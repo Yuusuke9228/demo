@@ -1,0 +1,268 @@
+<?php
+/**
+ * @var integer $imax
+ */
+?>
+<style>
+    /* bootstrapのガターを無くすため */
+    .o-3column { padding: 0px; margin: 0}
+</style>
+
+<div class="panel panel-info bg-blu">
+    <div class="panel-heading pnl-hed" onclick="save_ros()">出金伝票<span id="save_ros" style="color:pink;cursor:pointer;">(click→「入力制御の保存」)</span>
+    </div>
+    <div class="panel-body">
+        <div class="col-sm-2">
+            <label for="fieldShukkinbi" class="col-sm-12 control-label lbl-blu-up" onclick="switch_roa('Shukkinbi')">出金日></label>
+            <?php echo $this->tag->telField(array("shukkinbi", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", 'readonly' => ($readonlys['shukkinbi'] ?? 0) == 1 ? 'readonly' : null, "id" => "fieldShukkinbi")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldCd" class="col-sm-12 control-label lbl-blu-up" onclick="switch_roa('Cd')">伝票番号></label>
+            <?php echo $this->tag->textField(array("cd", "class" => "form-control f-cent", 'readonly' => ($readonlys['cd'] ?? 0) == 1 ? 'readonly' : null, "id" => "fieldCd")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldSakuseiUserName" class="col-sm-12 control-label lbl-blu-up">入力者</label>
+            <?php echo $this->tag->textField(array("sakusei_user_name", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldSakuseiUserName")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldUpdated" class="col-sm-12 control-label lbl-blu-up">最終更新日時</label>
+            <?php echo $this->tag->textField(array("updated", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldUpdated")) ?>
+        </div>
+        <div class="col-sm-12 pnl-hed" style="height:8px">　</div>
+        <div class="col-sm-8">
+            <label for="fieldShiiresakiMrCd" class="col-sm-2 control-label lbl-blu">仕入先></label>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(array("shiiresaki_mr_cd", "size" => 14, "maxlength" => 14, "class" => "form-control ime-i", "id" => "fieldShiiresakiMrCd", "list" => "ShiiresakiMrsOptions")) ?>
+            </div>
+            <div class="col-sm-8">
+                <?php echo $this->tag->textField(array("shiiresaki_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "rdonlyShiiresakiMrName")) ?>
+            </div>
+<!--            <label for="fieldTantouMrCd" class="col-sm-2 control-label lbl-blu"-->
+<!--                   onclick="switch_roa('TantouMrCd')">担当者</label>-->
+            <div class="col-sm-4">
+                <?php echo $this->tag->hiddenField(["tantou_mr_cd", "class" => "form-control", "id" => "fieldTantouMrCd"]) ?>
+            </div>
+            <div class="clearfix"></div>
+            <label for="fieldName" class="col-sm-2 control-label lbl-blu" onclick="switch_roa('Name')">摘要</label>
+            <div class="col-sm-10">
+                <?php echo $this->tag->textField(array("name", "size" => 32, "maxlength" => 32, "class" => "form-control ime-i", 'readonly' => ($readonlys['name'] ?? 0) == 1 ? 'readonly' : null, "id" => "fieldName")) ?>
+            </div>
+            <div class="col-sm-12 pnl-hed" style="height:8px">　</div>
+<!--            <label for="fieldShiharaiYoteibi" class="col-sm-2 control-label lbl-blu">支払</label>-->
+            <div class="col-sm-4">
+                <?php echo $this->tag->hiddenField(["harai_houhou_kbn_cd", "class" => "form-control", "id" => "fieldHaraiHouhouKbnCd"]) ?>
+            </div>
+            <div class="col-sm-3">
+                <?php echo $this->tag->hiddenField(["harai_saikuru_kbn_cd", "class" => "form-control", "id" => "fieldHaraiSaikuruKbnCd"]) ?>
+            </div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->hiddenField(["haraibi", "class" => "form-control", "id" => "fieldHaraibi"]) ?>
+            </div>
+<!--            <div class="col-sm-1">-->
+<!--                日-->
+<!--            </div>-->
+<!--            <label for="fieldShimegrpKbnCd" class="col-sm-2 control-label lbl-blu">締グループ</label>-->
+            <div class="col-sm-4">
+                <?php echo $this->tag->hiddenField(["shimegrp_kbn_cd", "class" => "form-control", "id" => "fieldShimegrpKbnCd"]) ?>
+            </div>
+<!--            <label for="fieldTesuuryouHutanFlg" class="col-sm-2 control-label lbl-blu">手数料負担区分</label>-->
+            <div class="col-sm-4">
+                <?php echo $this->tag->hiddenField(["tesuuryou_hutan_kbn_cd", "class" => "form-control", "id" => "fieldTesuuryouHutanFlg"]) ?>
+            </div>
+            <?php echo $this->tag->hiddenField(['shime_zumibi', "class" => "form-control", "id" => "fieldShimezumibi"]); ?>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="panel-heading pnl-hed">出金明細</div>
+    <div class="panel-body o-3column" style="overflow-x: scroll; padding: 0; margin-top: 0;">
+        <table width="807px" class="col-md-7">
+            <thead style="display: block;">
+            <tr class="tr-blu">
+                <th class="t-cent" width="30px" onclick="switch_ros('Cd')">№</th>
+                <th class="t-cent" width="100px">支払区分</th>
+                <th class="t-cent" width="160px" onclick="switch_ros('Name')">支払内容</th>
+                <th class="t-cent" width="160px" onclick="switch_ros('TegataKijitu')">手形期日</th>
+                <th class="t-cent" width="160px">金額</th>
+                <th class="t-cent" width="180px" onclick="switch_ros('Bikou')">備考</th>
+            </tr>
+            </thead>
+            <tbody style="display: block;overflow-y: scroll; height: 120px;">
+            <?php for ($i = -1; $i < $imax; $i++): ?>
+                <?php
+                if ($i < 0) {
+                    $name_head = "hidden"; // name-hedder nameの前半
+                    $id_head = "hidden"; // id-hedder idの前半
+                    echo '<tr id="tr_shukkin_meisai_dt_hidden" style="display:none;">';
+                } else {
+                    $name_head = "data[shukkin_meisai_dts][" . $i . "]";
+                    $id_head = "fieldShukkinMeisaiDts" . $i;
+                    echo '<tr id="tr_shukkin_meisai_dt_' . $i . '">';
+                }
+                ?>
+                <td width="30px">
+                    <!-- 行番 --><?php echo $this->tag->textField(array($name_head . "[cd]", "style" => "width: 30px; padding: 0;", "class" => "form-control f-cent", 'readonly' => ($readonlys['[cd'] ?? 0) == 1 ? 'readonly' : null, "id" => $id_head . "Cd")) . "\n" ?>
+                    <!--  ID  --><?php echo $this->tag->hiddenField(array($name_head . "[id]", "id" => $id_head . "Id")) . "\n" ?>
+                    <!--更新日--><?php echo $this->tag->hiddenField(array($name_head . "[updated]", "id" => $id_head . "Updated")) . "\n" ?>
+                </td>
+                <td width="100px">
+                    <!-- 区分 --><?php echo $this->tag->textField(array($name_head . "[shiharai_kbn_cd]", "maxlength" => 3, "style" => "padding: 0;", "class" => "form-control f-cent", "id" => $id_head . "ShiharaiKbnCd", "list" => "ShiharaiKbnsOptions")) . "\n" ?>
+                </td>
+                <td width="160px">
+                    <!-- 内容 --><?php echo $this->tag->textField(array($name_head . "[name]", "size" => 24, "maxlength" => 24, "class" => "form-control ime-i", 'readonly' => ($readonlys['[name'] ?? 0) == 1 ? 'readonly' : null, "id" => $id_head . "Name")) . "\n" ?>
+                </td>
+                <td width="160px">
+                    <!-- 期日 --><?php echo $this->tag->telField(array($name_head . "[tegata_kijitu]", "style" => "padding: 0;", "class" => "form-control f-cent  tegata_kijitu", 'readonly' => ($readonlys['[tegata_kijitu'] ?? 0) == 1 ? 'readonly' : null, "id" => $id_head . "TegataKijitu")) . "\n" ?>
+                </td>
+                <td width="160px">
+                    <!-- 金額 --><?php echo $this->tag->textField(array($name_head . "[kingaku]", "size" => 10, "class" => "form-control f-numb", "id" => $id_head . "Kingaku")) . "\n" ?>
+                </td>
+                <td width="180px">
+                    <!-- 備考 --><?php echo $this->tag->textField(array($name_head . "[bikou]", "size" => 14, "maxlength" => 14, "style" => "padding: 0;", "class" => "form-control ime-i", 'readonly' => ($readonlys['[bikou'] ?? 0) == 1 ? 'readonly' : null, "id" => $id_head . "Bikou")) . "\n" ?>
+                </td></tr>
+            <?php endfor; ?>
+            </tbody>
+        </table>
+
+        <div class="col-md-5">
+            <span id="getKeshikomiData" class="btn btn-sm btn-info z-depth-5">消込取得</span>
+        </div>
+    </div>
+    <div class="panel-body">
+
+        <div class="col-sm-2">
+            <label for="fieldShiharaiYoteigaku" class="col-sm-12 control-label lbl-blu-up">支払予定額</label>
+            <?php echo $this->tag->textField(array("kaishuu-yoteigaku", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldShiharaiYoteigaku")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldTougetuShiharaigaku" class="col-sm-12 control-label lbl-blu-up">当月支払額</label>
+            <?php echo $this->tag->textField(array("tougetu-kaishuugaku", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldTougetuShiharaigaku")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldKaikakeZandaka" class="col-sm-12 control-label lbl-blu-up">買掛残高</label>
+            <?php echo $this->tag->textField(array("kaikake-zandaka", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldKaikakeZandaka")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldGoukei" class="col-sm-12 control-label lbl-blu-up">合計</label>
+            <?php echo $this->tag->textField(array("goukei", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldGoukei")) ?>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-sm-12 pnl-hed" style="height:8px">　</div>
+
+    </div>
+    <div class="panel-heading pnl-hed">消込明細</div>
+    <div class="panel-body" style="overflow-x: scroll;padding: 0;">
+        <style>.tb-kesikkomi > tbody > tr > td {
+                padding: 0 5px;
+            }</style>
+        <table width="1020px" id="tb_kesikomi" class="table-bordered tb-kesikkomi col-sm-8">
+            <thead style="display: block;">
+            <tr class="tr-blu">
+                <th class="t-cent" width="30px">レ</th>
+                <th class="t-cent" width="150px">伝票日付</th>
+                <th class="t-cent" width="100px">伝票番号</th>
+                <th class="t-cent" width="100px">取引区分</th>
+                <th class="t-cent" width="150px">伝票状態</th>
+                <th class="t-cent" width="150px">仕入額</th>
+                <th class="t-cent" width="160px">消込済金額</th>
+                <th class="t-cent" width="160px">未消込金額</th>
+            </tr>
+            </thead>
+            <tbody style="display: block;overflow-y: scroll; height: 100px;">
+            <tr id="tr_kesikomi_hidden" style="display:none;" class="tr_pattern">
+                <td width="30px" align="center"><input type="checkbox" id="hiddenKesikomiChk"
+                                                       class="form-control kesuchk" style="height:14px !important;">
+                </td>
+                <td width="150px" align="center">
+                </td>
+                <td width="100px" align="right">0
+                </td>
+                <td width="100px" align="center">
+                </td>
+                <td width="150px" align="center">
+                </td>
+                <td width="150px" align="right">0
+                </td>
+                <td width="160px" align="right">0
+                </td>
+                <td width="160px" align="right">0
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="col-sm-2" align="center">
+            <label class="col-sm-12 control-label lbl-blu-up">消込初期化</label>
+            <button class="btn-info btn-xs" onclick="$('#meisai_flg').val(0); get_kesikomi(); return false;">伝票別</button>
+            <button class="btn-warning btn-xs" onclick="$('#meisai_flg').val(1); get_kesikomi(); return false;">伝票明細
+            </button>
+            <input type="hidden" id="meisai_flg" name="meisai_flg" value="0"/>
+        </div>
+    </div>
+    <div class="panel-body o-3column">
+        <div class="col-sm-2">
+            <label for="fieldShukkinKingaku" class="col-sm-12 control-label lbl-blu-up">出金金額</label>
+            <?php echo $this->tag->textField(array("shukkin_kingaku", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldShukkinKingaku")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldZenkaiKesikomiGaku" class="col-sm-12 control-label lbl-blu-up">前回消込額</label>
+            <?php echo $this->tag->textField(array("zenkai_kesikomi_gaku", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldZenkaiKesikomiGaku")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldKesikomiZandaka" class="col-sm-12 control-label lbl-blu-up">消込残高</label>
+            <?php echo $this->tag->textField(array("kesikomi_zandaka", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldKesikomiZandaka")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldKonkaiKesikomiKei" class="col-sm-12 control-label lbl-blu-up"
+                   onclick="denpyou_goukei_saikeisan()">今回消込計</label>
+            <?php echo $this->tag->textField(array("konkai_kesikomi_kei", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldKonkaiKesikomiKei")) ?>
+        </div>
+        <div class="col-sm-2">
+            <label for="fieldNokori" class="col-sm-12 control-label lbl-blu-up"
+                   onclick="denpyou_goukei_saikeisan()">残り</label>
+            <?php echo $this->tag->textField(array("nokori", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldNokori")) ?>
+        </div>
+
+        <?php echo $this->tag->hiddenField("id") ?>
+
+    </div><!-- panel-body -->
+</div><!-- panel -->
+
+<datalist id="ShiiresakiMrsOptions">
+</datalist>
+
+<datalist id="ShiharaiKbnsOptions">
+    <?php
+    $shiharai_kbns = ShiharaiKbns::find();
+    foreach ($shiharai_kbns as $shiharai_kbn) {
+        echo "<option value='"
+            . $shiharai_kbn->cd . "'>"
+            . $shiharai_kbn->cd . "="
+            . $shiharai_kbn->ShiharaiBunruiKbns->name . " "
+            . $shiharai_kbn->name
+            . "</option>\n";
+    }
+    ?>
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<div id="PgDn"></div>
+<div id="PgUp"></div>
+<div id="END"></div>
+
+<script type="text/javascript">
+    var shukkin_dts_edit = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shukkin_dts/edit/') ?>";
+    var shukkin_dts_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shukkin_dts/modal') ?>";
+    var shiiresaki_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/modal') ?>";
+    var shukkin_dts_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shukkin_dts/ajaxGet') ?>";
+    var shiiresaki_mrs_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/ajaxGet') ?>";
+    var shiiregaku_vws_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiregaku_vws/ajaxGet') ?>";
+    var readonlys_ajaxSave = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('readonly_field_kbns/ajaxSave') ?>";
+</script>

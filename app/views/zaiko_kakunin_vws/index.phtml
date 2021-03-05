@@ -1,0 +1,90 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "在庫.一覧"; ?>
+<div class="page-header">
+    <h3>在庫確認 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"zaiko_kakunin_vws","flds"=>[
+        ["shouhin_mr_cd","fieldShouhinMrCd","商品コード",14,14],["denpyou_mr_cd","fieldDenpyouMrCd","伝票コード",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["shouhin_mr_cd","商品コード"],
+                    ["tantou_mr_cd","担当"],
+                    ["tanni_mr1_cd","単位1"],
+                    ["tanni_mr2_cd","単位2"],
+                    ["iro","色番"],
+                    ["iromei","色名"],
+                    ["lot","ロット"],
+                    ["kobetucd","個別コード"],
+                    ["hinsitu_kbn_cd","品質"],
+                    ["hinsitu_hyouka_kbn_cd","品質評価"],
+                    ["souko_mr_cd","倉庫"],
+                    ["zaiko_ryou1","在庫1"],
+                    ["zaiko_ryou2","在庫2"],
+                    ["hacchuuzan_ryou1","発注残1"],
+                    ["hacchuuzan_ryou2","発注残2"],
+                    ["juchuuzan_ryou1","受注残1"],
+                    ["juchuuzan_ryou2","受注残2"],
+                    ["denpyou_mr_cd","伝票コード"],
+                    ["meisai_cd","明細行番"],
+                    ["utiwake_kbn_cd","内訳"],
+                    ["cd","伝票番号"],
+                    ["tokuisaki_mr_cd","得意先コード"],
+                    ["shiiresaki_mr_cd","仕入先コード"],
+                    ["nounyuu_kijitu","納入期日"],
+                    ["nouki","納期"],
+                    ["hacchuu_dt_id","発注id"],
+                    ["juchuu_dt_id","受注id"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $zaiko_kakunin_vw): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array($zaiko_kakunin_vw->DenpyouMrs->table_id."/edit/" . $zaiko_kakunin_vw->id, $zaiko_kakunin_vw->shouhin_mr_cd)); ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->tantou_mr_cd ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->TanniMr1s->name ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->TanniMr2s->name ?></td>
+                <td><?php echo $zaiko_kakunin_vw->iro ?></td>
+                <td><?php echo $zaiko_kakunin_vw->iromei ?></td>
+                <td><?php echo $zaiko_kakunin_vw->lot ?></td>
+                <td><?php echo $zaiko_kakunin_vw->kobetucd ?></td>
+                <td align="center" nowrap><?php echo $zaiko_kakunin_vw->HinsituKbns->name ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->hinsitu_hyouka_kbn_cd ?></td>
+                <td><?php echo $zaiko_kakunin_vw->souko_mr_cd ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->zaiko_ryou1 ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->zaiko_ryou2 ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->hacchuuzan_ryou1 ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->hacchuuzan_ryou2 ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->juchuuzan_ryou1 ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->juchuuzan_ryou2 ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->denpyou_mr_cd ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->meisai_cd ?></td>
+                <td nowrap><?php echo $zaiko_kakunin_vw->UtiwakeKbns->name ?></td>
+                <td align="right"><?php echo $zaiko_kakunin_vw->cd ?></td>
+                <td><?php echo $zaiko_kakunin_vw->tokuisaki_mr_cd ?></td>
+                <td><?php echo $zaiko_kakunin_vw->shiiresaki_mr_cd ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->nounyuu_kijitu ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->nouki ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->hacchuu_dt_id ?></td>
+                <td align="center"><?php echo $zaiko_kakunin_vw->juchuu_dt_id ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"zaiko_kakunin_vws"]) ?>

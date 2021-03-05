@@ -1,0 +1,135 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "発注データ.検索"; ?>
+<div class="page-header">
+    <h3>発注データ 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "hacchuu_dts/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldId" class="col-sm-2 control-label">Id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldId")) ?>
+    </div>
+
+<label for="fieldCd" class="col-sm-2 control-label">発注番号</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldTekiyou" class="col-sm-2 control-label">摘要</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tekiyou", "size" => 32, "maxlength" => 32, "style" => "width: 420px;", "class" => "form-control", "id" => "fieldTekiyou")) ?>
+    </div>
+
+<label for="fieldHacchuubi" class="col-sm-2 control-label">発注日</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hacchuubi", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldHacchuubi")) ?>
+    </div>
+
+<label for="fieldNounyuuKijitu" class="col-sm-2 control-label">納入期日</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nounyuu_kijitu", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldNounyuuKijitu")) ?>
+    </div>
+
+<label for="fieldZeirituTekiyoubi" class="col-sm-2 control-label">税率適用日</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("zeiritu_tekiyoubi", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldZeirituTekiyoubi")) ?>
+    </div>
+
+<label for="fieldShiiresakiMrCd" class="col-sm-2 control-label">仕入先</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiiresaki_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldShiiresakiMrCd")) ?>
+    </div>
+
+<label for="fieldTorihikiKbnCd" class="col-sm-2 control-label">取引区分</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("torihiki_kbn_cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldTorihikiKbnCd")) ?>
+    </div>
+
+<label for="fieldTankaShuruiKbnCd" class="col-sm-2 control-label">単価種類</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tanka_shurui_kbn_cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldTankaShuruiKbnCd")) ?>
+    </div>
+
+<label for="fieldZeiTenkaKbnCd" class="col-sm-2 control-label">税転嫁</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("zei_tenka_kbn_cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldZeiTenkaKbnCd")) ?>
+    </div>
+
+<label for="fieldKakeritu" class="col-sm-2 control-label">掛率</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kakeritu", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKakeritu")) ?>
+    </div>
+
+<label for="fieldTantouMrCd" class="col-sm-2 control-label">担当者</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tantou_mr_cd", "size" => 3, "maxlength" => 3, "style" => "width: 72px;", "class" => "form-control", "id" => "fieldTantouMrCd")) ?>
+    </div>
+
+<label for="fieldHassousakiKbnCd" class="col-sm-2 control-label">発送先区分</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hassousaki_kbn_cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldHassousakiKbnCd")) ?>
+    </div>
+
+<label for="fieldHassousakiMrCd" class="col-sm-2 control-label">発送先コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hassousaki_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldHassousakiMrCd")) ?>
+    </div>
+
+<label for="fieldShouninJoutaiFlg" class="col-sm-2 control-label">承認状態</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shounin_joutai_flg", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShouninJoutaiFlg")) ?>
+    </div>
+
+<label for="fieldShouninShaMrCd" class="col-sm-2 control-label">承認者</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shounin_sha_mr_cd", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShouninShaMrCd")) ?>
+    </div>
+
+<label for="fieldCreated" class="col-sm-2 control-label">登録日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("created", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldCreated")) ?>
+    </div>
+
+<label for="fieldSakuseiUserId" class="col-sm-2 control-label">登録者</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->select(array("sakusei_user_id", Users::find(["columns" => "id, name", "order" => "cd"]), "using" => array("id", "name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldSakuseiUserId")) ?>
+    </div>
+	<div class="clearfix"></div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+<label for="fieldKousinUserId" class="col-sm-2 control-label">更新者</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->select(array("kousin_user_id", Users::find(["columns" => "id, name", "order" => "cd"]), "using" => array("id", "name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldKousinUserId")) ?>
+    </div>
+	<div class="clearfix"></div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

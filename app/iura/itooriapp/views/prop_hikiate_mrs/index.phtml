@@ -1,0 +1,68 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "prop_hikiate_mrs.一覧"; ?>
+<div class="page-header">
+    <h3>prop_hikiate_mrs 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"prop_hikiate_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["指図番号","指図番号"],
+                    ["指図枝番","指図枝番"],
+                    ["加工№","加工№"],
+                    ["加工NO","加工NO"],
+                    ["単価","単価"],
+                    ["単価単位","単価単位"],
+                    ["糸名","糸名"],
+                    ["糸名２","糸名２"],
+                    ["ロット","ロット"],
+                    ["備考","備考"],
+                    ["出荷先","出荷先"],
+                    ["住所","住所"],
+                    ["電話","電話"],
+                    ["ラベル形式","ラベル形式"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $prop_hikiate_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("prop_hikiate_mrs/edit/" . $prop_hikiate_mr->id, $prop_hikiate_mr->指図番号)); ?></td>
+                <td><?php echo $prop_hikiate_mr->指図枝番 ?></td>
+                <td><?php echo $prop_hikiate_mr->加工№ ?></td>
+                <td><?php echo $prop_hikiate_mr->加工NO ?></td>
+                <td><?php echo $prop_hikiate_mr->単価 ?></td>
+                <td><?php echo $prop_hikiate_mr->単価単位 ?></td>
+                <td><?php echo $prop_hikiate_mr->糸名 ?></td>
+                <td><?php echo $prop_hikiate_mr->糸名２ ?></td>
+                <td><?php echo $prop_hikiate_mr->ロット ?></td>
+                <td><?php echo $prop_hikiate_mr->備考 ?></td>
+                <td><?php echo $prop_hikiate_mr->出荷先 ?></td>
+                <td><?php echo $prop_hikiate_mr->住所 ?></td>
+                <td><?php echo $prop_hikiate_mr->電話 ?></td>
+                <td><?php echo $prop_hikiate_mr->ラベル形式 ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("prop_hikiate_mrs/delete/" . $prop_hikiate_mr->指図番号, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"prop_hikiate_mrs"]) ?>

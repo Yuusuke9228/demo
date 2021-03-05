@@ -1,0 +1,55 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = '得意先.修正'; ?>
+<div class="page-header">
+    <h3>得意先台帳 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "tokuisaki_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+<div class="form-group">
+
+    <?php $this->partial('tokuisaki_mrs/inputfields'); ?>
+
+    <?php $this->partial('common/panel_updates'); ?>
+
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("tokuisaki_mrs/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("tokuisaki_mrs/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-6">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn btn-lg btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-2">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                台帳複写<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><?php echo $this->tag->linkTo(array("tokuisaki_mrs/new/".$id, "台帳の複写")) ?></li>
+              <li><?php echo $this->tag->linkTo(array("shiiresaki_mrs/new/".$id."/Tokuisaki", "仕入先台帳へ")) ?></li>
+              <li><?php echo $this->tag->linkTo(array("nounyuusaki_mrs/new/".$id."/Tokuisaki", "納入先台帳へ")) ?></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("tokuisaki_mrs/delete/".$id, "台帳削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+    </div>
+</div><!-- class="form-group" -->
+
+<?php echo $this->tag->endForm(); ?>
+<script type="text/javascript" src="<?php echo $this->url->get('js/lib.js'); ?>?var=20191023"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/tokuisaki_mrs.js'); ?>?var=20191023"></script>

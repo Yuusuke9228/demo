@@ -1,0 +1,102 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "締在庫データ.一覧"; ?>
+<div class="page-header">
+    <h3>締在庫データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"shimezaiko_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","メモ"],
+                    ["shouhin_mr_cd","商品コード"],
+                    ["tantou_mr_cd","担当者"],
+                    ["tanni_mr_cd","単位"],
+                    ["zaiko_ryou","在庫量"],
+                    ["suu_tanni_mr_cd","数単位"],
+                    ["zaiko_suu","在庫数"],
+                    ["simebi","締日"],
+                    ["lot","ロット"],
+                    ["kobetucd","個別コード"],
+                    ["hinsitu_kbn_cd","品質コード"],
+                    ["souko_mr_cd","倉庫コード"],
+                    ["nyuukobi","最終入庫日"],
+                    ["shukkobi","最終出庫日"],
+                    ["tanka","単価"],
+                    ["zaiko_hyouka_kbn_cd","在庫評価方法区分"],
+                    ["shiire_ryou","期間仕入量"],
+                    ["hokanyuuko_ryou","他入庫量"],
+                    ["uriage_ryou","期間売上量"],
+                    ["hokashukko_ryou","期間他出庫量"],
+                    ["shiire_suu","期間仕入数"],
+                    ["hokanyuuko_suu","他入庫数"],
+                    ["uriage_suu","期間売上数"],
+                    ["hokashukko_suu","期間他出庫数"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $shimezaiko_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("shimezaiko_dts/edit/" . $shimezaiko_dt->id, $shimezaiko_dt->id)); ?></td>
+                <td><?php echo $shimezaiko_dt->cd ?></td>
+                <td><?php echo $shimezaiko_dt->name ?></td>
+                <td><?php echo $shimezaiko_dt->shouhin_mr_cd ?></td>
+                <td><?php echo $shimezaiko_dt->tantou_mr_cd ?></td>
+                <td><?php echo $shimezaiko_dt->tanni_mr_cd ?></td>
+                <td><?php echo $shimezaiko_dt->zaiko_ryou ?></td>
+                <td><?php echo $shimezaiko_dt->suu_tanni_mr_cd ?></td>
+                <td><?php echo $shimezaiko_dt->zaiko_suu ?></td>
+                <td><?php echo $shimezaiko_dt->simebi ?></td>
+                <td><?php echo $shimezaiko_dt->lot ?></td>
+                <td><?php echo $shimezaiko_dt->kobetucd ?></td>
+                <td><?php echo $shimezaiko_dt->hinsitu_kbn_cd ?></td>
+                <td><?php echo $shimezaiko_dt->souko_mr_cd ?></td>
+                <td><?php echo $shimezaiko_dt->nyuukobi ?></td>
+                <td><?php echo $shimezaiko_dt->shukkobi ?></td>
+                <td><?php echo $shimezaiko_dt->tanka ?></td>
+                <td><?php echo $shimezaiko_dt->zaiko_hyouka_kbn_cd ?></td>
+                <td><?php echo $shimezaiko_dt->shiire_ryou ?></td>
+                <td><?php echo $shimezaiko_dt->hokanyuuko_ryou ?></td>
+                <td><?php echo $shimezaiko_dt->uriage_ryou ?></td>
+                <td><?php echo $shimezaiko_dt->hokashukko_ryou ?></td>
+                <td><?php echo $shimezaiko_dt->shiire_suu ?></td>
+                <td><?php echo $shimezaiko_dt->hokanyuuko_suu ?></td>
+                <td><?php echo $shimezaiko_dt->uriage_suu ?></td>
+                <td><?php echo $shimezaiko_dt->hokashukko_suu ?></td>
+                <td><?php echo $shimezaiko_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("shimezaiko_dts/delete/" . $shimezaiko_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shimezaiko_dts/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shimezaiko_dts/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("shimezaiko_dts/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shimezaiko_dts/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shimezaiko_dts/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

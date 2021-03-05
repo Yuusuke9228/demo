@@ -1,0 +1,73 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "項目幅制御.新規"; ?>
+<div class="page-header">
+    <h3>項目幅制御 新規登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "rewidth_field_mrs/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 50, "maxlength" => 50, "style" => "width: 636px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 50, "maxlength" => 50, "style" => "width: 636px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldControllerCd" class="col-sm-2 control-label">コントローラ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("controller_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldControllerCd")) ?>
+    </div>
+
+<label for="fieldGamenCd" class="col-sm-2 control-label">画面</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("gamen_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldGamenCd")) ?>
+    </div>
+
+<label for="fieldRiyouUserId" class="col-sm-2 control-label">ユーザーID</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("riyou_user_id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldRiyouUserId")) ?>
+    </div>
+
+<label for="fieldFieldCd" class="col-sm-2 control-label">項目</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("field_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldFieldCd")) ?>
+    </div>
+
+<label for="fieldHaba" class="col-sm-2 control-label">幅</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("haba", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHaba")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

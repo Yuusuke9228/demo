@@ -1,0 +1,80 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "メニューグループマスタ.修正"; ?>
+<div class="page-header">
+    <h3>メニューグループマスタ 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "menu_group_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 30, "maxlength" => 30, "style" => "width: 396px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldJun" class="col-sm-2 control-label">順位</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("jun", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJun")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("menu_group_mrs/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("menu_group_mrs/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("menu_group_mrs/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+<div class="row center-block" style="width:150px;">
+	<table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+		<thead>
+			<tr bgcolor="Lavender">
+				<th nowrap style="text-align:center;">表名</th>
+			</th>
+		</thead>
+		<tbody>
+        <?php foreach ($menu_group_mr->TableMrs as $table_mr): ?>
+            <tr>
+                <td align="center"><?php echo $this->tag->linkTo(array($table_mr->cd."/index", $table_mr->name, 'target'=>'_blank')); ?></td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>

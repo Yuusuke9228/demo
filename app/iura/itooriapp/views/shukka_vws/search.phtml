@@ -1,0 +1,86 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["shukka_vws/index", "Go Back"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["shukka_vws/copyoya", "複写親"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["shukka_vws/copyko", "複写子"]); ?></li>
+            <li><a href="#" onclick="window.close()">閉じる</a></li>
+            <li class="next"><?php echo $this->tag->linkTo(["shukka_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ito Of Code</th>
+            <th>Hiduke</th>
+            <th>Denpyou Of No</th>
+            <th>Kakou Of No</th>
+            <th>Lot</th>
+            <th>Suuryou</th>
+            <th>Honsuu</th>
+            <th>Hinsitu</th>
+            <th>Bikou1</th>
+            <th>Bikou2</th>
+            <th>Shukkasaki</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $shukka_vw): ?>
+            <tr>
+                <td><?php echo $shukka_vw->ito_code ?></td>
+            <td><?php echo $shukka_vw->hiduke ?></td>
+            <td><?php echo $shukka_vw->denpyou_no ?></td>
+            <td><?php echo $shukka_vw->kakou_no ?></td>
+            <td><?php echo $shukka_vw->lot ?></td>
+            <td><?php echo $shukka_vw->suuryou ?></td>
+            <td><?php echo $shukka_vw->honsuu ?></td>
+            <td><?php echo $shukka_vw->hinsitu ?></td>
+            <td><?php echo $shukka_vw->bikou1 ?></td>
+            <td><?php echo $shukka_vw->bikou2 ?></td>
+            <td><?php echo $shukka_vw->shukkasaki ?></td>
+
+                <td><?php echo $this->tag->linkTo(["shukka_vws/edit/" . $shukka_vw->ito_code, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["shukka_vws/delete/" . $shukka_vw->ito_code, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("shukka_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("shukka_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("shukka_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("shukka_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

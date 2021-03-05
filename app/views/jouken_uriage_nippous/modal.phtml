@@ -1,0 +1,188 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "条件売上日報"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "jouken_uriage_nippous/modalsave",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+<br>
+<div class="form-group">
+<label for="fieldCd" class="col-sm-3 control-label">条件名</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->selectStatic(array("cd", $joukens, "style" => "width: 400px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+</div>
+<?php echo $this->tag->hiddenField("id") ?>
+<?php echo $this->tag->hiddenField("junjo_kbn_table") ?>
+<?php echo $this->tag->hiddenField("name") ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-3 col-sm-3">
+        <?php echo $this->tag->submitButton(array("名前を付けて保存", "class" => "btn btn-info", "onclick" => 'return new_name();')) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->submitButton(array("上書き保存", "class" => "btn btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-3">
+        <button type="button", class="btn btn-warning", onclick='init_del();'>初期化/削除</button>
+    </div>
+</div>
+
+<div class="form-group">
+  <ul class="nav nav-tabs" style="display: flex; justify-content: center;">
+    <li class="nav-item active">
+      <a href="#tab1" class="nav-link bg-info" data-toggle="tab">　集計　</a>
+    </li>
+    <li class="nav-item">
+      <a href="#tab2" class="nav-link bg-info" data-toggle="tab">　期間　</a>
+    </li>
+    <li class="nav-item">
+      <a href="#tab3" class="nav-link bg-info" data-toggle="tab">　表示　</a>
+    </li>
+    <li class="nav-item">
+      <a href="#tab4" class="nav-link bg-info" data-toggle="tab">　その他　</a>
+    </li>
+  </ul>
+</div>
+<div class="bg-yel">
+<div class="form-group">
+  <!--タブのコンテンツ部分-->
+  <div class="tab-content">
+   <div id="tab1" class="tab-pane active">
+    <label for="fieldTorihikiKbnBetuFlg" class="col-sm-3 control-label">取引区分別</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->checkField(array("torihiki_kbn_betu_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldTorihikiKbnBetuFlg")) ?>
+    </div>
+
+    <label for="fieldJunjoKbnCd" class="col-sm-3 control-label">順序</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->select(array("junjo_kbn_cd", JunjoKbns::find(["columns" => "cd , name", "order" => "cd", "conditions" => "yobidasi_tbl = 'jouken_uriage_nippous'"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "style" => "width: 132px;", "class" => "form-control", "id" => "fieldJunjoKbnCd")) ?>
+    </div>
+    <label for="fieldKoujunFlg" class="col-sm-3 control-label">降順指定</label>
+    <div class="col-sm-1">
+        <?php echo $this->tag->checkField(array("koujun_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldKoujunFlg")) ?>
+    </div>
+    <div class="col-sm-2
+    ">
+    </div>
+
+    <label for="fieldHanniFrom" class="col-sm-3 control-label">範囲自</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("hanni_from", "size" => 20, "maxlength" => 20, "class" => "form-control", "list" => "fieldHanniFromOptions", "id" => "fieldHanniFrom")) ?>
+    </div>
+    <div class="col-sm-5">
+        <?php echo $this->tag->textField(array("hanni_from_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldHanniFromName")) ?>
+    </div>
+
+    <label for="fieldHanniTo" class="col-sm-3 control-label">範囲至</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("hanni_to", "size" => 20, "maxlength" => 20, "class" => "form-control", "list" => "fieldHanniToOptions", "id" => "fieldHanniTo")) ?>
+    </div>
+    <div class="col-sm-5">
+        <?php echo $this->tag->textField(array("hanni_to_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldHanniToName")) ?>
+    </div>
+   </div>
+   <div id="tab2" class="tab-pane">
+
+    <label for="fieldKikanSiteiKbnCd" class="col-sm-3 control-label">期間指定</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->select(array("kikan_sitei_kbn_cd", KikanSiteiKbns::find(["columns" => "cd , name", "order" => "cd", "conditions" => "yobidasi_tbl = 'jouken_uriage_nippous'"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "style" => "width: 132px;", "class" => "form-control", "id" => "fieldKikanSiteiKbnCd")) ?>
+    </div>
+
+    <label for="fieldKikanFrom" class="col-sm-3 control-label">期間自</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+    </div>
+
+    <label for="fieldKikanTo" class="col-sm-3 control-label">期間至</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+    </div>
+
+    <label for="fieldSimekiriKbn" class="col-sm-3 control-label">任意の締切</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->selectStatic(array("simekiri_kbn", array("0" => "0=期間指定", "1" => "1=前回締切以降", "2" => "2=今回締切分"), "style" => "width: 156px;", "class" => "form-control", "id" => "fieldSimekiriKbn")) ?>
+    </div>
+
+    </div>
+    <div id="tab3" class="tab-pane">
+
+    <label for="fieldMeisaigyouFlg" class="col-sm-3 control-label">明細行表示フラグ</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->checkField(array("meisaigyou_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldMeisaigyouFlg")) ?>
+    </div>
+
+    <label for="fieldGoukeigyouFlg" class="col-sm-3 control-label">合計行表示フラグ</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->checkField(array("goukeigyou_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldGoukeigyouFlg")) ?>
+    </div>
+
+   </div>
+   <div id="tab4" class="tab-pane">
+
+    <label for="fieldJinyuuryokuFlg" class="col-sm-3 control-label">入力者</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->selectStatic(array("jinyuuryoku_flg", array("0" => "0=全入力者分", "1" => "1=自入力分のみ"), "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJinyuuryokuFlg")) ?>
+    </div>
+
+    <label for="fieldTorihikiariFlg" class="col-sm-3 control-label">期間内取引有フラグ</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->checkField(array("torihikiari_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldTorihikiariFlg")) ?>
+    </div>
+
+    <label for="fieldTorihikinasiFlg" class="col-sm-3 control-label">期間内取引無フラグ</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->checkField(array("torihikinasi_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldTorihikinasiFlg")) ?>
+    </div>
+
+   </div>
+  </div>
+
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+<hr>
+<datalist id="fieldHanniFromOptions">
+</datalist>
+<datalist id="fieldHanniToOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle" style="width:800px; height:400px; left:60%;">
+	<div class="modal-header" style="padding: 0; background-color: #ddd;">
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+</div><!-- end class bg-yel -->
+<div class="col-sm-offset-6 col-sm-3">
+    <button type="button" class="btn btn-default" data-dismiss="modal" id="F12" onclick="return_value();">　 ＯＫ*12 　</button>
+</div>
+<div class="col-sm-3">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">キャンセル</button>
+</div>
+
+<script type="text/javascript">
+	var base_uri = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->getBaseUri() ?>";
+	var jouken_uriage_nippous = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('jouken_uriage_nippous') ?>";
+	var jouken_uriage_nippous_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('jouken_uriage_nippous/ajaxGet') ?>";
+	var kikan_sitei_kbns_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kikan_sitei_kbns/ajaxGet') ?>";
+	var junjo_kbns_ajaxHanni = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('junjo_kbns/ajaxHanni') ?>";
+	var junjo_kbns_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('junjo_kbns/ajaxGet') ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/jouken_uriage_nippous.js'); ?>?var=20160731"></script>

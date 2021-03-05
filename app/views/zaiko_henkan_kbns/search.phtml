@@ -1,0 +1,83 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "在庫変換区分.検索"; ?>
+<div class="page-header">
+    <h3>在庫変換区分 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "zaiko_henkan_kbns/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldId" class="col-sm-2 control-label">Id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldId")) ?>
+    </div>
+
+<label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 4, "maxlength" => 4, "style" => "width: 84px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldDenpyouMrCd" class="col-sm-2 control-label">伝票コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("denpyou_mr_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldDenpyouMrCd")) ?>
+    </div>
+
+<label for="fieldShiireFlg" class="col-sm-2 control-label">仕入在庫フラグ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiire_flg", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShiireFlg")) ?>
+    </div>
+
+<label for="fieldNyuukoFlg" class="col-sm-2 control-label">他入庫フラグ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nyuuko_flg", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldNyuukoFlg")) ?>
+    </div>
+
+<label for="fieldUriageFlg" class="col-sm-2 control-label">売上在庫フラグ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("uriage_flg", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldUriageFlg")) ?>
+    </div>
+
+<label for="fieldShukkoFlg" class="col-sm-2 control-label">他出庫フラグ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shukko_flg", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShukkoFlg")) ?>
+    </div>
+
+<label for="fieldAzuchouFlg" class="col-sm-2 control-label">預り調整フラグ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("azuchou_flg", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldAzuchouFlg")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

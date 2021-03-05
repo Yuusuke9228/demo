@@ -1,0 +1,111 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "納入先参照"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/modalkanni",["table_id"=>"nounyuusaki_mrs","flds"=>[
+		["cd","fieldCd","コード",14,14],
+		["name","fieldName","名称",24,24]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead>
+            <tr>
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["cd","コード"],
+					["","選択"],
+					["name","名称"],
+					["juusho1","住所1"],
+					["juusho2","住所2"],
+					["bushomei","部署名"],
+					["yakushoku","役職名"],
+					["gotantousha","ご担当者"],
+				]]) ?>
+
+				<th style="text-align:center;">修正</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $i = 1000; ?>
+        <?php foreach ($page->items as $nounyuusaki_mr): ?>
+            <tr>
+                <td align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $nounyuusaki_mr->cd; ?></div></td>
+                <td align='center'><?php echo "<input type='checkbox' class='returnto' id='fieldI".$i."' value='".$nounyuusaki_mr->cd."'>" ?></td>
+                <td><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $nounyuusaki_mr->name ?></div></td>
+                <td><?php echo $nounyuusaki_mr->juusho1 ?></td>
+                <td><?php echo $nounyuusaki_mr->juusho2 ?></td>
+                <td><?php echo $nounyuusaki_mr->bushomei ?></td>
+                <td><?php echo $nounyuusaki_mr->yakushoku ?></td>
+                <td><?php echo $nounyuusaki_mr->gotantousha ?></td>
+
+                <td align="center"><?php echo $this->tag->linkTo(array("nounyuusaki_mrs/edit/" . $nounyuusaki_mr->id, "別タブ", "target"=>"_blank")); ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+	<div class="col-sm-2">
+	    <br><button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+	</div>
+	<div class="col-sm-8">
+		<?php $this->partial("common/indextail",["index_or"=>"modal", "table_id"=>"nounyuusaki_mrs"]) ?>
+    </div>
+</div><!-- /modal-footer -->
+
+<div id="PgDn"></div><div id="PgUp"></div>
+
+<script type="text/javascript">
+
+	$(function(){ // テーブルのヘッドを消えなくする
+	  $('table.head_fix').floatThead({
+	  	top: 0
+	  });
+	});
+
+    $('.returnto').on('click change', function () {
+//alert ($("td",$(this).closest('tr')).eq(0).text());
+        window.parent.fromModal($("td",$(this).closest('tr')).eq(0).text());
+    });
+
+
+	$('#PgUp').click(function() { //上矢キー(↑)を押したら
+		if ($("#"+lastfocusin).attr('type').toLowerCase() === 'checkbox') {
+			ix = -1 + $("input:checkbox").index($("#"+lastfocusin));
+			if (ix >= 0) {
+				$("input:checkbox").eq(ix).focus();
+			} else {
+				$("input").first().focus();
+			}
+		} else {
+			$("input:checkbox").last().focus();
+		}
+	});
+
+	$('#PgDn').click(function() { //下矢キー(↓)を押したら
+		if ($("#"+lastfocusin).attr('type').toLowerCase() === 'checkbox') {
+			ix = 1 + $("input:checkbox").index($("#"+lastfocusin));
+			if (ix < $("input:checkbox").length) {
+				$("input:checkbox").eq(ix).focus();
+			} else {
+				$("input").first().focus();
+			}
+		} else {
+			$("input:checkbox").first().focus();
+		}
+	});
+
+	$("input:checkbox").focusin(function() {
+		$(this).parent().css('background-color', '#f88');
+	});
+
+	$("input:checkbox").focusout(function() {
+		$(this).parent().css('background-color', '');
+	});
+</script>
+

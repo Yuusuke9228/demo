@@ -1,0 +1,120 @@
+<?php use Phalcon\Tag; ?>
+
+<?php $title = 'ナビ.仕入'; ?>
+
+<?php echo $this->getContent(); ?>
+<p />
+<div class="panel panel-primary center-block" style="width:600px">
+ <div class="panel-heading" style="font-size: 24px; padding:0px 15px;">仕入</div>
+    <table class="table navis">
+      <tr>
+        <th colspan=5 style="padding:0px 15px;"> </th>
+      </tr>
+      <tr>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('hacchuu_dts/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />発注書<br /></div>', /* 'target'=>'_blank' , */
+          'title' => '仕入先への注文を入力して発注伝票を作成します。作成した発注伝票は、仕入先にメールで送信することができます。発注伝票から仕入伝票に「受入処理」をすると、商品の入荷状況や発注残数を管理することができます。')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shiire_dts/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />商品の仕入</div>', /* 'target'=>'_blank' , */
+          'title' => '仕入先からの仕入を入力して仕入伝票を作成します。仕入伝票は、発注伝票を複写して作成することもできます。')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shiiresaki_sime_dts/shiharai_simekiri', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />支払の締切</div>', /* 'target'=>'_blank' , */
+          'title' => '支払書を発行するために、指定期間の仕入明細、出金明細を集計して仕入先へ支払額を確定します。支払書を発行するには、支払締切をする必要があります。')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shiiresaki_sime_dts', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />支払書の<br />発行</div>', /* 'target'=>'_blank' , */
+          'title' => '支払締切を実行した仕入先に対する支払書を一括で発行します。仕入先への宛名ラベルを発行することもできます。')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shukkin_dts/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />仕入先への<br />支払</div>', /* 'target'=>'_blank' , */
+          'title' => '仕入先への買掛金の支払いを入力して出金伝票を個別に作成します。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan=2 width="120px" style="border-style: none;">
+          <?php echo Phalcon\Tag::image(array("img/navigators/migimigi.gif", 'style'=>'position: relative; top: -84px; left: 330px;')); ?>
+        </td>
+        <td rowspan=2 width="120px" style="border-style: none;">
+          <?php echo Phalcon\Tag::image(array("img/navigators/migimigi.gif", 'style'=>'position: relative; top: 13px; left: 330px;')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo Phalcon\Tag::image(array("img/navigators/migiya.gif", 'style'=>'position: relative; top: -85px; left: -180px;')); ?><br />
+          <?php echo Phalcon\Tag::image(array("img/navigators/migiya.gif", 'style'=>'position: relative; top: -107px; left: -60px;')); ?><br />
+          <?php echo Phalcon\Tag::image(array("img/navigators/migiya.gif", 'style'=>'position: relative; top: -129px; left: 180px;')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shiiresaki_sime_dts/kakunin', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />支払内容の<br />確認</div>', /* 'target'=>'_blank' , */
+          'title' => '支払締切処理で確定した支払予定額や支払方法を確認、変更します。ここで確認した金額や支払方法に基づいて出金伝票の自動作成や振込依頼書の作成をします。')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('seikyuu_kakunin', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />一括支払</div>', /* 'target'=>'_blank' , */
+          'title' => '「出金内容の確認」ウインドウで確定した支払予定額や支払方法に基づいて出金伝票を一括して自動作成します。自動作成された出金伝票は修正、削除することができます。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shukkairai_dts/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />倉庫宛に<br />出荷依頼</div>', /* 'target'=>'_blank' , */
+          'title' => '委託先や倉庫へ出荷依頼を入力して依頼伝票を作成します。作成した依頼伝票は、依頼先にメールで送信することができます。')); ?>
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+        </td>
+        <td align="center" width="120px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shiwake_out', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_79_s32_f_business_79_2nbg.png"). '<br />振込依頼書<br />の作成</div>', /* 'target'=>'_blank' , */
+          'title' => '買掛金の支払に銀行振込を利用する場合は、銀行振込明細を集計し、振込依頼書を作成します。ファームバンキングデータを出力することもできます。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <th colspan=5 class="active" style="height: 20px; padding:0px 15px;">設定</th>
+      </tr>
+      <tr>
+        <td colspan=5 class="active">
+          <table class="table active">
+            <tr class="table active">
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('shiiresaki_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>仕入先</div>', /* 'target'=>'_blank' , */
+                'title' => '名称や住所、取引条件など得意先の情報を登録します。得意先の情報は、伝票作成時にコードを入力すると自動で表示されます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('shouhin_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>商品</div>', /* 'target'=>'_blank' , */
+                'title' => '名称や単価など商品の情報を登録します。商品の情報は、伝票作成時にコードを入力すると自動で表示されます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('setshouhin_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>セット商品</div>', /* 'target'=>'_blank' , */
+                'title' => '複数の商品を組み合わせて販売する場合や、送料などの諸経費と商品を組合わせる場合の構成内容を登録します。個々の商品や諸経費はあらかじめ商品台帳に登録しておく必要があります。伝票作成時にセット商品コードを入力すると、明細には個々の商品が表示されます。')); ?>
+              </td>
+            </tr>
+            <tr class="table active">
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('tantou_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>担当者</div>', /* 'target'=>'_blank' , */
+                'title' => '伝票の入力者や得意先に対する営業担当者など自社の従業員を登録します。レポートを作成する際、担当者別に集計することができます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('shukkin_dts/kaikake_zandaka', '<div><i class="far fa-check-circle mr-1"></i>買掛残高</div>', /* 'target'=>'_blank' , */
+                'title' => '仕入先の買掛金を月ごとに確認できます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('seikyuu_zandaka', '<div><i class="far fa-check-circle mr-1"></i>支払残高</div>', /* 'target'=>'_blank' , */
+                'title' => '支払締切処理を実行した仕入先に対する支払明細書の鑑部分を確認することができます。支払予定日の変更や販売管理の導入時の前回支払額を調整することもできます。')); ?>
+              </td>
+            </tr>
+            <tr class="table active">
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('souko_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>倉庫</div>', /* 'target'=>'_blank' , */
+                'title' => '名称や住所など倉庫の情報を登録します。倉庫の情報は、伝票作成時にコード入力をすると自動的に表示されます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('shiiresaki_mrs/motochou', '<div><i class="far fa-check-circle mr-1"></i>仕入先元帳</div>', /* 'target'=>'_blank' , */
+                'title' => '仕入先別に買掛金を確認することができます。月次別、伝票別、明細別に集計できます。また、仕入と支払をチェックし、未払金額を確認することもできます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+</div>
+
+

@@ -1,0 +1,72 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * * @var Object $rows
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+<!--受注一覧表より、モーダル表示2019/5/17-->
+<?php $title = '受注別仕入明細'; ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.blue.min.css"
+      xmlns="http://www.w3.org/1999/html">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
+<script>
+    $(document).ready(function () {
+            $("#meisai_table").tablesorter();
+        }
+    );
+    function jouken_submit() {
+        document.post_form.submit();
+    }
+</script>
+
+<?php echo $this->getContent(); ?>
+<div class="page-header">
+    <h2><?php echo '対象受注仕入明細';?></span></h2>
+</div>
+<div class="row">
+    <table id="meisai_table" class="tablesorter tablesorter-blue head_fix">
+        <thead>
+        <tr>
+            <th nowrap style="text-align:center;">仕入NO</th>
+            <th nowrap style="text-align:center;">商品コード</th>
+            <th nowrap style="text-align:center;">商品名</th>
+            <th nowrap style="text-align:center;">仕入数</th>
+            <th nowrap style="text-align:center;">単位</th>
+            <th nowrap style="text-align:center;">仕入量</th>
+            <th nowrap style="text-align:center;">単位</th>
+            <th nowrap style="text-align:center;">仕入単価</th>
+            <th nowrap style="text-align: center;">仕入日</th>
+            <th nowrap style="text-align:center;">入荷区分</th>
+            <th nowrap style="text-align: center;">倉庫</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $zaiko2 = 0; ?>
+        <?php $i = 0; ?>
+        <?php foreach ($rows->toArray() as $row): ?>
+            <tr>
+                <td align="center"><a href="/demo/shiire_dts/edit/<?php echo $row['id'] ?>" target="_brank"><?php echo $row["shiire_no"]; ?></a></td>
+                <td align="center"><?php echo $row["shiire_shouhin_mr_cd"]; ?></td>
+                <td nowrap align="left"><?php echo $row["shouhin_name"]; ?></td>
+                <td align="right"><?php echo number_format(round((float)$row["shiire_suu"],3),2); ?></td>
+                <td align="center"><?php echo $row["shiire_tanni1"]; ?></td>
+                <td align="right"><?php echo number_format(round((float)$row["shiire_ryou"],3),2); ?></td>
+                <td align="center"><?php echo $row["shiire_tanni2"]; ?></td>
+                <td align="right"><?php echo number_format($row["shiire_tanka"]); ?></td>
+                <td align="center"><?php echo date('Y年m月d日', strtotime($row['shiirebi'])); ?></td>
+                <td align="center"><?php echo $row["nyuuka_kbn"]; ?></td>
+                <td align="center"><?php echo $row["souko_name"]; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal"
+                onclick="window.parent.fromModal();">中止
+        </button>
+    </div>
+</div>

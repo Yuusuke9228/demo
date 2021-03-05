@@ -1,0 +1,195 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "連続.印刷"; ?>
+<div class="page-header">
+    <h3 id='title'>帳票レイアウト名 連続印刷</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "chouhyou_mrs/renzokugo",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "id" => "form1",
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldHanniFlg" class="col-sm-2 control-label">範囲</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->selectStatic(array("hanni_flg", array("0" => "0=日付", "1" => "1=前回締切以降"), "class" => "form-control", "id" => "fieldHanniFlg")) ?>
+    </div>
+<label for="fieldNyuuryokushaFlg" class="col-sm-2 control-label">入力者指定</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->selectStatic(array("nyuuryokusha_flg", array("0" => "0=全入力者分", "1" => "1=自入力分のみ"), "class" => "form-control", "id" => "fieldNyuuryokushaFlg")) ?>
+    </div>
+<label for="fieldUriagebiFrom" class="col-sm-2 control-label">売上日</label>
+    <div class="col-sm-5">
+        <?php echo $this->tag->telField(array("uriagebi_from", "type" => "date", "class" => "form-control", "id" => "fieldUriagebiFrom")) ?>
+    </div>
+    <div class="col-sm-5">
+        <?php echo $this->tag->telField(array("uriagebi_to", "type" => "date", "class" => "form-control", "id" => "fieldUriagebiTo")) ?>
+    </div>
+<label for="fieldDenpyouCdFrom" class="col-sm-2 control-label">伝票番号</label>
+    <div class="col-sm-5">
+        <?php echo $this->tag->textField(array("denpyou_cd_from", "type" => "number", "class" => "form-control", "id" => "fieldDenpyouCdFrom")) ?>
+    </div>
+    <div class="col-sm-5">
+        <?php echo $this->tag->textField(array("denpyou_cd_to", "type" => "number", "class" => "form-control", "id" => "fieldDenpyouCdTo")) ?>
+    </div>
+<label for="fieldIdDe" class="col-sm-2 control-label">用紙で検索</label>
+    <div class="col-sm-1">
+        <?php echo $this->tag->checkField(array("id_de", "class" => "form-control", "style" => "height:14px !important;", "id" => "fieldIdDe")) ?>
+    </div>
+    <div class="col-sm-9">
+        <?php echo $this->tag->select(array("id", ChouhyouMrs::find(["columns" => "id , CONCAT(id , '=' , name) as id_name", "conditions" => "chouhyou_kbn_cd = ?1", "bind" => [1=>$this->tag->getValue("chouhyou_kbn_cd")]]), "using" => array("id", "id_name"), "class" => "form-control", "id" => "fieldId")) ?>
+    </div>
+	<div class="clearfix"></div>
+
+<label for="fieldTantouMrCd" class="col-sm-2 control-label">担当者指定</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("tantou_mr_cd", TantouMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldTantouMrCd")) ?>
+    </div>
+
+<label for="fieldTokuisakiMrCd" class="col-sm-2 control-label">得意先指定</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("tokuisaki_mr_cd", "class" => "form-control", "id" => "fieldTokuisakiMrCd", "list" => "TokuisakiMrsOptions")) ?>
+    </div>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("tokuisaki_mr_name", "class" => "form-control", "readonly" => "readonly", "value" => $chouhyou_kbn_cd, "id" => "fieldTokuisakiMrName")) ?>
+    </div>
+
+<label for="fieldNounyuusakiMrCd" class="col-sm-2 control-label">納入先指定</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("nounyuusaki_mr_cd", "class" => "form-control", "id" => "fieldNounyuusakiMrCd", "list" => "NounyuusakiMrsOptions")) ?>
+    </div>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("nounyuusaki_mr_name", "class" => "form-control", "readonly" => "readonly", "value" => $chouhyou_kbn_cd, "id" => "fieldNounyuusakiMrName")) ?>
+    </div>
+
+<label for="fieldTorihikiKbnCd" class="col-sm-2 control-label">取引区分</label>
+  <div class="col-sm-10">
+	<label for="fieldTorihikiKbn1" class="col-sm-2 checkbox">
+        <?php echo $this->tag->checkField(array("torihiki_kbn1", "value" => "1", "checked" => "true", "id" => "fieldTorihikiKbn1")) ?>
+		掛取引
+	</label>
+	<label for="fieldTorihikiKbn2" class="col-sm-2 checkbox">
+        <?php echo $this->tag->checkField(array("torihiki_kbn2", "value" => "1", "checked" => "true", "id" => "fieldTorihikiKbn2")) ?>
+		現金取引
+	</label>
+	<label for="fieldTorihikiKbn3" class="col-sm-2 checkbox">
+        <?php echo $this->tag->checkField(array("torihiki_kbn3", "value" => "1", "checked" => "true", "id" => "fieldTorihikiKbn3")) ?>
+		都度請求
+	</label>
+	<label for="fieldTorihikiKbn4" class="col-sm-2 checkbox">
+        <?php echo $this->tag->checkField(array("torihiki_kbn4", "value" => "1", "checked" => "true", "id" => "fieldTorihikiKbn4")) ?>
+		サンプル
+	</label>
+	<div class="clearfix"></div>
+  </div>
+
+<label class="col-sm-2 control-label">並び替え</label>
+  <div class="col-sm-10">
+	<label for="fieldSakuseiUsersOrder" class="col-sm-3 checkbox">
+        <?php echo $this->tag->checkField(array("sakusei_users_order", "value" => "1", "checked" => "true", "id" => "fieldSakuseiUsersOrder")) ?>
+		作成者ｺｰﾄﾞ順
+	</label>
+	<label for="fieldTokuisakiMrsOrder" class="col-sm-3 checkbox">
+        <?php echo $this->tag->checkField(array("tokuisaki_mrs_order", "value" => "1", "checked" => "true", "id" => "fieldTokuisakiMrsOrder")) ?>
+		得意先ｺｰﾄﾞ順
+	</label>
+	<div class="clearfix"></div>
+  </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button class="btn btn-warning" type="button" id='F5' onclick="kensaku()">
+            検索F5
+        </button>
+    </div>
+</div>
+
+<style>th{text-align:center;}</style>
+<div class="row">
+    <label><input type="checkbox" id="all" checked /> Check All !!</label>
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix" id='tb_uriage'>
+        <thead>
+            <tr bgcolor="floralwhite">
+                <th width="30px">印</th>
+                <th width="150px">売上日</th>
+                <th width="100px">伝票番号</th>
+                <th width="100px">得意先コード</th>
+                <th width="200px">得意先名称</th>
+                <th width="100px">明細数</th>
+                <th width="100px">作成者</th>
+            </tr>
+			<tr id="tr_uriage_hidden" style="display:none;">
+				<td align="center"><input type="checkbox" id="hiddenSentakuChk" class="form-control selchk" style="height:14px !important;"></td>
+				<td align="center"></td>
+				<td align="center"></td>
+				<td align="center"></td>
+				<td></td>
+				<td align="center"></td>
+				<td align="center"></td>
+			</tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <input type="button" id="ESC" value="取消" class="btn btn-default" onclick="torikesi()" />
+    </div>
+    <div class="col-sm-10">
+        <input type="button" id="F12" value="印刷F12" class="btn btn-lg btn-success" onclick="renzokugo()" />
+        <!-- echo $this->tag->submitButton(array("印刷F12", "id" => "F12", "class" => "btn btn-default", "onclick" => "return renzokugo()")) -->
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="TokuisakiMrsOptions">
+</datalist>
+
+<datalist id="NounyuusakiMrsOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 0; background-color: #ddd;">
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div>
+
+<script type="text/javascript">
+	var uriage_dts_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('uriage_dts/modal') ?>";
+	var tokuisaki_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('tokuisaki_mrs/modal') ?>";
+	var nounyuusaki_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('nounyuusaki_mrs/modal') ?>";
+	var uriage_dts_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('uriage_dts/ajaxGet') ?>";
+	var tokuisaki_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('tokuisaki_mrs/ajaxGet') ?>";
+	var nounyuusaki_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('nounyuusaki_mrs/ajaxGet') ?>";
+	var uriage_dts_ajaxRenzoku = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('uriage_dts/ajaxRenzoku') ?>";
+	var chouhyou_mrs_ajaxRenzokugo = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('chouhyou_mrs/ajaxRenzokugo') ?>";
+</script>
+<script>
+    //checkbox
+    $('#all').on('change', function() {
+        $('input').prop('checked', this.checked);
+    });
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/chouhyou_mrs_renzoku.js'); ?>?var=20210217"></script>

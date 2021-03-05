@@ -1,0 +1,112 @@
+<?php use Phalcon\Tag; ?>
+
+<?php $title = 'ナビ.在庫'; ?>
+
+<?php echo $this->getContent(); ?>
+<p/>
+<div class="panel panel-primary center-block" style="width:600px">
+    <div class="panel-heading" style="font-size: 24px; padding:0px 15px;">在庫</div>
+    <table class="table navis">
+        <tr>
+            <th colspan=5 style="padding:0px 15px;"> </th>
+        </tr>
+        <tr>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('zaiko_henkan_dts/new?kbn=3', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />商品の出庫</div>', /* 'target'=>'_blank' , */
+                    'title' => '不良品の破棄は在庫調整など、通常の取引以外で発生した商品の減少を入力します。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('zaiko_henkan_dts/new?kbn=2', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />倉庫間の<br />在庫移動</div>', /* 'target'=>'_blank' , */
+                    'title' => '商品を倉庫間で移動した場合に、移動した商品と倉庫の情報を入力して倉庫移動伝票を作成します。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('seikyuu_simekiri', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />売上原価<br />の更新</div>', /* 'target'=>'_blank' , */
+                    'title' => '商品ごとに指定された棚卸評価方法に基づいて売上原価を更新します。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('seikyuusho', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />棚卸</div>', /* 'target'=>'_blank' , */
+                    'title' => '実地棚卸をして、販売管理の在庫数と実際の在庫数の再を確認します。差異がある場合は、販売管理の在庫数を調整します。')); ?>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('zaiko_henkan_dts/new?kbn=1', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />商品の生産</div>', /* 'target'=>'_blank' , */
+                    'title' => '自社で商品を生産した場合に、生産した商品の情報を入力して生産伝票を作成します。生産伝票を作成すると、完成商品の入庫と構成部品の出庫が同時に行われます。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('report_zaiko_vws/index', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />在庫の一覧</div>', /* 'target'=>'_blank' , */
+                    'title' => '商品の在庫評価方法や在庫金額を確認します。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('zaiko_kakunin_azukari_vws/summary', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />在庫確認</div>', /* 'target'=>'_blank' , */
+                    'title' => '商品の現在庫数や適正在庫数などを一覧表示します。在庫の過不足を一覧で確認することもできます。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('zaiko_kakunin_azukari_vws/kouseibuhin_zaiko', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />構成部品<br />在庫照会</div>', /* 'target'=>'_blank' , */
+                    'title' => '商品を生産するために必要な構成部品数や構成部品の在庫を確認します。')); ?>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('report_zaiko_vws/all_column_zaiko', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />ロット・倉庫在庫の一覧</div>', /* 'target'=>'_blank' , */
+                    'title' => 'ロット別や、倉庫別などの在庫集計を行います。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('zaiko_kakunin_azukari_vws/azukari', '<div>' . Phalcon\Tag::image("img/sample/furikomiiraiginkou.png") . '<br />預り在庫の一覧</div>', /* 'target'=>'_blank' , */
+                    'title' => '商品の預り在庫数量を確認します。')); ?>
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+            </td>
+            <td align="center" width="150px" style="border-style: none;">
+            </td>
+        </tr>
+        <tr>
+            <th colspan=5 class="active" style="height: 20px; padding:0px 15px;">設定</th>
+        </tr>
+        <tr>
+            <td colspan=5 class="active">
+                <table class="table active">
+                    <tr class="table active">
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('shouhin_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>商品</div>', /* 'target'=>'_blank' , */
+                                'title' => '名称や単価など商品の情報を登録します。商品の情報は、伝票作成時にコードを入力すると自動で表示されます。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('setshouhin_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>セット商品</div>', /* 'target'=>'_blank' , */
+                                'title' => '複数の商品を組み合わせて販売する場合や、送料などの諸経費と商品を組合わせる場合の構成内容を登録します。個々の商品や諸経費はあらかじめ商品台帳に登録しておく必要があります。伝票作成時にセット商品コードを入力すると、明細には個々の商品が表示されます。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('kousei_buhin_mrs/buhin', '<div><i class="far fa-check-circle mr-1"></i>構成部品</div>', /* 'target'=>'_blank' , */
+                                'title' => '商品を生産する場合に、完成商品とその商品を構成する部品を登録します。完成商品と構成部品はあらかじめ商品台帳に登録しておく必要があります。伝票作成時に完成商品を入力しても、明細に個々の商品名は表示されません。')); ?>
+                        </td>
+                    </tr>
+                    <tr class="table active">
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('tantou_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>担当者</div>', /* 'target'=>'_blank' , */
+                                'title' => '伝票の入力者や得意先に対する営業担当者など自社の従業員を登録します。レポートを作成する際、担当者別に集計することができます。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('souko_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>倉庫</div>', /* 'target'=>'_blank' , */
+                                'title' => '名称や住所など倉庫の情報を登録します。倉庫の情報は、伝票作成時にコード入力をすると自動的に表示されます。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('zaiko_henkan_dts/new?kbn=5', '<div><i class="far fa-check-circle mr-1"></i>導入時在庫入力</div>', /* 'target'=>'_blank' , */
+                                'title' => '販売管理の導入時の在庫を商品別に登録します。。')); ?>
+                        </td>
+                    </tr>
+                    <tr class="table active">
+                        <td width="200px" style="border-style: none;">
+                             
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

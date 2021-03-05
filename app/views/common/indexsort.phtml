@@ -1,0 +1,10 @@
+<?php foreach ($flds as $fld): /* 一覧表の見出し行のソート制御部分 */ ?>
+	<th style="text-align:center;">
+	<?php if ($fld[0] == ""): ?> 
+		<?php echo $fld[1]; ?>
+	<?php else: ?>
+		<a href="?<?php echo TableSort\Sort::sortLink($fld[0]).$addlimit; ?>"><?php echo $fld[1]; ?></a> 
+		<?php echo TableSort\Sort::sortIcon($fld[0]); ?>
+	<?php endif ?>
+	</th>
+<?php endforeach; ?>

@@ -1,0 +1,43 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "Lot在庫"; ?>
+<div class="page-header">
+    <h3><?php echo $rows[0]["shouhin_mr_cd"]." ".$rows[0]["name"]; ?></h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+				<th style="text-align:center;">ロット(選択)</th>
+				<th style="text-align:center;">在庫数量</th>
+				<th style="text-align:center;">最終入庫日</th>
+            </tr>
+        </thead>
+        <tbody>
+			<?php foreach ($rows as $row): ?>
+				<?php if ($row["zaiko_ryou"] != 0): ?>
+					<tr>
+						<td align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $row["lot"]; ?></div></td>
+						<td align="right"><?php echo $row["zaiko_ryou"]; ?></td>
+						<td align="center"><?php echo $row["nyuukobi"]; ?></td>
+					</tr>
+				<?php endif; ?>
+			<?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+    </div>
+</div><!-- end class="row" -->
+<script type="text/javascript">
+	$('.returnto').click(function () {//alert($(this).text());
+		window.parent.fromModal($(this).text());
+	});
+</script>

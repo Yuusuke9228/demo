@@ -1,0 +1,75 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["itomei_vws/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["itomei_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Itoshu</th>
+            <th>Ito Of Code</th>
+            <th>Itomei1</th>
+            <th>Itomei2</th>
+            <th>Itomei3</th>
+            <th>Koushin Of Kbn</th>
+            <th>Kousin Of Date</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $itomei_vw): ?>
+            <tr>
+                <td><?php echo $itomei_vw->itoshu ?></td>
+            <td><?php echo $itomei_vw->ito_code ?></td>
+            <td><?php echo $itomei_vw->itomei1 ?></td>
+            <td><?php echo $itomei_vw->itomei2 ?></td>
+            <td><?php echo $itomei_vw->itomei3 ?></td>
+            <td><?php echo $itomei_vw->koushin_kbn ?></td>
+            <td><?php echo $itomei_vw->kousin_date ?></td>
+
+                <td><?php echo $this->tag->linkTo(["itomei_vws/edit/" . $itomei_vw->itoshu, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["itomei_vws/delete/" . $itomei_vw->itoshu, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("itomei_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("itomei_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("itomei_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("itomei_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

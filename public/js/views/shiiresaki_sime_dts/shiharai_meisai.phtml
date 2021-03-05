@@ -1,0 +1,211 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $row_zenkai */
+/** @var array $shiharai_meisais */
+?>
+<?php $title = "支払明細"; ?>
+<div class="page-header">
+    <h3>支払明細書</h3>
+</div>
+<?php echo $this->getContent(); ?>
+<?php
+echo $this->tag->form(
+    array(
+        "shiiresaki_sime_dts/shiharai_meisai",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    )
+);
+?>
+<div class="form-group">
+    <div class="col-sm-5">
+        <div class="col-sm-12">
+            <label id="sime_joutai" class="col-sm-6 control-label" style="color: darkred; font-size: 16px;"><?php if (isset($sime_joutai)) { echo $sime_joutai; } ?></label>
+        </div>
+        <label for="fieldShiiresakiMrCd" class="col-sm-3 control-label">仕入先</label>
+        <div class="col-sm-3">
+            <?php echo $this->tag->textField(array("shiiresaki_mr_cd", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldShiiresakiMrCd", "required" => "required",)) ?>
+
+        </div>
+        <div class="col-sm-6">
+            <?php echo $this->tag->textField(array("shiiresaki_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldShiiresakiName")) ?>
+        </div>
+        <label for="fieldSimebi" class="col-sm-3 control-label">締日</label>
+        <div class="col-sm-3">
+            <?php echo $this->tag->telField(array("simebi", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent", "id" => "fieldSimebi", "required" => "required",)) ?>
+        </div>
+        <label for="fieldShiharaishoBangou" class="col-sm-3 control-label">支払書番号</label>
+        <div class="col-sm-3">
+            <?php echo $this->tag->textField(array("shiharaisho_bangou", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent", "id" => "fieldShiharaishoBangou")) ?>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="col-sm-3">
+            <?php echo $this->tag->submitButton(array("集計F12", "id" => "F12", "name" => "shuukei_btn", "class" => "btn btn-success")) ?>
+        </div>
+        <div class="col-sm-3">
+            <span id="shimerireki" class="btn btn-info" onclick="rireki($('#fieldShiiresakiMrCd').val())">締切履歴</span>
+        </div>
+        <div class="col-sm-3">
+<!--            --><?php //echo $this->tag->submitButton(array("印刷F5", "id" => "F5", "name" => "insatu_btn", "class" => "btn btn-warning")) ?>
+            <span id="dl-xlsx" data-action="<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_sime_dts/print_meisai') ?>" class="btn btn-warning">　印刷　
+            </span>
+        </div>
+    </div>
+</div>
+<?php $last_row = count($shiharai_meisais) - 1 ?>
+<?php
+//echo '<pre>', var_dump($row_zenkai), '</pre>';
+?>
+<div class="form-group">
+    <table id="table1">
+        <thead>
+        <tr class="tr-blu">
+            <th class="t-cent" style="width: 150px;">前回支払残</th>
+            <th class="t-cent" style="width: 150px;">支払額</th>
+            <th class="t-cent" style="width: 150px;">繰越金額</th>
+            <th class="t-cent" style="width: 150px;">今回仕入額</th>
+            <th class="t-cent" style="width: 150px;">内消費税額</th>
+            <th class="t-cent" style="width: 150px;">今回支払残</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!-- 計算ロジック変更 2021-01-23 -->
+<!--            <td class="t-cent">--><?php //echo number_format($zenkaigaku = $row_zenkai->zenkai_siiregaku - $row_zenkai->shukkingaku) ?><!--</td>-->
+            <td class="t-cent"><?php echo number_format($zenkaigaku = $row_zenkai->zenkai_siiregaku - $row_zenkai->shukkingaku + $row_zenkai->konkai_siiregaku) ?></td>
+<!--            <td class="t-cent">--><?php //echo number_format($zenkaigaku = $row_zenkai->konkai_siiregaku - $row_zenkai->shukkingaku) ?><!--</td>-->
+            <td class="t-cent"><?php echo number_format($shukkingaku = $shiharai_meisais[$last_row]["shukkingakuk"]) ?></td>
+            <td class="t-cent"><?php echo number_format($kurikosigaku = $zenkaigaku - $shukkingaku) ?></td>
+            <td class="t-cent"><?php echo number_format($konkai_siire = $shiharai_meisais[$last_row]["zeinukigakuk"] + $shiharai_meisais[$last_row]["zeigakuk"]) ?></td>
+            <td class="t-cent"><?php echo number_format($utishouhizei = $shiharai_meisais[$last_row]["zeigakuk"]) ?></td>
+            <td class="t-cent"><?php echo number_format($konkai_siharai = $kurikosigaku + $konkai_siire) ?></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div>
+        <style>
+            .tb-shiiresaki > tbody > tr > td {
+                padding: 0 5px;
+            }
+        </style>
+        <table id="tb_shiiresaki" class="table-bordered tb-shiiresaki table-striped table-hover">
+            <tr class="tr-blu">
+                <th class="t-cent" style="width: 100px;">日付</th>
+                <th class="t-cent" style="width: 80px;">伝票番号</th>
+                <th class="t-cent" style="width: 80px;">区分</th>
+                <th class="t-cent" style="width: 400px;">商品名・出金内容</th>
+                <th class="t-cent" style="width: 80px;">課税区分</th>
+                <th class="t-cent" style="width: 80px;">数量</th>
+                <th class="t-cent" style="width: 80px;">単価</th>
+                <th class="t-cent" style="width: 100px;">金額</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $sotozei = 0; ?>
+            <?php foreach ($shiharai_meisais as $shiharai_meisai): ?>
+                <?php if ($shiharai_meisai['denpyou_bangou']): ?>
+                    <?php if ($shiharai_meisai['gyou']): ?>
+                        <tr class="tr_pattern">
+                            <td style="width: 100px;" class="t-cent"><?php echo $shiharai_meisai['hiduke'] ?></td>
+                            <td style="width: 80px;" class="t-cent"><?php echo $shiharai_meisai['denpyou_bangou'] ?></td>
+                            <td style="width: 80px;" class="t-cent"><?php echo $shiharai_meisai['kubun'] ?></td>
+                            <td style="width: 400px;"><?php echo $shiharai_meisai['naiyou'] ?></td>
+                            <td style="width: 80px;" class="t-cent"><?php echo $shiharai_meisai['kazeikubun'] ?></td>
+                            <td style="width: 80px;" class="t-right"><?php echo number_format($shiharai_meisai['suuryouk'], 2) !== '0.00' ? number_format($shiharai_meisai['suuryouk'], 2) : '' ?></td>
+                            <td style="width: 100px;" class="t-right"><?php echo number_format($shiharai_meisai['tanka'], 2) !== '0.00' ? number_format($shiharai_meisai['tanka'], 2) : '' ?>
+                                <?php if ($shiharai_meisai['zei_tenka_kbn_cd'] < 20) {
+                                    $sotozei += $shiharai_meisai['zeigakuk'];
+                                } else {
+                                    $utizei = $shiharai_meisai['zeigakuk'];
+                                } ?>
+                            </td>
+                            <td style="width: 80px;" class="t-right"><?php echo number_format($shiharai_meisai['zeinukigakuk'] + $utizei + $shiharai_meisai['shukkingakuk']) ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <?php if ($shiharai_meisai['denpyou_kbn'] == 1 && $shiharai_meisai['zei_tenka_kbn_cd'] < 20): ?>
+                            <tr class="tr_pattern">
+                                <td class="t-cent"><?php echo $shiharai_meisai['hiduke'] ?></td>
+                                <td class="t-cent"><?php echo $shiharai_meisai['denpyou_bangou'] ?></td>
+                                <td class="t-cent">消費税</td>
+                                <td></td>
+                                <td class="t-cent"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"><?php echo number_format($sotozei);$sotozei = 0 ?></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if ($shiharai_meisai['denpyou_kbn'] == 1): ?>
+                            <tr class="tr_pattern">
+                                <td class="t-cent"><?php echo $shiharai_meisai['hiduke'] ?></td>
+                                <td class="t-cent"><?php echo $shiharai_meisai['denpyou_bangou'] ?></td>
+                                <td class="t-cent">摘要</td>
+                                <td><?php echo $shiharai_meisai['shi_memo'] ?></td>
+                                <td class="t-cent"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if ($shiharai_meisai['denpyou_kbn'] == 1): ?>
+                            <tr class="tr_pattern">
+                                <td class="t-cent"><?php echo $shiharai_meisai['hiduke'] ?></td>
+                                <td class="t-cent"><?php echo $shiharai_meisai['denpyou_bangou'] ?></td>
+                                <td class="t-cent">納入先</td>
+                                <td><?php echo $shiharai_meisai['nounyuusaki'] ?></td>
+                                <td class="t-cent"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                            </tr>
+                        <?php endif; ?>
+                        <tr class="tr_pattern" style="color:blue;">
+                            <td class="t-cent"><?php echo $shiharai_meisai['hiduke'] ?></td>
+                            <td class="t-cent"><?php echo $this->tag->linkTo(array(($shiharai_meisai['denpyou_kbn'] == 1 ? "shiire_dts/edit/" : "shukkin_dts/edit/") . $shiharai_meisai['denpyou_id'], $shiharai_meisai['denpyou_bangou'], "target" => "_blank")); ?></td>
+                            <td class="t-cent"></td>
+                            <td>≪伝票計≫</td>
+                            <td class="t-cent"></td>
+                            <td class="t-right"></td>
+                            <td class="t-right"></td>
+                            <td class="t-right"><?php echo number_format($shiharai_meisai['zeinukigakuk'] + $shiharai_meisai['zeigakuk'] + $shiharai_meisai['shukkingakuk']) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php echo $this->tag->endForm(); ?>
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+<div id="PgDn"></div>
+<div id="PgUp"></div>
+
+<script type="text/javascript">
+    var shiiresaki_dts_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/modal') ?>";
+    var shiiresaki_mrs_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/ajaxGet'); ?>";
+    const getShiiresakiShimeHiduke = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_sime_dts/ajax_shimebi') ?>";
+    const shime_rireki = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_sime_dts/modal'); ?>";
+</script>
+<script>
+    function f8key() {
+        if (lastfocusin === "fieldSimebi") {
+            open_datepicker();
+        }
+    }
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.10/xlsx.full.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/shiharai_meisai.js'); ?>?var=20210205"></script>

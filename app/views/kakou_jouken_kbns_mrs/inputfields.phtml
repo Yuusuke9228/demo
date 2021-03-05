@@ -1,0 +1,110 @@
+<?php
+/** @var int $imax */
+?>
+<div class="panel panel-danger bg-yel">
+    <div class="panel-body">
+        <div class="col-sm-6">
+            <label for="fieldCd" class="col-sm-5 control-label lbl-grn">加工種コード：</label>
+            <div class="col-sm-7">
+                <?php echo $this->tag->select(array("cd", KakouJoukenKbnsMrs::find(["columns" => "cd, CONCAT(cd , '=' , name) as cd_name","order"=>"cd"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "style" => "padding: 0;", "class" => "form-control f-cent",  "id" => "fieldCd")) ?>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <label for="fieldName" class="col-sm-5 control-label lbl-grn">加工種名称：</label>
+            <div class="col-sm-7">
+                <?php echo $this->tag->textField(array("name", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldName","readonly" => "readonly")) ?>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-6">
+                <label for="fieldSakuseiUserName" class="col-sm-5 control-label lbl-grn">入力者：</label>
+                <div class="col-sm-7">
+                    <?php echo $this->tag->textField(array("sakusei_user_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldSakuseiUserName")) ?>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label for="fieldUpdated" class="col-sm-5 control-label lbl-grn">更新日時：</label>
+                <div class="col-sm-7">
+                    <?php echo $this->tag->textField(array("updated", "readonly" => "readonly", "class" => "form-control", "id" => "fieldUpdated")) ?>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- panel-body -->
+    <br/>
+    <?php echo $this->tag->hiddenField("gaku_hasuu_shori_kbn_cd") ?>
+    <?php echo $this->tag->hiddenField("zei_hasuu_shori_kbn_cd") ?>
+
+    <div class="panel-heading pnl-hed">加工条件見出し設定</div>
+    <div class="panel-body" style="overflow-x: scroll;padding: 0;">
+        <style scoped>
+            table {
+                table-layout: fixed;
+                width: 100%;
+            }
+
+            th, td {
+                white-space: nowrap;
+            }
+
+            th {
+                border-right: 1px #ccc solid;
+                font-size: x-small;
+                font-weight: normal;
+                text-align: center;
+                color: #3d773d;
+                background-color: #dff0d8;
+            }
+
+            /*th.ot-fixed, td.ot-fixed {*/
+            /*    position: absolute;*/
+            /*    left: 6px;*/
+            /*    width: */<?php //echo $rewidths['[cd']??'60' ?>/*px;*/
+            /*}*/
+        </style>
+        <table id="meisaiTable">
+            <thead>
+            <tr>
+                <th class="ot-fixed" style="width: 35%;">Cd</th>
+                <th style="width: 55%;">条件見出し</th>
+                <th style="width: 10%;">数値フラグ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <style scoped>div[class^="col-sm"], div[class^="panel"] {
+                        padding: 0 !important;
+                    }
+                </style>
+                <?php for ($i = -1;$i < $imax; $i++): /* $imaxはcontrollerから受け取る */ ?>
+                <?php
+                if ($i < 0) {
+                    $name_head = "hidden"; // name-hedder nameの前半
+                    $id_head = "hidden"; // id-hedder idの前半
+                    echo '<tr id="tr_kakou_jouken_midasis_dt_hidden" style="display:none;">';
+                } else {
+                    $name_head = "data[kakou_jouken_midasis_dts][" . $i . "]";
+                    $id_head = "fieldKakouJoukenMidasis" . $i;
+                    echo '<tr id="tr_kakou_jouken_midasis_dt_' . $i . $this->tag->getValue($name_head . "[kousei]") . '>';
+                }
+                ?>
+                <td class="ot-fixed">
+                    <!-- 行番 --><?php echo $this->tag->textField(array($name_head . "[cd]", "class" => "form-control ime-d f-cent", 'readonly' => ($readonlys['[cd'] ?? 0) == 1 ? 'readonly' : null, "id" => $id_head . "Cd")) ?>
+                </td>
+                <td class="ot-fixed">
+                <!--条件見出し--><?php echo $this->tag->textField(array($name_head . "[Name]", "id" => $id_head . "name", "class" => "form-control ime-d f-cent",)) ?>
+                </td>
+                <td class="ot-fixed">
+                    <!--数値フラグ--><?php echo $this->tag->textField(array($name_head . "[SuutiFlg]", "id" => $id_head . "suuti_flg", "class" => "form-control ime-d f-cent",)) ?>
+                </td>
+            </tr>
+            <?php endfor; ?>
+            </tbody>
+        </table>
+    </div>
+</div><!-- panel -->
+
+<script>
+    var kakou_jouken_midasis_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kakou_jouken_midashi_mrs/ajaxGet/') ?>";
+    var kakou_jouken_kbns_edit = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kakou_jouken_kbns_mrs/edit/') ?>";
+</script>

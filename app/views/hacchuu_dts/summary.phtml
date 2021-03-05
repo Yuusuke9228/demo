@@ -1,0 +1,178 @@
+<?php
+use Phalcon\Tag;
+/** @var array $rows */
+?>
+
+<?php $title = '発注明細表'; ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.blue.min.css" xmlns="http://www.w3.org/1999/html">
+<script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
+<script async>
+    $(document).ready(function () {
+            $("#hacchuu_table").tablesorter();
+        }
+    );
+    function jouken_submit() {
+        document.post_form.submit();
+    }
+    $(function () {
+        $('table.head_fix').floatThead({
+            top: 50
+        });
+    });
+</script>
+<style>
+    input[type=text]:focus {
+        outline: none;
+        background: #ffdab9;
+    }
+</style>
+
+<div class="page-header">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <h2><?php echo '発注明細表';?></h2>
+</div>
+<?php
+$kanryou_flg = 0; //default
+$hyouji_flg = 1; //default
+if ($this->request->isPost()) {
+    $kanryou_flg = $this->request->getPost('kanryou_flg');
+    $hyouji_flg = $this->request->getPost('hyouji_flg');
+}
+?>
+<div class="container">
+    <div class="row" style="border:2px solid #8eb0e7; padding:10px; border-radius:10px; font-size: 16px;">
+        <?php echo $this->tag->form(array("hacchuu_dts/summary", "id" => "summary_post", "name" => "post_form", "method" => "post")); ?>
+        <div class="col-sm-12" style="margin-bottom: 10px;margin-left: 20px;">
+            <input type="radio" id="kanryou_flg" name="kanryou_flg" value="1" <?php if ($kanryou_flg == '1') {echo("checked='checked'");} ?>> 全発注
+            <input type="radio" id="kanryou_flg" name="kanryou_flg" value="2" <?php if ($kanryou_flg == '2') {echo("checked='checked'");} ?>> 完了
+            <input type="radio" id="kanryou_flg" name="kanryou_flg" value="0" <?php if ($kanryou_flg == '0') {echo("checked='checked'");} ?>> 未完了
+        </div>
+        <div class="col-sm-12"  style="margin-bottom: 10px;margin-left: 20px;">
+            <input type="radio" id="hyouji_flg" name="hyouji_flg" value="1" <?php if ($hyouji_flg == '1') {echo("checked='checked'");} ?>> 内訳=20のみ
+            <input type="radio" id="hyouji_flg" name="hyouji_flg" value="2" <?php if ($hyouji_flg == '2') {echo("checked='checked'");} ?>> 内訳=10のみ
+            <input type="radio" id="hyouji_flg" name="hyouji_flg" value="0" <?php if ($hyouji_flg == '0') {echo("checked='checked'");} ?>> 全明細表示
+        </div>
+        <div class="col-sm-12 text-warning" style="margin-bottom: 10px;margin-left: 20px;">
+            <p><i class="far fa-check-circle mr-1"></i>　製品のみ・部品のみ選択時は、【在庫管理を行う】もののみ表示されます。</p>
+        </div>
+        <div class="col-sm-12"  style="margin-bottom: 10px;">
+            <div class="col-sm-6">
+                <div class="col-sm-3">
+                    <label for="fieldKikanSiteiKbnCd" class="control-label">期間指定 >></label>
+                </div>
+                <div class="col-sm-4">
+                    <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+                </div>
+                <div class="col-sm-1">
+                    <label for="fieldKikanTo" class="control-label"> ～ </label>
+                </div>
+                <div class="col-sm-4">
+                    <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+                </div>
+            </div>
+            <div class="col-sm-5 col-sm-offset-1">
+                <button id="initialize" class="btn  btn-success" style="background-color: #1c2d3f">条件初期化</button>
+                <button id="dl-xlsx" class="submit btn  btn-warning">EXCEL出力</button>
+                <button id="F12" class="btn  btn-success" onclick="jouken_submit();">抽出実行</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php echo $this->getContent(); ?>
+<div class="row">
+    <table id="hacchuu_table" class="tablesorter tablesorter-blue head_fix">
+        <thead>
+        <tr>
+            <input style="visibility:hidden" type="hidden"><input style="visibility:hidden" type="hidden">
+            <th nowrap style="text-align:center;">発<br>注<br>完</th>
+            <th nowrap style="text-align:center;">残数</th>
+            <th nowrap style="text-align:center;">残量</th>
+            <th nowrap style="text-align:center;">発注NO</th>
+            <th nowrap style="text-align:center;">発注日</th>
+            <th nowrap style="text-align:center;">納期</th>
+            <th nowrap style="text-align:center;">担<br>当<br>C<br>D</th>
+            <th nowrap style="text-align:center;">担当</th>
+            <th nowrap style="text-align:center;">仕入先CD</th>
+            <th nowrap style="text-align:center;">仕入先</th>
+            <th nowrap style="text-align:center;">倉庫CD</th>
+            <th nowrap style="text-align:center;">倉庫</th>
+            <th nowrap style="text-align:center;">商品CD</th>
+            <th nowrap style="text-align:center;">摘要</th>
+            <th nowrap style="text-align:center;">色番</th>
+            <th nowrap style="text-align:center;" colspan="2">発注数</th>
+            <input style="visibility:hidden" type="hidden">
+            <th nowrap style="text-align:center;" colspan="2">発注量</th>
+            <input style="visibility:hidden" type="hidden">
+            <th nowrap style="text-align:center;">コスト</th>
+            <th nowrap style="text-align:center;">最終仕入伝票</th>
+        </tr>
+        </thead>
+        <tr style="background: #ffffff;">
+            <input style="visibility:hidden" type="hidden"><input style="visibility:hidden" type="hidden">
+            <td></td><td></td><td></td>
+            <td><input type="text" id="query_hacchu_no" name="query_hacchu_no" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost('query_hacchu_no')) echo($this->request->getPost('query_hacchu_no')); ?>"></td>
+            <td></td>
+            <td style="position:relative"><input type="text" id="nouki" name="nouki" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('nouki')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="tantou_cd" name="tantou_cd" style="text-align:center;width:100%; box-sizing:border-box;" value="<?php if($this->request->isPost()) echo($this->request->getPost('tantou_cd')); ?>"></td>
+            <td nowrap style="position:relative"></td>
+            <td style="position:relative"><input type="text" id="shiire_cd" name="shiire_cd" style="text-align:center;width:100%; box-sizing:border-box;" value="<?php if($this->request->isPost()) echo($this->request->getPost('shiire_cd')); ?>"></td>
+            <td style="position:relative"><input type="text" id="shiire_name" name="shiire_name" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('shiire_name')); ?>"></td>
+            <td style="position:relative"><input type="text" id="souko_cd" name="souko_cd" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('souko_cd')); ?>"></td>
+            <td style="position:relative"><input type="text" id="souko_name" name="souko_name" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('souko_name')); ?>"></td>
+            <td style="position:relative"><input type="text" id="shouhin_cd" name="shouhin_cd" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('shouhin_cd')); ?>"></td>
+            <td style="position:relative"><input type="text" id="tekiyou" name="tekiyou" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('tekiyou')); ?>"></td>
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><input style="visibility:hidden" type="hidden"><input style="visibility:hidden" type="hidden">
+        </tr>
+        <?php echo $this->tag->endForm(); ?>
+        <tbody>
+        <?php $i = 1; ?>
+        <?php foreach ($rows as $row): ?>
+            <tr id="row<?php echo  $i + 1; ?>">
+                <input style="visibility:hidden" type="hidden" id="hacchuu_id<?php echo $i; ?>" value="<?php echo $row['hacchuu_id']; ?>">
+                <input style="visibility:hidden" type="hidden" id="shiire_id<?php echo $i; ?>" value="<?php echo $row['shiire_id']; ?>">
+                <td nowrap class="nyuukakbn" id="nyuukakbn_id<?php echo $i; ?>" style="text-align: center;cursor: pointer;"><?php echo $row['nyuuka_kbn']; ?></td>
+                <td nowrap id="zansuu<?php echo $i; ?>" style="text-align: right;"><?php if(isset($row['zan1'])) echo number_format($row['zan1']); ?></td>
+                <td nowrap id="zanryou<?php echo $i; ?>" style="text-align: right;"><?php if(isset($row['zan2'])) echo number_format($row['zan2'],2); ?></td>
+                <td nowrap id="hacchuu_no<?php echo $i; ?>" class="hacchuu_no" style="text-align: right;cursor: pointer;color: blue;"><?php echo $row['hacchuu_no']; ?></td>
+                <td nowrap style="text-align: right;"><?php echo $row['hacchuubi']; ?></td>
+                <td nowrap style="text-align: right;"><?php echo $row['nouki'] !== '0000-00-00' ? $row['nouki'] : '';?></td>
+                <td nowrap style="text-align: center;"><?php if (isset($row['tantou_cd'])) echo $row['tantou_cd']; ?></td>
+                <td nowrap style="text-align: center;"><?php if (isset($row['tantou_name'])) echo $row['tantou_name']; ?></td>
+                <td nowrap id="shiiresaki<?php echo $i; ?>" class="shiiresaki" style="text-align: left;cursor: pointer;"><?php echo $row['shiiresaki_mr_cd'] ?? ''; ?></td>
+                <td nowrap style="text-align: left"><?php echo $row['shiiresaki_name'] ?? ''; ?></td>
+                <td nowrap id="souko<?php echo $i; ?>" class="souko" nowrap style="text-align: left;cursor: pointer;"><?php echo $row['souko_mr_cd'] ?? ''; ?></td>
+                <td nowrap style="text-align: left"><?php echo $row['souko_name'] ?? ''; ?></td>
+                <td nowrap id="shouhin<?php echo $i; ?>" class="shouhin" nowrap style="text-align: left;cursor: pointer;"><?php echo $row['shouhin_mr_cd'] ?? ''; ?></td>
+                <td nowrap style="text-align: left"><?php echo $row['tekiyou1'] ?? ''; ?></td>
+                <td nowrap class="iro" id="iro<?php echo $i; ?>" style="text-align: left"><?php echo $row['iroban'] ?? ''; ?></td>
+                <td nowrap style="text-align: right"><?php echo number_format(round((float)$row['hacchuusuu'],3),2)  !== '0.00' ? number_format(round((float)$row['hacchuusuu'],3),2) : ''; ?></td>
+                <td nowrap style="text-align: center;"><?php echo number_format(round((float)$row['hacchuusuu'],3),2)  !== '0.00' ? $row['tanni1'] : ''; ?></td>
+                <td nowrap style="text-align:right;"><?php echo number_format(round((float)$row['hacchuuryou'],3),2) !== '0.00' ? number_format(round((float)$row['hacchuuryou'],3),2) : ''; ?></td>
+                <td nowrap style="text-align: center;"><?php echo number_format(round((float)$row['hacchuuryou'],3),2) !== '0.00' ? $row['tanni2'] : ''; ?></td>
+                <td nowrap style="text-align:right;"><?php echo number_format($row['tanka']) ?? '0'; ?></td>
+                <td nowrap id="shiire_no<?php echo $i; ?>" class="shiire_no" style="text-align:right;cursor: pointer;color: blue;"><?php echo $row['shiire_no'] ?? ''; ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+<script async>
+    var hacchuu_edit = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('hacchuu_dts/edit') ?>";
+    var shiire_edit = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiire_dts/edit') ?>";
+    var hacchuu_shiire_list = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiire_dts/shiire_list') ?>";
+    var hacchuu_save_ajax = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('hacchuu_dts/saveAjax') ?>";
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.10/xlsx.full.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script async type="text/javascript" src="<?php echo $this->url->get('js/views/hachuu_sammary.js'); ?>?var=20210120"></script>

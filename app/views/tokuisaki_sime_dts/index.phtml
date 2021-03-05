@@ -1,0 +1,115 @@
+<?php
+/**
+ * @var PhalconMvcViewEnginePhp $this
+ */
+?>
+
+<?php use PhalconTag; ?>
+
+<?php $title = "得意先締データ.一覧"; ?>
+<div class="page-header">
+    <h3>得意先締データ 一覧</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+echo $this->tag->form(
+    array(
+        "tokuisaki_sime_dts/index",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    )
+);
+?>
+
+<div class="form-group">
+    <div class="col-sm-4">
+        <label for="fieldShimegrpKbnCd" class="col-sm-5 control-label">締グループ</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->select(array("shimegrp_kbn_cd", ShimegrpKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldShimegrpKbnCd")) ?>
+        </div>
+
+        <label for="fieldSimeHiduke" class="col-sm-5 control-label">締日</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->telField(array("sime_hiduke", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldSimeHiduke")) ?>
+        </div>
+        <label for="fieldTorihikiFlg" class="col-sm-5 control-label">期間内取引有のみ表示</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->checkField(array("torihiki_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldTorihikiFlg")) ?>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="col-sm-4">
+            <?php echo $this->tag->submitButton(array("抽出", "id" => "F12", "name" => "simekiri_btn", "class" => "btn btn-success")) ?>
+            <button class="btn btn-info" onclick="window.print();">印刷</button>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <?php if (isset($rows)) $rows = $rows->toArray(); ?>
+        <?php $total = 0; ?>
+        <thead>
+        <tr>
+            <th colspan="6" style="text-align:center;background-color: #dcdcdc;">表示総計：</th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'zenkai_seikyuugaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'nyuukingaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'zenkai_seikyuugaku')) - array_sum(array_column($rows, 'nyuukingaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'konkai_uriagegaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'zenkai_seikyuugaku')) - array_sum(array_column($rows, 'nyuukingaku')) + array_sum(array_column($rows, 'konkai_uriagegaku'))); ?></th>
+        </tr>
+        <tr bgcolor="Lavender">
+            <th style="text-align:center;">請求書番号</th>
+            <th style="text-align:center;">年度</th>
+            <th style="text-align:center;">得意先CD</th>
+            <th style="text-align:center;">名称</th>
+            <th style="text-align:center;">締日付</th>
+            <th style="text-align:center;">回収予定日</th>
+            <th style="text-align:center;">前回請求額</th>
+            <th style="text-align:center;">入金額</th>
+            <th style="text-align:center;">繰越金額</th>
+            <th style="text-align:center;">今回売上額</th>
+            <th style="text-align:center;">今回請求額</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <?php if (isset($rows)): ?>
+            <?php foreach ($rows as $row): ?>
+                <?php
+                try {
+                    if ($this->request->getPost('torihiki_flg') === '1') {
+                        if ((int)$row['nyuukingaku'] === 0 && (int)$row['konkai_uriagegaku'] === 0) {
+                            continue;
+                        }
+                    }
+                } catch (Exception $e) {
+                    // エラー無視
+                }
+                ?>
+                <tr>
+                    <td style="text-align:right;"><?php if (isset($row['cd'])) echo $row['cd'] ?></td>
+                    <td style="text-align:center;"><?php if (isset($row['nendo'])) echo $row['nendo'] ?></td>
+                    <td style="text-align:center;"><?php if (isset($row['tokuisaki_mr_cd'])) echo $this->tag->linkTo(array("tokuisaki_sime_dts/seikyuu_meisai/" . $row['id'], $row['tokuisaki_mr_cd'], 'target' => '_blank')); ?></td>
+                    <td style="text-align:left;"><?php if (isset($row['name'])) echo $row['name'] ?></td>
+                    <td style="text-align:center;"><?php if (isset($row['sime_hiduke'])) echo $row['sime_hiduke'] ?></td>
+                    <td style="text-align:center;"><?php if (isset($row['kaishuu_yoteibi'])) echo $row['kaishuu_yoteibi'] ?></td>
+                    <td style="text-align:right;color: <?php echo (int)$row['zenkai_seikyuugaku'] > -0.1 ? 'black' : 'red'; ?>"><?php if (isset($row['zenkai_seikyuugaku'])) echo number_format($row['zenkai_seikyuugaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo (int)$row['zenkai_seikyuugaku'] > -0.1 ? 'black' : 'red'; ?>"><?php if (isset($row['nyuukingaku'])) echo number_format($row['nyuukingaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo ((int)$row['zenkai_seikyuugaku'] - (int)$row['nyuukingaku']) > -0.1 ? 'black' : 'red'; ?>"><?php if (isset($row['zenkai_seikyuugaku'])) echo number_format($row['zenkai_seikyuugaku'] - $row['nyuukingaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo (int)$row['konkai_uriagegaku'] > -0.1 ? 'black' : 'red'; ?>"><?php if (isset($row['konkai_uriagegaku'])) echo number_format($row['konkai_uriagegaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo ((int)$row['zenkai_seikyuugaku'] - (int)$row['nyuukingaku'] + (int)$row['konkai_uriagegaku']) > -0.1 ? 'black' : 'red'; ?>"><?php if (isset($row['zenkai_seikyuugaku'])) echo number_format($row['zenkai_seikyuugaku'] - $row['nyuukingaku'] + $row['konkai_uriagegaku']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    const getTokuisakiGroupLastShimeHiduke = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/ajax_last_shimebi') ?>";
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/seikyuu_simekiri.js'); ?>?var=20201008"></script>

@@ -1,0 +1,288 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "VIEW.新規"; ?>
+<div class="page-header">
+    <h3>VIEW 新規登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "zaiko_kakunin_azukari_vws/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldShouhinMrCd" class="col-sm-2 control-label">Shouhin Of Mr Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldShouhinMrCd")) ?>
+    </div>
+
+<label for="fieldTantouMrCd" class="col-sm-2 control-label">Tantou Of Mr Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tantou_mr_cd", "size" => 3, "maxlength" => 3, "style" => "width: 72px;", "class" => "form-control", "id" => "fieldTantouMrCd")) ?>
+    </div>
+
+<label for="fieldTanniMr1Cd" class="col-sm-2 control-label">Tanni Of Mr1 Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tanni_mr1_cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldTanniMr1Cd")) ?>
+    </div>
+
+<label for="fieldTanniMr2Cd" class="col-sm-2 control-label">Tanni Of Mr2 Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tanni_mr2_cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldTanniMr2Cd")) ?>
+    </div>
+
+<label for="fieldIro" class="col-sm-2 control-label">Iro</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("iro", "size" => 8, "maxlength" => 8, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldIro")) ?>
+    </div>
+
+<label for="fieldIromei" class="col-sm-2 control-label">Iromei</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("iromei", "size" => 16, "maxlength" => 16, "style" => "width: 228px;", "class" => "form-control", "id" => "fieldIromei")) ?>
+    </div>
+
+<label for="fieldLot" class="col-sm-2 control-label">Lot</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("lot", "size" => 50, "maxlength" => 50, "style" => "width: 636px;", "class" => "form-control", "id" => "fieldLot")) ?>
+    </div>
+
+<label for="fieldKobetucd" class="col-sm-2 control-label">Kobetucd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kobetucd", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldKobetucd")) ?>
+    </div>
+
+<label for="fieldHinsituKbnCd" class="col-sm-2 control-label">Hinsitu Of Kbn Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hinsitu_kbn_cd", "size" => 4, "maxlength" => 4, "style" => "width: 84px;", "class" => "form-control", "id" => "fieldHinsituKbnCd")) ?>
+    </div>
+
+<label for="fieldHinsituHyoukaKbnCd" class="col-sm-2 control-label">Hinsitu Of Hyouka Of Kbn Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hinsitu_hyouka_kbn_cd", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHinsituHyoukaKbnCd")) ?>
+    </div>
+
+<label for="fieldSoukoMrCd" class="col-sm-2 control-label">Souko Of Mr Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("souko_mr_cd", "size" => 12, "maxlength" => 12, "style" => "width: 180px;", "class" => "form-control", "id" => "fieldSoukoMrCd")) ?>
+    </div>
+
+<label for="fieldNyuukobis" class="col-sm-2 control-label">Nyuukobis</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nyuukobis", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldNyuukobis")) ?>
+    </div>
+
+<label for="fieldShukkobis" class="col-sm-2 control-label">Shukkobis</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shukkobis", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldShukkobis")) ?>
+    </div>
+
+<label for="fieldNyuushukkobi" class="col-sm-2 control-label">Nyuushukkobi</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nyuushukkobi", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldNyuushukkobi")) ?>
+    </div>
+
+<label for="fieldNyuushukkoym" class="col-sm-2 control-label">Nyuushukkoym</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nyuushukkoym", "size" => 6, "maxlength" => 6, "style" => "width: 108px;", "class" => "form-control", "id" => "fieldNyuushukkoym")) ?>
+    </div>
+
+<label for="fieldDenpyouMrCd" class="col-sm-2 control-label">Denpyou Of Mr Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("denpyou_mr_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldDenpyouMrCd")) ?>
+    </div>
+
+<label for="fieldId" class="col-sm-2 control-label">Id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldId")) ?>
+    </div>
+
+<label for="fieldCd" class="col-sm-2 control-label">Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldMeisaiId" class="col-sm-2 control-label">Meisai</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("meisai_id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldMeisaiId")) ?>
+    </div>
+
+<label for="fieldMeisaiCd" class="col-sm-2 control-label">Meisai Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("meisai_cd", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldMeisaiCd")) ?>
+    </div>
+
+<label for="fieldUtiwakeKbnCd" class="col-sm-2 control-label">Utiwake Of Kbn Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("utiwake_kbn_cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldUtiwakeKbnCd")) ?>
+    </div>
+
+<label for="fieldTorihikisakiCd" class="col-sm-2 control-label">Torihikisaki Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("torihikisaki_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldTorihikisakiCd")) ?>
+    </div>
+
+<label for="fieldBikou" class="col-sm-2 control-label">Bikou</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("bikou", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldBikou")) ?>
+    </div>
+
+<label for="fieldZaikoRyou1s" class="col-sm-2 control-label">Zaiko Of Ryou1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("zaiko_ryou1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldZaikoRyou1s")) ?>
+    </div>
+
+<label for="fieldZaikoRyou2s" class="col-sm-2 control-label">Zaiko Of Ryou2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("zaiko_ryou2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldZaikoRyou2s")) ?>
+    </div>
+
+<label for="fieldShiirebiTankas" class="col-sm-2 control-label">Shiirebi Of Tankas</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiirebi_tankas", "size" => 36, "maxlength" => 36, "style" => "width: 468px;", "class" => "form-control", "id" => "fieldShiirebiTankas")) ?>
+    </div>
+
+<label for="fieldShiireGakus" class="col-sm-2 control-label">Shiire Of Gakus</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiire_gakus", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShiireGakus")) ?>
+    </div>
+
+<label for="fieldShiireRyou1s" class="col-sm-2 control-label">Shiire Of Ryou1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiire_ryou1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShiireRyou1s")) ?>
+    </div>
+
+<label for="fieldShiireRyou2s" class="col-sm-2 control-label">Shiire Of Ryou2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiire_ryou2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShiireRyou2s")) ?>
+    </div>
+
+<label for="fieldHokanyuukoRyou1s" class="col-sm-2 control-label">Hokanyuuko Of Ryou1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hokanyuuko_ryou1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHokanyuukoRyou1s")) ?>
+    </div>
+
+<label for="fieldHokanyuukoRyou2s" class="col-sm-2 control-label">Hokanyuuko Of Ryou2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hokanyuuko_ryou2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHokanyuukoRyou2s")) ?>
+    </div>
+
+<label for="fieldUriageRyou1s" class="col-sm-2 control-label">Uriage Of Ryou1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("uriage_ryou1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldUriageRyou1s")) ?>
+    </div>
+
+<label for="fieldUriageRyou2s" class="col-sm-2 control-label">Uriage Of Ryou2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("uriage_ryou2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldUriageRyou2s")) ?>
+    </div>
+
+<label for="fieldHokashukkoRyou1s" class="col-sm-2 control-label">Hokashukko Of Ryou1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hokashukko_ryou1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHokashukkoRyou1s")) ?>
+    </div>
+
+<label for="fieldHokashukkoRyou2s" class="col-sm-2 control-label">Hokashukko Of Ryou2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hokashukko_ryou2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHokashukkoRyou2s")) ?>
+    </div>
+
+<label for="fieldShiiresakiMrCd" class="col-sm-2 control-label">Shiiresaki Of Mr Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiiresaki_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldShiiresakiMrCd")) ?>
+    </div>
+
+<label for="fieldTokuisakiMrCd" class="col-sm-2 control-label">Tokuisaki Of Mr Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tokuisaki_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldTokuisakiMrCd")) ?>
+    </div>
+
+<label for="fieldNounyuuKijitu" class="col-sm-2 control-label">Nounyuu Of Kijitu</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nounyuu_kijitu", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldNounyuuKijitu")) ?>
+    </div>
+
+<label for="fieldNouki" class="col-sm-2 control-label">Nouki</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nouki", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldNouki")) ?>
+    </div>
+
+<label for="fieldHacchuuDtId" class="col-sm-2 control-label">Hacchuu Of Dt</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hacchuu_dt_id", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHacchuuDtId")) ?>
+    </div>
+
+<label for="fieldJuchuuDtId" class="col-sm-2 control-label">Juchuu Of Dt</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("juchuu_dt_id", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJuchuuDtId")) ?>
+    </div>
+
+<label for="fieldHacchuuzanRyou1" class="col-sm-2 control-label">Hacchuuzan Of Ryou1</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hacchuuzan_ryou1", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHacchuuzanRyou1")) ?>
+    </div>
+
+<label for="fieldHacchuuzanRyou2" class="col-sm-2 control-label">Hacchuuzan Of Ryou2</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hacchuuzan_ryou2", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHacchuuzanRyou2")) ?>
+    </div>
+
+<label for="fieldJuchuuzanRyou1" class="col-sm-2 control-label">Juchuuzan Of Ryou1</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("juchuuzan_ryou1", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJuchuuzanRyou1")) ?>
+    </div>
+
+<label for="fieldJuchuuzanRyou2" class="col-sm-2 control-label">Juchuuzan Of Ryou2</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("juchuuzan_ryou2", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJuchuuzanRyou2")) ?>
+    </div>
+
+<label for="fieldAzukariZan1s" class="col-sm-2 control-label">Azukari Of Zan1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("azukari_zan1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldAzukariZan1s")) ?>
+    </div>
+
+<label for="fieldAzukariZan2s" class="col-sm-2 control-label">Azukari Of Zan2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("azukari_zan2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldAzukariZan2s")) ?>
+    </div>
+
+<label for="fieldAzukariTasi1s" class="col-sm-2 control-label">Azukari Of Tasi1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("azukari_tasi1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldAzukariTasi1s")) ?>
+    </div>
+
+<label for="fieldAzukariTasi2s" class="col-sm-2 control-label">Azukari Of Tasi2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("azukari_tasi2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldAzukariTasi2s")) ?>
+    </div>
+
+<label for="fieldAzukariHiki1s" class="col-sm-2 control-label">Azukari Of Hiki1s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("azukari_hiki1s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldAzukariHiki1s")) ?>
+    </div>
+
+<label for="fieldAzukariHiki2s" class="col-sm-2 control-label">Azukari Of Hiki2s</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("azukari_hiki2s", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldAzukariHiki2s")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行F12", "id" => "F12", "class" => "btn btn-lg btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

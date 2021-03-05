@@ -1,0 +1,182 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "部品.登録"; ?>
+<div class="page-header">
+    <h3>構成部品台帳 <?php echo($this->tag->getValue('id')?"登録修正":"新規登録"); ?></h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "kousei_buhin_mrs/buhin_save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group" style="width: 1000px;">
+<div class="panel panel-success bg-yel">
+ <div class="panel-heading pnl-hed">構成部品台帳</div>
+ <div class="panel-body">
+  <div class="col-sm-7">
+    <div class="col-sm-4">
+        <label for="fieldShouhinMrCd" class="col-sm-12 control-label lbl-grn-up">完成商品</label>
+        <?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 20, "maxlength" => 20, "class" => "form-control f-cent", "id" => "fieldShouhinMrCd", "list" => "ShouhinMrsOptions")) ?>
+    </div>
+    <div class="col-sm-8">
+        <label for="fieldShouhinMrName" class="col-sm-12 control-label lbl-grn-up">名称</label>
+        <?php echo $this->tag->textField(array("shouhin_mr_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldShouhinMrName")) ?>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="col-sm-4">
+        <label for="fieldHyoujunGenka" class="col-sm-12 control-label lbl-grn-up">標準原価</label>
+        <?php echo $this->tag->textField(array("hyoujun_genka", "readonly" => "readonly", "class" => "form-control f-numb", "id" => "fieldHyoujunGenka")) ?>
+    </div>
+    <div class="col-sm-4">
+        <label for="fieldShiireTanka" class="col-sm-12 control-label lbl-grn-up">仕入単価</label>
+        <?php echo $this->tag->textField(array("shiire_tanka", "readonly" => "readonly", "class" => "form-control f-numb", "id" => "fieldShiireTanka")) ?>
+    </div>
+    <div class="col-sm-4">
+        <label for="fieldUriGenka" class="col-sm-12 control-label lbl-grn-up">売上原価</label>
+        <?php echo $this->tag->textField(array("uri_genka", "readonly" => "readonly", "class" => "form-control f-numb", "id" => "fieldUriGenka")) ?>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <label for="fieldBuhinsuu" class="col-sm-3 control-label">部品数</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->textField(array("buhinsuu", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldBuhinsuu")) ?>
+    </div>
+    <label for="fieldTanniMrName" class="col-sm-3 control-label">製品単位</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->select(array("tanni_mr_name", TanniMrs::find(["columns" => "cd , name"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "readonly" => "readonly", "disabled" => "true", "class" => "form-control f-cent", "id" => "fieldTanniMrName")) ?>
+    </div>
+  </div>
+  <label class="col-sm-2 control-label">明細の合計</label>
+  <div class="col-sm-5">
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("hyoujun_genkakei", "readonly" => "readonly", "class" => "form-control f-numb", "id" => "fieldHyoujunGenkakei")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("shiire_tankakei", "readonly" => "readonly", "class" => "form-control f-numb", "id" => "fieldShiireTankakei")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("uri_genkakei", "readonly" => "readonly", "class" => "form-control f-numb", "id" => "fieldUriGenkakei")) ?>
+    </div>
+  </div>
+  <?php echo $this->tag->hiddenField("tanka_shousuu") ?>
+ </div><!-- panel-body -->
+ <div class="panel-heading pnl-hed">構成部品明細</div>
+ <div class="panel-body" style="overflow-x: scroll;padding: 0;">
+  <table id="meisaiTable" style="width: 1000px;">
+   <tr class="tr-grn">
+    <th class="t-cent" width="3%">№</th>
+    <th class="t-cent" width="15%">コード</th>
+    <th class="t-cent" width="35%">名称</th>
+    <th class="t-cent" width="8%">単位</th>
+    <th class="t-cent" width="10%">数量</th>
+    <th class="t-cent" width="10%">標準原価</th>
+    <th class="t-cent" width="10%">仕入単価</th>
+    <th class="t-cent" width="10%">売上原価</th>
+   </tr>
+  <?php for ($i = -1; $i < $imax; $i++): /* $imaxはcontrollerから受け取る */ ?>
+  <?php
+    if ($i < 0) {
+      $name_head = "hidden"; // name-hedder nameの前半
+      $id_head = "hidden"; // id-hedder idの前半
+      echo '<tr id="tr_kousei_buhin_mr_hidden" style="display:none;">';
+    } else {
+      $name_head = "data[kousei_buhin_mrs][".$i."]";
+      $id_head = "fieldKouseiBuhinMrs" . $i;
+      echo '<tr id="tr_kousei_buhin_mr_' . $i . '">';
+    }
+  ?>
+                 <td class="t-cent tr-grn">
+                     <!-- 行番 --><?php echo $this->tag->textField(array($name_head . "[cd]", "type" => "number", "style" => "width: 30px; padding: 0; text-align: center;", "class" => "form-control tr-grn", "id" => $id_head . "Cd")) ?>
+                     <!--  ID        --><?php echo $this->tag->hiddenField(array($name_head . "[id]", "id" => $id_head . "Id")) ?>
+                     <!-- 更新日時   --><?php echo $this->tag->hiddenField(array($name_head . "[updated]", "id" => $id_head . "Updated")) ?>
+                     <!-- 商品id     --><?php echo $this->tag->hiddenField(array($name_head . "[gen_shouhin_mr_id]", "id" => $id_head . "GenShouhinMrId")) ?>
+                     <!-- 商品元単位 --><?php echo $this->tag->hiddenField(array($name_head . "[moto_tanni_mr_cd]", "id" => $id_head . "MotoTanniMrCd")) ?>
+                     <!--数量小数桁数--><?php echo $this->tag->hiddenField(array($name_head . "[suu_shousuu]", "id" => $id_head . "SuuShousuu")) ?>
+                     <!-- 標準原価   --><?php echo $this->tag->hiddenField(array($name_head . "[hyoujun_genka]", "id" => $id_head . "HyoujunGenka")) ?>
+                     <!-- 仕入単価   --><?php echo $this->tag->hiddenField(array($name_head . "[shiire_tanka]", "id" => $id_head . "ShiireTanka")) ?>
+                     <!-- 売上原価   --><?php echo $this->tag->hiddenField(array($name_head . "[uri_genka]", "id" => $id_head . "UriGenka")) ?>
+   </td>         <td><!--コード--><?php echo $this->tag->textField(array($name_head . "[gen_shouhin_mr_cd]", "maxlength" => 20, "style" => "padding: 0; text-align: center;", "class" => "form-control", "id" => $id_head . "GenShouhinMrCd", "list" => "ShouhinMrsOptions")) ?>
+   </td>         <td><!-- 名称 --><?php echo $this->tag->textField(array($name_head . "[gen_shouhin_mr_name]", "readonly" => "readonly", "class" => "form-control", "id" => $id_head . "GenShouhinMrName")) ?>
+   </td>         <td><!-- 単位 --><?php echo $this->tag->select(array($name_head . "[tanni_mr_cd]", TanniMrs::find(["columns" => "cd , CONCAT(name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "style" => "padding: 0; text-align: center;", "class" => "form-control", "id" => $id_head . "TanniMrCd")) ?>
+   </td>         <td><!-- 数量 --><?php echo $this->tag->textField(array($name_head . "[suuryou]", "size" => 8, "maxlength" => 10, "type" => "number", "class" => "form-control f-numb", "id" => $id_head . "Suuryou")) ?>
+   </td>         <td><!-- 標準 --><?php echo $this->tag->textField(array($name_head . "[hyoujun_genkagaku]", "readonly" => "readonly", "type" => "number", "class" => "form-control f-numb", "id" => $id_head . "HyoujunGenkagaku")) ?>
+   </td>         <td><!-- 仕入 --><?php echo $this->tag->textField(array($name_head . "[shiire_tankagaku]", "readonly" => "readonly", "type" => "number", "class" => "form-control f-numb", "id" => $id_head . "ShiireTankagaku")) ?>
+   </td>         <td><!-- 売上 --><?php echo $this->tag->textField(array($name_head . "[uri_genkagaku]", "readonly" => "readonly", "type" => "number", "class" => "form-control f-numb", "id" => $id_head . "UriGenkagaku")) ?>
+   </td></tr>
+   <?php endfor; ?>
+  </table>
+  <?php echo $this->tag->hiddenField("id") ?>
+ </div><!-- panel-body -->
+</div><!-- panel -->
+
+<datalist id="ShouhinMrsOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div>
+
+<script type="text/javascript">
+	var kousei_buhin_mrs_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kousei_buhin_mrs/buhin/') ?>";
+	var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+	var shouhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/ajaxGet') ?>";
+</script>
+
+<div class="form-group">
+    <div class="col-sm-3">
+        <?php 
+        	if ($this->tag->getValue('id')) {
+	 			echo $this->tag->linkTo(array("kousei_buhin_mrs/prev/".$id0, "前へF3", "id" => "F3", "class" => "btn btn-default"));
+        		echo $this->tag->linkTo(array("kousei_buhin_mrs/next/".$id0, "次へF4", "id" => "F4", "class" => "btn btn-info"));
+        	} else {
+	  			echo $this->tag->linkTo(array("kousei_buhin_mrs/prev/".$id0, "最終F3", "id" => "F3", "class" => "btn btn-default"));
+        		echo $this->tag->linkTo(array("kousei_buhin_mrs/search", "検索F4", "id" => "F4", "class" => "btn btn-info"));
+        	}
+         ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <?php if ($this->tag->getValue('id')): ?>
+	    <div class="col-sm-2">
+	        <?php echo $this->tag->linkTo(array("kousei_buhin_mrs/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+	    </div>
+	    <div class="col-sm-2">
+	        <a href="#" onclick="f7key();return false;" id="F7" class="btn btn-primary">構成部品f7</a>
+	    </div>
+	    <div class="col-sm-2">
+	        <?php echo $this->tag->linkTo(array("kousei_buhin_mrs/buhin_delete/".$id, "台帳削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+	    </div>
+	<?php endif; ?>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<?php echo $this->tag->form(array("kousei_buhin_mrs/index", "name" => "index_post", "method" => "post")); ?>
+<!--	<input type=hidden name="shouhin_mr_cd"> -->
+	<input type='hidden' name="gen_shouhin_mr_cd" id="fieldGenShouhinMrCd">
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">var imax = <?php echo $imax ?>;</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/kousei_buhin_mrs.js'); ?>?var=20160724"></script>

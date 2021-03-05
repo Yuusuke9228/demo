@@ -1,0 +1,101 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["iyyiohst_vws/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["iyyiohst_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nyuuryoku Of Date</th>
+            <th>Itiren Of No</th>
+            <th>Denpyou Of Date</th>
+            <th>Shiiresaki</th>
+            <th>Nyuushukko Of Kbn</th>
+            <th>Denpyou Of No</th>
+            <th>Denpyou Of Eda</th>
+            <th>Rec Of Kbn</th>
+            <th>Itoshu</th>
+            <th>Ito Of Code</th>
+            <th>Bobin</th>
+            <th>Itoryou</th>
+            <th>Tanni</th>
+            <th>Tanka</th>
+            <th>Kingaku</th>
+            <th>Zaiko Of Ryou</th>
+            <th>Haraidasi Of Saki</th>
+            <th>Chuumon Of No</th>
+            <th>Hako Of Suu</th>
+            <th>Hon1hako</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $iyyiohst_vw): ?>
+            <tr>
+                <td><?php echo $iyyiohst_vw->nyuuryoku_date ?></td>
+            <td><?php echo $iyyiohst_vw->itiren_no ?></td>
+            <td><?php echo $iyyiohst_vw->denpyou_date ?></td>
+            <td><?php echo $iyyiohst_vw->shiiresaki ?></td>
+            <td><?php echo $iyyiohst_vw->nyuushukko_kbn ?></td>
+            <td><?php echo $iyyiohst_vw->denpyou_no ?></td>
+            <td><?php echo $iyyiohst_vw->denpyou_eda ?></td>
+            <td><?php echo $iyyiohst_vw->rec_kbn ?></td>
+            <td><?php echo $iyyiohst_vw->itoshu ?></td>
+            <td><?php echo $iyyiohst_vw->ito_code ?></td>
+            <td><?php echo $iyyiohst_vw->bobin ?></td>
+            <td><?php echo $iyyiohst_vw->itoryou ?></td>
+            <td><?php echo $iyyiohst_vw->tanni ?></td>
+            <td><?php echo $iyyiohst_vw->tanka ?></td>
+            <td><?php echo $iyyiohst_vw->kingaku ?></td>
+            <td><?php echo $iyyiohst_vw->zaiko_ryou ?></td>
+            <td><?php echo $iyyiohst_vw->haraidasi_saki ?></td>
+            <td><?php echo $iyyiohst_vw->chuumon_no ?></td>
+            <td><?php echo $iyyiohst_vw->hako_suu ?></td>
+            <td><?php echo $iyyiohst_vw->hon1hako ?></td>
+
+                <td><?php echo $this->tag->linkTo(["iyyiohst_vws/edit/" . $iyyiohst_vw->nyuuryoku_date, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["iyyiohst_vws/delete/" . $iyyiohst_vw->nyuuryoku_date, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("iyyiohst_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("iyyiohst_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("iyyiohst_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("iyyiohst_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

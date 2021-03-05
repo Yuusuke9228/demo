@@ -1,0 +1,45 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "項目.一覧"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<table class="table table-bordered table-hover table-condensed head_fix">
+		<thead>
+			<tr bgcolor="Lavender">
+				<th>並び順</th>
+				<th>選択</th>
+				<th>名称(選択)</th>
+				<th>コード</th>
+				<th>データ型</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php $i=0;foreach ($koumoku_mrs as $koumoku_mr): ?>
+				<tr>
+					<td><?php echo $koumoku_mr->jun ?></td>
+					<td><input type="checkbox" id="fieldMeisai<?php echo $i; ?>Selchk" name="data[meisai][<?php echo $i++; ?>][selchk]" class="form-control selchk" style="height:14px !important;" /></td>
+					<td><?php echo $koumoku_mr->name ?></input></td>
+					<td><?php echo $koumoku_mr->cd ?></td>
+					<td><?php echo $koumoku_mr->data_kata ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->submitButton(array("転記F12", "id" => "F12", "class" => "btn  btn-success returnto")) ?>
+    </div>
+</div><!-- end class="row" -->
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div>
+
+<script type="text/javascript">var imax = <?php echo $imax ?>;</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/koumoku_multisel.js'); ?>?var=20170214"></script>

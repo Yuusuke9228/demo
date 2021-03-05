@@ -1,0 +1,198 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var \Phalcon\Mvc\Model $page
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->get('css/handsontable.full.css') ?>">
+<script src="<?php echo $this->url->get('js/jquery/handsontable.full.js') ?>"></script>
+
+<?php $title = '商品.一覧'; ?>
+<div class="page-header">
+    <h2>商品台帳・一覧</h2>
+</div>
+<?php echo $this->getContent(); ?>
+
+<br/>
+<div class="row">
+    <?php
+    $index_or = 'index_2';
+    $table_id = 'shouhin_mrs';
+
+    $this->partial("common/indexkanni",
+        ["table_id" => $table_id, "index_or" => $index_or,
+            "flds" => [
+                ["cd", "fieldCd", "商品コード", 14, 14],
+                ["name", "fieldName", "商品名", 40, 40]
+            ]
+        ]);
+    ?>
+
+    <div id="grid" class="handsontable"></div>
+    <div id="msg" class="msg"></div>
+    <div class="col-sm-12 sticky" align="center">
+        <ul class="pagination">
+            <li <?php if ($page->current == 1) {
+                echo "class='disabled'";
+            } ?> ><?php echo $this->tag->linkTo(array($table_id . "/" . $index_or . "?page=1" . $parasort, "<<最初")) ?></li>
+            <li <?php if ($page->current == 1) {
+                echo "class='disabled'";
+            } ?> ><?php echo $this->tag->linkTo(array($table_id . "/" . $index_or . "?page=" . $page->before . $parasort, "<前頁F3", "id" => "F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo($table_id . "/" . $index_or . "?page=" . $page->current . $parasort, $page->current . "頁") ?></li>
+            <li <?php if ($page->current == $page->total_pages) {
+                echo "class='disabled'";
+            } ?> ><?php echo $this->tag->linkTo(array($table_id . "/" . $index_or . "?page=" . $page->next . $parasort, " 次頁F4>", "id" => "F4")) ?></li>
+            <li <?php if ($page->current == $page->total_pages) {
+                echo "class='disabled'";
+            } ?> ><?php echo $this->tag->linkTo(array($table_id . "/" . $index_or . "?page=" . $page->last . $parasort, "(" . $page->total_pages . "頁)最後>>")) ?></li>
+        </ul>
+    </div>
+    <?php //$data_php = json_encode($rows);  //商品データをjson化?>
+    <?php $data_php = json_encode($page->items);  //商品データをjson化?>
+
+    <style>
+        .currentRow {
+            background-color: #8eb0e7 !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            //PHPから値の受け取り
+            var js_array = <?php echo $data_php; ?>;
+            //Tableを表示するdiv要素
+            var grid = document.getElementById('grid');
+            //status message 表示用div要素
+            var msg = document.getElementById("msg");
+            //表要素指定
+            var hot = new Handsontable(grid, {
+                data: js_array,         //表示data指定
+                minSpareRows: 1,       //表の一番下空行数 ※新規の場合勝手に行追加してくれる
+                colHeaders: ['id', '商品CD', '摘要', 'カナ', '単位CD', '数単位CD',
+                    '単位1CD', '単位2CD', '単価区分', '在庫区分',
+                    '入数', '企画', '色番', '色名', 'サイズ', 'ロット', '品質区分CD',
+                    '数小数', '数1小数', '数2小数', '単価小数',
+                    '課税区分', '在庫管理', '発注ロット', 'リードタイム',
+                    '適正在庫', '在庫評価区分', '主仕入先',
+                    '種倉庫CD', '発注連動', '現在庫', '最終出庫日',
+                    '最終入庫日', '上代', '売単価1', '売単価2',
+                    '売単価3', '売単価4', '売原価', '仕入単価',
+                    '標準原価', '評価下げ原価', '分類1',
+                    '分類2', '分類3',
+                    '分類4', '分類5', '参照表示',
+                    'メモ', '元ID', '控え削除フラグ', '控えユーザー', '控え日時',
+                    '作成ユーザー', '作成日', '更新ユーザー', '更新日',
+                ],
+                colWidths: [0, 130, 300, 300, 0, 0, 100, 100, 120, 200,
+                    100, 200, 100, 200, 100, 100, 100, 100, 100, 100,
+                    100, 200, 100, 200, 100, 100, 100, 100, 100, 100,
+                    100, 200, 100, 200, 100, 100, 100, 100, 100, 100,
+                    100, 200, 100, 200, 100, 100, 100, 100, 100, 100,
+                    100, 200, 250, 200, 250, 100, 250,
+                ],
+                currentRowClassName: 'currentRow',
+                columnSorting: true,
+                contextMenu: true,
+                enterMoves: {row: 0, col: 1},
+                outsideClickDeselects: true,
+                manualColumnResize: true,
+                fillHandle: false,
+                fixedRowsTop: 1,
+                fixedColumnsLeft: 3,
+                undo: true,
+                customBorders: [
+                    {
+                        range: {
+                            from: {col: 0, row: 0},
+                            to: {col: 57, row: 0}
+                        },
+                        top: {
+                            width: 2,
+                            color: 'Blue'
+                        },
+                    }
+                ],
+                //値が変更されたときの処理
+                afterChange: function (change, source) {
+                    if (source === 'loadData') {
+                        return;
+                    }
+                    var row = change[0][0];
+                    //編集されたデータ行をDBのkeyと結合させる
+                    row_data = this.getDataAtRow(row);
+                    var keys = ['id', 'cd', 'name', 'kana', 'tanni_mr_cd', 'suu_tanni_mr_cd',
+                            'tanni_mr1_cd', 'tanni_mr2_cd', 'tanka_kbn', 'zaiko_kbn',
+                            'irisuu', 'kikaku', 'iro', 'iromei', 'size', 'lot', 'hinsitu_kbn_cd',
+                            'suu_shousuu', 'suu1_shousuu', 'suu2_shousuu', 'tanka_shousuu',
+                            'kazei_kbn_cd', 'zaikokanri', 'hacchuu_lot', 'lead_time',
+                            'zaiko_tekisei', 'zaiko_hyouka_kbn_cd', 'shu_shiiresaki_mr_cd',
+                            'shu_souko_mr_cd', 'hacchuu_rendou', 'gen_zaiko', 'last_shukko_date',
+                            'last_nyuuko_date', 'joudai', 'uri_tanka1', 'uri_tanka2',
+                            'uri_tanka3', 'uri_tanka4', 'uri_genka', 'shiire_tanka',
+                            'hyoujun_genka', 'hyoukasage_genka', 'shouhin_bunrui1_kbn_cd',
+                            'shouhin_bunrui2_kbn_cd', 'shouhin_bunrui3_kbn_cd',
+                            'shouhin_bunrui4_kbn_cd', 'shouhin_bunrui5_kbn_cd', 'sanshou_hyouji',
+                            'memo', 'id_moto', 'hikae_dltflg', 'hikae_user_id', 'hikae_nichiji',
+                            'sakusei_user_id', 'created', 'kousin_user_id', 'updated',
+                        ],
+                        values = row_data,
+                        array = [];
+                    for (var i = 0, l = keys.length, obj = Object.create(null); i < l; ++i) {
+                        if (values.hasOwnProperty(i)) {
+                            obj[keys[i]] = values[i];
+                        }
+                    }
+                    //PHPへ渡すObject
+                    row_data = obj;
+                    console.log(row_data);
+                    $.ajax({
+                        url: "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shouhin_mrs/saveAjax') ?>",
+                        dataType: "json",
+                        type: "POST",
+                        data: row_data,
+                        success: function (res) {
+                            console.log(res);       //更新したidを確認用の返却値として受け取る。
+                            console.log("updated!!");
+                            msg.innerText = "データベースへの更新処理が成功しました。";
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            msg.innerText = textStatus;
+                            console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+                            console.log("textStatus     : " + textStatus);
+                            console.log("errorThrown    : " + errorThrown.message);
+                        }
+                    });
+                }
+            });
+
+            // 最終行選択時に自動で行追加
+            // function afterSelection(row, col) {
+            //     if (row === hot.countRows() - 1 && col === 0) {
+            //         addRow();
+            //     }
+            // }
+            //
+            // Handsontable.hooks.add('afterSelection', afterSelection);
+            // function addRow() {
+            //     hot.alter('insert_row', hot.countRows());
+            //     var col = hot.propToCol(COL_PRODUCTCODE);
+            //     hot.selectCell(hot.countRows() - 1, col);
+            // }
+
+            function bindDumpButton() {
+                Handsontable.Dom.addEvent(document.body, 'click', function (e) {
+                    var element = e.target || e.srcElement;
+                    if (element.nodeName == "BUTTON" && element.name == 'dump') {
+                        var name = element.getAttribute('data-dump');
+                        var instance = element.getAttribute('data-instance');
+                        var hot = window[instance];
+                        console.log('data of ' + name, hot.getData());
+                    }
+                });
+            }
+
+            bindDumpButton();
+        });
+    </script>
+</div>

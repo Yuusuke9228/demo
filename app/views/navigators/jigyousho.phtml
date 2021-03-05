@@ -1,0 +1,109 @@
+<?php use Phalcon\Tag; ?>
+
+<?php $title = 'ナビ.事業所'; ?>
+
+<?php echo $this->getContent(); ?>
+<p/>
+<div class="panel panel-primary center-block" style="width:600px">
+    <div class="panel-heading" style="font-size: 24px; padding:0px 15px;">事業所データ</div>
+    <table class="table navis">
+        <tr>
+            <th colspan=5 style="padding:0px 15px;"> </th>
+        </tr>
+        <tr>
+            <td align="center" width="200px">
+                <?php echo $this->tag->linkTo(array('kihon_mrs/edit/1', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />基本情報</div>', /* 'target'=>'_blank' , */
+                    'title' => '事業所名や住所など自社の基本的な情報を登録します。伝票番号の付番方法や端数処理方法など販売管理の運用に関する情報もここで設定します。')); ?>
+            </td>
+            <td align="center" width="200px">
+                <?php echo $this->tag->linkTo(array('kihon_mrs/edit/1', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />帳票自社名<br />の設定</div>', /* 'target'=>'_blank' , */
+                    'title' => '伝票や請求書などに印刷する自社名欄を編集します。自社名欄は、帳票ごとに設定することができます。')); ?>
+            </td>
+            <td align="center" width="200px">
+                <?php echo $this->tag->linkTo(array('chouhyou_mrs', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />帳票<br />レイアウタ</div>', /* 'target'=>'_blank' , */
+                    'title' => 'まだできません。')); ?>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('mitsumori_dts/new', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />環境設定</div>', /* 'target'=>'_blank' , */
+                    'title' => '販売管理のバックアップなどの設定をします。')); ?>
+            </td>
+            <td align="center" width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('backup', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />バックアップ</div>', /* 'target'=>'_blank' , */
+                    'title' => '販売管理のバックアップを作成をします。')); ?>
+            </td>
+            <td align="center" width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('exports/yayoi', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />弥生へ伝票番<br />号同じで出力</div>', /* 'target'=>'_blank' , */
+                    'title' => '販売管理に登録した取引のデータを弥生販売システム向けに取引データとして出力します。')); ?>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('mitsumori_dts/new', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />データの<br />新規作成</div>', /* 'target'=>'_blank' , */
+                    'title' => 'まだできません。')); ?>
+            </td>
+            <td align="center" width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('index/sentaku', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />データの選択</div>', 'target' => '_blank',
+                    'title' => '複数の事業所データを同時に開けます。')); ?>
+            </td>
+            <td align="center" width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('denpyou_bangou_mrs', '<div>' . Phalcon\Tag::image("img/sample/f_f_business_4_s32_f_business_4_1nbg.png") . '<br />伝票番号設定</div>', 'target' => '_blank',
+                    'title' => '年度毎の伝票番号を指定します。。')); ?>
+            </td>
+        </tr>
+        <tr>
+            <th colspan=5 class="active" style="height: 20px; padding:0px 15px;">設定</th>
+        </tr>
+        <tr>
+            <td colspan=5 class="active">
+                <table class="table active">
+                    <tr class="table active">
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('tantou_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>担当者</div>', /* 'target'=>'_blank' , */
+                                'title' => '伝票の入力者や得意先に対する営業担当者など自社の従業員を登録します。レポートを作成する際、担当者別に集計することができます。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('nyuukin_kbns/new', '<div><i class="far fa-check-circle mr-1"></i>振込依頼銀行</div>', /* 'target'=>'_blank' , */
+                                'title' => '買掛金の支払に銀行振込を利用する場合は自社の銀行口座や振込手数料を登録します。登録した情報を基に振込依頼書を作成します。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('project_mrs/new', '<div><i class="far fa-check-circle mr-1"></i>プロジェクト</div>', /* 'target'=>'_blank' , */
+                                'title' => 'プロジェクトの名称や売り上げ予算などプロジェクトに関する情報を登録します。レポートを作成する際、プロジェクト別に集計することができます。')); ?>
+                        </td>
+                    </tr>
+                    <tr class="table active">
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('yosan_dts/index', '<div><i class="far fa-check-circle mr-1"></i>予算設定</div>', /* 'target'=>'_blank' , */
+                                'title' => '得意先別・担当者別・商品別の予算を設定し、予算と実績を管理します。予算は、売上金額と粗利益に設定することができます。また、参考期間の得意先・担当・商品の売上実績を基に配分して設定することもできます。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                            <?php echo $this->tag->linkTo(array('konnnenndo/new', '<div><i class="far fa-check-circle mr-1"></i>会計年度設定</div>', /* 'target'=>'_blank' , */
+                                'title' => '会計年度の追加及び、設定を行います。')); ?>
+                        </td>
+                        <td width="200px" style="border-style: none;"></td>
+                    </tr>
+                    <tr class="table active">
+                        <td width="200px" style="border-style: none;">
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                        </td>
+                    </tr>
+                    <tr class="table active">
+                        <td width="200px" style="border-style: none;">
+                             
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                        </td>
+                        <td width="200px" style="border-style: none;">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+

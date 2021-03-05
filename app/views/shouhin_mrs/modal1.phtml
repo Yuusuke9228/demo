@@ -1,0 +1,72 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "商品参照"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/indexkanni",["index_or"=>"modal","table_id"=>"shouhin_mrs","flds"=>[
+		["cd","fieldCd","商品コード",14,14],["name","fieldName","商品名",40,40],["zaiko","fieldZaiko","在庫 >",10,10]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead>
+            <tr bgcolor="Lavender">
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["shouhin_cd","コード(選択)"],
+					["shouhin_name","名称"],
+					["sum_zaiko","在庫数量"],
+					["tanni_name","単位"],
+					["memo","メモ"],
+//					["updated","更新日"]
+				]]) ?>
+                <th style="text-align:center;">修正</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $i = 1; ?>
+        <?php foreach ($page->items as $row): ?>
+            <tr>
+	            <td nowrap id="<?php echo 'cd' . $i; ?>" align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $row->shouhin_cd; ?></div></td>
+                <td nowrap ><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $row->shouhin_name ?></div></td>
+	            <td nowrap align="right"><?php echo number_format($row->sum_zaiko, 2) ?></td>
+	            <td nowrap align="center"><?php echo $row->tanni_name ?></td>
+	            <td nowrap align="center""><?php echo $row->shouhin_memo ?></td>
+<!--	            <td nowrap align="center">--><?php //echo $row->shouhin_updated ?><!--</td>-->
+
+                <td nowrap align="center"><?php echo $this->tag->linkTo(array("shouhin_mrs/edit/" . $row->id, "別タブ", "target"=>"_blank")); ?></td>
+                <?php $i += 1; ?>
+            </tr>
+
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+	<?php $this->partial("common/indextail",["index_or"=>"modal","table_id"=>"shouhin_mrs"]) ?>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+    </div>
+</div><!-- end class="row" -->
+<script type="text/javascript">
+    $('.returnto').click(function () {//alert($(this).text());
+        //Add By Nishiyama 2018/11/17
+        //品名を選択してもコードを取れるようにする
+        var index = $('.returnto').index(this);
+        if (index % 2 === 0) {
+            window.parent.fromModal($(this).text());
+        } else {
+            var row = $(this).closest('tr').index();
+            row += 1;
+            let cd = document.getElementById('cd' + row).textContent;
+            window.parent.fromModal(cd);
+        }
+    });
+
+	$(function(){ // テーブルのヘッドを消えなくする
+	  $('table.head_fix').floatThead({
+	  	top: 0
+	  });
+	});
+</script>

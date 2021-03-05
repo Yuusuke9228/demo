@@ -1,0 +1,61 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var array $rows
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '支払締切履歴'; ?>
+
+<?php echo $this->getContent(); ?>
+<?php
+if (!isset($rows[0])) {
+    echo '<h3>締切履歴がありません。</h3>';
+    exit;
+}
+?>
+<div class="row">
+    <div class="page-header">
+        <h3>仕入先: <?php echo $rows[0]['name'] ?>(<?php echo $this->request->getQuery('shiiresaki_mr_cd');?>)</h3>
+    </div>
+
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+            <tr bgcolor="Lavender">
+                <th style="text-align:center;">年度</th>
+                <th style="text-align:center;">締日付</th>
+                <th style="text-align:center;">支払予定日</th>
+                <th style="text-align:center;">前回仕入額</th>
+                <th style="text-align:center;">支払額</th>
+                <th style="text-align:center;">繰越金額</th>
+                <th style="text-align:center;">今回仕入額</th>
+                <th style="text-align:center;">今回支払額</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($rows as $row): ?>
+            <tr>
+                <td style="text-align:center;"><?php if(isset($row['nendo']))echo $row['nendo'] ?></td>
+                <td style="text-align:center;"><?php if(isset($row['sime_hiduke']))echo $row['sime_hiduke'] ?></td>
+                <td style="text-align:center;"><?php if(isset($row['shiharai_yoteibi']))echo $row['shiharai_yoteibi'] ?></td>
+                <td style="text-align:right;color: <?php echo (int)$row['zenkai_siiregaku'] > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['zenkai_siiregaku']) ?></td>
+                <td style="text-align:right;color: <?php echo (int)$row['shukkingaku'] > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['shukkingaku']) ?></td>
+                <td style="text-align:right;color: <?php echo ((int)$row['zenkai_siiregaku'] - (int)$row['shukkingaku']) > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['zenkai_siiregaku'] - $row['shukkingaku']) ?></td>
+                <td style="text-align:right;color: <?php echo (int)$row['konkai_siiregaku'] > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['konkai_siiregaku']) ?></td>
+                <td style="text-align:right;color: <?php echo ((int)$row['zenkai_siiregaku'] - (int)$row['shukkingaku'] + (int)$row['konkai_siiregaku']) > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['zenkai_siiregaku'] - $row['shukkingaku'] + $row['konkai_siiregaku']) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-2">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+</div>
+<script type="text/javascript">
+	$('.returnto').click(function () {//alert($(this).text());
+		window.parent.fromModal($(this).text());
+	});
+</script>

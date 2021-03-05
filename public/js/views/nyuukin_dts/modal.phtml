@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '入金.一覧'; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/modalkanni",["table_id"=>"nyuukin_dts","flds"=>[
+		["cd","fieldCd","伝票番号",14,14],["name","fieldName","摘要",24,24]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["cd","伝票番号"],
+					["name","摘要"],
+					["nyuukinbi","入金日"],
+                    ["seikyuusaki_mr_cd","請求先"],
+					["tantou_mr_cd","担当者"],
+					["","入金区分1"],
+					["","入金額1"],
+					["zenkai_kesikomi_gaku","前回消込額"],
+				]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $nyuukin_dt): ?>
+            <tr>
+                <td align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $nyuukin_dt->cd ?></td>
+                <td><?php echo $nyuukin_dt->name ?></td>
+                <td align="center"><?php echo $nyuukin_dt->nyuukinbi ?></td>
+                <td><?php echo $nyuukin_dt->seikyuusaki_mr_cd."=".$nyuukin_dt->SeikyuusakiMrs->name ?></td>
+                <td><?php echo $nyuukin_dt->tantou_mr_cd."=".$nyuukin_dt->TantouMrs->name ?></td>
+                <td><?php echo $nyuukin_dt->NyuukinMeisaiDts[0]->nyuukin_kbn_cd."=".$nyuukin_dt->NyuukinMeisaiDts[0]->NyuukinKbns->name ?></td>
+                <td align="right"><?php echo number_format($nyuukin_dt->NyuukinMeisaiDts[0]->kingaku) ?></td>
+                <td align="right"><?php echo number_format($nyuukin_dt->zenkai_kesikomi_gaku) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["index_or"=>"modal", "table_id"=>"nyuukin_dts"]) ?>
+
+<div class="col-sm-2">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+</div>
+<script type="text/javascript">
+	$('.returnto').click(function () {//alert($(this).text());
+		window.parent.fromModal($(this).text());
+	});
+</script>

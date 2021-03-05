@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "出金伝票.一覧"; ?>
+<div class="page-header">
+    <h3>出金伝票 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"shukkin_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","伝票番号"],
+                    ["nendo","年度"],
+                    ["name","摘要"],
+                    ["shukkinbi","出金日"],
+                    ["shiiresaki_mr_cd","仕入先"],
+                    ["tantou_mr_cd","担当者"],
+                    ["zenkai_kesikomi_gaku","前回消込額"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $shukkin_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("shukkin_dts/edit/" . $shukkin_dt->id, $shukkin_dt->id)); ?></td>
+                <td><?php echo $shukkin_dt->cd ?></td>
+                <td><?php echo $shukkin_dt->nendo ?></td>
+                <td><?php echo $shukkin_dt->name ?></td>
+                <td><?php echo $shukkin_dt->shukkinbi ?></td>
+                <td><?php echo $shukkin_dt->shiiresaki_mr_cd ?></td>
+                <td><?php echo $shukkin_dt->tantou_mr_cd ?></td>
+                <td><?php echo $shukkin_dt->zenkai_kesikomi_gaku ?></td>
+                <td><?php echo $shukkin_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("shukkin_dts/delete/" . $shukkin_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"shukkin_dts"]) ?>

@@ -1,0 +1,66 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "生産計画データ.一覧"; ?>
+<div class="page-header">
+    <h3>生産計画データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_keikaku_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","生産計画番号"],
+                    ["nendo","年度"],
+                    ["tekiyou","摘要"],
+                    ["se_keikakubi","生産計画日"],
+                    ["nounyuu_kijitu","納入期日"],
+                    ["juchuu_dt_cd","元受注番号"],
+                    ["tantou_mr_cd","担当者"],
+                    ["hassousaki_kbn_cd","発送先区分"],
+                    ["hassousaki_mr_cd","発送先コード"],
+                    ["shounin_joutai_flg","承認状態"],
+                    ["shounin_sha_mr_cd","承認者"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_keikaku_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_keikaku_dts/edit/" . $h_keikaku_dt->id, $h_keikaku_dt->id)); ?></td>
+                <td><?php echo $h_keikaku_dt->cd ?></td>
+                <td><?php echo $h_keikaku_dt->nendo ?></td>
+                <td><?php echo $h_keikaku_dt->tekiyou ?></td>
+                <td><?php echo $h_keikaku_dt->se_keikakubi ?></td>
+                <td><?php echo $h_keikaku_dt->nounyuu_kijitu ?></td>
+                <td><?php echo $h_keikaku_dt->juchuu_dt_cd ?></td>
+                <td><?php echo $h_keikaku_dt->tantou_mr_cd ?></td>
+                <td><?php echo $h_keikaku_dt->hassousaki_kbn_cd ?></td>
+                <td><?php echo $h_keikaku_dt->hassousaki_mr_cd ?></td>
+                <td><?php echo $h_keikaku_dt->shounin_joutai_flg ?></td>
+                <td><?php echo $h_keikaku_dt->shounin_sha_mr_cd ?></td>
+                <td><?php echo $h_keikaku_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_keikaku_dts/delete/" . $h_keikaku_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_keikaku_dts"]) ?>

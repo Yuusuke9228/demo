@@ -1,0 +1,191 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "伝票.一覧"; ?>
+<div class="page-header">
+    <h3>入力伝票 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+<?php echo $this->tag->form(array("zaiko_kakunin_azukari_vws/den_modal", "autocomplete" => "off", "class" => "form-horizontal")); ?>
+    <div class="col-sm-2">
+				<label for="fieldNyuushukkobi" class="control-label">伝票日付</label>
+				<?php echo $this->tag->telField(array("nyuushukkobi", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldNyuushukkobi")) ?>
+    </div>
+    <div class="col-sm-1">
+				<label for="fieldCd" class="control-label">伝票No</label>
+				<?php echo $this->tag->textField(array("cd", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldShouhinMrCd" class="control-label">商品</label>
+				<?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldShouhinMrCd")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldSoukoMrCd" class="control-label">倉庫</label>
+				<?php echo $this->tag->select(array("souko_mr_cd", SoukoMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name", "order"=>"cd"]), "using" => ["cd", "cd_name"], 'useEmpty' => true, 'emptyText' => 'All', "class" => "form-control", "id" => "fieldSoukoMrCd")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldSakuseiUserId" class="control-label">入力者</label>
+				<?php echo $this->tag->select(array("sakusei_user_id", Users::find(["columns" => "id , CONCAT(cd , '=' , name) as cd_name", "order"=>"cd"]), "using" => ["id", "cd_name"], 'useEmpty' => true, 'emptyText' => 'All', "class" => "form-control", "id" => "fieldSakuseiUserId")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldDenpyouMrCd" class="control-label">伝票種</label>
+				<?php echo $this->tag->select(array("denpyou_mr_cd", DenpyouMrs::find(["columns" => "cd , name", "order"=>"cd"]), "using" => ["cd", "name"], 'useEmpty' => true, 'emptyText' => 'All', "class" => "form-control", "id" => "fieldDenpyouMrCd")) ?>
+    </div>
+    <div  class="col-sm-1">
+				<label for="fieldPagelimit" class="control-label">行数</label>
+				<?php echo $this->tag->textField(array("pagelimit", "size" => 4, "maxlength" => 4, "class" => "form-control f-numb", "id" => "fieldPagelimit")) ?>
+    </div>
+
+    <table class="table table-bordered table-hover table-condens-0 head_fix">
+        <thead>
+        <tr style="background-color: lavender;">
+            <?php $this->partial("common/indexsort",["flds"=>[
+                    ["nyuushukkobi","伝票日付"],
+                    ["cd","[選択]伝票No"],
+                    ["meisai_cd","行"],
+                    ["denpyou_mr_cd","伝票種"],
+                    ["utiwake_kbn_cd","内訳"],
+                    ["shouhin_mr_cd","商品コード"],
+                    ["iro","色"],
+                    ["iromei","色名"],
+                    ["lot","ロット"],
+                    ["kobetucd","個別"],
+                    [$this->tag->getValue("denpyou_mr_cd")=='hacchuu'?"hacchuuzan_ryou1":"shiire_ryou1s","仕入数"],
+                    [$this->tag->getValue("denpyou_mr_cd")=='hacchuu'?"hacchuuzan_ryou2":"shiire_ryou2s","仕入量"],
+                    ["hokanyuuko_ryou1s","入庫数"],
+                    ["hokanyuuko_ryou2s","入庫量"],
+                    [$this->tag->getValue("denpyou_mr_cd")=='juchuu'?"juchuuzan_ryou1":"uriage_ryou1s","売上数"],
+                    [$this->tag->getValue("denpyou_mr_cd")=='juchuu'?"juchuuzan_ryou2":"uriage_ryou2s","売上量"],
+                    ["hokashukko_ryou1s","出庫数"],
+                    ["hokashukko_ryou2s","出庫量"],
+                    ["tanni_mr1_cd","数単位"],
+                    ["tanni_mr2_cd","量単位"],
+                    ["hinsitu_kbn_cd","品質"],
+                    ["updated","更新日時"],
+                    ["sakusei_user_id","入力者"],
+                    ["shiire_gakus","仕入額"],
+                    ["torihikisaki_cd","取引先"],
+                    ["tantou_mr_cd","担当"],
+                    ["souko_mr_cd","倉庫コード"],
+                    ["bikou","備考"],
+                    ["id","伝票ID"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $i=1000 ?>
+        <?php foreach ($page->items as $zaiko_kakunin_azukari_vw): ?>
+            <tr>
+                <td><?php echo $zaiko_kakunin_azukari_vw->nyuushukkobi ?></td>
+                <td style="text-align: center;"><?php echo "<input type='checkbox' class='returnto' id='fieldI".$i."' value='".$zaiko_kakunin_azukari_vw->cd."'><label for='fieldI".$i."'>".$zaiko_kakunin_azukari_vw->cd."</label>" ?></td>
+                <td style="text-align: center;"><?php echo $zaiko_kakunin_azukari_vw->meisai_cd ?></td>
+                <td style="text-align: center;font-size: 80%;"><?php echo $zaiko_kakunin_azukari_vw->DenpyouMrs->name ?></td>
+                <td style="text-align: center;font-size:80%;"><?php echo $zaiko_kakunin_azukari_vw->UtiwakeKbns->name ?></td>
+                <td style="text-align: center;"><?php echo $zaiko_kakunin_azukari_vw->shouhin_mr_cd ?></td>
+                <td><?php echo @$zaiko_kakunin_azukari_vw->iro ?></td>
+                <td><?php echo @$zaiko_kakunin_azukari_vw->iroban ?></td>
+                <td><?php echo @$zaiko_kakunin_azukari_vw->lot ?></td>
+                <td><?php echo @$zaiko_kakunin_azukari_vw->kobetucd ?></td>
+                <td style="text-align: right;"><?php echo ($zaiko_kakunin_azukari_vw->denpyou_mr_cd=='hacchuu'?$zaiko_kakunin_azukari_vw->hacchuuzan_ryou1:$zaiko_kakunin_azukari_vw->shiire_ryou1s)??'' ?></td>
+                <td style="text-align: center;"><?php echo ($zaiko_kakunin_azukari_vw->denpyou_mr_cd=='hacchuu'?$zaiko_kakunin_azukari_vw->hacchuuzan_ryou2:$zaiko_kakunin_azukari_vw->shiire_ryou2s)??'' ?></td>
+                <td style="text-align: right;"><?php echo $zaiko_kakunin_azukari_vw->hokanyuuko_ryou1s??'' ?></td>
+                <td style="text-align: center;"><?php echo $zaiko_kakunin_azukari_vw->hokanyuuko_ryou2s??'' ?></td>
+                <td style="text-align: right;"><?php echo ($zaiko_kakunin_azukari_vw->denpyou_mr_cd=='juchuu'?$zaiko_kakunin_azukari_vw->juchuuzan_ryou1:$zaiko_kakunin_azukari_vw->uriage_ryou1s)??'' ?></td>
+                <td style="text-align: right;"><?php echo ($zaiko_kakunin_azukari_vw->denpyou_mr_cd=='juchuu'?$zaiko_kakunin_azukari_vw->juchuuzan_ryou2:$zaiko_kakunin_azukari_vw->uriage_ryou2s)??'' ?></td>
+                <td style="text-align: right;"><?php echo ($zaiko_kakunin_azukari_vw->hokashukko_ryou1s+$zaiko_kakunin_azukari_vw->azukari_hiki1s)??'' ?></td>
+                <td style="text-align: center;"><?php echo ($zaiko_kakunin_azukari_vw->hokashukko_ryou2s+$zaiko_kakunin_azukari_vw->azukari_hiki2s)??'' ?></td>
+                <td style="text-align: center;"><?php echo $zaiko_kakunin_azukari_vw->TanniMr1s->name ?></td>
+                <td style="text-align: center;"><?php echo $zaiko_kakunin_azukari_vw->TanniMr2s->name ?></td>
+                <td style="text-align: center; font-size: 80%;"><?php echo $zaiko_kakunin_azukari_vw->HinsituKbns->name ?></td>
+                <td style="text-align: center; font-size: 80%"><?php echo $zaiko_kakunin_azukari_vw->updated ?></td>
+                <td style="text-align: center; font-size: 80%;"><?php echo $zaiko_kakunin_azukari_vw->Users->name ?></td>
+                <td style="text-align: right;"><?php echo number_format($zaiko_kakunin_azukari_vw->shiire_gakus)??'' ?></td>
+                <td style="text-align: center; font-size: 80%;"><?php echo $zaiko_kakunin_azukari_vw->TorihikisakiMrs->ryakushou??$zaiko_kakunin_azukari_vw->torihikisaki_cd ?></td>
+                <td style="text-align: center; font-size: 80%;"><?php echo $zaiko_kakunin_azukari_vw->TantouMrs->name ?></td>
+                <td style="text-align: center; font-size: 80%;"><?php echo $zaiko_kakunin_azukari_vw->SoukoMrs->name ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->bikou ?></td>
+                <td style="text-align: right;"><?php echo $zaiko_kakunin_azukari_vw->id ?></td>
+            </tr>
+        	<?php $i++ ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table><br><br><br>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-bottom" style="background-color:#e8e0d0;">
+ <div class="container">
+  <span class="navbar-text">
+	<input type="button" value="戻るESC" id="ESC" class="btn btn-default btn-xs" onclick="window.parent.fromModal();" title='選択を中止して戻る:ESCキー' />
+	<input type="button" value="－－F1" id="F1" class="btn btn-default btn-xs" onclick="$('#fieldPagelimit').focus().select();" title='ブラウザのHELP起動:F1キー' />
+	<?php echo $this->tag->linkTo(array("zaiko_kakunin_azukari_vws/den_modal?page=1" . $parasort, "最初F2", "id"=>"F2","class"=>"btn btn-default btn-xs ".($page->current==1?'disabled':''))) ?> 
+	<?php echo $this->tag->linkTo(array("zaiko_kakunin_azukari_vws/den_modal?page=" . $page->before . $parasort, "前頁F3", "id"=>"F3","class"=>"btn btn-default btn-xs ".($page->current==1?'disabled':''))) ?> 
+	<?php echo $this->tag->linkTo(array("zaiko_kakunin_azukari_vws/den_modal?page=" . $page->next . $parasort, "次頁F4", "id"=>"F4","class"=>"btn btn-default btn-xs ".($page->current==$page->total_pages?'disabled':''))) ?>　
+	<?php echo $this->tag->linkTo(array("zaiko_kakunin_azukari_vws/den_modal?page=" . $page->last . $parasort, "最後F5", "id"=>"F5","class"=>"btn btn-default btn-xs ".($page->current==$page->total_pages?'disabled':''))) ?> 
+	<input type="button" value="－－F6" id="F6" class="btn btn-default btn-xs" onclick="shuusei();" title='修正入力可能になります:F6キー' />
+	<input type="button" value="－－F7" id="F7" class="btn btn-default btn-xs" onclick="hyouji();" title='表示モードになります:F7キー' />
+	<input type="button" value="－－F8" id="X8" class="btn btn-default btn-xs" onclick="alert('F8');" title='参照可能の時、参照画面を開きます:F8キー' />　
+	<input type="button" value="中止F9" id="F9" class="btn btn-default btn-xs" onclick="window.parent.fromModal();" title='選択を中止して戻る:F9キー' />
+	<input type="button" value="－－F10" id="F10" class="btn btn-default btn-xs" onclick="" title='ブラウザの機能が起動:F10キー' />
+	<input type="button" value="－－F11" id="F11" class="btn btn-default btn-xs" onclick="alert('F11');" title='ブラウザの機能が起動:F11キー' />
+	<input type="submit" value="検索F12" id="F12" class="btn btn-success" title='指定の条件で簡易検索します:F12キー' />
+	<?php echo ' PAGE: '.$page->current.'／'.$page->total_pages; ?>
+  </span>
+ </div>
+</div>
+<?php echo $this->tag->endForm(); ?>
+
+<div id="PgDn"></div><div id="PgUp"></div>
+
+<script async type="text/javascript">
+$(function(){ // テーブルのヘッドを消えなくする
+  $('table.head_fix').floatThead({
+  	top: 0
+  });
+});
+$('.returnto').change(function () { // alert($(this).val());
+	window.parent.fromModal($(this).val());
+});
+$('#PgUp').click(function() { //上矢キー(↑)を押したら
+	if ($("#"+lastfocusin).attr('type').toLowerCase() === 'checkbox') {
+		ix = -1 + $("input:checkbox").index($("#"+lastfocusin));
+		if (ix >= 0) {
+			$("input:checkbox").eq(ix).focus();
+		} else {
+			$("input").first().focus();
+		}
+	} else {
+		$("input:checkbox").last().focus();
+	}
+});
+$('#PgDn').click(function() { //下矢キー(↓)を押したら
+	if ($("#"+lastfocusin).attr('type').toLowerCase() === 'checkbox') {
+		ix = 1 + $("input:checkbox").index($("#"+lastfocusin));
+		if (ix < $("input:checkbox").length) {
+			$("input:checkbox").eq(ix).focus();
+		} else {
+			$("input").first().focus();
+		}
+	} else {
+		$("input:checkbox").first().focus();
+	}
+});
+$("input:checkbox").focusin(function() {
+	$(this).parent().css('background-color', '#f88');
+});
+
+$("input:checkbox").focusout(function() {
+	$(this).parent().css('background-color', '');
+});
+$('table tbody tr').click(function(){ // クリックした行を目立たせる。table-stripedと共存できない
+	$('tr').removeClass('activetr');
+	$(this).addClass('activetr');
+});
+</script>

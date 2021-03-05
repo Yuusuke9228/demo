@@ -1,0 +1,110 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "売上明細データ.一覧"; ?>
+<div class="page-header">
+    <h3>売上明細データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"uriage_meisai_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","行番"],
+                    ["utiwake_kbn_cd","内訳"],
+                    ["uriage_dt_id","売上データID"],
+                    ["shukka_kbn_cd","出荷"],
+                    ["shouhin_mr_cd","商品コード"],
+                    ["tanni_mr_cd","単位"],
+                    ["kousei","構成"],
+                    ["irisuu","入数"],
+                    ["keisu","係数"],
+                    ["tekiyou","商品名/摘要"],
+                    ["lot","ロット"],
+                    ["kobetucd","個別コード"],
+                    ["hinsitu_kbn_cd","品質コード"],
+                    ["souko_mr_cd","倉庫コード"],
+                    ["kikaku","規格型番"],
+                    ["iro","色番"],
+                    ["iromei","色名"],
+                    ["size","サイズ"],
+                    ["suuryou","数量"],
+                    ["suuryou1","数量1"],
+                    ["tanni_mr1_cd","単位1"],
+                    ["suuryou2","数量2"],
+                    ["tanni_mr2_cd","単位2"],
+                    ["tanka_kbn","単価区分"],
+                    ["gentanka","原単価"],
+                    ["tanka","単価"],
+                    ["kingaku","金額"],
+                    ["genkagaku","原価額"],
+                    ["zeinukigaku","税抜額"],
+                    ["zeigaku","税額"],
+                    ["project_mr_cd","プロジェクトコード"],
+                    ["zeiritu_mr_cd","税率コード"],
+                    ["bikou","備考"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $uriage_meisai_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("uriage_meisai_dts/edit/" . $uriage_meisai_dt->id, $uriage_meisai_dt->id)); ?></td>
+                <td><?php echo $uriage_meisai_dt->cd ?></td>
+                <td><?php echo $uriage_meisai_dt->utiwake_kbn_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->uriage_dt_id ?></td>
+                <td><?php echo $uriage_meisai_dt->shukka_kbn_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->shouhin_mr_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->tanni_mr_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->kousei ?></td>
+                <td><?php echo $uriage_meisai_dt->irisuu ?></td>
+                <td><?php echo $uriage_meisai_dt->keisu ?></td>
+                <td><?php echo $uriage_meisai_dt->tekiyou ?></td>
+                <td><?php echo $uriage_meisai_dt->lot ?></td>
+                <td><?php echo $uriage_meisai_dt->kobetucd ?></td>
+                <td><?php echo $uriage_meisai_dt->hinsitu_kbn_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->souko_mr_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->kikaku ?></td>
+                <td><?php echo $uriage_meisai_dt->iro ?></td>
+                <td><?php echo $uriage_meisai_dt->iromei ?></td>
+                <td><?php echo $uriage_meisai_dt->size ?></td>
+                <td><?php echo $uriage_meisai_dt->suuryou ?></td>
+                <td><?php echo $uriage_meisai_dt->suuryou1 ?></td>
+                <td><?php echo $uriage_meisai_dt->tanni_mr1_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->suuryou2 ?></td>
+                <td><?php echo $uriage_meisai_dt->tanni_mr2_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->tanka_kbn ?></td>
+                <td><?php echo $uriage_meisai_dt->gentanka ?></td>
+                <td><?php echo $uriage_meisai_dt->tanka ?></td>
+                <td><?php echo $uriage_meisai_dt->kingaku ?></td>
+                <td><?php echo $uriage_meisai_dt->genkagaku ?></td>
+                <td><?php echo $uriage_meisai_dt->zeinukigaku ?></td>
+                <td><?php echo $uriage_meisai_dt->zeigaku ?></td>
+                <td><?php echo $uriage_meisai_dt->project_mr_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->zeiritu_mr_cd ?></td>
+                <td><?php echo $uriage_meisai_dt->bikou ?></td>
+                <td><?php echo $uriage_meisai_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("uriage_meisai_dts/delete/" . $uriage_meisai_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"uriage_meisai_dts"]) ?>

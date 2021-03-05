@@ -1,0 +1,82 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["shime_tankas_dts", "Go Back"]) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Create shime_tankas_dts
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "shime_tankas_dts/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldNyuushukkoym" class="col-sm-2 control-label">Nyuushukkoym</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["nyuushukkoym", "size" => 30, "class" => "form-control", "id" => "fieldNyuushukkoym"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldShouhinMrCd" class="col-sm-2 control-label">Shouhin Of Mr Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["shouhin_mr_cd", "size" => 30, "class" => "form-control", "id" => "fieldShouhinMrCd"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldZengetsuTanka" class="col-sm-2 control-label">Zengetsu Of Tanka</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["zengetsu_tanka", "size" => 30, "class" => "form-control", "id" => "fieldZengetsuTanka"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldTougetsuTanka" class="col-sm-2 control-label">Tougetsu Of Tanka</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["tougetsu_tanka", "type" => "number", "class" => "form-control", "id" => "fieldTougetsuTanka"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldTankaKbn" class="col-sm-2 control-label">Tanka Of Kbn</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["tanka_kbn", "size" => 30, "class" => "form-control", "id" => "fieldTankaKbn"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldZaikoHyoukaKbnCd" class="col-sm-2 control-label">Zaiko Of Hyouka Of Kbn Of Cd</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["zaiko_hyouka_kbn_cd", "size" => 30, "class" => "form-control", "id" => "fieldZaikoHyoukaKbnCd"]) ?>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Save", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

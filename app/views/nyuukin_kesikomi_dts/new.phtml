@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "入金消込.新規"; ?>
+<div class="page-header">
+    <h3>入金消込 新規登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "nyuukin_kesikomi_dts/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldUriageMeisaiDtId" class="col-sm-2 control-label">売上明細id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("uriage_meisai_dt_id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldUriageMeisaiDtId")) ?>
+    </div>
+
+<label for="fieldKesikomiGaku" class="col-sm-2 control-label">消込金額</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kesikomi_gaku", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKesikomiGaku")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

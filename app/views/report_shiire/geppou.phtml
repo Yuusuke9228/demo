@@ -1,0 +1,184 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var array $toviews
+ * @var array $joukens
+ * @var array $to_midasi
+ * @var array $shousuus
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+<?php $title = 'レポ.仕入月報'; ?>
+<div class="page-header">
+    <h3>仕入月報</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="panel panel-success bg-yel">
+    <br>
+    <?php
+    echo $this->tag->form(
+        array(
+            "report_shiire/geppou",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "name" => "form_jouken"
+        )
+    );
+    ?>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="fieldCd" class="col-sm-2 control-label">条件名</label>
+            <div class="col-sm-10">
+                <?php echo $this->tag->selectStatic(array("cd", $joukens, "style" => "width: 260px;", "class" => "form-control", "id" => "fieldCd")) ?>
+            </div>
+
+            <label for="fieldSimekiriKbn" class="col-sm-2 control-label">集計</label>
+            <div class="col-sm-10">
+                <?php echo $this->tag->selectStatic(array("simekiri_kbn", array("0" => "期間指定", "1" => "前回締切以降", "2" => "前回締切分"), "style" => "width: 130px;", "class" => "form-control", "id" => "fieldSimekiriKbn")) ?>
+            </div>
+
+            <label for="fieldKikanSiteiKbnCd" class="col-sm-2 control-label">期間</label>
+            <div class="col-sm-2">
+                <?php echo $this->tag->select(array("kikan_sitei_kbn_cd", KikanSiteiKbns::find(["columns" => "cd , name", "order" => "cd", "conditions" => "yobidasi_tbl='jouken_shiire_geppous'"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "style" => "width: 130px;", "class" => "form-control", "id" => "fieldKikanSiteiKbnCd")) ?>
+            </div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+            </div>
+
+            <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+            <div class="col-sm-2">
+                <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+            </div>
+
+        </div>
+        <div class="col-sm-2">
+
+            <?php /* 順序区分コード */
+            echo $this->tag->hiddenField("junjo_kbn_cd") ?>
+            <?php /* 降順フラグ     */
+            echo $this->tag->hiddenField("koujun_flg") ?>
+            <?php /* 範囲自         */
+            echo $this->tag->hiddenField("hanni_from") ?>
+            <?php /* 範囲至         */
+            echo $this->tag->hiddenField("hanni_to") ?>
+            <?php /* 税込フラグ     */
+            echo $this->tag->hiddenField("zeikomi_flg") ?>
+            <?php /* 明細行表示フラ */
+            echo $this->tag->hiddenField("meisaigyou_flg") ?>
+            <?php /* 合計行表示フラ */
+            echo $this->tag->hiddenField("goukeigyou_flg") ?>
+            <?php /* 期間内取引有フ */
+            echo $this->tag->hiddenField("torihikiari_flg") ?>
+            <?php /* 期間内取引無フ */
+            echo $this->tag->hiddenField("torihikinasi_flg") ?>
+            <?php /* 他計表示フラグ */
+            echo $this->tag->hiddenField("hokakei_flg") ?>
+            <?php /* 前年比較フラグ */
+            echo $this->tag->hiddenField("zennnen_flg") ?>
+            <?php /* 自入力分フラグ */
+            echo $this->tag->hiddenField("jinyuuryoku_flg") ?>
+
+            <div class="col-sm-12">
+                <button class="btn btn-warning" onclick="modalstart(jouken_shiire_modal);return false;">条件設定>8</button>
+            </div>
+            <br/><br/>
+            <div class="col-sm-12">
+                <button id="dl-xlsx" class="btn btn-warning">EXCEL出力</button>
+            </div>
+            <br/><br/>
+            <div class="col-sm-12">
+                <?php echo $this->tag->submitButton(array("集計f12", "id" => "F12", "class" => "btn btn-lg btn-success")) ?>
+            </div>
+        </div>
+    </div><!-- form-group -->
+
+    <?php echo $this->tag->endForm(); ?>
+</div><!-- panel-successp -->
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 table-striped">
+        <thead>
+        <tr bgcolor="lightgray">
+            <?php if ($to_midasi[0] == "") : ?>
+                <th colspan="2" style="text-align:center;"><?php echo $to_midasi[1] /* 小見出列 */ ?></th>
+            <?php else : ?>
+                <th style="text-align:center;"><?php echo $to_midasi[0] /* 見出し列 */ ?></th>
+                <th style="text-align:center;"><?php echo $to_midasi[1] /* 小見出列 */ ?></th>
+            <?php endif; ?>
+            <?php for ($i = 2; $i < count($to_midasi); $i++) : ?>
+                <th class="<?php echo ($this->request->getPost('zeikomi_flg') !== '1' && $i === 9) ? 'hidden' : ''; ?>"
+                    style="text-align:center;"><?php echo $to_midasi[$i]; ?></th>
+            <?php endfor; ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $mae_cd = "";
+        foreach ($toviews as $toview): ?>
+            <tr bgcolor="#fffcf8"><?php
+                if ($mae_cd == $toview[0]) {
+                    $font = "<font color='#cccccc'>";
+                } else {
+                    $font = "<font>";
+                }
+                $mae_cd = $toview[0]; ?>
+                <?php if ($toview[0] == "") : ?>
+                    <td colspan="2" nowrap><?php echo $toview[1] /* 小見出列 */ ?></font></td>
+                <?php else : ?>
+                    <td nowrap><?php echo $font . $toview[0] /* 見出し列 */ ?></font></td>
+                    <td nowrap><?php echo $toview[1] /* 小見出列 */ ?></font></td>
+                <?php endif; ?>
+
+                <?php for ($i = 2; $i < count($toview); $i++) : ?>
+                    <td class="<?php echo ($this->request->getPost('zeikomi_flg') !== '1' && $i === 9) ? 'hidden' : ''; ?>" style="color: <?php echo $toview[$i] < 0 ? 'red' : 'black'; ?>" nowrap
+                        align="right"><?php echo number_format($toview[$i], $shousuus[$i]) /* 金額列 */ ?></td>
+                <?php endfor; ?>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle" style="width:900px; height:500px;">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        仕入月報条件設定
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<script type="text/javascript">
+    var jouken_shiire_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('jouken_shiire_geppous/ajaxGet') ?>";
+    var kikan_sitei_kbns_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kikan_sitei_kbns/ajaxGet') ?>";
+    var junjo_kbns_ajaxHanni = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('junjo_kbns/ajaxHanni') ?>";
+    var jouken_shiire_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('jouken_shiire_geppous/modal') ?>";
+    var jouken_flds = [
+        "cd",
+        "junjo_kbn_cd",
+        "koujun_flg",
+        "hanni_from",
+        "hanni_to",
+        "kikan_sitei_kbn_cd",
+        "kikan_from",
+        "kikan_to",
+        "zeikomi_flg",
+        "meisaigyou_flg",
+        "goukeigyou_flg",
+        "torihikiari_flg",
+        "torihikinasi_flg",
+        "hokakei_flg",
+        "zennnen_flg",
+    ];
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.10/xlsx.full.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/report_shiire.js'); ?>?var=20191105"></script>

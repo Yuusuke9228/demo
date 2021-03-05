@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var \Phalcon\Mvc\Model $page
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "実績入力一覧"; ?>
+
+<div class="page-header">
+    <h3>実績入力一覧</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni", ["table_id" => "g_jisseki", "flds" => [
+        ["cd", "fieldCd", "コード", 14, 14], ["name", "fieldName", "名称", 24, 24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+        <tr>
+            <th style="text-align: center;">伝票番号</th>
+            <th style="text-align: center;">実績日</th>
+            <th style="text-align: center;">実績数１</th>
+            <th style="text-align: center;">実績数２</th>
+            <th style="text-align: center;">品質</th>
+            <th style="text-align: center;">備考</th>
+            <th style="text-align: center;">発注伝票番号</th>
+            <th style="text-align: center;">計画伝票番号</th>
+            <th style="text-align: center;">削除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if (isset($page)): ?>
+            <?php foreach ($page->items as $value): ?>
+                <tr>
+                    <td style="text-align: right; cursor: pointer;"><?php echo $this->tag->linkTo(array("g_jisseki/edit/" . $value->id, $value->cd)); ?></td>
+                    <td style="text-align: center;"><?php echo($value->jissekibi); ?></td>
+                    <td style="text-align: right;"><?php echo($value->jisseki_suu); ?></td>
+                    <td style="text-align: right;"><?php echo($value->jisseki_ryou); ?></td>
+                    <td style="text-align: center;"><?php echo($value->HinsituKbns->name); ?></td>
+                    <td style="text-align: center;"><?php echo($value->memo); ?></td>
+                    <td style="text-align: right; cursor: pointer;"><?php echo $this->tag->linkTo(array("hacchuu_dts/edit/" . $value->hacchuu_dt_id, $value->HacchuuDts->cd)); ?></td>
+                    <td style="text-align: right; cursor: pointer;"><?php echo $this->tag->linkTo(array("h_keikaku_dts/edit/" . $value->gyoumu_dt_id, $value->GyoumuDts->cd)); ?></td>
+                    <td style="text-align: center;"><?php echo $this->tag->linkTo(array("g_jisseki/delete/" . $value->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail", ["table_id" => "g_jisseki"]) ?>

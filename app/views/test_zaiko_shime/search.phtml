@@ -1,0 +1,173 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["test_zaiko_shime/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["test_zaiko_shime/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Shouhin Of Mr Of Cd</th>
+            <th>Tantou Of Mr Of Cd</th>
+            <th>Tanni Of Mr1 Of Cd</th>
+            <th>Tanni Of Mr2 Of Cd</th>
+            <th>Iro</th>
+            <th>Iromei</th>
+            <th>Lot</th>
+            <th>Kobetucd</th>
+            <th>Hinsitu Of Kbn Of Cd</th>
+            <th>Hinsitu Of Hyouka Of Kbn Of Cd</th>
+            <th>Souko Of Mr Of Cd</th>
+            <th>Nyuukobis</th>
+            <th>Shukkobis</th>
+            <th>Nyuushukkobi</th>
+            <th>Nyuushukkoym</th>
+            <th>Denpyou Of Mr Of Cd</th>
+            <th>Id</th>
+            <th>Cd</th>
+            <th>Meisai</th>
+            <th>Meisai Of Cd</th>
+            <th>Utiwake Of Kbn Of Cd</th>
+            <th>Torihikisaki Of Cd</th>
+            <th>Bikou</th>
+            <th>Zaiko Of Ryou1s</th>
+            <th>Zaiko Of Ryou2s</th>
+            <th>Tanka Of Tanni Of Mr Of Cd</th>
+            <th>Shiirebi Of Tankas</th>
+            <th>Shiire Of Gakus</th>
+            <th>Shiire Of Ryou1s</th>
+            <th>Shiire Of Ryou2s</th>
+            <th>Hokanyuuko Of Ryou1s</th>
+            <th>Hokanyuuko Of Ryou2s</th>
+            <th>Uriage Of Ryou1s</th>
+            <th>Uriage Of Ryou2s</th>
+            <th>Hokashukko Of Ryou1s</th>
+            <th>Hokashukko Of Ryou2s</th>
+            <th>Shiiresaki Of Mr Of Cd</th>
+            <th>Tokuisaki Of Mr Of Cd</th>
+            <th>Nounyuu Of Kijitu</th>
+            <th>Nouki</th>
+            <th>Hacchuu Of Dt</th>
+            <th>Juchuu Of Dt</th>
+            <th>Hacchuuzan Of Ryou1</th>
+            <th>Hacchuuzan Of Ryou2</th>
+            <th>Juchuuzan Of Ryou1</th>
+            <th>Juchuuzan Of Ryou2</th>
+            <th>Azukari Of Zan1s</th>
+            <th>Azukari Of Zan2s</th>
+            <th>Azukari Of Tasi1s</th>
+            <th>Azukari Of Tasi2s</th>
+            <th>Azukari Of Hiki1s</th>
+            <th>Azukari Of Hiki2s</th>
+            <th>Kousin Of User</th>
+            <th>Updated</th>
+            <th>Sakusei Of User</th>
+            <th>Created</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $test_zaiko_shime): ?>
+            <tr>
+                <td><?php echo $test_zaiko_shime->shouhin_mr_cd ?></td>
+            <td><?php echo $test_zaiko_shime->tantou_mr_cd ?></td>
+            <td><?php echo $test_zaiko_shime->tanni_mr1_cd ?></td>
+            <td><?php echo $test_zaiko_shime->tanni_mr2_cd ?></td>
+            <td><?php echo $test_zaiko_shime->iro ?></td>
+            <td><?php echo $test_zaiko_shime->iromei ?></td>
+            <td><?php echo $test_zaiko_shime->lot ?></td>
+            <td><?php echo $test_zaiko_shime->kobetucd ?></td>
+            <td><?php echo $test_zaiko_shime->hinsitu_kbn_cd ?></td>
+            <td><?php echo $test_zaiko_shime->hinsitu_hyouka_kbn_cd ?></td>
+            <td><?php echo $test_zaiko_shime->souko_mr_cd ?></td>
+            <td><?php echo $test_zaiko_shime->nyuukobis ?></td>
+            <td><?php echo $test_zaiko_shime->shukkobis ?></td>
+            <td><?php echo $test_zaiko_shime->nyuushukkobi ?></td>
+            <td><?php echo $test_zaiko_shime->nyuushukkoym ?></td>
+            <td><?php echo $test_zaiko_shime->denpyou_mr_cd ?></td>
+            <td><?php echo $test_zaiko_shime->id ?></td>
+            <td><?php echo $test_zaiko_shime->cd ?></td>
+            <td><?php echo $test_zaiko_shime->meisai_id ?></td>
+            <td><?php echo $test_zaiko_shime->meisai_cd ?></td>
+            <td><?php echo $test_zaiko_shime->utiwake_kbn_cd ?></td>
+            <td><?php echo $test_zaiko_shime->torihikisaki_cd ?></td>
+            <td><?php echo $test_zaiko_shime->bikou ?></td>
+            <td><?php echo $test_zaiko_shime->zaiko_ryou1s ?></td>
+            <td><?php echo $test_zaiko_shime->zaiko_ryou2s ?></td>
+            <td><?php echo $test_zaiko_shime->tanka_tanni_mr_cd ?></td>
+            <td><?php echo $test_zaiko_shime->shiirebi_tankas ?></td>
+            <td><?php echo $test_zaiko_shime->shiire_gakus ?></td>
+            <td><?php echo $test_zaiko_shime->shiire_ryou1s ?></td>
+            <td><?php echo $test_zaiko_shime->shiire_ryou2s ?></td>
+            <td><?php echo $test_zaiko_shime->hokanyuuko_ryou1s ?></td>
+            <td><?php echo $test_zaiko_shime->hokanyuuko_ryou2s ?></td>
+            <td><?php echo $test_zaiko_shime->uriage_ryou1s ?></td>
+            <td><?php echo $test_zaiko_shime->uriage_ryou2s ?></td>
+            <td><?php echo $test_zaiko_shime->hokashukko_ryou1s ?></td>
+            <td><?php echo $test_zaiko_shime->hokashukko_ryou2s ?></td>
+            <td><?php echo $test_zaiko_shime->shiiresaki_mr_cd ?></td>
+            <td><?php echo $test_zaiko_shime->tokuisaki_mr_cd ?></td>
+            <td><?php echo $test_zaiko_shime->nounyuu_kijitu ?></td>
+            <td><?php echo $test_zaiko_shime->nouki ?></td>
+            <td><?php echo $test_zaiko_shime->hacchuu_dt_id ?></td>
+            <td><?php echo $test_zaiko_shime->juchuu_dt_id ?></td>
+            <td><?php echo $test_zaiko_shime->hacchuuzan_ryou1 ?></td>
+            <td><?php echo $test_zaiko_shime->hacchuuzan_ryou2 ?></td>
+            <td><?php echo $test_zaiko_shime->juchuuzan_ryou1 ?></td>
+            <td><?php echo $test_zaiko_shime->juchuuzan_ryou2 ?></td>
+            <td><?php echo $test_zaiko_shime->azukari_zan1s ?></td>
+            <td><?php echo $test_zaiko_shime->azukari_zan2s ?></td>
+            <td><?php echo $test_zaiko_shime->azukari_tasi1s ?></td>
+            <td><?php echo $test_zaiko_shime->azukari_tasi2s ?></td>
+            <td><?php echo $test_zaiko_shime->azukari_hiki1s ?></td>
+            <td><?php echo $test_zaiko_shime->azukari_hiki2s ?></td>
+            <td><?php echo $test_zaiko_shime->kousin_user_id ?></td>
+            <td><?php echo $test_zaiko_shime->updated ?></td>
+            <td><?php echo $test_zaiko_shime->sakusei_user_id ?></td>
+            <td><?php echo $test_zaiko_shime->created ?></td>
+
+                <td><?php echo $this->tag->linkTo(["test_zaiko_shime/edit/" . $test_zaiko_shime->shouhin_mr_cd, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["test_zaiko_shime/delete/" . $test_zaiko_shime->shouhin_mr_cd, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo(["test_zaiko_shime/search", "First", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["test_zaiko_shime/search?page=" . $page->before, "Previous", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["test_zaiko_shime/search?page=" . $page->next, "Next", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["test_zaiko_shime/search?page=" . $page->last, "Last", 'class' => 'page-link']) ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $tokuisaki_mrs */
+// 締め処理変更により、テーブル回り変更
+$title = "請求締切";
+?>
+
+<div class="page-header">
+    <h3>請求締切</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+echo $this->tag->form(
+    array(
+        "tokuisaki_sime_dts/seikyuu_simekiri",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    )
+);
+?>
+
+<div class="form-group">
+    <div class="col-sm-4">
+        <label for="fieldShimegrpKbnCd" class="col-sm-5 control-label">締グループ</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->select(array("shimegrp_kbn_cd", ShimegrpKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldShimegrpKbnCd")) ?>
+        </div>
+        <label for="fieldSimeHiduke" class="col-sm-5 control-label">締日</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->telField(array("sime_hiduke", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldSimeHiduke")) ?>
+        </div>
+        <label for="fieldKaishuuYoteibi" class="col-sm-5 control-label">回収予定日</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->telField(array("kaishuu_yoteibi", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldKaishuuYoteibi")) ?>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="col-sm-4">
+            <?php echo $this->tag->submitButton(array("集計F3", "id" => "F3", "name" => "shuukei_btn", "class" => "btn btn-success")) ?>
+        </div>
+<!--        <div class="col-sm-4">-->
+<!--            --><?php //echo $this->tag->submitButton(array("締切F12", "id" => "F12", "name" => "simekiri_btn", "class" => "btn btn-warning", "onclick" => 'return confirm("よろしいですか？");')) ?>
+<!--        </div>-->
+        <div class="col-sm-4">
+            <span class="btn btn-warning" onclick="shimeShori()">締切ボタン</span>
+        </div>
+    </div>
+</div>
+<div style="overflow-x: scroll;padding: 0;width:850px;">
+    <style>
+        .tb-seikyuusaki > tbody > tr > td {
+            padding: 0 5px;
+        }
+    </style>
+    <table id="shime-table" width="850px" id="tb_seikyuusaki" class="table-bordered tb-seikyuusaki">
+        <thead style="display: block;">
+        <tr class="tr-pnk">
+            <th class="t-cent" width="30px">レ</th>
+            <th class="t-cent" width="100px">請求先コード</th>
+            <th class="t-cent" width="400px">請求先名</th>
+            <th class="t-cent" width="100px">前回締日</th>
+            <th class="t-cent" width="100px">今回売上額</th>
+            <th class="t-cent" width="100px">今回請求額</th>
+        </tr>
+        </thead>
+        <tbody style="display: block;overflow-y: scroll;height: 400px;">
+        <tr><label><input type="checkbox" id="all"/> Check all!!</label></tr>
+        <?php $i = 0; ?>
+        <?php foreach ($tokuisaki_mrs as $tokuisaki_mr): ?>
+            <tr class="tr_pattern" id="t-row<?php echo $i ?>">
+                <td width="30px" align="center"><input <?php echo 'name="code_' . $tokuisaki_mr['cd'] . '" id="code_' . $i . '"' ?>type="checkbox" class="form-control shimechk" style="height:14px !important;"></td>
+                <td id="tokuisaki_cd<?php echo $i; ?>" class="tokuisaki_cd" style="width: 100px;text-align: center;cursor: pointer;color: blue;"><?php echo $tokuisaki_mr['cd'] ?></td>
+                <td id="tokuisaki_name<?php echo $i; ?>" width="400px"><?php echo $tokuisaki_mr['name'] ?></td>
+                <td id="zenkai_hiduke<?php echo $i; ?>" width="100px" align="center"><?php echo $tokuisaki_mr['zenkai_hiduke'] ?></td>
+                <td id="uriagegaku<?php echo $i; ?>" width="100px" align="right"><?php echo number_format($tokuisaki_mr['uriagegaku']) ?></td>
+                <td id="konkaigaku<?php echo $i; ?>" width="100px" align="right"><?php echo number_format($tokuisaki_mr['zenkai_seikyuugaku'] - $tokuisaki_mr['nyuukingaku'] + $tokuisaki_mr['uriagegaku']) ?></td>
+
+                <input type="hidden" id="haraibi<?php echo $i; ?>" value="<?php echo $tokuisaki_mr["haraibi"]; ?>" />
+                <input type="hidden" id="zenkai_seikyuugaku<?php echo $i; ?>" value="<?php echo $tokuisaki_mr["zenkai_seikyuugaku"]; ?>" />
+                <input type="hidden" id="nyuukingaku<?php echo $i; ?>" value="<?php echo $tokuisaki_mr["nyuukingaku"]; ?>" />
+                <input type="hidden" id="shouhizeigaku<?php echo $i; ?>" value="<?php echo $tokuisaki_mr["shouhizeigaku"]; ?>" />
+                <input type="hidden" id="harai_saikuru_kbn_cd<?php echo $i; ?>" value="<?php echo $tokuisaki_mr["harai_saikuru_kbn_cd"]; ?>" />
+            </tr>
+        <?php $i++; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<div id="PgDn"></div>
+<div id="PgUp"></div>
+
+<script type="text/javascript">
+    var tokuisaki_sime_dts_modal_menu = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/modal_menu') ?>";
+    var seikyuu_meisai = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/seikyuu_meisai'); ?>";
+    var shimeAjax = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/shime_ajax'); ?>";
+    const shime_rireki = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/modal'); ?>";
+    const getTokuisakiGroupLastShimeHiduke = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/ajax_last_shimebi') ?>";
+</script>
+<script>
+    $('#all').on('change', function () {
+        $('input').prop('checked', this.checked);
+    });
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/seikyuu_simekiri.js'); ?>?var=20210129""></script>

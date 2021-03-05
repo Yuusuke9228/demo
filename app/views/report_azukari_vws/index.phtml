@@ -1,0 +1,72 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "預り.一覧"; ?>
+<div class="page-header">
+    <h3>預り 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"report_azukari_vws","flds"=>[
+        ["shouhin_mr_cd","ShouhinMrCd","商品コード",14,14],["tantou_mr_cd","TantouMrCd","担当",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["shouhin_mr_cd","商品コード"],
+                    ["tantou_mr_cd","担当"],
+                    ["tanni_mr_cd","単位"],
+                    ["lot","ロット"],
+                    ["kobetucd","個別コード"],
+                    ["zaiko_ryou2s","預り量"],
+                    ["nyuuko_ryou2s","預入量"],
+                    ["shukko_ryou2s","払出量"],
+                    ["nyuukobis","預入日"],
+                    ["shukkobis","払出日"],
+                    ["nyuushukkobi","出入日"],
+                    ["nyuushukkoym","出入月"],
+                    ["denpyou_mr_cd","伝票種類"],
+                    ["oya_cd","伝票番号"],
+                    ["gyou_cd","行番"],
+                    ["utiwake_kbn_cd","内訳区分"],
+                    ["torihikisaki_cd","取引先"],
+                    ["bikou","備考"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $report_azukari_vw): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array($report_azukari_vw->DenpyouMrs->table_id."/edit/" . $report_azukari_vw->oya_id, $report_azukari_vw->shouhin_mr_cd)); ?></td>
+                <td nowrap><?php echo $report_azukari_vw->TantouMrs->name ?></td>
+                <td align='center'><?php echo $report_azukari_vw->TanniMrs->name ?></td>
+                <td><?php echo $report_azukari_vw->lot ?></td>
+                <td><?php echo $report_azukari_vw->kobetucd ?></td>
+                <td align='right'><?php echo $report_azukari_vw->zaiko_ryou2s ?></td>
+                <td align='right'><?php echo $report_azukari_vw->nyuuko_ryou2s ?></td>
+                <td align='right'><?php echo $report_azukari_vw->shukko_ryou2s ?></td>
+                <td align='center'><?php echo $report_azukari_vw->nyuukobis ?></td>
+                <td align='center'><?php echo $report_azukari_vw->shukkobis ?></td>
+                <td align='center'><?php echo $report_azukari_vw->nyuushukkobi ?></td>
+                <td align='center'><?php echo $report_azukari_vw->nyuushukkoym ?></td>
+                <td align='center'><?php echo $report_azukari_vw->denpyou_mr_cd ?></td>
+                <td align='right'><?php echo $report_azukari_vw->oya_cd ?></td>
+                <td align='center'><?php echo $report_azukari_vw->gyou_cd ?></td>
+                <td align='center' nowrap><?php echo $report_azukari_vw->UtiwakeKbns->name ?></td>
+                <td align='center'><?php echo $report_azukari_vw->torihikisaki_cd ?></td>
+                <td><?php echo $report_azukari_vw->bikou ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"report_azukari_vws"]) ?>

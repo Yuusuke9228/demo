@@ -1,0 +1,200 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "部門マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>部門マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"bumon_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["cd","部門コード(変更)"],
+                    ["name","部門名称"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th><input type="button" id="rowNew" name="cancel" value="追加"  onclick="newrow()"/></th>
+            </tr>
+        </thead>
+        <tbody id="databody">
+        <?php foreach ($page->items as $bumon_mr): ?>
+            <tr>
+                <td class='edit_row'><?php echo $bumon_mr->cd ?></td>
+                <td><?php echo $bumon_mr->name ?></td>
+                <td><?php echo $bumon_mr->updated ?></td>
+                <td></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"bumon_mrs"]) ?>
+
+<div id="editparts" hidden>
+<input type="text" id="rowCd" name="cd" class="form-control" length="4" maxlength="4" />
+<input type="text" id="rowName" name="name" class="form-control" maxlength="40" />
+<input type="button" id="rowEnt" name="enter" value="更新" onclick="this0ent()" />
+<input type="button" id="rowEsc" name="escape" value="取消" onclick="this0esc()"/>
+<input type="button" id="rowCan" name="cancel" value="取消" onclick="this0can()"/>
+<input type="button" id="rowDlt" name="delete" value="削除"  onclick="this0dlt()"/>
+<input type="button" id="rowCrt" name="create" value="作成"  onclick="this0ent()"/>
+</div>
+<script type="text/javascript">
+/* 部門コードをクリックするとその明細表示を呼ぶ */
+var this0=null;
+var this0cd="";
+var this0name="";
+$(".edit_row").click(function() {
+	if (!this0) {
+		this0=this;
+		this0cd=$(this).text();
+		$(this).text('');
+		$("#rowCd").val(this0cd).attr('type','text').prependTo(this);
+		$("#rowCd").focus();
+		var this1 = $(this).nextAll().eq(0);
+		this0name=$(this1).text();
+		$(this1).text('');
+		$("#rowName").val(this0name).attr('type','text').prependTo(this1);
+		var thisend = $(this).nextAll().length - 1;
+		var this1 = $(this).nextAll().eq(thisend);
+		$(this1).text('');
+		$("#rowEsc").attr('type','button').appendTo(this1);
+		$("#rowEnt").attr('type','button').appendTo(this1);
+		$("#rowDlt").attr('type','button').appendTo(this1);
+	}
+});
+
+function newrow() {
+	$('#databody').append('<tr><td></td><td id="newCd"></td><td></td><td></td><td></td></tr>');
+	this0="#newCd";
+	$("#rowCd").val('').attr('type','text').prependTo(this0);
+	$("#rowCd").focus();
+	var this1 = $(this0).nextAll().eq(0);
+	$("#rowName").val('').attr('type','text').prependTo(this1);
+	var thisend = $(this0).nextAll().length - 1;
+	var this1 = $(this0).nextAll().eq(thisend);
+	$("#rowCrt").attr('type','button').appendTo(this1);
+	$("#rowCan").attr('type','button').appendTo(this1);
+}
+
+function this0esc() {
+	if (this0) {
+		$("#rowCd").appendTo("#editparts");
+		$("#rowName").appendTo("#editparts");
+		$("#rowEsc").appendTo("#editparts");
+		$("#rowEnt").appendTo("#editparts");
+		$("#rowDlt").appendTo("#editparts");
+		$(this0).text(this0cd);
+		var this1 = $(this0).nextAll().eq(0);
+		$(this1).text(this0name);
+		this0 = null;
+	}
+}
+
+var ajaxSave = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('bumon_mrs/ajaxSave') ?>";
+var ajaxDelete = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('bumon_mrs/ajaxDelete') ?>";
+
+function this0ent() {
+	if (this0) {
+		$("#rowCd").appendTo("#editparts");
+		$("#rowName").appendTo("#editparts");
+		$("#rowEsc").appendTo("#editparts");
+		$("#rowEnt").appendTo("#editparts");
+		$("#rowDlt").appendTo("#editparts");
+		$("#rowCrt").appendTo("#editparts");
+		$("#rowCan").appendTo("#editparts");
+		this9=this0;
+		$.ajax({
+			type:"POST",
+			url:ajaxSave,
+			data:{
+				'id':$(this0).prev().text(),
+				'cd':$('#rowCd').val(),
+				'name':$('#rowName').val(),
+				'updated':$(this0).nextAll().eq(1).text(),//更新日時
+				},
+			async:true,
+			dataType:'json',
+			success: function (data) {
+				var this1 = $(this9).prev();//CDの左
+				$(this1).text(data[0].id);
+				$(this9).text(data[0].cd);
+				var this1 = $(this9).nextAll().eq(0);//名前
+				$(this1).text(data[0].name);
+				var this1 = $(this9).nextAll().eq(1);//更新日時
+				$(this1).text(data[0].updated);
+			},
+			error: function(xhr, status, err) {
+				alert('エラー save.ajax '+status+'/'+err);
+			},
+		});
+		this0 = null;
+	}
+}
+
+function this0dlt() {
+	if (!confirm("よろしいですか？")) {
+		return false;
+	}
+	if (this0) {
+		$("#rowCd").appendTo("#editparts");
+		$("#rowName").appendTo("#editparts");
+		$("#rowEsc").appendTo("#editparts");
+		$("#rowEnt").appendTo("#editparts");
+		$("#rowDlt").appendTo("#editparts");
+$(this0).parent('tr').fadeOut( 500, function(){$(this).remove();} );
+		$.ajax({
+			type:"POST",
+			url:ajaxDelete,
+			data:{
+				'id':$(this0).prev().text(),
+				},
+			async:true,
+			dataType:'json',
+			success: function (data) {
+				$(this0).parent('tr').fadeOut( 500, function(){$(this).remove();} );
+			},
+			error: function(xhr, status, err) {
+				alert('エラー save.ajax '+status+'/'+err);
+			},
+		});
+		this0 = null;
+	}
+}
+
+function this0can() {
+	if (this0) {
+		$("#rowCd").appendTo("#editparts");
+		$("#rowName").appendTo("#editparts");
+		$("#rowCan").appendTo("#editparts");
+		$("#rowCrt").appendTo("#editparts");
+		$(this0).parent('tr').fadeOut( 500, function(){$(this).remove();} );
+		this0 = null;
+	}
+}
+
+function kanni(kahuka) {
+	if (kahuka) {
+		$("#fieldCd,#fieldName").removeAttr("readonly");
+		$("#F12x").prop("disabled", false).attr("id","F12");
+	} else {
+		$("#fieldCd,#fieldName").attr("readonly","readonly");
+		$("#F12").prop("disabled", true).attr("id","F12x");
+	}
+}
+
+</script>

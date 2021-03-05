@@ -1,0 +1,666 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php use Phalcon\Tag; ?>
+<?php $title = 'レポ.仕入明細'; ?>
+<div class="page-header">
+	<h3>仕入明細表</h3>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="panel panel-success bg-yel">
+    <br />
+    <?php
+        echo $this->tag->form(
+            array(
+                "report_shiire/index",
+                "autocomplete" => "off",
+                "class" => "form-horizontal",
+                "name" => "form_jouken"
+            )
+        );
+    ?>
+    <div class="form-group">
+        <div class="col-sm-8">
+          <label for="fieldCd" class="col-sm-2 control-label">条件名></label>
+            <div class="col-sm-10">
+                <?php echo $this->tag->selectStatic(array("cd", $joukens, "style" => "width: 260px;", "class" => "form-control", "id" => "fieldCd")) ?>
+            </div>
+          <label for="fieldKikanSiteiKbnCd" class="col-sm-2 control-label">期間></label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->select(array("kikan_sitei_kbn_cd", KikanSiteiKbns::find(["columns" => "cd , name", "order" => "cd", "conditions" => "cd like '2%'"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "style" => "width: 130px;", "class" => "form-control", "id" => "fieldKikanSiteiKbnCd")) ?>
+            </div>
+            <div class="col-sm-3">
+                <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+            </div>
+
+          <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <?php /* 順序区分コード */ echo $this->tag->hiddenField("junjo_kbn_cd") ?>
+            <?php /* 順序区分テーブル */ echo $this->tag->hiddenField("junjo_kbn_table") ?>
+            <?php /* 降順フラグ     */ echo $this->tag->hiddenField("koujun_flg") ?>
+            <?php /* 範囲自         */ echo $this->tag->hiddenField("hanni_from") ?>
+            <?php /* 範囲自名       */ echo $this->tag->hiddenField("hanni_from_name") ?>
+            <?php /* 範囲至         */ echo $this->tag->hiddenField("hanni_to") ?>
+            <?php /* 範囲至名       */ echo $this->tag->hiddenField("hanni_to_name") ?>
+            <?php /* 絞込仕入先コード*/ echo $this->tag->hiddenField("shiiresaki_mr_cd") ?>
+            <?php /* 絞込商品コード */ echo $this->tag->hiddenField("shouhin_mr_cd") ?>
+            <?php /* 絞込担当者コード*/ echo $this->tag->hiddenField("tantou_mr_cd") ?>
+            <?php /* 絞込倉庫コード */ echo $this->tag->hiddenField("souko_mr_cd") ?>
+            <?php /* 絞込プロジェクト*/ echo $this->tag->hiddenField("project_mr_cd") ?>
+            <?php /* 絞込プロジェクトサブ*/ echo $this->tag->hiddenField("project_sub_cd") ?>
+            <?php /* 伝票番号自     */ echo $this->tag->hiddenField("cd_from") ?>
+            <?php /* 伝票番号至     */ echo $this->tag->hiddenField("cd_to") ?>
+            <?php /* 締切区分       */ echo $this->tag->hiddenField("simekiri_kbn") ?>
+            <?php /* 内訳通常フラグ */ echo $this->tag->hiddenField("tuujou_flg") ?>
+            <?php /* 内訳返品フラグ */ echo $this->tag->hiddenField("henpin_flg") ?>
+            <?php /* 内訳値引フラグ */ echo $this->tag->hiddenField("nebiki_flg") ?>
+            <?php /* 内訳諸経費フラグ*/ echo $this->tag->hiddenField("shokeihi_flg") ?>
+            <?php /* 内訳加工生産フラグ */ echo $this->tag->hiddenField("seisan_flg") ?>
+            <?php /* 内訳支給消費フラグ */ echo $this->tag->hiddenField("shouhi_flg") ?>
+            <?php /* 内訳支給受入フラグ */ echo $this->tag->hiddenField("sikyuu_flg") ?>
+            <?php /* 内訳預りフラグ */ echo $this->tag->hiddenField("azukari_flg") ?>
+            <?php /* 内訳摘要フラグ */ echo $this->tag->hiddenField("tekiyou_flg") ?>
+            <?php /* 内訳メモフラグ */ echo $this->tag->hiddenField("memo_flg") ?>
+            <?php /* 内訳消費税フラグ*/ echo $this->tag->hiddenField("shouhizei_flg") ?>
+            <?php /* 自入力分フラグ */ echo $this->tag->hiddenField("jinyuuryoku_flg") ?>
+            <?php /* 伝票計摘要フラグ*/ echo $this->tag->hiddenField("keitekiyou_flg") ?>
+            <?php /* 合計行表示フラグ*/ echo $this->tag->hiddenField("goukeigyou_flg") ?>
+            <div class="col-sm-4">
+                <button class="btn btn-warning" onclick="modalstart(jouken_shiire_modal);return false;">条件設定>8</button>
+            </div>
+            <div class="col-sm-4">
+                <button class="submit btn btn-warning" data-action="/demo/report_shiire/indexxls">EXCEL出力</button>
+            </div>
+            <div class="col-sm-4">
+                <?php echo $this->tag->submitButton(array("集計f12", "id" => "F12", "class" => "btn btn-lg btn-success")) ?>
+            </div>
+        </div>
+    </div><!-- form-group -->
+    <?php echo $this->tag->endForm(); ?>
+</div><!-- panel-successp -->
+
+<?php
+	$meisai_suu = 0;
+	$genka_kei = 0;
+	$ararieki_kei = 0;
+	$zeinukigaku_kei = 0;
+	$zeigaku_kei = 0;
+	$kingaku_kei = 0;
+	$sotozeigaku_kei = 0;
+	foreach ($rows as $row) {
+		$meisai_suu++;
+		$genka = $row->shiireMeisaiDts->genkagaku; /* 四捨五入 */
+		$genka_kei += $genka;
+		$ararieki = $row->shiireMeisaiDts->kingaku - $genka;
+		$ararieki_kei += $ararieki;
+		$zeinukigaku_kei += $row->shiireMeisaiDts->zeinukigaku;
+		$zeigaku_kei += $row->shiireMeisaiDts->zeigaku;
+		$kingaku_kei += $row->shiireMeisaiDts->kingaku;
+		if ($row->shiireMeisaiDts->zeinukigaku == $row->shiireMeisaiDts->kingaku) {
+			$sotozeigaku_kei += $row->shiireMeisaiDts->zeigaku;
+		}
+	}
+?>
+<div class="row">
+	<table class="table table-bordered table-hover table-condens-0">
+		<thead>
+			<tr style="background-color: lavender;">
+				<th style="text-align: center;">明細数</th>
+				<th style="text-align: center;">金額計</th>
+				<th style="text-align: center;">外税額</th>
+				<th style="text-align: center;">合計</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr style="background-color: #fffcf8;">
+				<th style="text-align: center;"><?php echo number_format($meisai_suu) /* 明細数 */ ?></th>
+				<th style="text-align: center;"><?php echo number_format($kingaku_kei) /* 金額計 */ ?></th>
+				<th style="text-align: center;"><?php echo number_format($sotozeigaku_kei) /* 外税額 */ ?></th>
+				<th style="text-align: center;"><?php echo number_format($kingaku_kei+$sotozeigaku_kei) /* 合計 */ ?></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<?php $junjo_key = substr($setdts["junjo_kbn_cd"], -2) ?>
+<?php $color = ""; ?>
+<div class="row">
+	<table class="table table-bordered table-hover table-condens-0">
+		<thead>
+			<tr style="background-color: lavender;">
+				<?php if ($junjo_key === "03"): ?>
+					<th nowrap style="text-align: center;">仕入先コード</th>
+					<th nowrap style="text-align: center;">税転嫁</th>
+				<?php endif ?>
+				<?php if ($junjo_key === "05"): ?>
+					<th nowrap style="text-align: center;">担当者コード</th>
+				<?php endif ?>
+				<?php if ($junjo_key === "04"): ?>
+					<th nowrap style="text-align: center;">商品コード</th>
+					<th nowrap style="text-align: center;">単位</th>
+					<th nowrap style="text-align: center;">入数</th>
+					<th nowrap style="text-align: center;">ケース</th>
+				<?php endif ?>
+				<?php if ($junjo_key === "07"): ?>
+					<th nowrap style="text-align: center;">プロジェクトコード</th>
+				<?php endif ?>
+				<th nowrap style="text-align: center;">仕入日</th>
+				<th nowrap style="text-align: center;">取引区分</th>
+				<?php if ($junjo_key !== "03"): ?>
+					<th nowrap style="text-align: center;">仕入先コード</th>
+					<th nowrap style="text-align: center;">税転嫁</th>
+				<?php endif ?>
+				<?php if ($junjo_key !== "05"): ?>
+					<th nowrap style="text-align: center;">担当者コード</th>
+				<?php endif ?>
+				<th nowrap style="text-align: center;">内訳</th>
+				<?php if ($junjo_key !== "04"): ?>
+					<th nowrap style="text-align: center;">商品コード</th>
+					<th nowrap style="text-align: center;">単位</th>
+					<th nowrap style="text-align: center;">入数</th>
+					<th nowrap style="text-align: center;">ケース</th>
+				<?php endif ?>
+				<th nowrap style="text-align: center;">倉庫コード</th>
+				<th nowrap style="text-align: center;"></th>
+				<th nowrap style="text-align: center;"></th>
+				<th nowrap style="text-align: center;"></th>
+				<?php if ($junjo_key !== "07"): ?>
+					<th nowrap style="text-align: center;">プロジェクトコード</th>
+				<?php endif ?>
+				<th nowrap style="text-align: center;">課税区分</th>
+				<th nowrap style="text-align: center;"></th>
+			</tr>
+			<tr style="background-color: lavender;">
+				<?php if ($junjo_key === "03"): ?>
+					<th nowrap colspan="2" style="text-align: center;">仕入先名</th>
+				<?php endif ?>
+				<?php if ($junjo_key === "05"): ?>
+					<th nowrap style="text-align: center;">担当者名</th>
+				<?php endif ?>
+				<?php if ($junjo_key === "04"): ?>
+					<th nowrap colspan="4" style="text-align: center;">商品名/摘要</th>
+				<?php endif ?>
+				<?php if ($junjo_key === "07"): ?>
+					<th nowrap style="text-align: center;">プロジェクト名</th>
+				<?php endif ?>
+
+				<th nowrap style="text-align: center;">伝票番号</th>
+				<th nowrap style="text-align: center;">締切</th>
+				<?php if ($junjo_key !== "03"): ?>
+					<th nowrap colspan="2" style="text-align: center;">仕入先名</th>
+				<?php endif ?>
+				<?php if ($junjo_key !== "05"): ?>
+					<th nowrap style="text-align: center;">担当者名</th>
+				<?php endif ?>
+				<th nowrap style="text-align: center;">入荷</th>
+				<?php if ($junjo_key !== "04"): ?>
+					<th nowrap colspan="4" style="text-align: center;">商品名/摘要</th>
+				<?php endif ?>
+				<th nowrap style="text-align: center;">倉庫名</th>
+				<th nowrap style="text-align: center;">数量</th>
+				<th nowrap style="text-align: center;">単価</th>
+				<th nowrap style="text-align: center;">金額</th>
+				<?php if ($junjo_key !== "07"): ?>
+					<th nowrap style="text-align: center;">プロジェクト名</th>
+				<?php endif ?>
+				<th nowrap style="text-align: center;">備考</th>
+				<th nowrap style="text-align: center;">発注番号</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php
+			$suuryou_denkei = 0;
+			$ararieki_denkei = 0;
+			$kingaku_denkei = 0;
+			$sotozei_denkei = 0;
+			$suuryou_kei = 0;
+			$ararieki_kei = 0;
+			$kingaku_kei = 0;
+			$sotozei_kei = 0;
+			$suuryou_soukei = 0;
+			$ararieki_soukei = 0;
+			$kingaku_soukei = 0;
+			$sotozei_soukei = 0;
+			$mae_cd = "";
+			$bbkey = "";
+			$bkey = "";
+			$denkey = "";
+			$bdenkey = "";
+			$i = 0;
+			$i1 = 0;
+			$kei_midasi = ["","《伝票計》","《日計》","《仕入先計》","《商品計》","《担当計》","《納入先計》","《プロジェクト計》","","",""];
+		?>
+		<?php for ($i = 0; $i < count($rows); $i++): $row = $rows[$i] ?>
+			<tr style="background-color: #fffcf8;">
+                <?php
+                if($mae_cd == $row->uriageDts->cd){
+                    $font = "#cccccc";
+                } else {
+                    $font = "black";
+                }
+                $mae_cd = $row->uriageDts->cd;
+                ?>
+                <?php if ($junjo_key === "03"): ?>
+					<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->shiireDts->shiiresaki_mr_cd /* 仕入先コード*/ ?></td>
+					<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->zeitenkaKbns->name /* 税転嫁*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key === "05"): ?>
+					<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->shiireDts->tantou_mr_cd /* 担当者コード*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key === "04"): ?>
+					<td nowrap><?php echo $row->shiireMeisaiDts->shouhin_mr_cd /* 商品コード*/ ?></td>
+					<td nowrap style="text-align: center;"><?php echo $row->tanniMrs->name /* 単位*/ ?></td>
+					<td nowrap style="text-align: right;"><?php echo $row->shiireMeisaiDts->irisuu /* 入数*/ ?></td>
+					<td nowrap style="text-align: right;"><?php echo $row->shiireMeisaiDts->keisu /* ケース*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key === "07"): ?>
+					<td nowrap style="text-align: left;"><?php echo $row->shiireMeisaiDts->project_mr_cd /* 主プロジェクトコード*/ ?></td>
+				<?php endif ?>
+
+				<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->shiireDts->shiirebi /* 仕入日*/ ?></td>
+				<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->torihikiKbns->shiire_name /* 取引区分*/ ?></td>
+				<?php if ($junjo_key !== "03"): ?>
+					<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->shiireDts->shiiresaki_mr_cd /* 仕入先コード*/ ?></td>
+					<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->zeitenkaKbns->name /* 税転嫁*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key !== "05"): ?>
+					<td nowrap style="text-align: left;color: <?php echo $font; ?>;"><?php echo $row->shiireDts->tantou_mr_cd /* 担当者コード*/ ?></td>
+				<?php endif ?>
+				<td nowrap style="text-align: left;"><?php echo $row->utiwakeKbns->name /* 内訳*/ ?></td>
+				<?php if ($junjo_key !== "04"): ?>
+					<td nowrap><?php echo $row->shiireMeisaiDts->shouhin_mr_cd /* 商品コード*/ ?></td>
+					<td nowrap style="text-align: center;"><?php echo $row->tanniMrs->name /* 単位*/ ?></td>
+					<td nowrap style="text-align: right;"><?php echo $row->shiireMeisaiDts->irisuu /* 入数*/ ?></td>
+					<td nowrap style="text-align: right;"><?php echo $row->shiireMeisaiDts->keisu /* ケース*/ ?></td>
+				<?php endif ?>
+				<td nowrap style="text-align: left;"><?php echo $row->shiireMeisaiDts->souko_mr_cd /* 倉庫コード*/ ?></td>
+				<td></td>
+				<td nowrap style="text-align: right;"></td>
+				<td nowrap style="text-align: right;"></td>
+				<?php if ($junjo_key !== "07"): ?>
+					<td nowrap style="text-align: left;"><?php echo $row->shiireMeisaiDts->project_mr_cd /* 主プロジェクトコード*/ ?></td>
+				<?php endif ?>
+				<td nowrap style="text-align: left;"><?php echo $row->zeiritu_name /* 課税区分*/ ?></td>
+				<td nowrap style="text-align: left;"><?php echo $row->shiireDts->hacchuu_dt_cd /* 発注番号*/ ?></td>
+			</tr>
+			<tr style="background-color: #fffcf8;">
+				<?php if ($junjo_key === "03"): ?>
+					<td nowrap colspan="2" style="color: <?php echo $font; ?>;"><?php echo $row->shiiresakiMrs->name /* 仕入先名*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key === "05"): ?>
+					<td nowrap style="color: <?php echo $font; ?>;"><?php echo $row->tantouMrs->name /* 担当者名*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key === "04"): ?>
+					<td nowrap colspan="4"><?php echo $row->shiireMeisaiDts->tekiyou /* 商品名/摘要*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key === "07"): ?>
+					<td nowrap><?php echo $row->project_mr_cd==""?"":$row->projectMrs->name /* プロジェクト名*/ ?></td>
+				<?php endif ?>
+				<td nowrap style="text-align: right;color: blue;"><?php echo $this->tag->linkTo(array("shiire_dts/edit/" . $row->shiireDts->id, $row->shiireDts->cd, "target"=>"blank")); /* 伝票番号*/ ?></td>
+				<td nowrap style="text-align: right;color: <?php echo $font; ?>;"><?php echo ($row->shiireDts->shimekiri_flg == 0 ? "今回" : "次回"); /* 締切*/ ?></td>
+				<?php if ($junjo_key !== "03"): ?>
+					<td nowrap colspan="2" style="color: <?php echo $font; ?>;"><?php echo $row->shiiresakiMrs->name /* 仕入先名*/ ?></td>
+				<?php endif ?>
+				<?php if ($junjo_key !== "05"): ?>
+					<td nowrap style="color: <?php echo $font; ?>;"><?php echo $row->tantouMrs->name /* 担当者名*/ ?></td>
+				<?php endif ?>
+				<td nowrap style="text-align: center;"><?php echo $row->shiireMeisaiDts->nyuuka_kbn_cd== "" ? "" : $row->nyuukaKbns->name /* 入荷*/ ?></td>
+				<?php if ($junjo_key !== "04"): ?>
+					<td nowrap colspan="4"><?php echo $row->shiireMeisaiDts->tekiyou /* 商品名/摘要*/ ?></td>
+				<?php endif ?>
+				<td nowrap><?php echo $row->soukoMrs->name /* 倉庫名*/ ?></td>
+                <?php
+                $sn = "suuryou" . $row->shiireMeisaiDts->tanka_kbn;
+                if ((round((float)$row->shiireMeisaiDts->$sn, 3)) < 0.00) {
+                    $color = 'red';
+                } else {
+                    $color = 'black';
+                }
+                ?>
+				<td nowrap style="text-align: right;color: <?php echo $color; ?>;"><?php echo number_format($row->shiireMeisaiDts->$sn,2) /* 数量*/ ?></td>
+				<td nowrap style="text-align: right;"><?php echo number_format($row->shiireMeisaiDts->tanka,2) /* 単価*/ ?></td>
+				<?php
+					$sn="suuryou" . $row->shiireMeisaiDts->tanka_kbn;
+					$suuryou_denkei += $row->shiireMeisaiDts->$sn;
+					$suuryou_kei += $row->shiireMeisaiDts->$sn;
+					$suuryou_soukei += $row->shiireMeisaiDts->$sn;
+					$ararieki = $row->shiireMeisaiDts->kingaku - $row->shiireMeisaiDts->genkagaku;
+					$ararieki_denkei += $ararieki;
+					$ararieki_kei += $ararieki;
+					$ararieki_soukei += $ararieki;
+					$kingaku_denkei += $row->shiireMeisaiDts->kingaku;
+					$kingaku_kei += $row->shiireMeisaiDts->kingaku;
+					$kingaku_soukei += $row->shiireMeisaiDts->kingaku;
+					$sotozei_denkei += $row->shiireMeisaiDts->zeigaku - $row->shiireMeisaiDts->kingaku + $row->shiireMeisaiDts->zeinukigaku;
+					$sotozei_kei += $row->shiireMeisaiDts->zeigaku - $row->shiireMeisaiDts->kingaku + $row->shiireMeisaiDts->zeinukigaku;
+					$sotozei_soukei += $row->shiireMeisaiDts->zeigaku - $row->shiireMeisaiDts->kingaku + $row->shiireMeisaiDts->zeinukigaku;
+				?>
+                <?php
+                if ((round((float)$row->shiireMeisaiDts->kingaku, 3)) < 0.00) {
+                    $color = 'red';
+                } else {
+                    $color = 'black';
+                }
+                ?>
+				<td nowrap style="text-align: right;color: <?php echo $color; ?>;"><?php echo number_format($row->shiireMeisaiDts->kingaku) /* 金額*/ ?></td>
+				<?php if ($junjo_key !== "07"): ?>
+					<td nowrap><?php echo $row->shiireMeisaiDts->project_mr_cd==""?"":$row->projectMrs->name /* プロジェクト名*/ ?></td>
+				<?php endif ?>
+				<td nowrap><?php echo $row->shiireMeisaiDts->bikou /* 備考*/ ?></td>
+				<td nowrap style="text-align: right;"><?php echo $row->shiireDts->hacchuu_dt_cd /* 発注番号*/ ?></td>
+			</tr>
+			<?php
+				for (; $i1 <= $i + 1 && $i + 1 < count($rows); $i1++) {
+					$bbkey = $bkey; // バックブレークキー と ブレークキー
+					$bdenkey = $denkey;
+					$denkey = $rows[$i1]->shiireDts->cd;
+					if ($junjo_key == "01") {$bkey = $rows[$i1]->shiireDts->cd;}
+					if ($junjo_key == "02") {$bkey = $rows[$i1]->shiireDts->shiirebi;}
+					if ($junjo_key == "03") {$bkey = $rows[$i1]->shiireDts->shiiresaki_mr_cd;}
+					if ($junjo_key == "04") {$bkey = $rows[$i1]->shiireMeisaiDts->shouhin_mr_cd;}
+					if ($junjo_key == "05") {$bkey = $rows[$i1]->shiireDts->tantou_mr_cd;}
+					if ($junjo_key == "07") {$bkey = $rows[$i1]->shiireMeisaiDts->project_mr_cd;}
+				}
+			?>
+			<?php if ($junjo_key !== "04" && $junjo_key !== "07" && ($i + 1 >= count($rows) || $denkey !== $bdenkey)): /* 伝票毎表示 */ ?>
+			  <?php if ($setdts["shouhizei_flg"] === "1"): /* 外税表示 */ ?>
+				<tr style="background-color: #fffcf8;">
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr style="background-color: #fffcf8;">
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th>《外税》</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+                    <?php
+                    if ((round((float)$sotozei_denkei, 3)) < 0.00) {
+                        $color = 'red';
+                    } else {
+                        $color = 'black';
+                    }
+                    ?>
+					<th style="text-align:right;color: <?php echo $color;?>;"><?php echo number_format($sotozei_denkei); $kingaku_denkei += $sotozei_denkei; $sotozei_denkei = 0; /* 外税 */ ?></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			  <?php endif ?>
+			  <?php if ($setdts["keitekiyou_flg"] === "1"): /* 伝票計表示 */ ?>
+				<tr style="background-color: #fffcf8;">
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr style="background-color: #fffcf8;">
+					<?php if ($junjo_key === "03" || $junjo_key === "05" || $junjo_key === "06"): ?>
+						<th></th>
+					<?php endif ?>
+					<?php if ($junjo_key === "03"): ?>
+						<th></th>
+					<?php endif ?>
+					<th>《伝計》</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<?php if ($junjo_key !== "03" && $junjo_key !== "05" && $junjo_key !== "06"): ?>
+						<th></th>
+					<?php endif ?>
+					<?php if ($junjo_key !== "03"): ?>
+						<th></th>
+					<?php endif ?>
+					<th></th>
+                    <?php
+                    if ((round((float)$suuryou_denkei, 3)) < 0.00) {
+                        $color = 'red';
+                    } else {
+                        $color = 'black';
+                    }
+                    ?>
+					<th style="text-align:right;color: <?php echo $color; ?>;"><?php echo number_format($suuryou_denkei,2); $suuryou_denkei = 0; /* 数量 */ ?></th>
+					<th></th>
+                    <?php
+                    if ((round((float)$kingaku_denkei, 3)) < 0.00) {
+                        $color = 'red';
+                    } else {
+                        $color = 'black';
+                    }
+                    ?>
+					<th style="text-align:right;color: <?php echo $color; ?>;"><?php echo number_format($kingaku_denkei); $kingaku_denkei = 0; /* 金額 */ ?></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			  <?php endif ?>
+			<?php endif ?>
+			<?php if ($setdts["goukeigyou_flg"] === "1" && $junjo_key !== "01" && ($i + 1 >= count($rows) || $bkey !== $bbkey)): /* 合計表示 */ ?>
+				<tr style="background-color: #fffcf8;">
+					<th></th>
+					<?php if ($junjo_key === "07"): ?>
+						<th></th>
+					<?php endif ?>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<?php if ($junjo_key !== "07"): ?>
+						<th></th>
+					<?php endif ?>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr style="background-color: #fffcf8;">
+					<th><?php echo $kei_midasi[0+$junjo_key] ?></th>
+					<?php if ($junjo_key === "07"): ?>
+						<th></th>
+					<?php endif ?>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+                    <?php
+                    if ((round((float)$suuryou_kei, 3)) < 0.00) {
+                        $color = 'red';
+                    } else {
+                        $color = 'black';
+                    }
+                    ?>
+					<th style="text-align:right;color: <?php echo $color; ?>;"><?php echo number_format($suuryou_kei,2); $suuryou_kei = 0; /* 数量 */ ?></th>
+					<th></th>
+                    <?php
+                    if ((round((float)$kingaku_kei, 3)) < 0.00) {
+                        $color = 'red';
+                    } else {
+                        $color = 'black';
+                    }
+                    ?>
+					<th style="text-align:right;color: <?php echo $color; ?>;"><?php echo number_format($kingaku_kei); $kingaku_kei = 0; /* 金額 */ ?></th>
+					<?php if ($junjo_key !== "07"): ?>
+						<th></th>
+					<?php endif ?>
+					<th></th>
+					<th></th>
+				</tr>
+			<?php endif ?>
+		<?php endfor; ?>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th></th>
+				<?php if ($junjo_key === "07"): ?>
+					<th></th>
+				<?php endif ?>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<?php if ($junjo_key !== "07"): ?>
+					<th></th>
+				<?php endif ?>
+				<th></th>
+				<th></th>
+			</tr>
+			<tr>
+				<th>合計</th>
+				<?php if ($junjo_key === "07"): ?>
+					<th></th>
+				<?php endif ?>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+                <?php
+                if ((round((float)$suuryou_soukei, 3)) < 0.00) {
+                    $color = 'red';
+                } else {
+                    $color = 'black';
+                }
+                ?>
+				<th style="text-align:right;color: <?php echo $color; ?>;"><?php echo number_format($suuryou_soukei,2) /* 数量 */ ?></th>
+				<th></th>
+                <?php
+                if ((round((float)$kingaku_soukei, 3)) < 0.00) {
+                    $color = 'red';
+                } else {
+                    $color = 'black';
+                }
+                ?>
+				<th style="text-align:right;color: <?php echo $color; ?>;"><?php echo number_format($kingaku_soukei) /* 金額 */ ?></th>
+				<?php if ($junjo_key !== "07"): ?>
+					<th></th>
+				<?php endif ?>
+				<th></th>
+				<th></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+    <div id="iframe-wrap" class="wrapStyle" style="width:900px; height:500px;">
+        <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+            仕入明細条件設定
+            <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+        </div>
+	    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<script type="text/javascript">
+	var jouken_shiire_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('jouken_shiire_meisais/ajaxGet') ?>";
+	var kikan_sitei_kbns_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kikan_sitei_kbns/ajaxGet') ?>";
+	var junjo_kbns_ajaxHanni = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('junjo_kbns/ajaxHanni') ?>";
+	var jouken_shiire_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('jouken_shiire_meisais/modal') ?>";
+	var jouken_flds = ['junjo_kbn_cd'
+		,'koujun_flg'
+		,'hanni_from'
+		,'hanni_from_name'
+		,'hanni_to'
+		,'hanni_to_name'
+		,'shiiresaki_mr_cd'
+		,'shouhin_mr_cd'
+		,'tantou_mr_cd'
+		,'souko_mr_cd'
+		,'project_mr_cd'
+		,'project_sub_cd'
+		,'kikan_sitei_kbn_cd'
+		,'kikan_from'
+		,'kikan_to'
+		,'cd_from'
+		,'cd_to'
+		,'simekiri_kbn'
+		,'tuujou_flg'
+		,'henpin_flg'
+		,'nebiki_flg'
+		,'shokeihi_flg'
+		,'seisan_flg'
+		,'shouhi_flg'
+		,'sikyuu_flg'
+		,'azukari_flg'
+		,'tekiyou_flg'
+		,'memo_flg'
+		,'shouhizei_flg'
+		,'jinyuuryoku_flg'
+		,'keitekiyou_flg'
+		,'goukeigyou_flg'
+	];
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/report_shiire.js'); ?>?var=20191031"></script>

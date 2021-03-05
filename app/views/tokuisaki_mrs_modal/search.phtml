@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="modal-header" style="padding:0px 15px;">
+    <h4>得意先 検索条件</h4>
+</div>
+
+<?php echo $this->getContent() ?>
+<div class="modal-body" style="padding:0px 15px;">
+<?php
+    echo $this->tag->form(
+        array(
+            "tokuisaki_mrs_modal/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('tokuisaki_mrs/inputfields'); ?>
+
+    <?php $this->partial('common/panel_search_bottom'); ?>
+
+    <div class="col-sm-offset-2 col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+    <div class="col-sm-offset-4 col-sm-2">
+        <?php echo $this->tag->linkTo(array("tokuisaki_mrs_modal/index?page=1", "戻る*4", "id" => "F4", "class" => "btn btn-primary")) ?>
+    </div>
+
+</div><!-- class="form-group" -->
+
+<?php echo $this->tag->endForm(); ?>
+</div><!-- /modal-body -->

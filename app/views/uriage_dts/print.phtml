@@ -1,0 +1,28 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '売上.印刷'; ?>
+<div class="page-header">
+    <h3>売上伝票 印刷</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php echo $this->tag->form(array("hinsitu_kbns/index", "autocomplete" => "off", "class" => "form-horizontal")); ?>
+
+<div class="form-group">
+	<label for="fieldChouhyouKbn" class="col-sm-2 control-label">出力帳票</label>
+	<div class="col-sm-10">
+		<?php echo $this->tag->selectStatic(array("chouhyou_kbn", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldId")) ?>
+	</div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div>

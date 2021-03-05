@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "得意先分類５.一覧"; ?>
+<div class="page-header">
+    <h3>得意先分類５ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"tokuisaki_bunrui5_kbns","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","分類名"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $tokuisaki_bunrui5_kbn): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("tokuisaki_bunrui5_kbns/edit/" . $tokuisaki_bunrui5_kbn->id, $tokuisaki_bunrui5_kbn->id)); ?></td>
+                <td><?php echo $tokuisaki_bunrui5_kbn->cd ?></td>
+                <td><?php echo $tokuisaki_bunrui5_kbn->name ?></td>
+                <td><?php echo $tokuisaki_bunrui5_kbn->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("tokuisaki_bunrui5_kbns/delete/" . $tokuisaki_bunrui5_kbn->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"tokuisaki_bunrui5_kbns"]) ?>

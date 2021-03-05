@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$/app/controllers/ShouhinMrsModalController.php" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/app/models/ReportZaikoVws.php" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/public/js/views/uriage_dts.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/js/views/zaiko_henkan_dts.js" charset="UTF-8" />
+  </component>
+</project>

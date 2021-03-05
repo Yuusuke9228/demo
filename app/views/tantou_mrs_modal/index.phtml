@@ -1,0 +1,77 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<div class="contents" style="width:90%;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">
+      <span aria-hidden="true">&#215;</span><span class="sr-only">閉じる</span>
+    </button>
+    <h4 class="modal-title">Remote Modal タイトル</h4>
+  </div><!-- /modal-header -->
+  <div class="modal-body">
+
+<?php $title = '担当者.一覧'; ?>
+<div class="page-header">
+    <h3>担当者マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+            <th>担当コード</th>
+            <th>担当者名</th>
+            <th>フリガナ</th>
+            <th>部門</th>
+            <th>更新日時</th>
+
+                <th><a href=# onclick="$('#F10').focus();return false;" id="F10">修正*10</a></th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $tantou_mr): ?>
+            <tr>
+                <td><?php echo $tantou_mr->id ?></td>
+            <td><?php echo $tantou_mr->cd ?></td>
+            <td><?php echo $tantou_mr->name ?></td>
+            <td><?php echo $tantou_mr->kana_mei ?></td>
+            <td><?php echo $tantou_mr->bumonMrs->name ?></td>
+            <td><?php echo $tantou_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("tantou_mrs/edit/" . $tantou_mr->id, "修正")); ?></td>
+                <td><?php echo $this->tag->linkTo(array("tantou_mrs/delete/" . $tantou_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("tantou_mrs/index", "<<最初*11") ?></li>
+                <li><?php echo $this->tag->linkTo("tantou_mrs/index?page=" . $page->before, "<前頁*1") ?></li>
+                <li><?php echo $this->tag->linkTo("tantou_mrs/index?page=" . $page->next, " 次頁*2>") ?></li>
+                <li><?php echo $this->tag->linkTo("tantou_mrs/index?page=" . $page->last, "最後*12>>") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+  </div><!-- /modal-body -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+    <button type="button" class="btn btn-primary">変更を保存</button>
+  </div><!-- /modal-footer -->
+</div>

@@ -1,0 +1,78 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "条件見出しマスタ.一覧"; ?>
+<div class="page-header">
+    <h3>条件見出しマスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_jouken_midasi_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["h_kouteimei_mr_cd","工程名コード"],
+                    ["cd","条件コード"],
+                    ["name","条件名"],
+                    ["tanni_mr_cd","単位"],
+                    ["retu","表示列"],
+                    ["gyou","表示行"],
+                    ["val_type","値タイプ"],
+                    ["seisuuketa","整数桁"],
+                    ["shousuuketa","小数桁"],
+                    ["h_jouken_kouho_mr_cd","条件候補コード"],
+                    ["yuuikey","有意キー"],
+                    ["jikan_keisan","時間計算方法"],
+                    ["jikan_keisan_jun","計算順"],
+                    ["sagyou_keisan","作業量計算方法"],
+                    ["sagyou_keisan_jun","計算順"],
+                    ["koutin_keisan","工賃計算方法"],
+                    ["koutin_keisan_jun","計算順"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_jouken_midasi_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_jouken_midasi_mrs/edit/" . $h_jouken_midasi_mr->id, $h_jouken_midasi_mr->id)); ?></td>
+                <td><?php echo $h_jouken_midasi_mr->h_kouteimei_mr_cd ?></td>
+                <td><?php echo $h_jouken_midasi_mr->cd ?></td>
+                <td><?php echo $h_jouken_midasi_mr->name ?></td>
+                <td><?php echo $h_jouken_midasi_mr->tanni_mr_cd ?></td>
+                <td><?php echo $h_jouken_midasi_mr->retu ?></td>
+                <td><?php echo $h_jouken_midasi_mr->gyou ?></td>
+                <td><?php echo $h_jouken_midasi_mr->val_type ?></td>
+                <td><?php echo $h_jouken_midasi_mr->seisuuketa ?></td>
+                <td><?php echo $h_jouken_midasi_mr->shousuuketa ?></td>
+                <td><?php echo $h_jouken_midasi_mr->h_jouken_kouho_mr_cd ?></td>
+                <td><?php echo $h_jouken_midasi_mr->yuuikey ?></td>
+                <td><?php echo $h_jouken_midasi_mr->jikan_keisan ?></td>
+                <td><?php echo $h_jouken_midasi_mr->jikan_keisan_jun ?></td>
+                <td><?php echo $h_jouken_midasi_mr->sagyou_keisan ?></td>
+                <td><?php echo $h_jouken_midasi_mr->sagyou_keisan_jun ?></td>
+                <td><?php echo $h_jouken_midasi_mr->koutin_keisan ?></td>
+                <td><?php echo $h_jouken_midasi_mr->koutin_keisan_jun ?></td>
+                <td><?php echo $h_jouken_midasi_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_jouken_midasi_mrs/delete/" . $h_jouken_midasi_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_jouken_midasi_mrs"]) ?>

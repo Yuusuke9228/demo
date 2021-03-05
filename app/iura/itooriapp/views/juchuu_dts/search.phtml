@@ -1,0 +1,114 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["juchuu_dts/index", "Go Back"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["juchuu_dts/copyfromprop", "複写親"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["juchuu_meisai_dts/search", "子へ移動"]); ?></li>
+            <li><a href="#" onclick="window.close()">閉じる</a></li>
+            <li class="next"><?php echo $this->tag->linkTo(["juchuu_dts/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+            <th>Cd</th>
+            <th>Nendo</th>
+            <th>Tekiyou</th>
+            <th>Juchuubi</th>
+            <th>Zeiritu Of Tekiyoubi</th>
+            <th>Tokuisaki Of Mr Of Cd</th>
+            <th>Torihiki Of Kbn Of Cd</th>
+            <th>Zei Of Tenka Of Kbn Of Cd</th>
+            <th>Tantou Of Mr Of Cd</th>
+            <th>Shimekiri Of Flg</th>
+            <th>Nounyuu Of Kijitu</th>
+            <th>Mitumori Of Dt</th>
+            <th>Saki Of Hacchuu Of Cd</th>
+            <th>Nounyuusaki Of Mr Of Cd</th>
+            <th>Nounyuusaki</th>
+            <th>Chokusousaki Of Kbn Of Cd</th>
+            <th>Id Of Moto</th>
+            <th>Hikae Of Dltflg</th>
+            <th>Hikae Of User</th>
+            <th>Hikae Of Nichiji</th>
+            <th>Sakusei Of User</th>
+            <th>Created</th>
+            <th>Kousin Of User</th>
+            <th>Updated</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $juchuu_dt): ?>
+            <tr>
+                <td><?php echo $juchuu_dt->id ?></td>
+            <td><?php echo $juchuu_dt->cd ?></td>
+            <td><?php echo $juchuu_dt->nendo ?></td>
+            <td><?php echo $juchuu_dt->tekiyou ?></td>
+            <td><?php echo $juchuu_dt->juchuubi ?></td>
+            <td><?php echo $juchuu_dt->zeiritu_tekiyoubi ?></td>
+            <td><?php echo $juchuu_dt->tokuisaki_mr_cd ?></td>
+            <td><?php echo $juchuu_dt->torihiki_kbn_cd ?></td>
+            <td><?php echo $juchuu_dt->zei_tenka_kbn_cd ?></td>
+            <td><?php echo $juchuu_dt->tantou_mr_cd ?></td>
+            <td><?php echo $juchuu_dt->shimekiri_flg ?></td>
+            <td><?php echo $juchuu_dt->nounyuu_kijitu ?></td>
+            <td><?php echo $juchuu_dt->mitumori_dt_id ?></td>
+            <td><?php echo $juchuu_dt->saki_hacchuu_cd ?></td>
+            <td><?php echo $juchuu_dt->nounyuusaki_mr_cd ?></td>
+            <td><?php echo $juchuu_dt->nounyuusaki ?></td>
+            <td><?php echo $juchuu_dt->chokusousaki_kbn_cd ?></td>
+            <td><?php echo $juchuu_dt->id_moto ?></td>
+            <td><?php echo $juchuu_dt->hikae_dltflg ?></td>
+            <td><?php echo $juchuu_dt->hikae_user_id ?></td>
+            <td><?php echo $juchuu_dt->hikae_nichiji ?></td>
+            <td><?php echo $juchuu_dt->sakusei_user_id ?></td>
+            <td><?php echo $juchuu_dt->created ?></td>
+            <td><?php echo $juchuu_dt->kousin_user_id ?></td>
+            <td><?php echo $juchuu_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(["juchuu_dts/edit/" . $juchuu_dt->id, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["juchuu_dts/delete/" . $juchuu_dt->id, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("juchuu_dts/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("juchuu_dts/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("juchuu_dts/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("juchuu_dts/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

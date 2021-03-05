@@ -1,0 +1,111 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["jouken_shiire_suiis/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["jouken_shiire_suiis/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+            <th>Cd</th>
+            <th>Name</th>
+            <th>Junjo Of Kbn Of Cd</th>
+            <th>Koujun Of Flg</th>
+            <th>Hanni Of From</th>
+            <th>Hanni Of To</th>
+            <th>Kikan Of Sitei Of Kbn Of Cd</th>
+            <th>Kikan Of From</th>
+            <th>Kikan Of To</th>
+            <th>Zeikomi Of Flg</th>
+            <th>Meisaigyou Of Flg</th>
+            <th>Goukeigyou Of Flg</th>
+            <th>Torihikiari Of Flg</th>
+            <th>Torihikinasi Of Flg</th>
+            <th>Hokakei Of Flg</th>
+            <th>Zennnen Of Flg</th>
+            <th>Id Of Moto</th>
+            <th>Hikae Of Dltflg</th>
+            <th>Hikae Of User</th>
+            <th>Hikae Of Nichiji</th>
+            <th>Sakusei Of User</th>
+            <th>Created</th>
+            <th>Kousin Of User</th>
+            <th>Updated</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $jouken_shiire_suii): ?>
+            <tr>
+                <td><?php echo $jouken_shiire_suii->id ?></td>
+            <td><?php echo $jouken_shiire_suii->cd ?></td>
+            <td><?php echo $jouken_shiire_suii->name ?></td>
+            <td><?php echo $jouken_shiire_suii->junjo_kbn_cd ?></td>
+            <td><?php echo $jouken_shiire_suii->koujun_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->hanni_from ?></td>
+            <td><?php echo $jouken_shiire_suii->hanni_to ?></td>
+            <td><?php echo $jouken_shiire_suii->kikan_sitei_kbn_cd ?></td>
+            <td><?php echo $jouken_shiire_suii->kikan_from ?></td>
+            <td><?php echo $jouken_shiire_suii->kikan_to ?></td>
+            <td><?php echo $jouken_shiire_suii->zeikomi_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->meisaigyou_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->goukeigyou_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->torihikiari_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->torihikinasi_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->hokakei_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->zennnen_flg ?></td>
+            <td><?php echo $jouken_shiire_suii->id_moto ?></td>
+            <td><?php echo $jouken_shiire_suii->hikae_dltflg ?></td>
+            <td><?php echo $jouken_shiire_suii->hikae_user_id ?></td>
+            <td><?php echo $jouken_shiire_suii->hikae_nichiji ?></td>
+            <td><?php echo $jouken_shiire_suii->sakusei_user_id ?></td>
+            <td><?php echo $jouken_shiire_suii->created ?></td>
+            <td><?php echo $jouken_shiire_suii->kousin_user_id ?></td>
+            <td><?php echo $jouken_shiire_suii->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(["jouken_shiire_suiis/edit/" . $jouken_shiire_suii->id, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["jouken_shiire_suiis/delete/" . $jouken_shiire_suii->id, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo(["jouken_shiire_suiis/search", "First", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["jouken_shiire_suiis/search?page=" . $page->before, "Previous", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["jouken_shiire_suiis/search?page=" . $page->next, "Next", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["jouken_shiire_suiis/search?page=" . $page->last, "Last", 'class' => 'page-link']) ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

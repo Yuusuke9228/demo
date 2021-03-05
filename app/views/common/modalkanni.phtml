@@ -1,0 +1,27 @@
+<?php /* 一覧表の簡易検索部分 $table_id,[["cd","fieldCd","コード",14,14],[項目コード,項目ID,項目名,画面サイズ,入力サイズ],…] */
+	if (empty($index_or)) {$index_or = "modal";} // $index_or に 'modal'と入れるとモーダル用に使える。
+	echo $this->tag->form(array($table_id."/".$index_or, "autocomplete" => "off", "class" => "form-horizontal"));
+	$ime_c=0;
+?>
+	<table class="table table-condensed">
+		<tr>
+			<?php foreach ($flds as $fld): ?>
+				<td align="right" style="border-style:none;">
+					<label for=<?php echo $fld[1] ?> class="control-label"><?php echo $fld[2] ?></label>
+				</td>
+				<td style="border-style:none;">
+					<?php echo $this->tag->textField(array($fld[0], "size" => $fld[3], "maxlength" => $fld[4], "class" => "form-control ".($ime_c++?"ime-a":"ime-i"), "id" => $fld[1])) ?>
+				</td>
+			<?php endforeach; ?>
+			<td style="border-style:none;">
+				<?php echo $this->tag->submitButton(array("簡易検索F12", "id" => "F12", "class" => "btn btn-success")) ?>
+			</td>
+			<td style="border-style:none;">
+				<?php echo $this->tag->linkTo(array($table_id."/search", "検索条件入力F3", "id" => "F3", "class" => "btn btn-info")) ?>
+			</td>
+			<td style="border-style:none;">
+				<?php echo $this->tag->linkTo(array($table_id."/new", "新規登録F5", "id" => "F5", "class" => "btn btn-warning", "target" => "_blank")) ?>
+			</td>
+		</tr>
+	</table>
+<?php echo $this->tag->endForm(); ?>

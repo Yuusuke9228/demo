@@ -1,0 +1,72 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = '仕入.修正'; ?>
+<div class="page-header">
+    <h3>仕入伝票（修正）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "shiire_dts/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "name" => "post_form",
+            "id" => "post_form",
+            //"onsubmit" => "return final_check();"	//最終入力チェックがfalseならsubmitしない Add By Nishiyama 2019/4/2
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('shiire_dts/inputfields'); ?>
+
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("shiire_dts/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("shiire_dts/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->submitButton(array("登録F12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return final_check2();'
+        	,($this->tag->getValue("shiirebi")<=$simezumibi?"disabled":"enabled")=>"true" )) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->linkTo(array("shiire_dts/denpyou/".$id, "伝票再印刷", "class" => "btn btn-warning", "id" => "F7")) ?>
+        <?php echo $this->tag->linkTo(array("shiire_dts/export/".$id, "EXCEL出力", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                伝票複写<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><?php echo $this->tag->linkTo(array("shiire_dts/new/".$id, "伝票の複写")) ?></li>
+              <li><?php echo $this->tag->linkTo(array("shiire_dts/new/".$id."/-Shiire", "赤伝票発行",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("hacchuu_dts/new/".$id."/Shiire", "発注伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("juchuu_dts/new/".$id."/Shiire", "受注伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("uriage_dts/new/".$id."/Shiire", "売上伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("mitumori_dts/new/".$id."/Shiire", "見積伝票へ",'target'=>'_blank')) ?></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("id" => "btn_del","shiire_dts/delete/".$id, "伝票削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");'
+        	,($this->tag->getValue("shiirebi")<=$simezumibi?"disabled":"enabled")=>"true" )) ?>
+    </div>
+
+</div><!-- form-group -->
+
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">
+	var imax = <?php echo $imax ?>;
+	var simezumibi = <?php echo $simezumibi??'0000-00-00' ?>;
+//console.log("|" + simezumibi + "|");
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/shiire_dts.js'); ?>?var=20190405"></script>

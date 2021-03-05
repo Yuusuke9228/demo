@@ -1,0 +1,503 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php use Phalcon\Tag; ?>
+<?php $title = 'レポ.入出庫 ' .  @$this->request->getPost('cd'); ?>
+<div class="page-header">
+    <h3>入出庫明細表 (簡易表示)</h3>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="panel panel-success bg-yel">
+    <br>
+    <?php
+    echo $this->tag->form(
+        array(
+            "report_zaiko_vws/nyuushukko_2",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "id" => "form_zaiko"
+        )
+    );
+    ?>
+    <div class="form-group">
+        <div class="col-sm-8">
+            <label for="fieldCd" class="col-sm-2 control-label">商品></label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(array("cd", "class" => "form-control", "id" => "fieldCd", "list" => "ShouhinMrsOptions")) ?>
+            </div>
+            <div class="col-sm-7">
+                <?php echo $this->tag->textField(array("name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldName")) ?>
+            </div>
+            <!-- ↓倉庫選択をモーダルに変更2019/02/16井浦 -->
+            <label for="fieldSoukoMrCd" class="col-sm-2 control-label">倉庫</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(array("souko_mr_cd", "class" => "form-control", "id" => "fieldSoukoMrCd", "list" => "SoukoMrsOptions")) ?>
+            </div>
+            <div class="col-sm-7">
+                <?php echo $this->tag->textField(array("souko_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldSoukoName")) ?>
+            </div>
+            <!-- ↑倉庫名表示に変更2019/02/16井浦 -->
+            <label for="fieldHyoujiFlg" class="col-sm-2 control-label">表示</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->selectStatic(array("hyouji_flg", ["0" => "0=月次計", "1" => "1=明細表"], "class" => "form-control", "id" => "fieldHyoujiFlg")) ?>
+            </div>
+            <div class="clearfix"></div>
+
+            <label for="fieldKikanSiteiKbnCd" class="col-sm-2 control-label">期間></label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+            </div>
+
+            <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-10"><br />
+                <?php echo $this->tag->linkTo(array('report_zaiko_vws/nyuushukko_2','※ 簡易入出庫明細表を開く >>','class' =>'flink','id' => 'link1')) ?>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="col-sm-4">
+                <?php echo $this->tag->submitButton(array("集計F12", "id" => "F12", "class" => "btn  btn-success")) ?>
+            </div>
+        </div>
+    </div><!-- form-group -->
+
+    <?php echo $this->tag->endForm(); ?>
+</div><!-- panel-successp -->
+<style>
+    .flink {
+        padding: 4px 4px 6px 15px;
+        font-size: 11pt;
+    }
+</style>
+<?php
+$setdts["kikan_from"] = date('Y-m-'.($setdts["hyouji_flg"]==1?'d':'01'), strtotime($setdts["kikan_from"]));
+$setdts["kikan_to"] = date('Y-m-'.($setdts["hyouji_flg"]==1?'d':'t'), strtotime($setdts["kikan_to"]));
+$kurikosi_ryou2 = 0;
+$zaiko_ryou1 = 0;
+$zaiko_ryou2 = 0;
+$nyuuko_ryou2 = 0;
+$shukko_ryou2 = 0;
+$idou_ryou2 = 0;
+$kurikosi_ryou1_kei = 0;
+$zaiko_ryou1_kei = 0;
+$nyuuko_ryou1_kei = 0;
+$shukko_ryou1_kei = 0;
+$idou_ryou1_kei = 0;
+$hacchuuzan_ryou1 = 0;
+$hacchuuzan_ryou2 = 0;
+$hikiate_ryou1_kei = 0;
+$hikiate_ryou2_kei = 0;
+$juchuuzan_ryou1 = 0;
+$juchuuzan_ryou2 = 0;
+$hacchuuzan_ryou1_kei = 0;
+$juchuuzan_ryou1_kei = 0;
+$kurikosi_ryou2_kei = 0;
+$zaiko_ryou2_kei = 0;
+$nyuuko_ryou2_kei = 0;
+$shukko_ryou2_kei = 0;
+$idou_ryou2_kei = 0;
+$hacchuuzan_ryou2_kei = 0;
+$juchuuzan_ryou2_kei = 0;
+$shuukei = [];
+$tanka_kbn = $rows[0]["tanka_kbn"];
+
+for ($i = 0; $i < count($rows); $i++) {
+    $lot_tannis = $rows[$i]["souko_name"]."_^".$rows[$i]["lot"]."_^".$rows[$i]["iro"]."_^".$rows[$i]["iromei"]."_^".$rows[$i]["hinsitu_kbn_cd"]."_^".$rows[$i]["tanni_mr1_cd"]."_^".$rows[$i]["tanni_mr2_cd"];
+    if (!array_key_exists($lot_tannis, $shuukei)) {
+        $shuukei[$lot_tannis] = [];
+        $shuukei[$lot_tannis]["souko_name"]=$rows[$i]["souko_name"];
+        $shuukei[$lot_tannis]["lot"]=$rows[$i]["lot"];
+        $shuukei[$lot_tannis]["iro"]=$rows[$i]["iro"];
+        $shuukei[$lot_tannis]["iromei"]=$rows[$i]["iromei"];
+        $shuukei[$lot_tannis]["hinsitu_name"]=$rows[$i]["hinsitu_name"];
+        $shuukei[$lot_tannis]["tanni1_name"]=$rows[$i]["tanni1_name"];
+        $shuukei[$lot_tannis]["tanni2_name"]=$rows[$i]["tanni2_name"];
+        $shuukei[$lot_tannis]["kurikosi_ryou1"] = 0;
+        $shuukei[$lot_tannis]["zaiko_ryou1"] = 0;
+        $shuukei[$lot_tannis]["nyuuko_ryou1"] = 0;
+        $shuukei[$lot_tannis]["shukko_ryou1"] = 0;
+        $shuukei[$lot_tannis]["idou_ryou1"] = 0;
+        $shuukei[$lot_tannis]["hacchuuzan_ryou1"] = 0;
+        $shuukei[$lot_tannis]["hikiate_ryou1"] = 0;
+        $shuukei[$lot_tannis]["juchuuzan_ryou1"] = 0;
+        $shuukei[$lot_tannis]["kurikosi_ryou2"] = 0;
+        $shuukei[$lot_tannis]["zaiko_ryou2"] = 0;
+        $shuukei[$lot_tannis]["nyuuko_ryou2"] = 0;
+        $shuukei[$lot_tannis]["shukko_ryou2"] = 0;
+        $shuukei[$lot_tannis]["idou_ryou2"] = 0;
+        $shuukei[$lot_tannis]["hacchuuzan_ryou2"] = 0;
+        $shuukei[$lot_tannis]["hikiate_ryou2"] = 0;
+        $shuukei[$lot_tannis]["juchuuzan_ryou2"] = 0;
+        $shuukei[$lot_tannis]["kurikosi_azukari"] = 0;
+    }
+    if ($rows[$i]["nyuushukkobi"] < $setdts["kikan_from"]) {
+        $shuukei[$lot_tannis]["kurikosi_ryou1"] += $rows[$i]["zaiko_ryou1"];
+        $shuukei[$lot_tannis]["kurikosi_ryou2"] += $rows[$i]["zaiko_ryou2"];
+        $kurikosi_ryou1_kei += $rows[$i]["zaiko_ryou1"];
+        $kurikosi_ryou2_kei += $rows[$i]["zaiko_ryou2"];
+    } else {
+        $shuukei[$lot_tannis]["nyuuko_ryou1"] += $rows[$i]["shiire_ryou1"] + $rows[$i]["hokanyuuko_ryou1"];
+        $shuukei[$lot_tannis]["shukko_ryou1"] += $rows[$i]["uriage_ryou1"] + $rows[$i]["hokashukko_ryou1"];
+        $shuukei[$lot_tannis]["nyuuko_ryou2"] += $rows[$i]["shiire_ryou2"] + $rows[$i]["hokanyuuko_ryou2"];
+        $shuukei[$lot_tannis]["shukko_ryou2"] += $rows[$i]["uriage_ryou2"] + $rows[$i]["hokashukko_ryou2"];
+        $nyuuko_ryou1_kei += $rows[$i]["shiire_ryou1"] + $rows[$i]["hokanyuuko_ryou1"];
+        $shukko_ryou1_kei += $rows[$i]["uriage_ryou1"] + $rows[$i]["hokashukko_ryou1"];
+        $nyuuko_ryou2_kei += $rows[$i]["shiire_ryou2"] + $rows[$i]["hokanyuuko_ryou2"];
+        $shukko_ryou2_kei += $rows[$i]["uriage_ryou2"] + $rows[$i]["hokashukko_ryou2"];
+    }
+    $shuukei[$lot_tannis]["zaiko_ryou1"] += $rows[$i]["zaiko_ryou1"];
+    $shuukei[$lot_tannis]["zaiko_ryou2"] += $rows[$i]["zaiko_ryou2"];
+    $shuukei[$lot_tannis]["hacchuuzan_ryou1"] += $rows[$i]["hacchuuzan_ryou1"] + $rows[$i]['hikiate_ryou1'];
+    $shuukei[$lot_tannis]["juchuuzan_ryou1"] += $rows[$i]["juchuuzan_ryou1"];
+    $shuukei[$lot_tannis]["hacchuuzan_ryou2"] += $rows[$i]["hacchuuzan_ryou2"] + $rows[$i]['hikiate_ryou2'];
+    $shuukei[$lot_tannis]["juchuuzan_ryou2"] += $rows[$i]["juchuuzan_ryou2"];
+    $zaiko_ryou1_kei += $rows[$i]["zaiko_ryou1"];
+    $zaiko_ryou2_kei += $rows[$i]["zaiko_ryou2"];
+    $hacchuuzan_ryou1_kei += $rows[$i]["hacchuuzan_ryou1"];
+    $hikiate_ryou1_kei += $rows[$i]['hikiate_ryou1'];
+    $juchuuzan_ryou1_kei += $rows[$i]["juchuuzan_ryou1"];
+    $hacchuuzan_ryou2_kei += $rows[$i]["hacchuuzan_ryou2"];
+    $hikiate_ryou2_kei += $rows[$i]['hikiate_ryou2'];
+    $juchuuzan_ryou2_kei += $rows[$i]["juchuuzan_ryou2"];
+}
+foreach ($shuukei as $key => $value) {
+    $sort[$key] = $key;
+}
+array_multisort($sort, SORT_ASC, $shuukei);
+?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0">
+        <thead>
+        <tr bgcolor="Lavender">
+            <th style="text-align:center;">繰越数</th>
+            <th style="text-align:center;">発注残数</th>
+            <th style="text-align:center;">引当数</th>
+            <th style="text-align:center;">入庫数</th>
+            <th style="text-align:center;">受注残数</th>
+            <th style="text-align:center;">出庫数</th>
+            <th style="text-align:center;">在庫数</th>
+            <th style="text-align:center;">過不足</th>
+            <th style="text-align:center;">繰越量</th>
+            <th style="text-align:center;">発注残量</th>
+            <th style="text-align:center;">引当量</th>
+            <th style="text-align:center;">入庫量</th>
+            <th style="text-align:center;">受注残量</th>
+            <th style="text-align:center;">出庫量</th>
+            <th style="text-align:center;">在庫量</th>
+            <th style="text-align:center;">過不足</th>
+            <th style="text-align:center;">適正数量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr bgcolor="#fffcf8">
+            <td style="text-align:right;"><?php echo number_format($kurikosi_ryou1_kei,1) !== '0.0' ? number_format($kurikosi_ryou1_kei,1) : '' /* 繰越数 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($hacchuuzan_ryou1_kei,1) !== '0.0' ? number_format($hacchuuzan_ryou1_kei,1) : '' /* 発注残数 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($hikiate_ryou1_kei,1) !== '0.0' ? number_format($hikiate_ryou1_kei,1) : '' /* 引当残数 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($nyuuko_ryou1_kei,1) !== '0.0' ? number_format($nyuuko_ryou1_kei,1) : '' /* 入庫数 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($juchuuzan_ryou1_kei,1) !== '0.0' ? number_format($juchuuzan_ryou1_kei,1) : '' /* 受注残数 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($shukko_ryou1_kei,1) !== '0.0' ? number_format($shukko_ryou1_kei,1) : '' /* 出庫数 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($zaiko_ryou1_kei,1) !== '0.0' ? number_format($zaiko_ryou1_kei,1) : '' /* 在庫数 */ ?></td>
+            <td style="text-align:right;font-weight: bolder;"><?php echo number_format($zaiko_ryou1_kei + $hacchuuzan_ryou1 - $juchuuzan_ryou1,1) !== '0.0' ? number_format($zaiko_ryou1_kei + $hacchuuzan_ryou1 - $juchuuzan_ryou1,1) : ''/* 過不足数 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($kurikosi_ryou2_kei,2) !== '0.00' ? number_format($kurikosi_ryou2_kei,2) : ''/* 繰越量 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($hacchuuzan_ryou2_kei,2) !== '0.00' ? number_format($hacchuuzan_ryou2_kei,2) : '' /* 発注残量 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($hikiate_ryou2_kei,2) !== '0.00' ? number_format($hikiate_ryou2_kei,2) : '' /* 発注残量 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($nyuuko_ryou2_kei,2) !== '0.00' ? number_format($nyuuko_ryou2_kei,2) : '' /* 入庫量 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($juchuuzan_ryou2_kei,2) !== '0.00' ? number_format($juchuuzan_ryou2_kei,2) : '' /* 受注残量 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($shukko_ryou2_kei,2) !== '0.00' ? number_format($shukko_ryou2_kei,2) : '' /* 出庫量 */ ?></td>
+            <td style="text-align:right;font-weight: bolder;"><?php echo number_format($zaiko_ryou2_kei,2) !== '0.00' ? number_format($zaiko_ryou2_kei,2) : '' /* 在庫量 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format($zaiko_ryou2_kei + $hacchuuzan_ryou2 - $juchuuzan_ryou2,2) !== '0.00' ? number_format($zaiko_ryou2_kei + $hacchuuzan_ryou2 - $juchuuzan_ryou2,2) : '' /* 過不足量 */ ?></td>
+            <td style="text-align:right;"><?php echo number_format(0,2) !== '0.00' ? number_format(0,2) : '' /* 適正数量 */ ?></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0">
+        <thead>
+        <tr bgcolor="Lavender">
+            <th style="text-align:center;">倉庫</th>
+            <th style="text-align:center;">ロット</th>
+            <th style="text-align:center;">色番</th>
+            <th style="text-align:center;">色名</th>
+            <th style="text-align:center;">品質</th>
+            <th style="text-align:center;">繰越数</th>
+            <th style="text-align:center;">入庫数</th>
+            <th style="text-align:center;">出庫数</th>
+            <th style="text-align:center;">在庫数</th>
+            <th style="text-align:center;">繰越量</th>
+            <th style="text-align:center;">入庫量</th>
+            <th style="text-align:center;">出庫量</th>
+            <th style="text-align:center;">在庫量</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($shuukei as $key => $value): ?>
+            <?php
+            $buf = 0;
+            $buf += $value["zaiko_ryou1"] + $value["nyuuko_ryou1"] + $value["shukko_ryou1"] + $value["zaiko_ryou2"] + $value["nyuuko_ryou2"] + $value["shukko_ryou2"] + $value["zaiko_ryou2"];
+            //echo $buf . PHP_EOL;
+            ?>
+            <?php if (!$buf == 0): ?>
+                <tr bgcolor="#fffcf8">
+                    <td style="text-align:left;"><?php echo $value["souko_name"] /* 倉庫 */ ?></td>
+                    <td nowrap class="zoom_nyuushukko_name" style="cursor:pointer;"><?php echo $value["lot"] /* ロット */ ?></td>
+                    <td style="text-align:left;"><?php echo $value["iro"] /* 色番 */ ?></td>
+                    <td style="text-align:left;"><?php echo $value["iromei"] /* 色名 */ ?></td>
+                    <td style="text-align:left;"><?php echo $value["hinsitu_name"] /* 品質 */ ?></td>
+                    <td style="text-align:right;"><?php echo number_format($value["kurikosi_ryou1"],1).$value["tanni1_name"] !== '0.0'.$value["tanni1_name"] ? number_format($value["kurikosi_ryou1"],1).$value["tanni1_name"] : '' /* 繰越数 */ ?></td>
+                    <!--					<td style="text-align:right;">--><?php //echo number_format($value["hacchuuzan_ryou1"],1) !== '0.0' ? number_format($value["hacchuuzan_ryou1"],1) : '' /* 発注数 */ ?><!--</td>-->
+                    <td style="text-align:right;"><?php echo number_format($value["nyuuko_ryou1"],1).$value["tanni1_name"] !== '0.0'. $value["tanni1_name"] ? number_format($value["nyuuko_ryou1"],1).$value["tanni1_name"] : ''/* 入庫数 */ ?></td>
+                    <!--					<td style="text-align:right;">--><?php //echo number_format($value["juchuuzan_ryou1"],1) !== '0.0' ? number_format($value["juchuuzan_ryou1"],1) : '' /* 受注数 */ ?><!--</td>-->
+                    <td style="text-align:right;"><?php echo number_format($value["shukko_ryou1"],1).$value["tanni1_name"] !== '0.0' . $value['tanni1_name'] ? number_format($value["shukko_ryou1"],1).$value["tanni1_name"] : ''/* 出庫数 */ ?></td>
+
+                    <td style="text-align:right;font-weight: bolder;"><?php echo number_format($value["zaiko_ryou1"],1).$value["tanni1_name"] !== '0.0'.$value["tanni1_name"] ? number_format($value["zaiko_ryou1"],1).$value["tanni1_name"] : ''/* 在庫数 */ ?></td>
+                    <!--					<td style="text-align:right;">--><?php //echo number_format($value["zaiko_ryou1"]+$value["hacchuu_ryou1"]-$value["juchuu_ryou1"],1) !== '0.0' ? number_format($value["zaiko_ryou1"]+$value["hacchuu_ryou1"]-$value["juchuu_ryou1"],1) : ''/* 過不足数 */ ?><!--</td>-->
+                    <td style="text-align:right;"><?php echo number_format($value["kurikosi_ryou2"],2).$value["tanni2_name"] !== '0.00' . $value["tanni2_name"] ? number_format($value["kurikosi_ryou2"],2).$value["tanni2_name"] : ''/* 繰越数量 */ ?></td>
+                    <!--					<td style="text-align:right;">--><?php //echo number_format($value["hacchuuzan_ryou2"],2) !== '0.00' ? number_format($value["hacchuuzan_ryou2"],2) : '' /* 発注量 */ ?><!--</td>-->
+                    <td style="text-align:right;"><?php echo number_format($value["nyuuko_ryou2"],2).$value["tanni2_name"] !== '0.00'. $value["tanni2_name"] ? number_format($value["nyuuko_ryou2"],2).$value["tanni2_name"] : ''/* 入庫量 */ ?></td>
+                    <!--					<td style="text-align:right;">--><?php //echo number_format($value["juchuuzan_ryou2"],2) !== '0.00' ? number_format($value["juchuuzan_ryou2"],2) : '' /* 受注量 */ ?><!--</td>-->
+                    <td style="text-align:right;"><?php echo number_format($value["shukko_ryou2"],2).$value["tanni2_name"] !== '0.00' . $value["tanni2_name"] ? number_format($value["shukko_ryou2"],2).$value["tanni2_name"] : ''/* 出庫量 */ ?></td>
+
+                    <td style="text-align:right;font-weight: bolder;"><?php echo number_format($value["zaiko_ryou2"],2).$value["tanni2_name"] !== '0.00'.$value["tanni2_name"] ? number_format($value["zaiko_ryou2"],2).$value["tanni2_name"] : ''/* 在庫量 */ ?></td>
+                </tr>
+            <?php   endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <?php if ($setdts["hyouji_flg"] == "1"): /* 明細表 */ ?>
+        <table class="table table-bordered table-hover table-condens-0 head_fix">
+            <thead>
+            <tr bgcolor="Lavender">
+                <th nowrap style="text-align:center;">伝票日付</th>
+                <th nowrap style="text-align:center;">伝票<br>番号</th>
+                <th nowrap style="text-align:center;">取引<br>区分</th>
+                <th nowrap style="text-align:center;">　内訳　</th>
+                <th nowrap style="text-align:center;">ロット</th>
+                <th nowrap style="text-align:center;">色番</th>
+                <th nowrap style="text-align:center;">色<br>識別</th>
+                <th nowrap style="text-align:center;">品質</th>
+                <th nowrap style="text-align:center;">備考</th>
+                <th nowrap style="text-align:center;">仕入<br>単価</th>
+                <th nowrap style="text-align:center;">単価<br>単位</th>
+                <th nowrap style="text-align:center;" colspan="2">入庫<br>数</th>
+                <th nowrap style="text-align:center;" colspan="2">入庫<br>量</th>
+                <th nowrap style="text-align:center;" colspan="2">出庫<br>数</th>
+                <th nowrap style="text-align:center;" colspan="2">出庫<br>量</th>
+                <th nowrap style="text-align:center;font-weight: bolder;" colspan="2">在庫<br>数</th>
+                <th nowrap style="text-align:center;font-weight: bolder;" colspan="2">在庫<br>量</th>
+                <th nowrap style="text-align:center;">取引先名</th>
+                <th nowrap style="text-align:center;">倉庫名</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $zaiko_ryou2 = 0;
+            for ($i = 0; $i < count($rows); $i++):
+                //発注残受注残を表示しないので、発注受注伝票を飛ばす
+                if ($rows[$i]["denpyou_mr_cd"]=="juchuu" || $rows[$i]["denpyou_mr_cd"]=="hacchuu") continue;
+                $zaiko_ryou1 += $rows[$i]["zaiko_ryou1"];
+                $zaiko_ryou2 += $rows[$i]["zaiko_ryou2"];
+                if ($rows[$i]["nyuushukkobi"] >= $setdts["kikan_from"]):
+                    ?>
+                    <?php
+                    //移動数量の振り分け（移動数量がプラスなら入庫、マイナスなら出庫に振り分ける 2019/3/12井浦
+                    $rows[$i]["shiire_ryou1"] += $rows[$i]["hokanyuuko_ryou1"];
+                    $rows[$i]["uriage_ryou1"] += $rows[$i]["hokashukko_ryou1"];
+                    $rows[$i]["shiire_ryou2"] += $rows[$i]["hokanyuuko_ryou2"];
+                    $rows[$i]["uriage_ryou2"] += $rows[$i]["hokashukko_ryou2"];
+                    //仕入赤を出庫の＋、売上赤を入庫の＋へ変換
+                    if ($rows[$i]["shiire_ryou1"] < 0 ) {
+                        $rows[$i]["uriage_ryou1"] = -1 * (float)$rows[$i]["shiire_ryou1"];
+                        $rows[$i]["shiire_ryou1"] = 0;
+                    }
+                    if ($rows[$i]["shiire_ryou2"] < 0 ) {
+                        $rows[$i]["uriage_ryou2"] = -1 * (float)$rows[$i]["shiire_ryou2"];
+                        $rows[$i]["shiire_ryou2"] = 0;
+                    }
+                    if ($rows[$i]["uriage_ryou1"] < 0 ) {
+                        $rows[$i]["shiire_ryou1"] = -1 * (float)$rows[$i]["uriage_ryou1"];
+                        $rows[$i]["uriage_ryou1"] = 0;
+                    }
+                    if ($rows[$i]["uriage_ryou2"] < 0 ) {
+                        $rows[$i]["shiire_ryou2"] = -1 * (float)$rows[$i]["uriage_ryou2"];
+                        $rows[$i]["uriage_ryou2"] = 0;
+                    }
+                    ?>
+                    <tr bgcolor="#fffcf8">
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["nyuushukkobi"] /* 入出庫日 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;"><?php echo $this->tag->linkTo(array((($rows[$i]["denpyou_mr_cd"]=="uriage" || $rows[$i]["denpyou_mr_cd"]=="shiire" || $rows[$i]["denpyou_mr_cd"]=="juchuu" || $rows[$i]["denpyou_mr_cd"]=="hacchuu"
+                                )?$rows[$i]["denpyou_mr_cd"]:"zaiko_henkan")."_dts/edit/" . $rows[$i]["id"], $rows[$i]["cd"], "target"=>"_blank")); /* 伝票番号 */ ?></td>
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["denpyou_name"] /* 取引区分名 */ ?></td>
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["utiwake_name"] /* 内訳区分名 */ ?></td>
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["lot"] /* ロット */ ?></td>
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["iro"] /* 色番 */ ?></td>
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["iromei"] /* 色名 */ ?></td>
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["hinsitu_name"] /* 品質 */ ?></td>
+                        <td nowrap align="left" style="text-indent:1em;"><?php echo $rows[$i]["bikou"] /* 備考 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;"><?php echo substr($rows[$i]["shiirebi_tanka"],10)=="0"?"":number_format(substr($rows[$i]["shiirebi_tanka"],10),2) /* 仕入単価*/ ?></td>
+                        <td nowrap align="center"><?php echo substr($rows[$i]["shiirebi_tanka"],10)=="0"?"":("/".$rows[$i]["tanka_tanni_name"]) /* 単位 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;"><?php echo $rows[$i]["shiire_ryou1"]==0?"":number_format($rows[$i]["shiire_ryou1"],2) /* 入庫数1*/ ?></td>
+                        <td nowrap align="center"><?php echo $rows[$i]["shiire_ryou1"]==0?"":$rows[$i]["tanni1_name"] /* 単位1 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;"><?php echo $rows[$i]["shiire_ryou2"]==0?"":number_format($rows[$i]["shiire_ryou2"],2) /* 入庫量2*/ ?></td>
+                        <td nowrap align="center"><?php echo $rows[$i]["shiire_ryou2"]==0?"":$rows[$i]["tanni2_name"] /* 単位2 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;"><?php echo $rows[$i]["uriage_ryou1"]==0?"":number_format($rows[$i]["uriage_ryou1"],2) /* 出庫数1*/ ?></td>
+                        <td nowrap align="center"><?php echo $rows[$i]["uriage_ryou1"]==0?"":$rows[$i]["tanni1_name"] /* 単位1 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;"><?php echo $rows[$i]["uriage_ryou2"]==0?"":number_format($rows[$i]["uriage_ryou2"],2) /* 出庫量2*/ ?></td>
+                        <td nowrap align="center"><?php echo $rows[$i]["uriage_ryou2"]==0?"":$rows[$i]["tanni2_name"] /* 単位2 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;font-weight: bolder;"><?php echo number_format($zaiko_ryou1,1) !== '0.0' ? number_format($zaiko_ryou1,1) : '' /* 在庫数1 */ ?></td>
+                        <td nowrap align="center"><?php echo $rows[$i]["tanni1_name"] /* 単位1 */ ?></td>
+                        <td nowrap align="right" style="text-indent:1em;font-weight: bolder;"><?php echo number_format($zaiko_ryou2,2) !== '0.00' ? number_format($zaiko_ryou2,2) : '' /* 在庫量2 */ ?></td>
+                        <td nowrap align="center"><?php echo $rows[$i]["tanni2_name"] /* 単位2 */ ?></td>
+                        <td nowrap style="text-indent:1em;"><?php echo $rows[$i][$rows[$i]["denpyou_mr_cd"]=="shiire"?"shiiresaki_name":"tokuisaki_name"] /* 取引先名 */ ?></td>
+                        <td nowrap style="text-indent:1em;"><?php echo $rows[$i]["souko_name"] /* 倉庫名 */ ?></td>
+                    </tr>
+                <?php
+                endif;
+            endfor;
+            ?>
+            </tbody>
+        </table>
+    <?php else: /* 月次表 */ ?>
+        <table class="table table-bordered table-hover table-condens-0 head_fix">
+            <thead>
+            <tr bgcolor="Lavender">
+                <th nowrap style="text-align:center;">月度</th>
+                <th nowrap style="text-align:center;">期間From</th>
+                <th nowrap style="text-align:center;">～期間To</th>
+                <th nowrap style="text-align:center;">平均単価</th>
+                <th nowrap style="text-align:center;">入庫数量1</th>
+                <th nowrap style="text-align:center;">出庫数量1</th>
+                <th nowrap style="text-align:center;">移動数量1</th>
+                <th nowrap style="text-align:center;">在庫数量1</th>
+                <th nowrap style="text-align:center;">入庫数量2</th>
+                <th nowrap style="text-align:center;">出庫数量2</th>
+                <th nowrap style="text-align:center;">移動数量2</th>
+                <th nowrap style="text-align:center;">在庫数量2</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $i = 0;
+            $zaiko_ryou1 = 0;
+            $zaiko_ryou2 = 0;
+            for ($kikan =  $setdts["kikan_from"];
+                 $kikan <= $setdts["kikan_to"];
+                 $kikan = date('Y-m-d', strtotime($kikan.' +1 month'))):
+                $ym = date('Ym',  strtotime($kikan));
+                $y_m = date('Y-m',  strtotime($kikan));
+                for ( ; $i < count($rows) && $rows[$i]["nyuushukkoym"] < $ym; $i++) {
+                    $zaiko_ryou1 += $rows[$i]["zaiko_ryou1"];
+                    $zaiko_ryou2 += $rows[$i]["zaiko_ryou2"];
+                }
+                ?>
+                <tr bgcolor="#fffcf8">
+                    <td nowrap align="left" class="zoom_meisai" style="cursor:pointer"><?php echo $y_m /* 月度 */ ?></td>
+                    <td nowrap align="center"><?php echo $kikan /* 期間From */ ?></td>
+                    <td nowrap align="center"><?php echo date('Y-m-t', strtotime($kikan)) /* 期間to */ ?></td>
+                    <?php if ($i >= count($rows) || $rows[$i]["nyuushukkoym"] != $ym): ?>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"><?php echo number_format($zaiko_ryou1,2) ?></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"><?php echo number_format($zaiko_ryou2,2) ?></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"></td>
+                        <td nowrap align="right"><?php echo number_format($azukari_zan,2) ?></td>
+                    <?php else: ?>
+                        <?php
+                        $shiire_gaku = 0;
+                        $shiire_ryou1 = 0;
+                        $uriage_ryou1 = 0;
+                        $hokanyuuko_ryou1 = 0;
+                        $hokashukko_ryou1 = 0;
+                        $shiire_ryou2 = 0;
+                        $uriage_ryou2 = 0;
+                        $hokanyuuko_ryou2 = 0;
+                        $hokashukko_ryou2 = 0;
+                        for ( ; $i < count($rows) && $rows[$i]["nyuushukkoym"] == $ym; $i++) {
+                            $shiire_gaku += $rows[$i]["shiire_gaku"];
+                            $shiire_ryou1 += $rows[$i]["shiire_ryou1"];
+                            $uriage_ryou1 += $rows[$i]["uriage_ryou1"];
+                            $hokanyuuko_ryou1 += $rows[$i]["hokanyuuko_ryou1"];
+                            $hokashukko_ryou1 += $rows[$i]["hokashukko_ryou1"];
+                            $zaiko_ryou1 += $rows[$i]["zaiko_ryou1"];
+                            $shiire_ryou2 += $rows[$i]["shiire_ryou2"];
+                            $uriage_ryou2 += $rows[$i]["uriage_ryou2"];
+                            $hokanyuuko_ryou2 += $rows[$i]["hokanyuuko_ryou2"];
+                            $hokashukko_ryou2 += $rows[$i]["hokashukko_ryou2"];
+                            $zaiko_ryou2 += $rows[$i]["zaiko_ryou2"];
+                        }
+                        ?>
+                        <td nowrap align="right"><?php if ($shiire_ryou2 != 0) {echo number_format($shiire_gaku / $shiire_ryou2,2);} /* 平均単価*/ ?></td>
+                        <td nowrap align="right"><?php echo $shiire_ryou1==0?"":number_format($shiire_ryou1,2) /* 入庫数量*/ ?></td>
+                        <td nowrap align="right"><?php echo $uriage_ryou1==0?"":number_format($uriage_ryou1,2) /* 出庫数量*/ ?></td>
+                        <td nowrap align="right"><?php echo ($hokanyuuko_ryou1 - $hokashukko_ryou1)==0?"":number_format($hokanyuuko_ryou1 - $hokashukko_ryou1,2) /* 移動数量*/ ?></td>
+                        <td nowrap align="right"><?php echo number_format($zaiko_ryou1,2) /* 在庫数量 */ ?></td>
+                        <td nowrap align="right" style="font-weight: bolder;"><?php echo $shiire_ryou2==0?"":number_format($shiire_ryou2,2) /* 入庫数量*/ ?></td>
+                        <td nowrap align="right"><?php echo $uriage_ryou2==0?"":number_format($uriage_ryou2,2) /* 出庫数量*/ ?></td>
+                        <td nowrap align="right"><?php echo ($hokanyuuko_ryou2 - $hokashukko_ryou2)==0?"":number_format($hokanyuuko_ryou2 - $hokashukko_ryou2,2) /* 移動数量*/ ?></td>
+                        <td nowrap align="right" style="font-weight: bolder;"><?php echo number_format($zaiko_ryou2,2) /* 在庫数量 */ ?></td>
+                    <?php endif; ?>
+                </tr>
+            <?php endfor; ?>
+            </tbody>
+        </table>
+    <?php endif ?>
+</div>
+
+<?php /* 明細表を別タブで表示するためのリンク部分 */
+echo $this->tag->form(
+    array(
+        "report_zaiko_vws/nyuushukko",
+        "autocomplete" => "off",
+        "class" => "form-horizontal",
+        "target" => "_blank",
+        "id" => "hidden_form"
+    )
+);
+?>
+<input id="hiddenCd" name="cd" hidden>
+<input id="hiddenSoukoMrCd" name="souko_mr_cd" hidden>
+<input id="hiddenHyoujiFlg" name="hyouji_flg" hidden>
+<input id="hiddenKikanFrom" name="kikan_from" hidden>
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="ShouhinMrsOptions">
+</datalist>
+
+<datalist id="SoukoMrsOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<script type="text/javascript">
+    var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+    var souko_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('souko_mrs/modal') ?>";
+    var shouhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/ajaxGet') ?>";
+    var souko_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('souko_mrs/ajaxGet') ?>";
+    //Add by Nishiyama 2010/2/4
+    var lot_zaiko_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('report_zaiko_vws/lot_zaiko') ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/report_zaiko_nyuushukko.js'); ?>?var=20160723"></script>

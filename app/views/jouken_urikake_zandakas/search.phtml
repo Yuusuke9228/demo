@@ -1,0 +1,111 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+            <th>Cd</th>
+            <th>Name</th>
+            <th>Junjo Of Kbn Of Cd</th>
+            <th>Koujun Of Flg</th>
+            <th>Hanni Of From</th>
+            <th>Hanni Of To</th>
+            <th>Kikan Of Sitei Of Kbn Of Cd</th>
+            <th>Kikan Of From</th>
+            <th>Kikan Of To</th>
+            <th>Zeikomi Of Flg</th>
+            <th>Meisaigyou Of Flg</th>
+            <th>Goukeigyou Of Flg</th>
+            <th>Torihikiari Of Flg</th>
+            <th>Torihikinasi Of Flg</th>
+            <th>Hokakei Of Flg</th>
+            <th>Zennnen Of Flg</th>
+            <th>Id Of Moto</th>
+            <th>Hikae Of Dltflg</th>
+            <th>Hikae Of User</th>
+            <th>Hikae Of Nichiji</th>
+            <th>Sakusei Of User</th>
+            <th>Created</th>
+            <th>Kousin Of User</th>
+            <th>Updated</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $jouken_urikake_zandaka): ?>
+            <tr>
+                <td><?php echo $jouken_urikake_zandaka->id ?></td>
+            <td><?php echo $jouken_urikake_zandaka->cd ?></td>
+            <td><?php echo $jouken_urikake_zandaka->name ?></td>
+            <td><?php echo $jouken_urikake_zandaka->junjo_kbn_cd ?></td>
+            <td><?php echo $jouken_urikake_zandaka->koujun_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->hanni_from ?></td>
+            <td><?php echo $jouken_urikake_zandaka->hanni_to ?></td>
+            <td><?php echo $jouken_urikake_zandaka->kikan_sitei_kbn_cd ?></td>
+            <td><?php echo $jouken_urikake_zandaka->kikan_from ?></td>
+            <td><?php echo $jouken_urikake_zandaka->kikan_to ?></td>
+            <td><?php echo $jouken_urikake_zandaka->zeikomi_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->meisaigyou_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->goukeigyou_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->torihikiari_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->torihikinasi_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->hokakei_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->zennnen_flg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->id_moto ?></td>
+            <td><?php echo $jouken_urikake_zandaka->hikae_dltflg ?></td>
+            <td><?php echo $jouken_urikake_zandaka->hikae_user_id ?></td>
+            <td><?php echo $jouken_urikake_zandaka->hikae_nichiji ?></td>
+            <td><?php echo $jouken_urikake_zandaka->sakusei_user_id ?></td>
+            <td><?php echo $jouken_urikake_zandaka->created ?></td>
+            <td><?php echo $jouken_urikake_zandaka->kousin_user_id ?></td>
+            <td><?php echo $jouken_urikake_zandaka->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/edit/" . $jouken_urikake_zandaka->id, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/delete/" . $jouken_urikake_zandaka->id, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/search", "First", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/search?page=" . $page->before, "Previous", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/search?page=" . $page->next, "Next", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["jouken_urikake_zandakas/search?page=" . $page->last, "Last", 'class' => 'page-link']) ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

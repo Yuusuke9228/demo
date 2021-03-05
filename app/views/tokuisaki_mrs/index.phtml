@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '得意先.一覧'; ?>
+<div class="page-header">
+    <h3>得意先台帳 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/indexkanni",["table_id"=>"tokuisaki_mrs","flds"=>[
+		["cd","fieldCd","コード",14,14],
+		["name","fieldName","名称",24,24]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["cd","コード(修正)"],
+					["name","名称"],
+					["juusho1","住所1"],
+					["bushomei","部署名"],
+					["yakushoku","役職名"],
+					["tantou_mr_cd","担当"]
+				]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $tokuisaki_mr): ?>
+            <tr>
+				<td align="center"><?php echo $this->tag->linkTo(array("tokuisaki_mrs/edit/" . $tokuisaki_mr->id, $tokuisaki_mr->cd)); ?></td>
+				<td><?php echo $tokuisaki_mr->name ?></td>
+				<td><?php echo $tokuisaki_mr->juusho1 ?></td>
+				<td><?php echo $tokuisaki_mr->bushomei ?></td>
+				<td><?php echo $tokuisaki_mr->yakushoku ?></td>
+				<td><?php echo $tokuisaki_mr->TantouMrs->name ?></td>
+
+				<td align="center"><?php echo $this->tag->linkTo(array("tokuisaki_mrs/delete/" . $tokuisaki_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"tokuisaki_mrs"]) ?>

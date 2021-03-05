@@ -1,0 +1,144 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "業務データ.一覧"; ?>
+<div class="page-header">
+    <h3>業務データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"gyoumu_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["denpyou_mr_id","伝票種類ID"],
+                    ["cd","伝票番号"],
+                    ["hakkoubi","発行日"],
+                    ["nendo","年度"],
+                    ["tekiyou","摘要"],
+                    ["zeiritu_tekiyoubi","税率適用日"],
+                    ["tokuisaki_mr_cd","得意先"],
+                    ["tokuisaki_name","得意先名称"],
+                    ["gotantousha","ご担当者"],
+                    ["keishou","敬称"],
+                    ["tel","TEL"],
+                    ["fax","FAX"],
+                    ["torihiki_kbn_cd","取引区分"],
+                    ["zei_tenka_kbn_cd","税転嫁"],
+                    ["tantou_mr_cd","担当者"],
+                    ["shimekiri_flg","締切"],
+                    ["nounyuu_kijitu","納入期日"],
+                    ["nounyuusaki_mr_cd","納入先コード"],
+                    ["nounyuusaki","納入先"],
+                    ["kidukesaki_mr_cd","気付先コード"],
+                    ["kiduke","気付"],
+                    ["kenmei","件名"],
+                    ["nouki_memo","納期メモ"],
+                    ["nounyuu_basho","納入場所"],
+                    ["torihiki_houhou","取引方法"],
+                    ["yuukou_kigen","有効期限"],
+                    ["kingaku_meishou","合計金額名称"],
+                    ["saki_hacchuu_cd","得意先発注コード"],
+                    ["mitumori_dt_id","元見積id"],
+                    ["juchuu_dt_id","元受注id"],
+                    ["hacchuu_dt_id","発注id"],
+                    ["keikaku_meisai_id","計画明細id"],
+                    ["sasizu_jun","指図順"],
+                    ["shiiresaki_mr_cd","仕入先"],
+                    ["hassousaki_kbn_cd","発送先区分"],
+                    ["hassousaki_mr_cd","発送先コード"],
+                    ["hassousaki","発送先名"],
+                    ["shukkabi","出荷日"],
+                    ["tanka_shurui_kbn_cd","単価種類"],
+                    ["kaishuu_yoteibi","回収予定日"],
+                    ["seikyuusho_dt_cd","請求書番号"],
+                    ["keshikomi_flg","消込状態"],
+                    ["irai_kbn_cd","依頼区分"],
+                    ["souko_mr_cd","依頼先倉庫"],
+                    ["assistant","アシスタント"],
+                    ["sasizu_dt_cd","指図番号"],
+                    ["moto_souko_mr_cd","元倉庫コード"],
+                    ["moto_tantou_mr_cd","元担当者"],
+                    ["shounin_joutai_flg","承認状態"],
+                    ["shounin_sha_mr_cd","承認者"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $gyoumu_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("gyoumu_dts/edit/" . $gyoumu_dt->id, $gyoumu_dt->id)); ?></td>
+                <td><?php echo $gyoumu_dt->denpyou_mr_id ?></td>
+                <td><?php echo $gyoumu_dt->cd ?></td>
+                <td><?php echo $gyoumu_dt->hakkoubi ?></td>
+                <td><?php echo $gyoumu_dt->nendo ?></td>
+                <td><?php echo $gyoumu_dt->tekiyou ?></td>
+                <td><?php echo $gyoumu_dt->zeiritu_tekiyoubi ?></td>
+                <td><?php echo $gyoumu_dt->tokuisaki_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->tokuisaki_name ?></td>
+                <td><?php echo $gyoumu_dt->gotantousha ?></td>
+                <td><?php echo $gyoumu_dt->keishou ?></td>
+                <td><?php echo $gyoumu_dt->tel ?></td>
+                <td><?php echo $gyoumu_dt->fax ?></td>
+                <td><?php echo $gyoumu_dt->torihiki_kbn_cd ?></td>
+                <td><?php echo $gyoumu_dt->zei_tenka_kbn_cd ?></td>
+                <td><?php echo $gyoumu_dt->tantou_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->shimekiri_flg ?></td>
+                <td><?php echo $gyoumu_dt->nounyuu_kijitu ?></td>
+                <td><?php echo $gyoumu_dt->nounyuusaki_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->nounyuusaki ?></td>
+                <td><?php echo $gyoumu_dt->kidukesaki_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->kiduke ?></td>
+                <td><?php echo $gyoumu_dt->kenmei ?></td>
+                <td><?php echo $gyoumu_dt->nouki_memo ?></td>
+                <td><?php echo $gyoumu_dt->nounyuu_basho ?></td>
+                <td><?php echo $gyoumu_dt->torihiki_houhou ?></td>
+                <td><?php echo $gyoumu_dt->yuukou_kigen ?></td>
+                <td><?php echo $gyoumu_dt->kingaku_meishou ?></td>
+                <td><?php echo $gyoumu_dt->saki_hacchuu_cd ?></td>
+                <td><?php echo $gyoumu_dt->mitumori_dt_id ?></td>
+                <td><?php echo $gyoumu_dt->juchuu_dt_id ?></td>
+                <td><?php echo $gyoumu_dt->hacchuu_dt_id ?></td>
+                <td><?php echo $gyoumu_dt->keikaku_meisai_id ?></td>
+                <td><?php echo $gyoumu_dt->sasizu_jun ?></td>
+                <td><?php echo $gyoumu_dt->shiiresaki_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->hassousaki_kbn_cd ?></td>
+                <td><?php echo $gyoumu_dt->hassousaki_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->hassousaki ?></td>
+                <td><?php echo $gyoumu_dt->shukkabi ?></td>
+                <td><?php echo $gyoumu_dt->tanka_shurui_kbn_cd ?></td>
+                <td><?php echo $gyoumu_dt->kaishuu_yoteibi ?></td>
+                <td><?php echo $gyoumu_dt->seikyuusho_dt_cd ?></td>
+                <td><?php echo $gyoumu_dt->keshikomi_flg ?></td>
+                <td><?php echo $gyoumu_dt->irai_kbn_cd ?></td>
+                <td><?php echo $gyoumu_dt->souko_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->assistant ?></td>
+                <td><?php echo $gyoumu_dt->sasizu_dt_cd ?></td>
+                <td><?php echo $gyoumu_dt->moto_souko_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->moto_tantou_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->shounin_joutai_flg ?></td>
+                <td><?php echo $gyoumu_dt->shounin_sha_mr_cd ?></td>
+                <td><?php echo $gyoumu_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("gyoumu_dts/delete/" . $gyoumu_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"gyoumu_dts"]) ?>

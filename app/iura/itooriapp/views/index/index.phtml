@@ -1,0 +1,68 @@
+<div class="page-header">
+    <h1>Congratulations!</h1>
+</div>
+
+<p>You're now flying with Phalcon. Great things are about to happen!</p>
+
+<p>This page is located at <code>views/index/index.phtml</code></p>
+<div class="col-sm-6">
+<?php
+	echo '<p>'.$this->tag->linkTo(["webtools.php", 'WEB開発=>webtools.php', 'target'=>'_blank']).'</p>';
+	$tables=[
+	'gouki_vws'=>'号機',
+	'higenr_vws'=>'原料指図',
+	'hisasi_vws'=>'糸指図',
+	'iraikiroku_vws'=>'依頼記録',
+	'itojisseki_vws'=>'糸実績',
+	'itomei_vws'=>'糸名',
+	'iyyiohst_vws'=>'糸倉庫ヒスト',
+	'seisan_tantou_vws'=>'生産担当',
+	'prop_hikiate_vws'=>'プロパー引当',
+	'ukeire_vws'=>'受入',
+	'uri_vws'=>'売上',
+	'shukka_vws'=>'出荷',
+	'host_memo'=>'ホストメモ',
+	'gouki_mrs'=>'号機MR',
+	'higenrpf'=>'原料指図PF',
+	'hisasip1_dts'=>'糸指図P1',
+	'hisasip2_dts'=>'糸指図P2',
+	'iraikiroku_dts'=>'依頼記録DT',
+	'iroban_kbns'=>'色番KBN',
+	'itojisseki_cnts'=>'糸実績CNT',
+	'itojisseki_dts'=>'糸実績DT',
+	'itokigou_kbns'=>'糸記号KBN',
+	'itomei_mrs'=>'糸名MR',
+	'itosasizu_mrs'=>'糸指図MR',
+	'iyyiohst_dts'=>'糸倉庫HST',
+	'juchuu_dts'=>'受注DT',
+	'juchuu_meisai_dts'=>'受注明細DT',
+	'prop_hikiate_mrs'=>'プロパー引当MR',
+	'prop_tanni_kbns'=>'プロパー単位KBN',
+	'seisan_tantou_mrs'=>'生産担当MR',
+	'ukeire'=>'受入DT',
+	'uri_dts'=>'売上DT',
+	];
+	foreach($tables as $table=>$name){
+		echo $this->tag->linkTo([$table."/search/", $name.'=>'.$table, 'target'=>'_blank']).'<br>';
+	}
+?>
+</div>
+<div class="col-sm-6">
+	<h2>手順</h2>
+	<ul>
+	<li>各種区分</li>
+	<li>商品マスター</li>
+	<li>構成部品マスター</li>
+	<li>導入時在庫</li>
+	<li>導入時預り調整</li>
+	<li><?php echo $this->tag->linkTo(["juchuu_dts/search/", '受注データ', 'target'=>'_blank']) ?></li>
+	<li><?php echo $this->tag->linkTo(["ukeire_vws/search/", '受入データ', 'target'=>'_blank']) ?></li>
+		<ul>
+		<li>S:\h製織部\１．受入リスト（原料台帳）.xls の 受入れ を S:\d経理部\経理課\担当作業\井浦\シモムラDB\糸織設計情報\txt-csv\受入.csv へ保存する。</li>
+		<li>S:\d経理部\経理課\担当作業\井浦\シモムラDB\糸織設計情報\erphalcon移行.mdb で テーブル の 受入 をエクスポートして ODBC の MySQL へ入れる。</li>
+		</ul>
+	<li><?php echo $this->tag->linkTo(["itojisseki_vws/search/", '生産実績データ', 'target'=>'_blank']) ?></li>
+	<li><?php echo $this->tag->linkTo(["uri_vws/search/", '売上データ', 'target'=>'_blank']) ?></li>
+	<li><?php echo $this->tag->linkTo(["shukka_vws/search/", '出荷データ', 'target'=>'_blank']) ?></li>
+	</ul>
+</dib>

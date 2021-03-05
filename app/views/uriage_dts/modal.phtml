@@ -1,0 +1,95 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '売上.一覧'; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/modalkanni",["table_id"=>"uriage_dts","flds"=>[
+		["cd","fieldCd","伝票番号",14,14],["tekiyou","fieldTekiyou","摘要",24,24]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["cd","伝票番号"],
+					["tekiyou","摘要"],
+					["uriagebi","売上日"],
+					["tokuisaki_mr_cd","得意先"],
+					["tantou_mr_cd","担当者"],
+					["","商品1"],
+					["","数量1"]
+				]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $uriage_dt): ?>
+            <tr>
+                <td align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $uriage_dt->cd ?></td>
+                <td><?php echo $uriage_dt->tekiyou ?></td>
+                <td align="center"><?php echo $uriage_dt->uriagebi ?></td>
+                <td><?php echo $uriage_dt->tokuisaki_mr_cd."=".$uriage_dt->TokuisakiMrs->name ?></td>
+                <td><?php echo $uriage_dt->tantou_mr_cd."=".$uriage_dt->TantouMrs->name ?></td>
+                <td><?php echo $uriage_dt->UriageMeisaiDts[0]->shouhin_mr_cd ?></td>
+                <td align="right"><?php echo $uriage_dt->UriageMeisaiDts[0]->suuryou.$uriage_dt->UriageMeisaiDts[0]->TanniMrs->name ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["index_or"=>"modal", "table_id"=>"uriage_dts"]) ?>
+
+<div class="col-sm-2">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+</div>
+<script type="text/javascript">
+	$('.returnto').click(function () {//alert($(this).text());
+		window.parent.fromModal($(this).text());
+	});
+</script>
+
+<div class="contents-wrap">
+    <div class="contents-box">
+        <div class="elem">
+            <a href="https://muranishi226.com/tax-department/" style="color:black">
+                <img src="https://muranishi226.com/wp-content/uploads/2019/07/omitumori.png">
+                <h5 class="pr_h5">税務部門</h5>
+                <p class="pr_p">法人税、所得税、消費税、相続税等のご相談、申請書の作成。土地、株式の評価はお任せください。</p>
+            </a>
+        </div>
+    </div>
+    <div class="contents-box">
+        <div class="elem">
+            <a href="https://muranishi226.com/accounting-department/" style="color:black">
+                <img src="https://muranishi226.com/wp-content/uploads/2019/07/0000027041.jpg">
+                <h5>会計部門</h5>
+                <p>記帳、決算、財務諸表の作成や会計に関するデータの作成はお任せください。記帳、決算、財務諸表の作成や会計に関するデータの作成はお任せください。  </p>
+            </a>
+        </div>
+    </div>
+    <div class="contents-box">
+        <div class="elem">
+            <a href="https://muranishi226.com/labor-department/" style="color:black">
+            <img src="https://muranishi226.com/wp-content/uploads/2019/07/meeting-1.jpg">
+            <h5>労務部門</h5>
+            <p>  社会保険に関するお手続き、書類作成や給料計算、就業規則作成等はお任せください。</p>
+            </a>
+        </div>
+    </div>
+    <div class="contents-box">
+        <div class="elem">
+            <a href="https://muranishi226.com/insurance-agent/" style="color:black">
+                <img src="https://muranishi226.com/wp-content/uploads/2019/07/0000036519.jpg">
+                <h5>保険代理</h5>
+                <p>損害保険、生命保険の代理店業務はお任せください。</p>
+            </a>
+        </div>
+    </div>
+</div>

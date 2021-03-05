@@ -1,0 +1,40 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "出依.新規"; ?>
+<div class="page-header">
+    <h3>出荷依頼伝票 新規登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "shukkairai_dts/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('shukkairai_dts/inputfields'); ?>
+
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("shukkairai_dts/prev", "最終F3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("shukkairai_dts/search", "検索F4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-10">
+        <?php echo $this->tag->submitButton(array("登録F12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return final_check();')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">var imax = <?php echo $imax ?>;</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/shukkairai_dts.js'); ?>?var=20200513"></script>

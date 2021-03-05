@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "在庫.一覧"; ?>
+<div class="page-header">
+    <h3>在庫変換伝票 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"zaiko_henkan_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["zaiko_henkan_kbn_cd","在庫変換区分"],
+                    ["cd","伝票番号(修正)"],
+                    ["name","摘要"],
+                    ["henkanbi","変換日"],
+                    ["tantou_mr_cd","担当者"],
+                    ["","商品1"],
+                    ["","数量"],
+                    ["","単位"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $zaiko_henkan_dt): ?>
+            <tr>
+                <td align="center"><?php echo $zaiko_henkan_dt->ZaikoHenkanKbns->name ?></td>
+                <td align="center"><?php echo $this->tag->linkTo(array("zaiko_henkan_dts/edit/" . $zaiko_henkan_dt->id, $zaiko_henkan_dt->cd)); ?></td>
+                <td><?php echo $zaiko_henkan_dt->name ?></td>
+                <td align="center"><?php echo $zaiko_henkan_dt->henkanbi ?></td>
+                <td align="center"><?php echo $zaiko_henkan_dt->TantouMrs->name ?></td>
+                <td align="center"><?php echo $zaiko_henkan_dt->ZaikoHenkanMeisaiDts[0]->shouhin_mr_cd ?></td>
+                <td align="right"><?php	$tanka_kbn=$zaiko_henkan_dt->ZaikoHenkanMeisaiDts[0]->tanka_kbn;$suufld='suuryou'.$tanka_kbn;$tannitb='TanniMr'.$tanka_kbn.'s';
+                						echo $zaiko_henkan_dt->ZaikoHenkanMeisaiDts[0]->$suufld ?></td>
+                <td align="center"><?php echo $zaiko_henkan_dt->ZaikoHenkanMeisaiDts[0]->$tannitb->name ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"zaiko_henkan_dts"]) ?>

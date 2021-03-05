@@ -1,0 +1,62 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<!-- 単価履歴確認用  Add By Nishiyama 2019/1/9 -->
+<?php use Phalcon\Tag; ?>
+<?php $title = "仕入明細データ.一覧"; ?>
+<div class="page-header">
+    <h2 style="text-align: center;">商品仕入時 単価履歴（選択商品）</h2>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <?php $this->partial("common/indexsort",["flds"=>[
+                        ["shiire_dt_id","仕入伝票(選択)"],
+                        ["shouhin_mr_cd","商品コード"],
+                        ["tekiyou","商品名/摘要"],
+                        ["lot","ロット"],
+                        ["suuryou","数量2"],
+                        ["tanka","単価"],
+                        ["kingaku","金額"],
+                        ["bikou","備考"],
+                        ["updated","更新日時"],
+                    ]])
+                ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($shiire_meisai_dts as $shiire_meisai_dt): ?>
+            <?php $nos = ShiireDts::query()
+                ->where("id = :cd:")
+                ->bind(['cd' =>$shiire_meisai_dt['shiire_dt_id']])
+                ->limit(1)
+                ->execute()->toArray();
+            ?>
+            <tr>
+                <?php foreach ($nos as $no): ?>
+                    <td align="center"><?php echo $this->tag->linkTo("shiire_dts/edit/" .$shiire_meisai_dt['shiire_dt_id'],$no['cd']); ?></td>
+                <?php endforeach; ?>
+                <td align="center"><?php echo $shiire_meisai_dt['shouhin_mr_cd'] ?></td>
+                <td><?php echo $shiire_meisai_dt['tekiyou'] ?></td>
+                <td><?php echo $shiire_meisai_dt['lot'] ?></td>
+                <td align="right"><?php echo $shiire_meisai_dt['suuryou2'] ?></td>
+                <td align="right"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $shiire_meisai_dt['tanka'] ?></div></td>
+                <td align="right"><?php echo $shiire_meisai_dt['kingaku'] ?></td>
+                <td><?php echo $shiire_meisai_dt['bikou'] ?></td>
+                <td><?php echo $shiire_meisai_dt['updated'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    //選択された単価を親フォームへ返却
+    $('.returnto').click(function () {
+        window.parent.fromModal($(this).text());
+    });
+</script>

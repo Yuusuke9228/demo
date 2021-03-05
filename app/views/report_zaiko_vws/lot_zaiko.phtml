@@ -1,0 +1,111 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<!-- Add By Nishiyama 2019/2/8 在庫一覧より呼び出し。-->
+
+<?php $title = "Lot在庫"; ?>
+<div class="page-header">
+    <h2>商品 >><?php echo $rows ? $rows[0]["shouhin_mr_cd"] . " : " . $rows[0]["name"] : "現在、表示できるデータがありません。"; ?></h2>
+    <br/>
+    <?php
+    $soukoName = SoukoMrs::find('cd =' . $rows[0]["souko_mr_cd"]);
+    if (isset($soukoName)) {
+        $soukoName = $soukoName->toArray();
+    }
+    $result = 0;
+    ?>
+    <h3>倉庫 >><?php echo $rows ? $rows[0]["souko_mr_cd"] . " : " . $soukoName[0]['name'] : ""; ?> </h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr style="background-color: lavender;">
+            <th nowrap style="text-align:center;">入庫日</th>
+            <th nowrap style="text-align:center;">ロット</th>
+            <th nowrap style="text-align:center;">伝票種</th>
+            <th nowrap style="text-align:center;">伝票NO</th>
+            <th nowrap style="text-align:center;">内訳</th>
+            <th nowrap style="text-align:center;">色番</th>
+            <th nowrap style="text-align:center;">色</th>
+            <th nowrap style="text-align:center;">品質</th>
+            <th nowrap style="text-align:center;">入本数</th>
+            <th nowrap style="text-align:center;">単位1</th>
+            <th nowrap style="text-align:center;">入数量</th>
+            <th nowrap style="text-align:center;">単位2</th>
+            <th nowrap style="text-align:center;">コスト</th>
+            <th nowrap style="text-align:center;">/</th>
+            <th nowrap style="text-align:center;">出本数</th>
+            <th nowrap style="text-align:center;">単位1</th>
+            <th nowrap style="text-align:center;">出数量</th>
+            <th nowrap style="text-align:center;">単位2</th>
+            <th nowrap style="text-align:center;">在庫数量</th>
+            <th nowrap style="text-align:center;">備考</th>
+            <th nowrap style="text-align:center;">納入先</th>
+            <th nowrap style="text-align:center;">気付先</th>
+            <th nowrap style="text-align:center;">取引先</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $zaiko2 = 0; ?>
+        <?php $i = 0; ?>
+        <?php foreach ($rows as $row): ?>
+            <?php if ($row["zaiko_ryou1"] != 0 || $row["zaiko_ryou2"] != 0): ?>
+                <tr>
+                    <td style="text-align:center;"><?php echo $row["nyuushukkobi"]; ?></td>
+                    <td style="text-align:center;">
+                        <div class="returnto" data-dismiss="modal"
+                             style="cursor: pointer;"><?php echo $row["lot"]; ?>
+                        </div>
+                    </td>
+                    <?php
+                    if (isset($row['denpyou_mr_cd'])) {
+                        $denName = DenpyouMrs::find('cd =' . "'" . $row["denpyou_mr_cd"] . "'");
+                        if (isset($denName)) {
+                            $denName = $denName->toArray();
+                        }
+                    }
+                    ?>
+                    <td nowrap><?php echo @$denName[0]['name'] ? $denName[0]['name'] : ''; ?> </td>
+                    <td style="text-align:center;"><?php echo $row["cd"]; ?></td>
+                    <td style="text-align:center;"><?php echo $row["utiwake_kbn_cd"]; ?></td>
+                    <td style="text-align:center;"><?php echo $row["iro"]; ?></td>
+                    <td nowrap style="text-align:center;"><?php echo $row["iromei"]; ?></td>
+                    <td style="text-align:center;"><?php echo $row["hinsitu_kbn_cd"]; ?></td>
+                    <td style="text-align:right;"><?php echo(($row["shiire_ryou1"] + $row["hokanyuuko_ryou1"]) ?? ""); ?></td>
+                    <td style="text-align:center;"><?php echo(($row["shiire_ryou1"] + $row["hokanyuuko_ryou1"]) ? $row["t1_name"] : ""); ?></td>
+                    <td style="text-align:right;"><?php echo(($row["shiire_ryou2"] + $row["hokanyuuko_ryou2"]) ?? ""); ?></td>
+                    <td style="text-align:center;"><?php echo(($row["shiire_ryou2"] + $row["hokanyuuko_ryou2"]) ? $row["t2_name"] : ""); ?></td>
+                    <td style="text-align:right;"><?php echo(substr($row["shiirebi_tanka"], 10) != "0" ? substr($row["shiirebi_tanka"], 10) : ""); ?></td>
+                    <td style="text-align:center;"><?php echo(substr($row["shiirebi_tanka"], 10) != "0" ? '/' . $row["t3_name"] : ""); ?></td>
+                    <td style="text-align:right;"><?php echo(($row["uriage_ryou1"] + $row["hokashukko_ryou1"]) ?? ""); ?></td>
+                    <td style="text-align:center;"><?php echo(($row["uriage_ryou1"] + $row["hokashukko_ryou1"]) ? $row["t1_name"] : ""); ?></td>
+                    <td style="text-align:right;"><?php echo(($row["uriage_ryou2"] + $row["hokashukko_ryou2"]) ?? ""); ?></td>
+                    <td style="text-align:center;"><?php echo(($row["uriage_ryou2"] + $row["hokashukko_ryou2"]) ? $row["t2_name"] : ""); ?></td>
+                    <?php $result += $row["zaiko_ryou2"]; ?>
+                    <td nowrap style="text-align:right;"><?php echo $zaiko2 = round($result, 4); ?></td>
+                    <td><?php echo $row["bikou"]; ?></td>
+                    <?php
+                    if ($row['denpyou_mr_cd'] === 'uriage') {
+                        $nounyusaki = UriageDts::find("cd = " . $row['cd']);
+                    }
+                    ?>
+                    <td nowrap style="text-align:center;"><?php if(isset($nounyuusaki)) {echo $nounyusaki[0]['nounyuusaki'] ?? '';} ?></td>
+                    <td nowrap style="text-align:center;"><?php if(isset($nounyuusaki)) {echo $nounyusaki[0]['kiduke'] ?? '';} ?></td>
+                    <td nowrap style="text-align:center;"><?php echo $row[$row["denpyou_mr_cd"] == "shiire" ? "shiiresaki_name" : "tokuisaki_name"]; ?></td>
+                </tr>
+                <?php $i++; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal"
+                onclick="window.parent.fromModal();">中止
+        </button>
+    </div>
+</div>

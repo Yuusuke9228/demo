@@ -1,0 +1,92 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "基本情報.一覧"; ?>
+<div class="page-header">
+    <h3>基本情報 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"kihon_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","名称"],
+                    ["kana","フリガナ"],
+                    ["ryakushou","略称"],
+                    ["yuubin_bangou","郵便番号"],
+                    ["juusho1","住所1"],
+                    ["juusho2","住所2"],
+                    ["yakushoku","役職名"],
+                    ["gotantousha","ご担当者"],
+                    ["tel","TEL"],
+                    ["fax","FAX"],
+                    ["email","メールアドレス"],
+                    ["homepage","ホームページ"],
+                    ["shimegrp_kbn_cd","締グループ"],
+                    ["gaku_hasuu_shori_kbn_cd","金額端数処理"],
+                    ["zei_hasuu_shori_kbn_cd","税端数処理"],
+                    ["zei_tenka_kbn_cd","税転嫁"],
+                    ["harai_houhou_kbn_cd","回収方法"],
+                    ["harai_saikuru_kbn_cd","回収サイクル"],
+                    ["haraibi","回収日"],
+                    ["tesuuryou_hutan_kbn_cd","手数料負担区分"],
+                    ["tegata_sight","手形サイト"],
+                    ["kigyou_code","企業コード"],
+                    ["memo","メモ欄"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $kihon_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("kihon_mrs/edit/" . $kihon_mr->id, $kihon_mr->id)); ?></td>
+                <td><?php echo $kihon_mr->cd ?></td>
+                <td><?php echo $kihon_mr->name ?></td>
+                <td><?php echo $kihon_mr->kana ?></td>
+                <td><?php echo $kihon_mr->ryakushou ?></td>
+                <td><?php echo $kihon_mr->yuubin_bangou ?></td>
+                <td><?php echo $kihon_mr->juusho1 ?></td>
+                <td><?php echo $kihon_mr->juusho2 ?></td>
+                <td><?php echo $kihon_mr->yakushoku ?></td>
+                <td><?php echo $kihon_mr->gotantousha ?></td>
+                <td><?php echo $kihon_mr->tel ?></td>
+                <td><?php echo $kihon_mr->fax ?></td>
+                <td><?php echo $kihon_mr->email ?></td>
+                <td><?php echo $kihon_mr->homepage ?></td>
+                <td><?php echo $kihon_mr->shimegrp_kbn_cd ?></td>
+                <td><?php echo $kihon_mr->gaku_hasuu_shori_kbn_cd ?></td>
+                <td><?php echo $kihon_mr->zei_hasuu_shori_kbn_cd ?></td>
+                <td><?php echo $kihon_mr->zei_tenka_kbn_cd ?></td>
+                <td><?php echo $kihon_mr->harai_houhou_kbn_cd ?></td>
+                <td><?php echo $kihon_mr->harai_saikuru_kbn_cd ?></td>
+                <td><?php echo $kihon_mr->haraibi ?></td>
+                <td><?php echo $kihon_mr->tesuuryou_hutan_kbn_cd ?></td>
+                <td><?php echo $kihon_mr->tegata_sight ?></td>
+                <td><?php echo $kihon_mr->kigyou_code ?></td>
+                <td><?php echo $kihon_mr->memo ?></td>
+                <td><?php echo $kihon_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("kihon_mrs/delete/" . $kihon_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"kihon_mrs"]) ?>

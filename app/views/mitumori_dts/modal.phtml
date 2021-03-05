@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "見積書参照"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/modalkanni",["table_id"=>"mitumori_dts","flds"=>[
+        ["cd","fieldCd","見積番号",14,14],["tekiyou","fieldName","摘要",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["cd","見積番号"],
+                    ["tekiyou","摘要"],
+                    ["mitumoribi","見積日"],
+                    ["tokuisaki_mr_cd","得意先"],
+                    ["tantou_mr_cd","担当者"],
+                    ["","商品コード1"],
+                    ["","数量1"],
+                ]]) ?>
+
+                <th style="text-align:center;">修正</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $mitumori_dt): ?>
+            <tr>
+                <td><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $mitumori_dt->cd; ?></div></td>
+                <td><?php echo $mitumori_dt->tekiyou ?></td>
+                <td><?php echo $mitumori_dt->mitumoribi ?></td>
+                <td><?php echo $mitumori_dt->TokuisakiMrs->name ?></td>
+                <td><?php echo $mitumori_dt->TantouMrs->name ?></td>
+                <td><?php echo $mitumori_dt->MitumoriMeisaiDts[0]->shouhin_mr_cd ?></td>
+                <td align='right'><?php echo $mitumori_dt->MitumoriMeisaiDts[0]->suuryou ?></td>
+
+                <td align="center"><?php echo $this->tag->linkTo(array("mitumori_dts/edit/" . $mitumori_dt->id, "別タブ", "target"=>"_blank")); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["index_or"=>"modal", "table_id"=>"mitumori_dts"]) ?>
+
+<div class="col-sm-2">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+</div>
+<script type="text/javascript">
+	$('.returnto').click(function () {//alert($(this).text());
+		window.parent.fromModal($(this).text());
+	});
+</script>

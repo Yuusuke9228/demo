@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "VIEW.一覧"; ?>
+<div class="page-header">
+    <h3>VIEW 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"uriage_shukka_maxs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["juchuu_dt_id","受注id"],
+                    ["shouhin_mr_cd","商品コード"],
+                    ["iro","色番"],
+                    ["shukka_kbn_max","出荷"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $uriage_shukka_max): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("uriage_shukka_maxs/edit/" . $uriage_shukka_max->id, $uriage_shukka_max->juchuu_dt_id)); ?></td>
+                <td><?php echo $uriage_shukka_max->shouhin_mr_cd ?></td>
+                <td><?php echo $uriage_shukka_max->iro ?></td>
+                <td><?php echo $uriage_shukka_max->shukka_kbn_max ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("uriage_shukka_maxs/delete/" . $uriage_shukka_max->juchuu_dt_id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"uriage_shukka_maxs"]) ?>

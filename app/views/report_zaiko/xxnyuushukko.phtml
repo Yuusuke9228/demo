@@ -1,0 +1,306 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = 'レポ.入出庫'; ?>
+<div class="page-header">
+	<h3>入出庫明細表</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="panel panel-success bg-yel">
+<br>
+<?php
+    echo $this->tag->form(
+        array(
+            "report_zaiko/nyuushukko",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "id" => "form_zaiko"
+        )
+    );
+?>
+<div class="form-group">
+<div class="col-sm-8">
+  <label for="fieldCd" class="col-sm-2 control-label">商品</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->textField(array("cd", "class" => "form-control", "id" => "fieldCd", "list" => "ShouhinMrsOptions")) ?>
+    </div>
+    <div class="col-sm-7">
+        <?php echo $this->tag->textField(array("name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+  <label for="fieldSoukoMrCd" class="col-sm-2 control-label">倉庫</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("souko_mr_cd", SoukoMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]),'useEmpty' => true, "using" => array("cd", "cd_name"), "class" => "form-control", "id" => "fieldSoukoMrCd")) ?>
+    </div>
+
+  <label for="fieldHyoujiFlg" class="col-sm-2 control-label">表示</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->selectStatic(array("hyouji_flg", ["0" => "0=月次計", "1" => "1=明細表"], "class" => "form-control", "id" => "fieldHyoujiFlg")) ?>
+    </div>
+	<div class="clearfix"></div>
+
+  <label for="fieldKikanSiteiKbnCd" class="col-sm-2 control-label">期間</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->dateField(array("kikan_from", "type" => "date", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+    </div>
+
+  <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->dateField(array("kikan_to", "type" => "date", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+    </div>
+	<div class="clearfix"></div>
+
+</div>
+<div class="col-sm-4">
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("集計f12", "id" => "F12", "class" => "btn  btn-success")) ?>
+    </div>
+</div>
+</div><!-- form-group -->
+
+<?php echo $this->tag->endForm(); ?>
+</div><!-- panel-successp -->
+
+<?php
+	$setdts["kikan_from"] = date('Y-m-'.($setdts["hyouji_flg"]==1?'d':'01'), strtotime($setdts["kikan_from"]));
+	$setdts["kikan_to"] = date('Y-m-'.($setdts["hyouji_flg"]==1?'d':'t'), strtotime($setdts["kikan_to"]));
+	$kurikosi_ryou = 0;
+	$zaiko_ryou = 0;
+	$nyuuko_ryou = 0;
+	$shukko_ryou = 0;
+	$idou_ryou = 0;
+	$shuukei = [];
+	for ($i = 0; $i < count($rows); $i++) {
+		$lot_tannis = $rows[$i]["lot"]."__".$rows[$i]["tanni_mr_cd"]."@".$rows[$i]["suu_tanni_mr_cd"];
+		if (!array_key_exists($lot_tannis, $shuukei)) {
+			$shuukei[$lot_tannis] = [];
+			$shuukei[$lot_tannis]["lot"]=$rows[$i]["lot"];
+			$shuukei[$lot_tannis]["tanni_name"]=$rows[$i]["tanni_name"];
+			$shuukei[$lot_tannis]["suu_tanni_name"]=$rows[$i]["suu_tanni_name"];
+			$shuukei[$lot_tannis]["kurikosi_ryou"] = 0;
+			$shuukei[$lot_tannis]["zaiko_ryou"] = 0;
+			$shuukei[$lot_tannis]["nyuuko_ryou"] = 0;
+			$shuukei[$lot_tannis]["shukko_ryou"] = 0;
+			$shuukei[$lot_tannis]["idou_ryou"] = 0;
+			$shuukei[$lot_tannis]["kurikosi_suu"] = 0;
+			$shuukei[$lot_tannis]["zaiko_suu"] = 0;
+			$shuukei[$lot_tannis]["nyuuko_suu"] = 0;
+			$shuukei[$lot_tannis]["shukko_suu"] = 0;
+			$shuukei[$lot_tannis]["idou_suu"] = 0;
+		}
+		if ($rows[$i]["nyuushukkobi"] < $setdts["kikan_from"]) {
+			$shuukei[$lot_tannis]["kurikosi_ryou"] += $rows[$i]["zaiko_ryou"];
+			$shuukei[$lot_tannis]["kurikosi_suu"] += $rows[$i]["zaiko_suu"];
+		} else {
+			$shuukei[$lot_tannis]["nyuuko_ryou"] += $rows[$i]["shiire_ryou"];
+			$shuukei[$lot_tannis]["shukko_ryou"] += $rows[$i]["uriage_ryou"];
+			$shuukei[$lot_tannis]["idou_ryou"] += $rows[$i]["hokanyuuko_ryou"] - $rows[$i]["hokashukko_ryou"];
+			$shuukei[$lot_tannis]["nyuuko_suu"] += $rows[$i]["shiire_suu"];
+			$shuukei[$lot_tannis]["shukko_suu"] += $rows[$i]["uriage_suu"];
+			$shuukei[$lot_tannis]["idou_suu"] += $rows[$i]["hokanyuuko_suu"] - $rows[$i]["hokashukko_suu"];
+		}
+		$shuukei[$lot_tannis]["zaiko_ryou"] += $rows[$i]["zaiko_ryou"];
+		$shuukei[$lot_tannis]["zaiko_suu"] += $rows[$i]["zaiko_suu"];
+	}
+/*	foreach ($shuukei as $key => $value) {
+	    $sort[$key] = $key;
+	}
+	array_multisort($sort, SORT_ASC, $shuukei);
+*/
+?>
+
+<div class="row">
+	<table class="table table-bordered table-hover table-condens-0 table-striped">
+		<thead>
+			<tr bgcolor="Lavender">
+				<th style="text-align:center;">ロット</th>
+				<th style="text-align:center;">繰越数</th>
+				<th style="text-align:center;">繰越数量</th>
+				<th style="text-align:center;">入庫数</th>
+				<th style="text-align:center;">入庫数量</th>
+				<th style="text-align:center;">出庫数</th>
+				<th style="text-align:center;">出庫数量</th>
+				<th style="text-align:center;">移動数</th>
+				<th style="text-align:center;">移動数量</th>
+				<th style="text-align:center;">在庫数</th>
+				<th style="text-align:center;">在庫数量</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($shuukei as $key => $value): ?>
+				<tr bgcolor="#fffcf8">
+					<td style="text-align:left;"><?php echo $value["lot"] /* ロット */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["kurikosi_suu"],1).$value["suu_tanni_name"] /* 繰越数 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["kurikosi_ryou"],2).$value["tanni_name"] /* 繰越数量 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["nyuuko_suu"],1).$value["suu_tanni_name"] /* 入庫数 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["nyuuko_ryou"],2).$value["tanni_name"] /* 入庫数量 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["shukko_suu"],1).$value["suu_tanni_name"] /* 出庫数 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["shukko_ryou"],2).$value["tanni_name"] /* 出庫数量 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["idou_suu"],1).$value["suu_tanni_name"] /* 移動数 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["idou_ryou"],2).$value["tanni_name"] /* 移動数量 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["zaiko_suu"],1).$value["suu_tanni_name"] /* 在庫数 */ ?></td>
+					<td style="text-align:right;"><?php echo number_format($value["zaiko_ryou"],2).$value["tanni_name"] /* 在庫数量 */ ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+<div class="row">
+	<?php if ($setdts["hyouji_flg"] == "1"): /* 明細表 */ ?>
+		<table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+			<thead>
+				<tr bgcolor="Lavender">
+					<th nowrap style="text-align:center;">伝票日付</th>
+					<th nowrap style="text-align:center;">取引区分</th>
+					<th nowrap style="text-align:left  ;">取引先コード</th>
+					<th nowrap style="text-align:center;">単位</th>
+					<th nowrap style="text-align:center;">仕入単価</th>
+					<th nowrap style="text-align:center;">入庫数量</th>
+					<th nowrap style="text-align:center;">出庫数量</th>
+					<th nowrap style="text-align:center;">移動数量</th>
+					<th nowrap style="text-align:center;">在庫数量</th>
+					<th nowrap style="text-align:center;">備考</th>
+				</tr>
+				<tr bgcolor="Lavender">
+					<th nowrap style="text-align:center;">伝票番号</th>
+					<th nowrap style="text-align:center;">内訳</th>
+					<th colspan="2" nowrap style="text-align:center;">取引先名</th>
+					<th nowrap style="text-align:center;">　</th>
+					<th nowrap style="text-align:center;">　</th>
+					<th nowrap style="text-align:center;">　</th>
+					<th nowrap style="text-align:center;">　</th>
+					<th nowrap style="text-align:center;">　</th>
+					<th nowrap style="text-align:center;">　</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+				$zaiko_ryou = 0;
+				for ($i = 0; $i < count($rows); $i++):
+					$zaiko_ryou += $rows[$i]["zaiko_ryou"];
+					if ($rows[$i]["nyuushukkobi"] >= $setdts["kikan_from"]):
+			?>
+				<tr bgcolor="#fffcf8">
+					<td nowrap              ><?php echo $rows[$i]["nyuushukkobi"] /* 入出庫日 */ ?></td>
+					<td nowrap              ><?php echo $rows[$i]["denpyou_name"] /* 取引区分名 */ ?></td>
+					<td nowrap              ><?php echo $rows[$i]["torihikisaki_cd"] /* 取引先コード */ ?></td>
+					<td nowrap align="right"><?php echo $rows[$i]["tanni_name"] /* 単位 */ ?></td>
+					<td nowrap align="right"><?php echo number_format(substr($rows[$i]["shiirebi_tanka"],10),2) /* 仕入単価*/ ?></td>
+					<td nowrap align="right"><?php echo number_format($rows[$i]["shiire_ryou"],2) /* 入庫数量*/ ?></td>
+					<td nowrap align="right"><?php echo number_format($rows[$i]["uriage_ryou"],2) /* 出庫数量*/ ?></td>
+					<td nowrap align="right"><?php echo number_format($rows[$i]["hokanyuuko_ryou"] - $rows[$i]["hokashukko_ryou"],2) /* 移動数量*/ ?></td>
+					<td nowrap align="right"><?php echo number_format($zaiko_ryou,2) /* 在庫数量 */ ?></td>
+					<td nowrap              ><?php echo $rows[$i]["bikou"] /* 備考 */ ?></td>
+				</tr>
+				<tr bgcolor="#fffcf8">
+					<td nowrap align="center"><?php echo $this->tag->linkTo(array((($rows[$i]["denpyou_mr_cd"]=="uriage" || $rows[$i]["denpyou_mr_cd"]=="shiire" )?$rows[$i]["denpyou_mr_cd"]:"zaiko_henkan")."_dts/edit/" . $rows[$i]["oya_id"], $rows[$i]["oya_cd"], "target"=>"_blank")); /* 伝票番号 */ ?></td>
+					<td nowrap align="center"><?php echo $rows[$i]["utiwake_name"] /* 内訳区分名 */ ?></td>
+					<td colspan="2" nowrap><?php echo $rows[$i][$rows[$i]["denpyou_mr_cd"]=="shiire"?"shiiresaki_name":"tokuisaki_name"] /* 取引先名 */ ?></td>
+					<td nowrap align="right">　</td>
+					<td nowrap align="right">　</td>
+					<td nowrap align="right">　</td>
+					<td nowrap align="right">　</td>
+					<td nowrap align="right">　</td>
+					<td nowrap align="right">　</td>
+				</tr>
+			<?php
+					endif;
+				endfor;
+			?>
+			</tbody>
+		</table>
+	<?php else: /* 月次表 */ ?>
+		<table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+			<thead>
+				<tr bgcolor="Lavender">
+					<th nowrap style="text-align:center;">月度</th>
+					<th nowrap style="text-align:center;">期間From</th>
+					<th nowrap style="text-align:center;">～期間To</th>
+					<th nowrap style="text-align:center;">平均単価</th>
+					<th nowrap style="text-align:center;">入庫数量</th>
+					<th nowrap style="text-align:center;">出庫数量</th>
+					<th nowrap style="text-align:center;">移動数量</th>
+					<th nowrap style="text-align:center;">在庫数量</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+				$i = 0;
+				$zaiko_ryou = 0;
+				for ($kikan =  $setdts["kikan_from"];
+					 $kikan <= $setdts["kikan_to"];
+					 $kikan = date('Y-m-d', strtotime($kikan.' +1 month'))):
+					$ym = date('Ym',  strtotime($kikan));
+					$y_m = date('Y-m',  strtotime($kikan));
+					for ( ; $i < count($rows) && $rows[$i]["nyuushukkoym"] < $ym; $i++) {
+						$zaiko_ryou += $rows[$i]["zaiko_ryou"];
+					}
+			?>
+				<tr bgcolor="#fffcf8">
+					<td nowrap align="left" class="zoom_meisai" style="cursor:pointer"><?php echo $y_m /* 月度 */ ?></td>
+					<td nowrap align="center"><?php echo $kikan /* 期間From */ ?></td>
+					<td nowrap align="center"><?php echo date('Y-m-t', strtotime($kikan)) /* 期間to */ ?></td>
+					<?php if ($i >= count($rows) || $rows[$i]["nyuushukkoym"] != $ym): ?>
+						<td nowrap align="right"></td>
+						<td nowrap align="right">0</td>
+						<td nowrap align="right">0</td>
+						<td nowrap align="right">0</td>
+						<td nowrap align="right"><?php echo number_format($zaiko_ryou,2) ?></td>
+					<?php else: ?>
+						<td nowrap align="right"><?php if ($rows[$i]["shiire_ryou"]!=0) {echo number_format($rows[$i]["shiire_gaku"] / $rows[$i]["shiire_ryou"],2);} /* 平均単価*/ ?></td>
+						<td nowrap align="right"><?php echo number_format($rows[$i]["shiire_ryou"],2) /* 入庫数量*/ ?></td>
+						<td nowrap align="right"><?php echo number_format($rows[$i]["uriage_ryou"],2) /* 出庫数量*/ ?></td>
+						<td nowrap align="right"><?php echo number_format($rows[$i]["hokanyuuko_ryou"] - $rows[$i]["hokashukko_ryou"],2) /* 移動数量*/ ?></td>
+						<?php $zaiko_ryou += $rows[$i++]["zaiko_ryou"]; ?>
+						<td nowrap align="right"><?php echo number_format($zaiko_ryou,2) /* 在庫数量 */ ?></td>
+					<?php endif; ?>
+				</tr>
+			<?php endfor; ?>
+			</tbody>
+		</table>
+	<?php endif ?>
+</div>
+
+<?php /* 明細表を別タブで表示するためのリンク部分 */
+    echo $this->tag->form(
+        array(
+            "report_zaiko/nyuushukko",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "target" => "_blank",
+            "id" => "hidden_form"
+        )
+    );
+?>
+<input id="hiddenCd" name="cd" hidden>
+<input id="hiddenSoukoMrCd" name="souko_mr_cd" hidden>
+<input id="hiddenHyoujiFlg" name="hyouji_flg" hidden>
+<input id="hiddenKikanFrom" name="kikan_from" hidden>
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="ShouhinMrsOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<script type="text/javascript">
+	var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+	var shouhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/ajaxGet') ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/report_zaiko_nyuushukko.js'); ?>?var=20160723"></script>

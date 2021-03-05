@@ -1,0 +1,78 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $joukens */
+/** @var array $rows */
+?>
+<?php use Phalcon\Tag; ?>
+<?php $title = '支払状況一覧表'; ?>
+<div class="page-header">
+    <h3>支払状況一覧表</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="panel panel-success bg-yel">
+    <br>
+    <?php
+    echo $this->tag->form(
+        [
+            "nyuukin_dts/shiharai_joukyou",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "name" => "form_jouken"
+        ]);
+    ?>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="fieldCd" class="col-sm-2 control-label">条件名</label>
+            <div class="col-sm-10">
+                <span>支払状況一覧表</span>
+            </div>
+            <br /><br />
+            <label for="getsudo" class="col-sm-2 control-label">対象期間</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(["getsudo", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "getsudo"]) ?>
+            </div>
+            <div class="col-sm-6">
+                <?php echo $this->tag->submitButton(["集計f12", "id" => "F12", "class" => "btn btn-lg btn-success"]) ?>
+            </div>
+        </div>
+
+    </div><!-- form-group -->
+
+    <?php echo $this->tag->endForm(); ?>
+</div><!-- panel-successp -->
+
+<div class="container-fluid">
+    <div class="row">
+        <table class="table table-striped table-bordered">
+            <thead style="background-color: lavender;">
+                <tr>
+                    <th colspan="2"></th><th colspan="3" style="text-align: center;">支払実績</th><th colspan="3" style="text-align: center;">滞納額<th colspan="2" style="text-align: center;">支払予定 </th>
+                </tr>
+                <tr>
+                    <th style="text-align: center;">仕入先コード</th><th style="text-align: center;">仕入先名</th><th style="text-align: center;">当月要支払額</th><th style="text-align: center;">当月支払額</th><th style="text-align: center;">支払率</th><th style="text-align: center;">前月以前分</th><th style="text-align: center;">当月分</th><th style="text-align: center;">当月末時点</th><th style="text-align: center;">当月予定</th><th style="text-align: center;">翌月予定</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rows as $row): ?>
+                    <tr>
+                        <td style="text-align: center;"><?php echo $row['shiiresaki_mr_cd']; ?></td><!-- 仕入先コード -->
+                        <td><?php echo $row['shiiresaki_name']; ?></td><!-- 名称 -->
+                        <td style="text-align: right;"><?php echo number_format($row['tougetsu_konkai_siiregaku'] - $row['shukkingaku']); ?></td><!-- 当月要支払額 -->
+                        <td style="text-align: right;"><?php echo number_format($row['zen_shukkingaku']); ?></td><!-- 当月支払額 -->
+
+                        <td></td>
+                        <td style="text-align: right;"><?php echo number_format($row['kurikoshigaku'] + $row['konkai_siiregaku']);  ?></td><!-- 前月以前（滞納） -->
+                        <td style="text-align: right;"><?php echo number_format( $row['zen_konkai_siiregaku']); ?></td><!-- 当月（滞納） -->
+                        <td style="text-align: right;"><?php echo number_format($row['kurikoshigaku'] + $row['konkai_siiregaku'] - $row['zen_shukkingaku']) ?></td><!-- 当月末時点（滞納） -->
+                        <td style="text-align: right;"><?php echo number_format($row['tougetsu_konkai_siiregaku']); ?></td><!-- 当月（予定） -->
+                        <td style="text-align: right;"><?php echo number_format($row['yokugetsu_konkai_siiregaku']); ?></td><!-- 翌月（予定） -->
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "在庫変換区分.一覧"; ?>
+<div class="page-header">
+    <h3>在庫変換区分 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"zaikohenkan_kbns","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","名称"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $zaikohenkan_kbn): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("zaikohenkan_kbns/edit/" . $zaikohenkan_kbn->id, $zaikohenkan_kbn->id)); ?></td>
+                <td><?php echo $zaikohenkan_kbn->cd ?></td>
+                <td><?php echo $zaikohenkan_kbn->name ?></td>
+                <td><?php echo $zaikohenkan_kbn->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("zaikohenkan_kbns/delete/" . $zaikohenkan_kbn->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaikohenkan_kbns/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaikohenkan_kbns/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("zaikohenkan_kbns/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaikohenkan_kbns/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaikohenkan_kbns/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

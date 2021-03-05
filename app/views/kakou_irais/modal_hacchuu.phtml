@@ -1,0 +1,120 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var Object $details
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "加工内容複写"; ?>
+
+<?php echo $this->getContent(); ?>
+<div class="container-fluid">
+    <div class="page-header">
+        <h3>加工内容複写</h3>
+    </div>
+    <div class="panel">
+        <div class="panel-heading panel-info">
+            <div class="col-sm-12" style="border-bottom: #9999cc 1px solid; padding-bottom: 2px; margin-bottom: 10px;">
+                    <span class="h3 panel-tilte">発注番号で複写元選択</span>
+            </div>
+            <div class="panel-body">
+                <?php
+                echo $this->tag->form([
+                    "kakou_irais/modal_hacchuu",
+                    "autocomplete" => "off",
+                    "class" => "form-inline"
+                ]);
+                ?>
+                <div class="col-sm-12">
+                    <div class="col-sm-12">
+                        <label class="col-sm-5 for="h_cd" style="text-align: center;">発注番号：</label>
+                        <div class="col-sm-7">
+                            <?php echo $this->tag->textField(["h_cd", "class" => "form-control f-cent ime-d", "id" => "h_cd", "required" => "required"]); ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label class="col-sm-5" for="shouhin_mr_cd" style="text-align: center;">商品コード：</label>
+                        <div class="col-sm-7">
+                            <?php echo $this->tag->textField(["shouhin_mr_cd", "class" => "form-control f-cent ime-d", "id" => "shouhin_mr_cd", "required" => "required"]); ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-9"></div>
+                    <div class="col-sm-2">
+                        <?php echo $this->tag->submitButton(["検索", "id" => "F12", "class" => "btn btn-info"]); ?>
+                    </div>
+                </div>
+                <?php echo $this->tag->endForm(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead style="background-color: lavender">
+    <tr>
+        <th>選択</th>
+        <th>内容1</th>
+        <th>内容2</th>
+        <th>内容3</th>
+        <th>内容4</th>
+        <th>内容5</th>
+        <th>内容6</th>
+        <th>内容7</th>
+        <th>内容8</th>
+        <th>内容9</th>
+        <th>内容10</th>
+        <th>内容11</th>
+        <th>内容12</th>
+        <th>内容13</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php $i = 0; ?>
+    <?php foreach ($details as $item): ?>
+        <tr height=”50″>
+            <td nowrap id="tda_<?php echo $i; ?>" style="text-align: right; cursor: pointer; color: blue;" class="returnto"><?php echo $item->id ?></td>
+            <td nowrap id="tdb_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_1 ?></td>
+            <td nowrap id="tdc_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_2 ?></td>
+            <td nowrap id="tdd_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_3 ?></td>
+            <td nowrap id="tde_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_4 ?></td>
+            <td nowrap id="tdf_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_5 ?></td>
+            <td nowrap id="tdg_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_6 ?></td>
+            <td nowrap id="tdh_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_7 ?></td>
+            <td nowrap id="tdi_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_8 ?></td>
+            <td nowrap id="tdj_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_9 ?></td>
+            <td nowrap id="tdk_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_10 ?></td>
+            <td nowrap id="tdl_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_11 ?></td>
+            <td nowrap id="tdm_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_12 ?></td>
+            <td nowrap id="tdn_<?php echo $i; ?>" class="ret_td"><?php echo $item->naiyou_13 ?></td>
+        </tr>
+    <?php $i++;?>
+    </tbody>
+    <?php endforeach; ?>
+</table>
+
+<script type="text/javascript">
+    $('.returnto').click(function () {
+        const id = $(this).attr('id');
+        const index = id.replace(/[^0-9]/g, '');
+        if (index) {
+            window.parent.fromModal(
+                $('#tdb_' + index).text(),
+                $('#tdc_' + index).text(),
+                $('#tdd_' + index).text(),
+                $('#tde_' + index).text(),
+                $('#tdf_' + index).text(),
+                $('#tdg_' + index).text(),
+                $('#tdh_' + index).text(),
+                $('#tdi_' + index).text(),
+                $('#tdj_' + index).text(),
+                $('#tdk_' + index).text(),
+                $('#tdl_' + index).text(),
+                $('#tdm_' + index).text(),
+                $('#tdn_' + index).text(),
+            )
+        }
+    })
+</script>
+

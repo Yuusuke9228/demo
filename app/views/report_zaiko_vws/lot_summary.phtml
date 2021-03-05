@@ -1,0 +1,100 @@
+<!--
+ロット集計モーダル 現在伝票のロットをダブルクリックしたら使える。
+Add By Nishiyama 2019/3/6 2019/8/12プログラム内容刷新
+-->
+<?php $title = "Lot在庫"; ?>
+<?php
+//echo '<pre>';
+//var_dump($rows);
+//echo '</pre>';
+?>
+<div class="page-header">
+    <?php
+    if (isset($rows)) {
+        $hacchuuzan_ryou1 = floor(array_sum(array_column($rows, 'hacchuuzan_ryou1')) * 1000) / 1000;
+        $hacchuuzan_ryou2 = floor(array_sum(array_column($rows, 'hacchuuzan_ryou2')) * 1000) / 1000;
+        $tan1 = $rows[0]['tanni1_name'];
+        $tan2 = $rows[0]['tanni2_name'];
+    }
+    ?>
+    <h2>
+        商品 >>
+        <?php
+        echo $rows ? $rows[0]["shouhin_mr_cd"] . " : " . $rows[0]["shouhin_name"] : "現在、表示できるデータがありません。";
+        echo PHP_EOL;
+        ?>
+    </h2>
+    <h3 style="text-align: left;background-color: whitesmoke;">
+        <?php
+        echo " 発注残1: ${hacchuuzan_ryou1}${tan1} \t 発注残2: ${hacchuuzan_ryou2}${tan2} "
+        ?>
+    </h3>
+    <br/>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 table-striped">
+        <thead>
+        <tr style="background-color: lavender;">
+            <th nowrap style="text-align:center;">行番号(選択)</th>
+            <th nowrap style="text-align:center;">ロット</th>
+            <th nowrap style="text-align:center;">色番</th>
+            <th nowrap style="text-align:center;">色名</th>
+            <th nowrap style="text-align:center;">品質区分</th>
+            <th nowrap style="text-align:center;">品質</th>
+            <th nowrap style="text-align:center;">倉庫コード</th>
+            <th nowrap style="text-align:center;">倉庫名</th>
+            <th nowrap style="text-align:center;">在庫数量1</th>
+            <th nowrap style="text-align:center;">在庫数量2</th>
+            <th nowrap style="text-align:center;">売原価</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $i = 0; ?>
+        <?php foreach ($rows as $value): ?>
+            <?php
+            if ((float)round($value["zaiko_ryou1"],3) === 0.000 && (float)round($value["zaiko_ryou2"],3) === 0.000) {
+                continue;
+            }
+            ?>
+            <tr style="background-color: #fffcf8;">
+                <td nowrap style="text-align:center;">
+                    <div class="returnto_1" data-dismiss="modal" style="cursor: pointer;">
+                        <?php echo (string)($i + 1); ?>
+                </td>
+                <td nowrap id="<?php echo 'lot' . $i; ?>" style="text-align:center;"><?php echo $value["lot"]; ?></td>
+                <td nowrap id="<?php echo 'iro' . $i; ?>" style="text-align:center;"><?php echo $value["iro"] /* 色番 */ ?></td>
+                <td nowrap id="<?php echo 'iromei' . $i; ?>" style="text-align:center;"><?php echo $value["iromei"] /* 色名 */ ?></td>
+                <td nowrap id="<?php echo 'hinsitu_kbn_cd' . $i ?>" style="text-align: center;"><?php echo $value["hinsitu_kbn_cd"] ?></td>
+                <td nowrap id="<?php echo 'hinshitu' . $i; ?>" style="text-align:center;"><?php echo $value["hinsitu_name"] /* 品質 */ ?></td>
+                <td nowrap id="<?php echo 'souko' . $i; ?>" style="text-align:center;"><?php echo $value["souko_cd"] /* 倉庫コード */ ?></td>
+                <td nowrap style="text-align:center;"><?php echo $value["souko_name"] /* 倉庫名 */ ?></td>
+                <td nowrap style="text-align:right;"><?php echo number_format($value["zaiko_ryou1"], 1) . $value["tanni1_name"] /* 在庫数 */ ?></td>
+                <td nowrap style="text-align:right;"><?php if ((float)$value["zaiko_ryou2"] > 0.0001) {echo number_format($value["zaiko_ryou2"], 2). $value["tanni2_name"];} /* 在庫数量 */ ?></td>
+                <td nowrap style="text-align:right;"><?php echo number_format($value['cost'],2) ?? 0; /* 単価 */ ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $('.returnto').click(function () {
+        let rowIndex = $(this).index();
+        let rowId = '#souko' + rowIndex;
+        window.parent.fromModal($(this).text(), $(rowId).text());
+    });
+    //LOTが空白の場合、カーソルがポインターに変わらないので日付クリックでロット倉庫色を投げる 2019/2/26
+    $('.returnto_1').click(function () {
+        let rIndex = $(this).closest('tr').index();
+        let lot = '#lot' + rIndex;
+        let soukoId = '#souko' + rIndex;
+        let zaikoSuu = '#zaiko' + rIndex;
+        let iro = '#iro' + rIndex;
+        let iromei = '#iromei' + rIndex;
+        let hinshitu = '#hinsitu_kbn_cd' + rIndex;
+        console.log($(hinshitu).text());
+        window.parent.fromModal($(lot).text(), $(soukoId).text(), $(zaikoSuu).text(), $(iro).text(), $(iromei).text(), $(hinshitu).text());
+    });
+</script>

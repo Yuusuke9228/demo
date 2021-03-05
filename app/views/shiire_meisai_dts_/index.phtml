@@ -1,0 +1,81 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "仕入明細データ.一覧"; ?>
+<div class="page-header">
+    <h3>仕入明細データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('id'); ?>">Id</a> <?php echo TableSort\Sort::sortIcon('id'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('cd'); ?>">行番</a> <?php echo TableSort\Sort::sortIcon('cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('utiwake_kbn_cd'); ?>">内訳</a> <?php echo TableSort\Sort::sortIcon('utiwake_kbn_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('shiire_dt_id'); ?>">仕入データID</a> <?php echo TableSort\Sort::sortIcon('shiire_dt_id'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('nyuuka_kbn_cd'); ?>">入荷</a> <?php echo TableSort\Sort::sortIcon('nyuuka_kbn_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('shouhin_mr_cd'); ?>">商品コード</a> <?php echo TableSort\Sort::sortIcon('shouhin_mr_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('tanni_mr_cd'); ?>">単位</a> <?php echo TableSort\Sort::sortIcon('tanni_mr_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('irisuu'); ?>">入数</a> <?php echo TableSort\Sort::sortIcon('irisuu'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('keisu'); ?>">ケース</a> <?php echo TableSort\Sort::sortIcon('keisu'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('tekiyou'); ?>">商品名/摘要</a> <?php echo TableSort\Sort::sortIcon('tekiyou'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('souko_mr_cd'); ?>">倉庫コード</a> <?php echo TableSort\Sort::sortIcon('souko_mr_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('suuryou'); ?>">数量</a> <?php echo TableSort\Sort::sortIcon('suuryou'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('tanka'); ?>">単価</a> <?php echo TableSort\Sort::sortIcon('tanka'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('kingaku'); ?>">金額</a> <?php echo TableSort\Sort::sortIcon('kingaku'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('project_mr_cd'); ?>">プロジェクトコード</a> <?php echo TableSort\Sort::sortIcon('project_mr_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('kazei_kbn_cd'); ?>">課税区分</a> <?php echo TableSort\Sort::sortIcon('kazei_kbn_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('bikou'); ?>">備考</a> <?php echo TableSort\Sort::sortIcon('bikou'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('updated'); ?>">更新日時</a> <?php echo TableSort\Sort::sortIcon('updated'); ?></th>
+
+                <th><a href=# onclick="$('#F10').focus();return false;" id="F10">修正*10</a></th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $shiire_meisai_dt): ?>
+            <tr>
+                <td><?php echo $shiire_meisai_dt->id ?></td>
+            <td><?php echo $shiire_meisai_dt->cd ?></td>
+            <td><?php echo $shiire_meisai_dt->utiwake_kbn_cd ?></td>
+            <td><?php echo $shiire_meisai_dt->shiire_dt_id ?></td>
+            <td><?php echo $shiire_meisai_dt->nyuuka_kbn_cd ?></td>
+            <td><?php echo $shiire_meisai_dt->shouhin_mr_cd ?></td>
+            <td><?php echo $shiire_meisai_dt->tanni_mr_cd ?></td>
+            <td><?php echo $shiire_meisai_dt->irisuu ?></td>
+            <td><?php echo $shiire_meisai_dt->keisu ?></td>
+            <td><?php echo $shiire_meisai_dt->tekiyou ?></td>
+            <td><?php echo $shiire_meisai_dt->souko_mr_cd ?></td>
+            <td><?php echo $shiire_meisai_dt->suuryou ?></td>
+            <td><?php echo $shiire_meisai_dt->tanka ?></td>
+            <td><?php echo $shiire_meisai_dt->kingaku ?></td>
+            <td><?php echo $shiire_meisai_dt->project_mr_cd ?></td>
+            <td><?php echo $shiire_meisai_dt->kazei_kbn_cd ?></td>
+            <td><?php echo $shiire_meisai_dt->bikou ?></td>
+            <td><?php echo $shiire_meisai_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("shiire_meisai_dts/edit/" . $shiire_meisai_dt->id, "修正")); ?></td>
+                <td><?php echo $this->tag->linkTo(array("shiire_meisai_dts/delete/" . $shiire_meisai_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shiire_meisai_dts/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shiire_meisai_dts/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("shiire_meisai_dts/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shiire_meisai_dts/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("shiire_meisai_dts/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

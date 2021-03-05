@@ -1,0 +1,153 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = 'アップ.調整'; ?>
+<div class="page-header">
+    <h3>アップロードデータ項目調整</h3>
+</div>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "load_mrs/settei",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldSkip" class="col-sm-2 control-label">開始前行数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("skip", "size" => 3, "maxlength" => 3, "style" => "width: 50px;", "class" => "form-control", "id" => "fieldSkip")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUwagaki" class="col-sm-2 control-label">上書き許可</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->selectStatic(array("uwagaki", array("0" => "0:上書きしない", "1" => "1:上書きする"), "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUwagaki")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "class" => "btn btn-default", "id" => "F12", "onclick" => 'return presubmit();')) ?>
+    </div>
+</div>
+
+説明：「開始前行数」の行数はインポートしません。その次の行からインポートします。見出し行が１行あるデータは「1」と入れて見出し行をインポートしないようにします。<br>
+　　　変換□にチェックを入れると、変換用テーブルに変換元候補の文字をセットされます。後で毎々に変換先コードを入れてください。<br>
+　　　キー□にチェックを入れると、それらの項目をキーとして新規登録か上書き登録を決める。キーは複数の組み合わせも可能です。<br>
+　　　2行目の見出しの項目に以下のデータを登録することになります。見出しの項目は変更できます。<br>
+　　　　[不使用]を選ぶとその列はインポートしません。[挿入]を選ぶと見出しを１列右にシフトします。[削除]を選ぶと見出しを１行左へシフトします。<br>
+
+<table border=1>
+ <tr id="type">
+  <?php $i=0; ?>
+  <?php foreach ($load_mr->LoadKoumokuMrs as $load_koumoku_mr): ?>
+   <?php if ($load_koumoku_mr->fusiyou_kbn != 1): ?>
+    <?php for ( ; $i < $load_koumoku_mr->jun; $i++): ?>
+     <?php
+      echo '<td id="UNUSE'.$i.'">変換<input type="checkbox" class="selt" />';
+      echo ',キー<input type="checkbox" class="qkey" />';
+      echo '<span>UNUSE'.$i;
+     ?>
+     </span></td>
+    <?php endfor; $i++ ?>
+    <td id="<?php echo $load_koumoku_mr->cd; ?>">
+     変換<input type="checkbox" class="selt" <?php if ($load_koumoku_mr->fusiyou_kbn == 2) {echo 'checked="checked"';}?> />
+     ,キー<input type="checkbox" class="qkey" <?php if ($load_koumoku_mr->keys == 1) {echo 'checked="checked"';}?> />
+     <span><?php echo $load_koumoku_mr->KoumokuMrs->data_kata ?></span>
+    </td>
+   <?php endif; ?>
+  <?php endforeach; ?>
+ </tr>
+ <tr id="name">
+  <?php $i=0; ?>
+  <?php foreach ($load_mr->LoadKoumokuMrs as $load_koumoku_mr): ?>
+   <?php if ($load_koumoku_mr->fusiyou_kbn != 1): ?>
+    <?php for ( ; $i<$load_koumoku_mr->jun; $i++): ?>
+     <th id="<?php echo 'UNUSE'.$i; ?>">
+      <select>
+       <?php foreach ($load_mr->TableMrs->KoumokuMrs as $koumoku_mr): ?>
+        <?php echo '<option value="'.$koumoku_mr->cd.'">'.$koumoku_mr->name.'</option>'; ?>
+       <?php endforeach; ?>
+       <option value="UNUSE" SELECTED>[不使用]</option>
+       <option value="DELETE">[削除]</option>
+       <option value="INSERT">[挿入]</option>
+      </select>
+     </th>
+    <?php endfor; $i++ ?>
+    <th id="<?php echo $load_koumoku_mr->cd; ?>">
+     <select>
+      <?php foreach ($load_mr->TableMrs->KoumokuMrs as $koumoku_mr): ?>
+       <?php echo '<option value="'.$koumoku_mr->cd.'"'. ($koumoku_mr->cd==$load_koumoku_mr->koumoku_mr_cd?'SELECTED':'') .'>'.$koumoku_mr->name.'</option>'; ?>
+      <?php endforeach; ?>
+      <option value="UNUSE">[不使用]</option>
+      <option value="DELETE">[削除]</option>
+      <option value="INSERT">[挿入]</option>
+     </select>
+    </th>
+   <?php endif; ?>
+  <?php endforeach; ?>
+ </tr>
+ <?php foreach ($records as $record): ?>
+  <tr>
+  <?php foreach ($record as $coldata): ?>
+   <td><?php echo $coldata ?></td>
+  <?php endforeach; ?>
+  </tr>
+ <?php endforeach; ?>
+</table>
+
+<?php echo $this->tag->hiddenField("id") ?>
+<?php echo $this->tag->endForm(); ?>
+<?php echo count($records)."件"; ?>
+
+<script>
+$("select").change(function () {
+//alert($(this).val());
+  if ($(this).val()=='INSERT') {
+//    alert($(this).parent("th").attr('id'));
+    thissell=$(this).parent("th").attr('id');
+    $(this).parent("th").clone(true).insertAfter($(this).parent("th"));
+//    alert($("td#"+thissell).attr('id'));
+    $("td#"+thissell).clone(true).insertBefore($("td#"+thissell)).attr("id",thissell+"_UNUSE");
+    $(this).val("UNUSE");
+    $(this).attr("id",thissell+"_UNUSE");
+    $("td#"+thissell+"_UNUSE span").text("[UNUSE]");
+  }else if ($(this).val()=='DELETE') {
+    thissell=$(this).parent("th").attr('id');//alert(thissell);
+    $(this).parent("th").remove();
+    $("td#"+thissell).remove();
+  }
+});
+function presubmit(){
+  cols=$("tr#name select");//<tr id="name">の行の中で<select>を全て対象とする
+//  alert(cols.length);
+  for (i=0; i<cols.length; i++){
+    cols.eq(i).attr('name','cols['+i+']name');
+//    if(i==2){alert(cols.eq(i).attr('name'));}
+  }
+  sels=$("tr#type input.selt");//<tr id="type">の行の中で< class="selt">を全て対象とする
+//  alert(sels.length);
+  for (i=0; i<sels.length; i++){
+    sels.eq(i).attr('name','sels['+i+']check');
+//    if(i==2){alert(sels.eq(i).attr('name'));}
+  }
+  qkeys=$("tr#type input.qkey");//<tr id="type">の行の中で< class="qkey">を全て対象とする
+//  alert(qkeys.length);
+  for (i=0; i<qkeys.length; i++){
+    qkeys.eq(i).attr('name','qkeys['+i+']check');
+//    if(i==2){alert(qkeys.eq(i).attr('name'));}
+  }
+  return confirm("よろしいですか？");
+}
+</script>
+

@@ -1,0 +1,123 @@
+<?php
+/**
+ * @var PhalconMvcViewEnginePhp $this
+ */
+?>
+
+<?php use PhalconTag; ?>
+
+<?php $title = "仕入先締データ.一覧"; ?>
+<div class="page-header">
+    <h3>仕入先締データ 一覧</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+<?php
+echo $this->tag->form(
+    array(
+        "shiiresaki_sime_dts/index",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    )
+);
+?>
+<div class="form-group">
+    <div class="col-sm-4">
+        <label for="fieldShimegrpKbnCd" class="col-sm-5 control-label">締グループ</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->select(array("shimegrp_kbn_cd", ShimegrpKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldShimegrpKbnCd")) ?>
+        </div>
+
+        <label for="fieldSimeHiduke" class="col-sm-5 control-label">締日</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->telField(array("sime_hiduke", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldSimeHiduke")) ?>
+        </div>
+        <label for="fieldTorihikiFlg" class="col-sm-5 control-label">期間内取引有のみ表示</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->checkField(array("torihiki_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldTorihikiFlg")) ?>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="col-sm-4">
+            <?php echo $this->tag->submitButton(array("抽出", "id" => "F12", "name" => "simekiri_btn","class" => "btn btn-success")) ?>
+            <button class="btn btn-info" onclick="window.print();">印刷</button>
+        </div>
+
+        <div class="col-sm-4">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <table id="simeTable" class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <?php if(isset($rows))$rows = $rows->toArray(); ?>
+        <?php $total = 0; ?>
+        <thead>
+        <tr>
+            <th colspan="5" style="text-align:center;background-color: #dcdcdc;">表示総計：</th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'zenkai_siiregaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'shukkingaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'zenkai_siiregaku')) - array_sum(array_column($rows, 'shukkingaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'konkai_siiregaku'))); ?></th>
+            <th style="text-align:right; background-color: #ffffff;"><?php echo number_format(array_sum(array_column($rows, 'zenkai_siiregaku')) - array_sum(array_column($rows, 'shukkingaku')) + array_sum(array_column($rows, 'konkai_siiregaku'))); ?></th>
+        </tr>
+        <tr bgcolor="Lavender">
+            <th style="text-align:center;">年度</th>
+            <th style="text-align:center;">仕入先CD</th>
+            <th style="text-align:center;">名称</th>
+            <th style="text-align:center;">締日付</th>
+            <th style="text-align:center;">支払予定日</th>
+            <th style="text-align:center;">前回仕入額</th>
+            <th style="text-align:center;">支払額</th>
+            <th style="text-align:center;">繰越金額</th>
+            <th style="text-align:center;">今回仕入額</th>
+            <th style="text-align:center;">今回支払額</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if(isset($rows)): ?>
+            <?php foreach ($rows as $row): ?>
+                <?php
+                try {
+                    if ($this->request->getPost('torihiki_flg') === '1') {
+                        if ((int)$row['shukkingaku'] === 0 && (int)$row['konkai_siiregaku'] === 0) {
+                            continue;
+                        }
+                    }
+                } catch (Exception $e) {
+                    // エラー無視
+                }
+                ?>
+                <tr>
+                    <td style="text-align:center;"><?php if(isset($row['nendo']))echo $row['nendo'] ?></td>
+                    <td style="text-align:center;"><?php if(isset($row['shiiresaki_mr_cd']))echo $this->tag->linkTo(array("shiiresaki_sime_dts/shiharai_meisai/" . $row['id'], $row['shiiresaki_mr_cd'], 'target'=>'_blank')) ?></td>
+                    <td style="text-align:left;"><?php if(isset($row['name']))echo $row['name'] ?></td>
+                    <td style="text-align:center;"><?php if(isset($row['sime_hiduke']))echo $row['sime_hiduke'] ?></td>
+                    <td style="text-align:center;"><?php if(isset($row['shiharai_yoteibi']))echo $row['shiharai_yoteibi'] ?></td>
+                    <td style="text-align:right;color: <?php echo (int)$row['zenkai_siiregaku'] > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['zenkai_siiregaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo (int)$row['shukkingaku'] > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['shukkingaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo ((int)$row['zenkai_siiregaku'] - (int)$row['shukkingaku']) > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['zenkai_siiregaku'] - $row['shukkingaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo (int)$row['konkai_siiregaku'] > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['konkai_siiregaku']) ?></td>
+                    <td style="text-align:right;color: <?php echo ((int)$row['zenkai_siiregaku'] - (int)$row['shukkingaku'] + (int)$row['konkai_siiregaku']) > -0.1 ? 'black' : 'red'; ?>"><?php echo number_format($row['zenkai_siiregaku'] - $row['shukkingaku'] + $row['konkai_siiregaku']) ?></td>
+
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    //印刷がずれる　印刷画面を作るのが面倒なので、消す
+    // $(function () {
+    //     $('table.head_fix').floatThead({
+    //         top: 50
+    //     });
+    // });
+
+</script>
+
+<script type="text/javascript">
+    const getShiiresakiGroupLastShimeHiduke = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/ajax_last_shimebi') ?>";
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/shiharai_simekiri.js'); ?>?var=20201009"></script>

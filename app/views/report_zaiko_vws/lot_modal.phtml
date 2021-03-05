@@ -1,0 +1,146 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php $title = "Lot在庫"; ?>
+<div class="page-header">
+    <h2>商品 >><?php echo $rows ? $rows[0]["shouhin_mr_cd"] . " : " . $rows[0]["name"] : "現在、表示できるデータがありません。"; ?></h2>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+        <tr>
+            <th style="text-align:center;">入庫日</th>
+            <th style="text-align:center;">ロット(選択)</th>
+            <th style="text-align:center;">伝票</th>
+            <th style="text-align:center;">伝票番号</th>
+            <th style="text-align:center;">内訳</th>
+            <th style="text-align:center;">倉庫</th>
+            <th style="text-align:center;">倉庫名</th>
+            <th style="text-align:center;">色番</th>
+            <th style="text-align:center;">色</th>
+            <th style="text-align:center;">品質</th>
+            <th style="text-align:center;">本数</th>
+            <th style="text-align:center;">単<br/>1</th>
+            <th style="text-align:center;">数量</th>
+            <th style="text-align:center;">単<br/>2</th>
+            <th style="text-align:center;">コスト</th>
+            <th style="text-align:center;">/</th>
+            <th style="text-align:center;">本数</th>
+            <th style="text-align:center;">単<br/>1</th>
+            <th style="text-align:center;">数量</th>
+            <th style="text-align:center;">単<br/>2</th>
+            <th style="text-align:center;">在庫数量</th>
+            <th style="text-align:center;">備考</th>
+            <th style="text-align:center;">取引先</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $zaiko2 = 0;
+        $i = 0;
+        $result = 0;
+        ?>
+        <?php $i = 0; ?>
+        <?php foreach ($rows as $row): ?>
+            <?php if ($row["zaiko_ryou1"] != 0 || $row["zaiko_ryou2"] != 0): ?>
+                <tr>
+                    <td nowrap align="center">
+                        <div class="returnto_1" data-dismiss="modal"
+                             style="cursor: pointer;"><?php echo $row["nyuushukkobi"]; ?></td>
+                    <td nowrap id="<?php echo 'lot' . $i; ?>" align="center">
+                        <div class="returnto" data-dismiss="modal"
+                             style="cursor: pointer;"><?php echo $row["lot"]; ?></div>
+                    </td>
+                    <?php
+                    //伝票名表示 Add By Nishiyama 2019/2/28
+                    if (isset($row['denpyou_mr_cd'])) {
+                        $denName = DenpyouMrs::find('cd =' . "'" . $row["denpyou_mr_cd"] . "'");
+                        //var_dump($denName);
+                        if (isset($denName)) {
+                            $denName = $denName->toArray();
+                        }
+                    }
+                    ?>
+                    <td nowrap><?php echo @$denName[0]['name'] ? $denName[0]['name'] : ''; ?> </td>
+                    <td nowrap align="center"><?php echo $row["cd"]; ?></td>
+                    <td nowrap align="center"><?php echo $row["utiwake_kbn_cd"]; ?></td>
+                    <td nowrap id="<?php echo 'souko' . $i; ?>" align="center"><?php echo $row["souko_mr_cd"]; ?></td>
+                    <?php
+                    //倉庫名表示 Add By Nishiyama 2019/2/28
+                    if (isset($row['souko_mr_cd'])) {
+                        $soukoName = SoukoMrs::find(["conditions" => "cd = ?0", "bind" => [0 => $row["souko_mr_cd"]]]);
+                        if (isset($soukoName)) {
+                            $soukoName = $soukoName->toArray();
+                        }
+                    }
+                    ?>
+                    <td nowrap><?php echo @$soukoName[0]['name'] ? $soukoName[0]['name'] : ''; ?> </td>
+                    <td nowrap id="<?php echo 'iro' . $i; ?>" align="center"><?php echo $row["iro"]; ?></td>
+                    <td nowrap id="<?php echo 'iromei' . $i; ?>" nowrap
+                        align="center"><?php echo $row["iromei"]; ?></td>
+                    <td nowrap align="center"><?php echo $row["hinsitu_kbn_cd"]; ?></td>
+                    <td nowrap
+                        align="right"><?php echo(($row["shiire_ryou1"] + $row["hokanyuuko_ryou1"]) ?? ""); ?></td>
+                    <td nowrap
+                        align="center"><?php echo(($row["shiire_ryou1"] + $row["hokanyuuko_ryou1"]) ? $row["t1_name"] : ""); ?></td>
+                    <td nowrap
+                        align="right"><?php echo(($row["shiire_ryou2"] + $row["hokanyuuko_ryou2"]) ?? ""); ?></td>
+                    <td nowrap
+                        align="center"><?php echo(($row["shiire_ryou2"] + $row["hokanyuuko_ryou2"]) ? $row["t2_name"] : ""); ?></td>
+                    <td nowrap
+                        align="right"><?php echo(substr($row["shiirebi_tanka"], 10) != "0" ? substr($row["shiirebi_tanka"], 10) : ""); ?></td>
+                    <td nowrap
+                        align="center"><?php echo(substr($row["shiirebi_tanka"], 10) != "0" ? '/' . $row["t3_name"] : ""); ?></td>
+                    <td nowrap
+                        align="right"><?php echo(($row["uriage_ryou1"] + $row["hokashukko_ryou1"]) ?? ""); ?></td>
+                    <td nowrap
+                        align="center"><?php echo(($row["uriage_ryou1"] + $row["hokashukko_ryou1"]) ? $row["t1_name"] : ""); ?></td>
+                    <td nowrap
+                        align="right"><?php echo(($row["uriage_ryou2"] + $row["hokashukko_ryou2"]) ?? ""); ?></td>
+                    <td nowrap
+                        align="center"><?php echo(($row["uriage_ryou2"] + $row["hokashukko_ryou2"]) ? $row["t2_name"] : ""); ?></td>
+                    <?php $result += $row["zaiko_ryou2"]; ?>
+                    <td nowrap align="right"><?php echo $zaiko2 = round($result, 4); ?></td>
+                    <td nowrap align="center"><?php echo $row["bikou"]; ?></td>
+                    <td nowrap
+                        align="center"><?php echo $row[$row["denpyou_mr_cd"] == "shiire" ? "shiiresaki_name" : "tokuisaki_name"]; ?></td>
+                </tr>
+                <?php $i++; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal"
+                onclick="window.parent.fromModal();">中止
+        </button>
+    </div>
+</div><!-- end class="row" -->
+<script type="text/javascript">
+    $('.returnto').click(function () {
+        let rIndex = $(this).closest('tr').index();
+        //売上伝票では倉庫コードまで入れたいので倉庫コードも投げる。Add by Nishiyama(2018/12/26)
+        let soukoId = '#souko' + rIndex;
+        let zaikoSuu = '#zaiko' + rIndex;
+        let iro = '#iro' + rIndex;
+        let iromei = '#iromei' + rIndex;
+
+        window.parent.fromModal($(this).text(), $(soukoId).text(), $(zaikoSuu).text(), $(iro).text(), $(iromei).text());
+    });
+
+    //LOTが空白の場合、カーソルがポインターに変わらないので日付クリックでロット倉庫色を投げる 2019/2/26
+    $('.returnto_1').click(function () {
+        let rIndex = $(this).closest('tr').index();
+        let lot = '#lot' + rIndex;
+        let soukoId = '#souko' + rIndex;
+        let zaikoSuu = '#zaiko' + rIndex;
+        let iro = '#iro' + rIndex;
+        let iromei = '#iromei' + rIndex;
+        window.parent.fromModal($(lot).text(), $(soukoId).text(), $(zaikoSuu).text(), $(iro).text(), $(iromei).text());
+    });
+</script>

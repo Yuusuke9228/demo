@@ -1,0 +1,97 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = 'テーブル.修正'; ?>
+<div class="page-header">
+    <h3>テーブルマスタ 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "table_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldDatabaseCd" class="col-sm-2 control-label">データーベースｃｄ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("database_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldDatabaseCd")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+<?php echo $this->tag->linkTo(array("koumoku_mrs/autogen/".$id, "自動項目登録*6", "id" => "F6")); ?>
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th>コード</th>
+            <th>名称</th>
+            <th>並び順</th>
+            <th>データ型</th>
+            <th>長さ</th>
+            <th>照合順序</th>
+            <th>属性</th>
+            <th>ヌル可</th>
+            <th>デフォルト値</th>
+            <th>その他</th>
+            <th>インデックス</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($koumoku_mrs as $koumoku_mr): ?>
+            <tr>
+            <td><?php echo $koumoku_mr->cd ?></td>
+            <td><?php echo $koumoku_mr->name ?></td>
+            <td><?php echo $koumoku_mr->jun ?></td>
+            <td><?php echo $koumoku_mr->data_kata ?></td>
+            <td><?php echo $koumoku_mr->nagasa ?></td>
+            <td><?php echo $koumoku_mr->shougoujunjo ?></td>
+            <td><?php echo $koumoku_mr->zokusei ?></td>
+            <td><?php echo $koumoku_mr->nullka ?></td>
+            <td><?php echo $koumoku_mr->default_ti ?></td>
+            <td><?php echo $koumoku_mr->sonota ?></td>
+            <td><?php echo $koumoku_mr->indekkusu ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

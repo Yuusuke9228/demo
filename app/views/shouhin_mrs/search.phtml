@@ -1,0 +1,54 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = '商品.検索'; ?>
+<div class="page-header">
+    <h3>商品台帳 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    if (strpos($_SERVER['HTTP_REFERER'], '/shouhin_mrs/modal')) {
+        $formurl = "shouhin_mrs/modal";
+    } else {
+        $formurl = "shouhin_mrs/index";
+    }
+
+    echo $this->tag->form(
+        array(
+            $formurl,
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('shouhin_mrs/inputfields'); ?>
+
+<div class="panel panel-danger">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">
+  <a data-toggle="collapse" href="#updates">更新情報…</a>
+ </div>
+ <div class="panel-body collapse" id="updates">
+    <label for="fieldId" class="col-sm-2 control-label">Id</label>
+    <div class="col-sm-5">
+        <?php echo $this->tag->textField(array("id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldId")) ?>
+    </div>
+    <label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+ </div>
+</div>
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div><!-- class="form-group" -->
+
+<?php echo $this->tag->endForm(); ?>

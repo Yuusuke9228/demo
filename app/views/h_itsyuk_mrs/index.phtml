@@ -1,0 +1,54 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "糸縮率マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>糸縮率マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_itsyuk_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["grtm","原料縮み率"],
+                    ["jden","実デニール"],
+                    ["gden","合糸後実デニール"],
+                    ["gstm","合糸後縮み率"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_itsyuk_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_itsyuk_mrs/edit/" . $h_itsyuk_mr->id, $h_itsyuk_mr->id)); ?></td>
+                <td><?php echo $h_itsyuk_mr->cd ?></td>
+                <td><?php echo $h_itsyuk_mr->grtm ?></td>
+                <td><?php echo $h_itsyuk_mr->jden ?></td>
+                <td><?php echo $h_itsyuk_mr->gden ?></td>
+                <td><?php echo $h_itsyuk_mr->gstm ?></td>
+                <td><?php echo $h_itsyuk_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_itsyuk_mrs/delete/" . $h_itsyuk_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_itsyuk_mrs"]) ?>

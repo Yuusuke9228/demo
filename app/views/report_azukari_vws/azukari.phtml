@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "預り.集計"; ?>
+<div class="page-header">
+    <h3>預り残集計表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead>
+        <tr bgcolor="Lavender">
+			<th style="text-align:center;">取引先コード</th>
+			<th style="text-align:center;">取引先名</th>
+			<th style="text-align:center;">商品コード</th>
+			<th style="text-align:center;">商品名</th>
+			<th style="text-align:center;">預り数量</th>
+			<th style="text-align:center;">単位</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($rows as $row): ?>
+            <tr>
+                <td align='center'><?php echo $row->torihikisaki1_cd ?></td>
+                <td><?php echo $row->torihikisaki_name ?></td>
+                <td align='center'><?php echo $row->shouhin_mr_cd ?></td>
+                <td><?php echo $row->shouhin_name ?></td>
+                <td align='right' <?php if ($row->azukari_zan < 0) {
+                    echo 'style="color:red;"';
+                } ?> ><?php echo number_format($row->azukari_zan, 2) ?></td>
+                <td align='center'><?php echo $row->tanni_name ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+$(function(){ // テーブルのヘッドを消えなくする
+  $('table.head_fix').floatThead({
+  	top: 50
+  });
+});
+</script>
+

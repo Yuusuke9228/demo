@@ -1,0 +1,57 @@
+<?php
+/**
+ * Local variables
+ * @var \Phalcon\Mvc\Code\Engine $this
+ * @var null|string $codesDir
+ * @var closure $fileOwner Get file owner/group closure
+ */
+?>
+
+<?php $title = 'List.Code'; ?>
+<h1 class="page-header">Search Codes <?php echo $codesDir; ?></h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <?php echo $this->getContent() ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th width="10%">Size</th>
+                    <th width="15%">Updated</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if (!$codesDir): ?>
+                <tr class="warning">
+                    <td colspan="4">
+                        <p class="text-center lead">
+                            Sorry, WebTools doesn't know where the codes directory is.<br>
+                            Please add the valid path for <code>codesDir</code> in the <code>application</code> section.
+                        </p>
+                    </td>
+                </tr>
+            <?php else: ?>
+                <?php $iterator = new DirectoryIterator('../app/' . $codesDir); foreach($iterator as $file): ?>
+                    <?php if (!$file->isDot() && 0 !== strrpos($file->getBasename(), '.')): ?>
+                        <tr>
+                            <td><?php echo $file->getFileName(); ?></td>
+                            <td><?php echo $file->getSize() . ' b' ?></td>
+                            <td><?php echo date("Y-m-d H:i:s", $file->getMTime()); ?></td>
+                            <td>
+                                <?php echo $this->tag->linkTo(array('edit_codes/edit/' . $codesDir . '/'. $file->getFileName(), 'Edit', 'class' => 'btn btn-link')); ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

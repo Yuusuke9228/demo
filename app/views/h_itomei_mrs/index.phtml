@@ -1,0 +1,93 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $page */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "糸名マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>糸名マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_itomei_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["eda","枝表示"],
+                    ["ishu","糸種区分"],
+                    ["gumu","原料有無"],
+                    ["itme","糸名"],
+                    ["ktak","光沢"],
+                    ["kden","デニール"],
+                    ["kfil","フィラメント"],
+                    ["biko","備考"],
+                    ["itm2","糸名２"],
+                    ["meik","メーカー名"],
+                    ["dtex","デシテックス"],
+                    ["rykg","略号"],
+                    ["shin","芯"],
+                    ["hana","花"],
+                    ["turi","釣"],
+                    ["gaic","外注先名"],
+                    ["hnyk","略号翻訳名"],
+                    ["bnam","ボビン名"],
+                    ["symd","更新年月日"],
+                    ["stnk","最終仕入単価"],
+                    ["tate","建値"],
+                    ["tank","予定単価"],
+                    ["kohi","工費係数"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_itomei_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_itomei_mrs/edit/" . $h_itomei_mr->id, $h_itomei_mr->id)); ?></td>
+                <td><?php echo $h_itomei_mr->cd ?></td>
+                <td><?php echo $h_itomei_mr->eda ?></td>
+                <td><?php echo $h_itomei_mr->ishu ?></td>
+                <td><?php echo $h_itomei_mr->gumu ?></td>
+                <td><?php echo $h_itomei_mr->itme ?></td>
+                <td><?php echo $h_itomei_mr->ktak ?></td>
+                <td><?php echo $h_itomei_mr->kden ?></td>
+                <td><?php echo $h_itomei_mr->kfil ?></td>
+                <td><?php echo $h_itomei_mr->biko ?></td>
+                <td><?php echo $h_itomei_mr->itm2 ?></td>
+                <td><?php echo $h_itomei_mr->meik ?></td>
+                <td><?php echo $h_itomei_mr->dtex ?></td>
+                <td><?php echo $h_itomei_mr->rykg ?></td>
+                <td><?php echo $h_itomei_mr->shin ?></td>
+                <td><?php echo $h_itomei_mr->hana ?></td>
+                <td><?php echo $h_itomei_mr->turi ?></td>
+                <td><?php echo $h_itomei_mr->gaic ?></td>
+                <td><?php echo $h_itomei_mr->hnyk ?></td>
+                <td><?php echo $h_itomei_mr->bnam ?></td>
+                <td><?php echo $h_itomei_mr->symd ?></td>
+                <td><?php echo $h_itomei_mr->stnk ?></td>
+                <td><?php echo $h_itomei_mr->tate ?></td>
+                <td><?php echo $h_itomei_mr->tank ?></td>
+                <td><?php echo $h_itomei_mr->kohi ?></td>
+                <td><?php echo $h_itomei_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_itomei_mrs/delete/" . $h_itomei_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_itomei_mrs"]) ?>

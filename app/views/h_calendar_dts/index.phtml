@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "カレンダーデータ.一覧"; ?>
+<div class="page-header">
+    <h3>カレンダーデータ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_calendar_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","カレンダーパタン"],
+                    ["hiduke","日付"],
+                    ["kadou_flg","稼働フラグ"],
+                    ["bikou","備考"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_calendar_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_calendar_dts/edit/" . $h_calendar_dt->id, $h_calendar_dt->id)); ?></td>
+                <td><?php echo $h_calendar_dt->cd ?></td>
+                <td><?php echo $h_calendar_dt->hiduke ?></td>
+                <td><?php echo $h_calendar_dt->kadou_flg ?></td>
+                <td><?php echo $h_calendar_dt->bikou ?></td>
+                <td><?php echo $h_calendar_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_calendar_dts/delete/" . $h_calendar_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_calendar_dts"]) ?>

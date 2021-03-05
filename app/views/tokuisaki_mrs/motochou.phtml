@@ -1,0 +1,1072 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var Object $uriage_rows
+ * @var array $nyuukin_rows
+ * @var Object $seikyuusaki_mr
+ * @var array $setdts
+ */
+
+use Phalcon\Tag;;
+$title = '得意・元帳';
+?>
+
+<div class="page-header">
+    <h3>得意先元帳</h3>
+</div>
+
+<style>
+    .cs_checkbox {
+        display: none;
+    }
+    .cs_checkbox + .checkbox-icon {
+        position: relative;
+        vertical-align: middle;
+    }
+    .cs_checkbox + .checkbox-icon:before {
+        content: "\f372";
+        font-family: "Ionicons";
+        color: #ccc;
+        font-size: 1.35em;
+        vertical-align:middle;
+    }
+    .cs_checkbox:checked + .checkbox-icon:before {
+        content: "\f374";
+        color: #17bcdf;
+    }
+</style>
+<?php echo $this->getContent(); ?>
+
+<link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<div class="panel panel-success bg-yel">
+    <br/>
+    <?php
+    echo $this->tag->form([
+        "tokuisaki_mrs/motochou",
+        "autocomplete" => "off",
+        "class" => "form-horizontal",
+        "id" => "form_motochou",
+        "name" => "form_motochou",
+    ]);
+    ?>
+    <div class="form-group">
+        <div class="col-sm-8">
+            <label for="fieldSeikyuusakiMrCd" class="col-sm-2 control-label">請求先></label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(array("seikyuusaki_mr_cd", "class" => "form-control ime-i", "id" => "fieldSeikyuusakiMrCd", "list" => "TokuisakiMrsOptions")) ?>
+            </div>
+            <div class="col-sm-7">
+                <?php echo $this->tag->textField(array("seikyuusaki_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldSeikyuusakiMrName")) ?>
+            </div>
+            <label for="fieldTokuisakiMrCd" class="col-sm-2 control-label">得意先</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(array("tokuisaki_mr_cd", "class" => "form-control ime-i", "id" => "fieldTokuisakiMrCd", "list" => "TokuisakiMrsOptions")) ?>
+            </div>
+            <div class="col-sm-7">
+                <?php echo $this->tag->textField(array("tokuisaki_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldTokuisakiMrName")) ?>
+            </div>
+            <label for="fieldHyoujiFlg" class="col-sm-2 control-label">表示</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->selectStatic(array("hyouji_flg", ["1" => "1=月次計", "2" => "2=伝票計", "3" => "3=明細表", "4" => "4=明細2行表"], "class" => "form-control", "id" => "fieldHyoujiFlg")) ?>
+            </div>
+            <label for="fieldShouhinMrCd" class="col-sm-1 control-label">商品</label>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(array("shouhin_mr_cd", "class" => "form-control ime-i", "id" => "fieldShouhinMrCd")) ?>
+            </div>
+            <label for="fieldShouhinTekiyou" class="col-sm-1 control-label">摘要</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(array("shouhin_tekiyou", "class" => "form-control ime-i", "id" => "fieldShouhinTekiyou")) ?>
+            </div>
+            <div class="clearfix"></div>
+            <label for="fieldKikanSiteiKbnCd" class="col-sm-2 control-label">期間</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->select(array("kikan_sitei_kbn_cd", KikanSiteiKbns::find(["columns" => "cd , name", "order" => "cd"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldKikanSiteiKbnCd")) ?>
+            </div>
+            <div class="col-sm-3">
+                <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+            </div>
+            <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+            </div>
+            <div class="clearfix"></div>
+
+            <br />
+            <label for="hanni_from" class="col-sm-2 control-label">金額範囲</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(array("hanni_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "hanni_from")) ?>
+            </div>
+            <label for="hanni_to" class="col-sm-1 control-label">～</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(array("hanni_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "hanni_to")) ?>
+            </div>
+            <div class="clearfix"></div>
+            <label for="joutai" class="col-sm-2 control-label">伝票状態</label>
+            <div class="col-sm-2">
+                <?php echo $this->tag->select(array("joutai", ['0' => '指定なし', '1' => '未締切', '2' => '締切済'], "style" => "width: 132px;", "class" => "form-control", "id" => "joutai")) ?>
+            </div>
+            <div class="clearfix"></div>
+            <label for="keshikomi_joutai" class="col-sm-2 control-label">売上消込</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->select(array("keshikomi_joutai", ['0' => '指定なし', '1' => '消込無', '2' => '消込有'], "style" => "width: 132px;", "class" => "form-control", "id" => "keshikomi_joutai")) ?>
+            </div>
+
+        <div class="col-lg-offset-2 col-sm-4">
+            <div class="col-sm-4">
+                <?php echo $this->tag->submitButton(array("集計F12", "id" => "F12", "class" => "btn btn-success")) ?>
+            </div>
+            <div class="col-sm-4">
+                <?php echo $this->tag->submitButton(array("EXCEL出力", "class" => "btn btn-warning", "onclick" => "$('#fieldToExcel').val('1')")) ?>
+            </div>
+        </div>
+        </div>
+        <?php echo $this->tag->hiddenField(array("to_excel", "id" => 'fieldToExcel')) ?>
+    </div><!-- form-group -->
+    <?php echo $this->tag->endForm(); ?>
+</div><!-- panel-successp -->
+
+<?php
+if ($this->request->isPost()) {
+    $joutai = $this->request->getPost('joutai');
+    $keshikomi_joutai = $this->request->getPost('keshikomi_joutai');
+} else {
+    $joutai = '0';
+    $keshikomi_joutai = '0';
+}
+?>
+<?php
+$count1_rows = count($uriage_rows->toArray());
+$count2_rows = count($nyuukin_rows);
+$count_rows = $count1_rows + $count2_rows;
+$uriagegaku = $seikyuusaki_mr->kake_zandaka;
+$kesi_kei = 0;
+$kesikomizumi_uriagegaku = 0; // 消込状態指定の場合、前残高を計算する
+$i1 = 0;
+$i2 = 0;
+for ($i1 = 0; $i1 < $count1_rows && $uriage_rows[$i1]["denpyoubi"] < $setdts["kikan_from"]; $i1++) {
+    $uriagegaku += $uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"];
+    $kesikomizumi_uriagegaku += $uriage_rows[$i1]["kesikomi_gaku"];
+}
+$kesikomizumi_kurikoshigaku = $uriagegaku - $kesikomizumi_uriagegaku; // 消込状態指定の場合、前残高を計算する
+$nyuukingaku = 0;
+$dummyNyuukingaku = 0; // 累計残高計算用
+if ($keshikomi_joutai !== '1') {
+    for ($i2 = 0; $i2 < $count2_rows && $nyuukin_rows[$i2]["denpyoubi"] < $setdts["kikan_from"]; $i2++) {
+        $nyuukingaku += $nyuukin_rows[$i2]["kingaku"];
+    }
+} else {
+    for ($i2 = 0; $i2 < $count2_rows && $nyuukin_rows[$i2]["denpyoubi"] < $setdts["kikan_from"]; $i2++) {
+        $dummyNyuukingaku += $nyuukin_rows[$i2]["kingaku"];
+    }
+}
+if ($keshikomi_joutai !== '1') {
+    $zandaka = $uriagegaku - $nyuukingaku;
+} else {
+    $zandaka = $uriagegaku - $dummyNyuukingaku;
+}
+
+$uriagegaku = 0;
+$i1a = $i1;
+for ($i1a = $i1; $i1a < $count1_rows && $uriage_rows[$i1a]["denpyoubi"] <= $setdts["kikan_to"]; $i1a++) {
+    $uriagegaku += $uriage_rows[$i1a]["zeinukigaku"] + $uriage_rows[$i1a]["zeigaku"];
+    $kesi_kei += $uriage_rows[$i1a]["kesikomi_gaku"];
+}
+
+$nyuukingaku = 0;
+$dummyNyuukingaku = 0; // 累計残高計算用
+$i2a = $i2;
+if ($keshikomi_joutai !== '1') {
+    for ($i2a = $i2; $i2a < $count2_rows && $nyuukin_rows[$i2a]["denpyoubi"] <= $setdts["kikan_to"]; $i2a++) {
+        $nyuukingaku += $nyuukin_rows[$i2a]["kingaku"];
+    }
+} else {
+    for ($i2a = $i2; $i2a < $count2_rows && $nyuukin_rows[$i2a]["denpyoubi"] <= $setdts["kikan_to"]; $i2a++) {
+        $dummyNyuukingaku += $nyuukin_rows[$i2a]["kingaku"];
+    }
+}
+
+$count1_rows = $i1a;
+$count2_rows = $i2a;
+$count_rows = $count1_rows + $count2_rows;
+$kesi_txt1 = ["", "一部消込", "消込済"];
+?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 head_fix">
+        <thead>
+        <tr>
+            <td colspan=22 bgcolor="whitesmoke">
+                <div class="col-sm-4">
+                    <table class="table-bordered table-condens-0" width="100%">
+                        <thead>
+                        <tr class="tr-pnk">
+                            <th style="width:33%; text-align:center;">売上消込計</th>
+                            <th style="width:33%; text-align:center;">入金消込計</th>
+                            <th style="width:33%; text-align:center;">差異</th>
+                        </tr>
+                        <tr>
+                            <td align="right" id="tmpKesikomi">0</td>
+                            <td align="right" id="tmpNyuukinKesikomi">0</td>
+                            <td align="right" id="tmpSai">0</td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                    <table class="table-bordered table-condens-0" width="100%">
+                        <thead>
+                        <tr class="tr-pnk">
+                            <th style="width:25%; text-align:center;">前月繰越</th>
+                            <th style="width:25%; text-align:center;">売上額計</th>
+                            <th style="width:25%; text-align:center;">入金額計</th>
+                            <th style="width:25%; text-align:center;">残高金額
+                        </tr>
+                        <tr>
+                            <?php if ($this->request->getPost('keshikomi_joutai') === '1'): ?>
+                                <td align="center"><?php echo '-'; ?></td>
+                                <td align="right" style="color: <?php echo ($uriagegaku - $kesi_kei < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriagegaku - $kesi_kei) ?></td>
+                                <td align="right" style="color: <?php echo ($nyuukingaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($nyuukingaku) ?></td>
+                                <td align="right" style="color: <?php echo ($uriagegaku - $kesi_kei < 0 ? 'red': 'black') ?>;"><?php echo number_format($kesikomizumi_kurikoshigaku + $uriagegaku - $kesi_kei) ?></td>
+                            <?php elseif ($this->request->getPost('keshikomi_joutai') === '2'): ?>
+                                <td align="center"><?php echo '-'; ?></td>
+                                <td align="right" style="color: <?php echo ($kesi_kei < 0 ? 'red': 'black') ?>;"><?php echo number_format($kesi_kei) ?></td>
+                                <td align="right" style="color: <?php echo ($nyuukingaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($nyuukingaku) ?></td>
+                                <td align="right" style="color: <?php echo ($kesi_kei < 0 ? 'red': 'black') ?>;"><?php echo number_format($kesikomizumi_kurikoshigaku + $kesi_kei - $nyuukingaku) ?></td>
+                            <?php else: ?>
+                                <td align="right" style="color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka) ?></td>
+                                <td align="right" style="color: <?php echo ($uriagegaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriagegaku) ?></td>
+                                <td align="right" style="color: <?php echo ($nyuukingaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($nyuukingaku) ?></td>
+                                <td align="right" style="color: <?php echo ($zandaka + $uriagegaku - $nyuukingaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka + $uriagegaku - $nyuukingaku) ?></td>
+                            <?php endif; ?>
+
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <?php if ($setdts["hyouji_flg"] == "4"): /* 明細2行表 */ ?>
+        <tr bgcolor="Lavender">
+            <th nowrap style="text-align:center;">伝票日付</th>
+            <th nowrap style="text-align:center;">取引区分</th>
+            <th nowrap style="text-align:center;">内訳</th>
+            <th nowrap style="text-align:center;">商品コード</th>
+            <th nowrap style="text-align:center;">課税区分</th>
+            <th nowrap style="text-align:center;">手形期日</th>
+            <th nowrap style="text-align:center;">単位</th>
+            <th nowrap style="text-align:center;">数量1</th>
+            <th nowrap style="text-align:center;">単位</th>
+            <th nowrap style="text-align:center;">売上額</th>
+            <th nowrap style="text-align:center;">消込</th>
+            <th nowrap style="text-align:center;">入金額</th>
+            <th nowrap style="text-align:center;">消込</th>
+            <th nowrap style="text-align:center;">残高</th>
+        </tr>
+        <tr bgcolor="Lavender">
+            <th nowrap style="text-align:center;">伝票番号</th>
+            <th nowrap style="text-align:center;">伝票状態</th>
+            <th nowrap style="text-align:center;">消込状態</th>
+            <th colspan="3" nowrap style="text-align:center;">商品/摘要</th>
+            <th nowrap style="text-align:center;">　</th>
+            <th nowrap style="text-align:center;">数量2</th>
+            <th nowrap style="text-align:center;">単価</th>
+            <th nowrap style="text-align:center;">　</th>
+            <th nowrap style="text-align:center;">　</th>
+            <th nowrap style="text-align:center;">　</th>
+            <th nowrap style="text-align:center;">　</th>
+            <th nowrap style="text-align:center;">備考</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr bgcolor="#fffcf8">
+            <td></td>
+            <td>　</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td nowrap align="right" style="color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka) /* 残高 */ ?></td>
+        </tr>
+        <tr bgcolor="#fffcf8">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td colspan="3" nowrap>　繰越</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <?php
+        $denpyoubi = "";
+        $denpyou_bangou = 0;
+        $cntSimeDts = count($seikyuusaki_mr->TokuisakiSimeDts);
+        if ($cntSimeDts > 0) {
+            $sime0 = $seikyuusaki_mr->TokuisakiSimeDts[0]->sime_hiduke;
+        }
+        if ($cntSimeDts > 1) {
+            $sime1 = $seikyuusaki_mr->TokuisakiSimeDts[1]->sime_hiduke;
+        }
+
+        for (; $i1 + $i2 < $count_rows;):
+            if ($i2 >= $count2_rows
+                || $i1 < $count1_rows
+                && $uriage_rows[$i1]["denpyoubi"] <= $nyuukin_rows[$i2]["denpyoubi"]
+            ): // 売上明細
+                $zandaka += $uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"];
+                //$kesi_kbn =
+                $kesi_kbn = $uriage_rows[$i1]["kesikomi_gaku"] == 0 ? 0 : (($uriage_rows[$i1]["kesikomi_gaku"] == $uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"]) ? 2 : 1); // 0=未,1=一部,2=済
+                // 0円の消込データを判別できない為（3項演算子の中に含めると見にくいので分ける）
+                if (isset($uriage_rows[$i1]['kesi_id'])) {
+                    if ($kesi_kbn === 0 && !is_null($uriage_rows[$i1]['kesi_id'])) {
+                        $kesi_kbn = 2;
+                    }
+                }
+
+                $denpyou_last_flg = 1;
+                $simekiri_flg = 0; // 0=未締切,1=締済み
+                if ($cntSimeDts > 0) {
+                    if ($uriage_rows[$i1]->shimekiri_flg == 0) { // 0=今回
+                        if ($uriage_rows[$i1]->denpyoubi <= $sime0) {
+                            $simekiri_flg = 1;
+                        }
+                    } else { // 1=次回
+                        if ($cntSimeDts > 1) {
+                            if ($uriage_rows[$i1]->denpyoubi <= $sime1) {
+                                $simekiri_flg = 1;
+                            }
+                        }
+                    }
+                }
+                // 伝票状態フラグで表示を分ける
+                if ($joutai === '1') {
+                    if ($simekiri_flg === 1) {
+                        $i1++;
+                        continue;
+                    }
+                } else if($joutai === '2') {
+                    if ($simekiri_flg === 0) {
+                        $i1++;
+                        continue;
+                    }
+                }
+                // 売上消込状態フラグで表示を分ける
+                if ($keshikomi_joutai === '1') {
+                    if ($kesi_kbn === 2) {
+                        $i1++;
+                        continue;
+                    }
+                } else if ($keshikomi_joutai === '2') {
+                    if ($kesi_kbn === 0) {
+                        $i1++;
+                        continue;
+                    }
+                }
+                ?>
+                <tr bgcolor="#fffcf8">
+                    <td nowrap><?php echo $uriage_rows[$i1]["denpyoubi"] == $denpyoubi ? "" : $uriage_rows[$i1]["denpyoubi"] /* 伝票日付 */ ?></td>
+                    <td nowrap><?php echo $uriage_rows[$i1]["torihiki_kbn_name"] /* 取引区分名 */ ?></td>
+                    <td nowrap><?php echo $uriage_rows[$i1]["utiwake_kbn_name"] /* 内訳 */ ?></td>
+                    <td nowrap><?php echo $uriage_rows[$i1]["shouhin_mr_cd"] /* 商品コード */ ?></td>
+                    <td nowrap><?php echo $uriage_rows[$i1]["zeiritu_mr_name"] . mb_substr($uriage_rows[$i1]["zei_tenka_kbn_name"], 0, 1) /* 課税区分=税率台帳+税転嫁区分 */ ?></td>
+                    <td nowrap align="center"></td>
+                    <td nowrap align="center"><?php echo $uriage_rows[$i1]["tanni_mr1_name"] /* 単位 */ ?></td>
+                    <td nowrap align="right" style="color: <?php echo ($uriage_rows[$i1]["suuryou1"] < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriage_rows[$i1]["suuryou1"], 2) /* 数量*/ ?></td>
+                    <td nowrap
+                        align="right"><?php echo "/" . $uriage_rows[$i1]["tanni_mr" . ($uriage_rows[$i1]["tanka_kbn"] ?? "2") . "_name"] /* 単位 */ ?></td>
+                    <td nowrap
+                        align="right" style="color: <?php echo ($uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"] < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"], 0) /* 売上額 */ ?></td>
+                    <td nowrap
+                        align="center">
+                        <div class="custom-control custom-checkbox">
+                            <?php echo $this->tag->checkField(array("kesuchk", "class" => "form-control kesuchk", "value" => $uriage_rows[$i1]["id"], "checked" => [null, true, true][$kesi_kbn], "style" => "height:14px !important;"))/* ["","△","＊"][$kesi_kbn] */ ?><?php /* 消込 */ ?>
+                            <label for="kesuchk" class="checkbox-icon"></label>
+                        </div>
+                    </td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap align="right" style="color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka) /* 残高 */ ?></td>
+                </tr>
+                <tr bgcolor="#fffcf8">
+                    <td nowrap align="right"><?php echo $uriage_rows[$i1]["denpyou_bangou"] == $denpyou_bangou ? ""
+                            : $this->tag->linkTo(array("uriage_dts/edit/" . $uriage_rows[$i1]["uriage_dt_id"]
+                            , $uriage_rows[$i1]["denpyou_bangou"], "target" => "_blank")); /* 伝票番号 */ ?></td>
+                    <td nowrap align="center"
+                        style="color: <?php echo $simekiri_flg == 1 ? "green" : 'red'; ?>"><?php echo $simekiri_flg == 1 ? "締切済" : ($uriage_rows[$i1]->shimekiri_flg == 1 ? "次回" : "未締切") /* 伝票状態 */ ?></td>
+                    <td nowrap align="center"><?php echo ["", "一部消込", "消込済"][$kesi_kbn] /* 消込状態 */ ?></td>
+                    <td colspan="3" nowrap><?php echo $uriage_rows[$i1]["tekiyou"] /* 商品/摘要 */ ?></td>
+                    <td nowrap align="center"><?php echo $uriage_rows[$i1]["tanni_mr2_name"] /* 単位 */ ?></td>
+                    <td nowrap align="right" style="color: <?php echo ($uriage_rows[$i1]["suuryou2"] < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriage_rows[$i1]["suuryou2"], 2) /* 数量*/ ?></td>
+                    <td nowrap align="right"><?php echo number_format($uriage_rows[$i1]["tanka"], 2) /* 単価 */ ?></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap><?php echo $uriage_rows[$i1]["bikou"] /* 備考 */ ?></td>
+                </tr>
+                <?php
+                $denpyoubi = $uriage_rows[$i1]["denpyoubi"];
+                $denpyou_bangou = $uriage_rows[$i1]["denpyou_bangou"];
+                $i1++;
+            else: // 入金明細
+                // 売上消込状態フラグで表示を分ける
+                if ($keshikomi_joutai === '1') {
+                    if ($kesi_kbn === 2) {
+                        $i2++;
+                        continue;
+                    }
+                } else if ($keshikomi_joutai === '2') {
+                    if ($kesi_kbn === 0) {
+                        $i2++;
+                        continue;
+                    }
+                }
+                $zandaka -= $nyuukin_rows[$i2]["kingaku"];
+                ?>
+                <tr bgcolor="#fffcf8">
+                    <td nowrap><?php echo $nyuukin_rows[$i2]["denpyoubi"] == $denpyoubi ? "" : $nyuukin_rows[$i2]["denpyoubi"] /* 伝票日付 */ ?></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap>
+                        <?php
+                        if (isset($nyuukin_rows[$i2]['tegata_kijitu'])) {
+                            if ($nyuukin_rows[$i2]["tegata_kijitu"] === '' && $nyuukin_rows[$i2]["tegata_kijitu"] === '0000-00-00') {
+                                echo $nyuukin_rows[$i2]["tegata_kijitu"]; /* 手形期日 */
+                            }
+                        }
+                        ?></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap></td>
+                    <td nowrap
+                        align="right" style="color: <?php echo ($nyuukin_rows[$i2]["kingaku"] < 0 ? 'red': 'black') ?>;"><?php echo number_format($nyuukin_rows[$i2]["kingaku"], 0) /* 入金額 */ ?></td>
+                    <td nowrap
+                        align="center">
+                        <?php echo $nyuukin_rows[$i2]["zenkai_kesikomi_gaku"] == 0 ? "" : "" /* 消込 */ ?></td>
+                    <td nowrap align="right" style="color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;">
+                        <?php
+                        if ($nyuukin_rows[$i2]["denpyou_bangou"] == $denpyou_bangou) {
+                            echo "";
+                        } else {
+                            echo number_format($zandaka); /* 残高 */
+                        }
+                        ?>
+                    </td>
+                </tr>
+
+                <?php if ($keshikomi_joutai !== '1'):?>
+                        <tr bgcolor="#fffcf8">
+                            <input type="hidden" id="nyuukin_dt_id<?php echo $i2; ?>"
+                                   value="<?php echo $nyuukin_rows[$i2]["denpyou_bangou"] == $denpyou_bangou ? "" :
+                                       $nyuukin_rows[$i2]['nyuukin_dt_id']; ?>">
+                            <td nowrap align="right"><?php echo $nyuukin_rows[$i2]["denpyou_bangou"] == $denpyou_bangou ? ""
+                                    : $this->tag->linkTo(array("nyuukin_dts/edit/" . $nyuukin_rows[$i2]["nyuukin_dt_id"]
+                                    , $nyuukin_rows[$i2]["denpyou_bangou"], "target" => "_blank")); /* 伝票番号 */ ?></td>
+                            <td nowrap></td>
+                            <td nowrap></td>
+                            <td colspan="3" nowrap><?php echo $nyuukin_rows[$i2]["tekiyou"] /* 摘要 */ ?></td>
+                            <td nowrap></td>
+                            <td nowrap></td>
+                            <td nowrap></td>
+                            <td nowrap></td>
+                            <td nowrap></td>
+                            <td nowrap></td>
+                            <td nowrap></td>
+                            <td nowrap><?php echo $nyuukin_rows[$i2]["bikou"] /* 備考 */ ?></td>
+                        </tr>
+                <?php endif; ?>
+                <?php
+                $denpyoubi = $nyuukin_rows[$i2]["denpyoubi"];
+                $denpyou_bangou = $nyuukin_rows[$i2]["denpyou_bangou"];
+                $i2++;
+            endif;
+        endfor;
+        ?>
+        </tbody>
+        <?php elseif ($setdts["hyouji_flg"] == "3"): /* 明細表 */ ?>
+            <tr bgcolor="Lavender">
+                <th style="text-align:center;">伝票日付</th>
+                <th style="text-align:center;">伝票番号</th>
+                <th style="text-align:center;">取引区分</th>
+                <th style="text-align:center;">伝票状態</th>
+                <th style="text-align:center;">内訳</th>
+                <th style="text-align:center;">消込状態</th>
+                <th style="text-align:center;">商品コード</th>
+                <th style="text-align:center;">商品/摘要</th>
+                <th style="text-align:center;">課税区分</th>
+                <th style="text-align:center;">手形期日</th>
+                <th style="text-align:center;">数量</th>
+                <th style="text-align:center;">単位</th>
+                <th style="text-align:center;">単価</th>
+                <th style="text-align:center;">売上税抜額</th>
+                <th style="text-align:center;">税額</th>
+                <th style="text-align:center;">消込</th>
+                <th style="text-align:center;">入金額</th>
+                <th style="text-align:center;">消込</th>
+                <th style="text-align:center;">残高</th>
+                <th style="text-align:center;">備考</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr bgcolor="#fffcf8">
+                <td></td>
+                <td></td>
+                <td>　</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td nowrap>　繰越</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <?php if ($keshikomi_joutai === '1'): ?>
+                    <td nowrap align="right" style="padding:0 4px; color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($kesikomizumi_kurikoshigaku) /* 消し込み残高 */ ?></td>
+                <?php elseif ($keshikomi_joutai === '2'): ?>
+                    <td nowrap align="right" style="padding:0 4px; color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($kesikomizumi_kurikoshigaku) /* 消し込み残高 */ ?></td>
+                <?php else: ?>
+                    <td nowrap align="right" style="padding:0 4px; color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka) /* 残高 */ ?></td>
+                <?php endif; ?>
+                <td><?php echo $count_rows ?></td>
+            </tr>
+
+            <?php
+            if ($keshikomi_joutai === '1') {
+                $zandaka = $kesikomizumi_kurikoshigaku;
+            } else if ($keshikomi_joutai === '2') {
+                $zandaka = $kesikomizumi_kurikoshigaku;
+            }
+            $denpyoubi = "";
+            $denpyou_bangou = 0;
+            $cntSimeDts = count($seikyuusaki_mr->TokuisakiSimeDts);
+            if ($cntSimeDts > 0) {
+                $sime0 = $seikyuusaki_mr->TokuisakiSimeDts[0]->sime_hiduke;
+            }
+            if ($cntSimeDts > 1) {
+                $sime1 = $seikyuusaki_mr->TokuisakiSimeDts[1]->sime_hiduke;
+            }
+//            echo $i2;
+//            exit;
+            for (; $i1 + $i2 < $count_rows;):
+                if ($i2 >= $count2_rows
+                    || $i1 < $count1_rows
+                    && $uriage_rows[$i1]["denpyoubi"] <= $nyuukin_rows[$i2]["denpyoubi"]
+                ): // 売上明細
+
+                    $kesi_kbn = $uriage_rows[$i1]["kesikomi_gaku"] == 0 ? 0 : (($uriage_rows[$i1]["kesikomi_gaku"] == $uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"]) ? 2 : 1); // 0=未,1=一部,2=済
+                    if (isset($uriage_rows[$i1]['kesi_id'])) {
+                        if ($kesi_kbn === 0 && !is_null($uriage_rows[$i1]['kesi_id'])) {
+                            $kesi_kbn = 2;
+                        }
+                    }
+                    $denpyou_last_flg = 1;
+                    $simekiri_flg = 0; // 0=未締切,1=締済み
+                    if ($cntSimeDts > 0) {
+                        if ($uriage_rows[$i1]->shimekiri_flg == 0) { // 0=今回
+                            if ($uriage_rows[$i1]->denpyoubi <= $sime0) {
+                                $simekiri_flg = 1;
+                            }
+                        } else { // 1=次回
+                            if ($cntSimeDts > 1) {
+                                if ($uriage_rows[$i1]->denpyoubi <= $sime1) {
+                                    $simekiri_flg = 1;
+                                }
+                            }
+                        }
+                    }
+                    // 伝票状態フラグで表示を分ける
+                    if ($joutai === '1') {
+                        if ($simekiri_flg === 1) {
+                            $i1++;
+                            continue;
+                        }
+                    } else if($joutai === '2') {
+                        if ($simekiri_flg === 0) {
+                            $i1++;
+                            continue;
+                        }
+                    }
+                    // 売上消込状態フラグで表示を分ける
+                    if ($keshikomi_joutai === '1') {
+                        if ($kesi_kbn === 2) {
+                            $i1++;
+                            continue;
+                        }
+                    } else if ($keshikomi_joutai === '2') {
+                        if ($kesi_kbn === 0) {
+                            $i1++;
+                            continue;
+                        }
+                    }
+                    $zandaka += $uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"];
+                    ?>
+                    <tr bgcolor="#fffcf8">
+                        <td nowrap align="center"><?php echo $uriage_rows[$i1]["denpyoubi"] == $denpyoubi ?
+                                "<span style='color:#eee;'>" . $uriage_rows[$i1]["denpyoubi"] . "</span>" :
+                                $uriage_rows[$i1]["denpyoubi"] /* 伝票日付 */ ?></td>
+                        <td nowrap align="center"><?php echo $uriage_rows[$i1]["denpyou_bangou"] == $denpyou_bangou ?
+                                "<span style='color:#eee;'>" . $uriage_rows[$i1]["denpyou_bangou"] . "</span>" :
+                                $this->tag->linkTo(array("uriage_dts/edit/" . $uriage_rows[$i1]["uriage_dt_id"]
+                                , $uriage_rows[$i1]["denpyou_bangou"], "target" => "_blank")); /* 伝票番号 */ ?></td>
+                        <td nowrap align="center"><?php echo $uriage_rows[$i1]["torihiki_kbn_name"] /* 取引区分名 */ ?></td>
+                        <td nowrap align="center"
+                            style="color: <?php echo $simekiri_flg == 1 ? "green" : 'red'; ?>"><?php echo $simekiri_flg == 1 ? "締切済" : ($uriage_rows[$i1]->shimekiri_flg == 1 ? "次回" : "未締切") /* 伝票状態 */ ?></td>
+                        <td nowrap><?php echo $uriage_rows[$i1]["utiwake_kbn_name"] /* 内訳 */ ?></td>
+                        <td nowrap align="center"><?php echo ["", "一部消込", "消込済"][$kesi_kbn] /* 消込状態 */ ?></td>
+                        <td nowrap><?php echo $uriage_rows[$i1]["shouhin_mr_cd"] /* 商品コード */ ?></td>
+                        <td><?php echo $uriage_rows[$i1]["tekiyou"] /* 商品/摘要 */ ?></td>
+                        <td nowrap><?php echo $uriage_rows[$i1]["zeiritu_mr_name"] . mb_substr($uriage_rows[$i1]["zei_tenka_kbn_name"], 0, 1) /* 課税区分=税率台帳+税転嫁区分 */ ?></td>
+                        <td nowrap align="center"></td>
+                        <td nowrap
+                            align="right" style="color: <?php echo ($uriage_rows[$i1]["suuryou"] < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriage_rows[$i1]["suuryou" . $uriage_rows[$i1]["tanka_kbn"]], 2) /* 数量*/ ?></td>
+                        <td nowrap
+                            align="center"><?php echo $uriage_rows[$i1]["tanni_mr" . ($uriage_rows[$i1]["tanka_kbn"] ?? "2") . "_name"] /* 単位 */ ?></td>
+                        <td nowrap
+                            align="right"><?php echo number_format($uriage_rows[$i1]["tanka"], 2) /* 単価 */ ?></td>
+                        <td nowrap align="right" style="padding:0 4px; color: <?php echo ($uriage_rows[$i1]["zeinukigaku"] < 0 ? 'red': 'black') ?>;"
+                        ><?php echo number_format($uriage_rows[$i1]["zeinukigaku"], 0) /* 売上税込額 */ ?></td>
+                        <td nowrap align="right" style="padding:0 4px; color: <?php echo ($uriage_rows[$i1]["zeigaku"] < 0 ? 'red': 'black') ?>;"
+                        ><?php echo number_format($uriage_rows[$i1]["zeigaku"], 0) /* 税額 */ ?></td>
+                        <td nowrap
+                            align="center">
+                            <div class="custom-control custom-checkbox">
+                                <?php echo $this->tag->checkField(array("kesuchk", "class" => "form-control kesuchk", "value" => $uriage_rows[$i1]["id"], "checked" => [null, true, true][$kesi_kbn], "style" => "height:14px !important;"))/* ["","△","＊"][$kesi_kbn] */ ?><?php /* 消込 */ ?>
+                                <label for="kesuchk" class="checkbox-icon"></label>
+                            </div>
+                        </td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <?php
+                        $bikou = $uriage_rows[$i1]["bikou"];
+                        $denpyoubi = $uriage_rows[$i1]["denpyoubi"];
+                        $denpyou_bangou = $uriage_rows[$i1]["denpyou_bangou"];
+                        $i1++;
+                        if ($i1 < $count1_rows) {
+                            if ($uriage_rows[$i1]->denpyou_bangou == $denpyou_bangou) {
+                                $denpyou_last_flg = 0;
+                            }
+                        }
+                        ?>
+
+                        <td nowrap align="right" style="padding:0 4px; color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo $denpyou_last_flg == 0 ?
+                                "<span style='color:#eee;'>" . number_format($zandaka, 0) . "</span>" :
+                                number_format($zandaka, 0) /* 残高 */ ?></td>
+                        <td><?php echo $bikou /* 備考 */ ?></td>
+                    </tr>
+                <?php
+                else: // 入金明細
+                    // 売上消込状態フラグで表示を分ける
+                    if ($keshikomi_joutai === '1') {
+                        $i2++;
+                        continue;
+//                        if ($kesi_kbn === 2) {
+//                            $i2++;
+//                            continue;
+//                        }
+//                    } else if ($keshikomi_joutai === '2') {
+//                        if ($kesi_kbn === 0) {
+//                            $i2++;
+//                            continue;
+//                        }
+                    }
+                    $zandaka -= $nyuukin_rows[$i2]["kingaku"];
+                    ?>
+                    <tr bgcolor="#fffcf8">
+                        <td nowrap
+                            align="center"><?php echo $nyuukin_rows[$i2]["denpyoubi"] == $denpyoubi ? "" : $nyuukin_rows[$i2]["denpyoubi"] /* 伝票日付 */ ?></td>
+                        <input type="hidden" id="nyuukin_dt_id<?php echo $i2; ?>"
+                               value="<?php echo $nyuukin_rows[$i2]["denpyou_bangou"] == $denpyou_bangou ? "" :
+                                   $nyuukin_rows[$i2]['nyuukin_dt_id']; ?>">
+                        <td nowrap
+                            align="center"><?php echo $nyuukin_rows[$i2]["denpyou_bangou"] == $denpyou_bangou ? ""
+                                : $this->tag->linkTo(array("nyuukin_dts/edit/" . $nyuukin_rows[$i2]["nyuukin_dt_id"]
+                                , $nyuukin_rows[$i2]["denpyou_bangou"], "target" => "_blank")); /* 伝票番号 */ ?></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap><?php echo $nyuukin_rows[$i2]["tekiyou"] /* 摘要 */ ?></td>
+                        <td nowrap></td>
+                        <td nowrap>
+                            <?php
+                            if (isset($nyuukin_rows[$i2]['tegata_kijitu'])) {
+                                if ($nyuukin_rows[$i2]["tegata_kijitu"] !== '' && $nyuukin_rows[$i2]["tegata_kijitu"] !== '0000-00-00') {
+                                    echo $nyuukin_rows[$i2]["tegata_kijitu"]; /* 手形期日 */
+                                }
+                            }
+                            ?>
+                        </td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+
+                        <td nowrap align="right" id="<?php echo 'nyuukingaku' . $i2 ?>"
+                            style="padding:0 4px; color: <?php echo ($nyuukin_rows[$i2]["kingaku"] < 0 ? 'red': 'black') ?>"><?php echo number_format($nyuukin_rows[$i2]["kingaku"], 0) /* 入金額 */ ?></td>
+                        <td nowrap id="<?php echo 'kesikomi' . $i2 ?>" class="kesikomi"
+                            align="center"><?php echo $nyuukin_rows[$i2]["zenkai_kesikomi_gaku"] == 0 ? "" : "" /* 消込 */ ?></td>
+                        <td nowrap align="right"
+                            style="padding:0 4px; color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>"><?php
+                            try {
+                                if ($i2 === 0) {
+                                    echo "<span style='color:#eee;'>" . number_format($zandaka) . "</span>";/* 残高 */
+                                } else {
+                                    if ($nyuukin_rows[$i2]["denpyou_bangou"] === $nyuukin_rows[$i2 - 1]["denpyou_bangou"]) {
+                                        if ($i2 < count($nyuukin_rows)) {
+                                            if ($nyuukin_rows[$i2]["denpyou_bangou"] === $nyuukin_rows[$i2 + 1]["denpyou_bangou"]) {
+                                                echo "<span style='color:#eee;'>" . number_format($zandaka) . "</span>";/* 残高 */
+                                            } else {
+                                                echo number_format($zandaka);/* 残高 */
+                                            }
+                                        } else {
+                                            echo number_format($zandaka);/* 残高 */
+                                        }
+                                    } else {
+                                        if ($i2 < count($nyuukin_rows)) {
+                                            if ($nyuukin_rows[$i2]["denpyou_bangou"] === $nyuukin_rows[$i2 + 1]["denpyou_bangou"]) {
+                                                echo "<span style='color:#eee;'>" . number_format($zandaka) . "</span>";/* 残高 */
+                                            } else {
+                                                echo number_format($zandaka);/* 残高 */
+                                            }
+                                        } else {
+                                            echo number_format($zandaka);/* 残高 */
+                                        }
+                                    }
+                                }
+                            } catch (Exception $e) {
+                                echo number_format($zandaka);/* 残高 */
+                            }
+                            ?></td>
+                        <td><?php echo $nyuukin_rows[$i2]["bikou"] /* 備考 */ ?></td>
+                    </tr>
+                    <?php
+                    $denpyoubi = $nyuukin_rows[$i2]["denpyoubi"];
+                    $denpyou_bangou = $nyuukin_rows[$i2]["denpyou_bangou"];
+                    $i2++;
+                endif;
+            endfor;
+            ?>
+            </tbody>
+        <?php elseif ($setdts["hyouji_flg"] == "2"): /* 伝票計 */ ?>
+            <tr bgcolor="Lavender">
+                <th nowrap style="text-align:center;">伝票日付</th>
+                <th nowrap style="text-align:center;">取引区分</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">売上額</th>
+                <th nowrap style="text-align:center;">消込</th>
+                <th nowrap style="text-align:center; width: 30px;"">　</th>
+                <th nowrap style="text-align:center;">入金額</th>
+                <th nowrap style="text-align:center;">消込</th>
+                <th nowrap style="text-align:center;">残高</th>
+            </tr>
+            <tr bgcolor="Lavender">
+                <th nowrap style="text-align:center;">伝票番号</th>
+                <th nowrap style="text-align:center;">伝票状態</th>
+                <th nowrap style="text-align:center;">消込状態</th>
+                <th colspan="3" nowrap style="text-align:center;">伝票種別</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+                <th nowrap style="text-align:center;">　</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr bgcolor="#fffcf8">
+                <td></td>
+                <td>　</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td nowrap align="right" style="color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka) /* 残高 */ ?></td>
+            </tr>
+            <tr bgcolor="#fffcf8">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td colspan="3" nowrap>　繰越</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <?php
+            $denpyoubi = "";
+
+            $cntSimeDts = count($seikyuusaki_mr->TokuisakiSimeDts);
+
+            if ($cntSimeDts > 0) {
+                $sime0 = $seikyuusaki_mr->TokuisakiSimeDts[0]->sime_hiduke;
+            }
+            if ($cntSimeDts > 1) {
+                $sime1 = $seikyuusaki_mr->TokuisakiSimeDts[1]->sime_hiduke;
+            }
+
+            for (; $i1 + $i2 < $count_rows;):
+                if ($i2 >= $count2_rows
+                    || $i1 < $count1_rows
+                    && $uriage_rows[$i1]["denpyoubi"] <= $nyuukin_rows[$i2]["denpyoubi"]
+                ): // 売上明細
+                    $i1a = $i1; // 控え
+                    $uriagegaku = 0;
+                    $kesikomigaku = 0;
+                    $kesiFlg = false;
+                    for (; $i1 < $count1_rows && $uriage_rows[$i1]["denpyou_bangou"] == $uriage_rows[$i1a]["denpyou_bangou"]; $i1++) {
+                        $uriagegaku += $uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"];
+                        $kesikomigaku += $uriage_rows[$i1]["kesikomi_gaku"];
+                        // 消込状態取得
+                        if ($kesiFlg === false && $uriage_rows[$i1]['kesi_id']) {
+                            $kesiFlg = true;
+                        }
+                    }
+                    $zandaka += $uriagegaku;
+                    $denpyou_last_flg = 1;
+                    $simekiri_flg = 0; // 0=未締切,1=締済み
+                    try {
+                        if ($cntSimeDts > 0) {
+                            if ($uriage_rows[$i1a]->shimekiri_flg == 0) { // 0=今回
+                                if ($uriage_rows[$i1a]->denpyoubi <= $sime0) {
+                                    $simekiri_flg = 1;
+                                }
+                            } else { // 1=次回
+                                if ($cntSimeDts > 1) {
+                                    if ($uriage_rows[$i1a]->denpyoubi <= $sime1) {
+                                        $simekiri_flg = 1;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception $e) {
+                    }
+                    // 伝票状態フラグで表示を分ける
+
+//                    if ($joutai === '1' && $simekiri_flg === 1) continue;
+                    ?>
+                    <tr bgcolor="#fffcf8">
+                        <td nowrap><?php echo $uriage_rows[$i1a]["denpyoubi"] == $denpyoubi ? "" : $uriage_rows[$i1a]["denpyoubi"] /* 伝票日付 */ ?></td>
+                        <td nowrap><?php echo $uriage_rows[$i1a]["torihiki_kbn_name"] /* 取引区分名 */ ?></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap align="center"></td>
+                        <td nowrap align="right" id="<?php echo 'uri_gaku_' . $uriage_rows[$i1a]["uriage_dt_id"] ?>" style="color: <?php echo ($uriagegaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriagegaku, 0) /* 売上額 */ ?></td>
+                        <td nowrap align="center"><?php echo $kesikomigaku == 0 ? "" : ($kesikomigaku == $uriagegaku ? "＊" : "△") /* 消込 */ ?></td>
+                        <td nowrap align="center">
+                            <input type="checkbox" id="<?php echo 'kesikomi_' . $uriage_rows[$i1a]["uriage_dt_id"] ?>" <?php echo $kesiFlg ? 'checked' : '';?> />
+                        </td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap align="right" style="color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka) /* 残高 */ ?></td>
+                    </tr>
+                    <tr bgcolor="#fffcf8">
+                        <td nowrap
+                            align="right"><?php echo $this->tag->linkTo(array("uriage_dts/edit/" . $uriage_rows[$i1a]["uriage_dt_id"], $uriage_rows[$i1a]["denpyou_bangou"], "target" => "_blank")); /* 伝票番号 */ ?></td>
+                        <td nowrap align="center" style="color: <?php echo $simekiri_flg == 1 ? "green" : 'red';
+                        ?>">
+                            <?php echo $simekiri_flg == 1 ? "締切済" : ($uriage_rows[$i1a]->shimekiri_flg == 1 ? "次回" : "未締切") /* 伝票状態 */ ?>
+                        </td>
+                        <td nowrap
+                            align="center"><?php echo @$kesikomigaku == 0 ? "" : ($kesikomigaku == $uriagegaku ? "消込済" : "一部消込") /* 消込状態 */ ?></td>
+                        <td colspan="3" nowrap>売上伝票</td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                    </tr>
+                    <?php
+                    $denpyoubi = $uriage_rows[$i1a]["denpyoubi"];
+                else: // 入金明細
+                    if ($keshikomi_joutai === '1') {
+                        $i2++;
+                        continue;
+                    }
+
+                    $i2a = $i2; // 控え
+                    $nyuukingaku = 0;
+                    $kesikomigaku = $nyuukin_rows[$i2]["zenkai_kesikomi_gaku"];
+                    for (; $i2 < $count2_rows && $nyuukin_rows[$i2]["denpyou_bangou"] == $nyuukin_rows[$i2a]["denpyou_bangou"]; $i2++) {
+                        $nyuukingaku += $nyuukin_rows[$i2]["kingaku"];
+                    }
+                    $zandaka -= $nyuukingaku;
+                    ?>
+                    <tr bgcolor="#fffcf8">
+                        <td nowrap><?php echo $nyuukin_rows[$i2a]["denpyoubi"] == $denpyoubi ? "" : $nyuukin_rows[$i2a]["denpyoubi"] /* 伝票日付 */ ?></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap id="<?php echo 'nyuukingaku' . $i2a ?>"
+                            align="right" style="color: <?php echo ($nyuukingaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($nyuukingaku) /* 入金額 */ ?></td>
+                        <td nowrap id="<?php echo 'kesikomi' . $i2a ?>" class="kesikomi" align="center"><?php echo $kesikomigaku == 0 ? "" : "" /* 消込 */ ?></td>
+                        <td nowrap align="right"><?php echo number_format($zandaka) /* 残高 */ ?></td>
+
+                    </tr>
+                    <tr bgcolor="#fffcf8">
+                        <td nowrap
+                            align="right"><?php echo $this->tag->linkTo(array("nyuukin_dts/edit/" . $nyuukin_rows[$i2a]["nyuukin_dt_id"], $nyuukin_rows[$i2a]["denpyou_bangou"], "target" => "_blank")); /* 伝票番号 */ ?></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td colspan="3" nowrap>入金伝票</td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                        <td nowrap></td>
+                    </tr>
+                    <?php
+                    $denpyoubi = $nyuukin_rows[$i2a]["denpyoubi"];
+                endif;
+            endfor;
+            ?>
+            </tbody>
+        <?php elseif ($setdts["hyouji_flg"] == "1"): /* 月次計 */ ?>
+            <tr bgcolor="Lavender">
+                <th nowrap style="text-align:center;">月度</th>
+                <th nowrap style="text-align:center;"></th>
+                <th nowrap style="text-align:center;"></th>
+                <th nowrap style="text-align:center;"></th>
+                <th nowrap style="text-align:center;">売上額</th>
+                <th nowrap style="text-align:center;">入金額</th>
+                <th nowrap style="text-align:center;">残高</th>
+            </tr>
+            <tr bgcolor="Lavender">
+                <th nowrap style="text-align:center;"></th>
+                <th colspan="3" nowrap style="text-align:center;">期間</th>
+                <th nowrap style="text-align:center;"></th>
+                <th nowrap style="text-align:center;"></th>
+                <th nowrap style="text-align:center;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            for ($kikan = $setdts["kikan_from"];
+                 $kikan <= $setdts["kikan_to"];
+                 $kikan = date('Y-m-d', strtotime($kikan . ' +1 month'))):
+                $ym = date('Ym', strtotime($kikan));
+                $y_m = date('Y-m', strtotime($kikan));
+
+                // 売上
+                $uriagegaku = 0;
+                for (; $i1 < $count1_rows && substr($uriage_rows[$i1]["denpyoubi"], 0, 7) == $y_m; $i1++) {
+                    $uriagegaku += $uriage_rows[$i1]["zeinukigaku"] + $uriage_rows[$i1]["zeigaku"];
+                }
+                // 入金
+                $nyuukingaku = 0;
+                for (; $i2 < $count2_rows && substr($nyuukin_rows[$i2]["denpyoubi"], 0, 7) == $y_m; $i2++) {
+                    $nyuukingaku += $nyuukin_rows[$i2]["kingaku"];
+                }
+                $zandaka += $uriagegaku - $nyuukingaku;
+                ?>
+                <tr bgcolor="#fffcf8">
+                    <td nowrap><?php echo $y_m ?></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td nowrap align="right" style="color: <?php echo ($uriagegaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($uriagegaku) /* 売上額 */ ?></td>
+                    <td nowrap align="right" style="color: <?php echo ($nyuukingaku < 0 ? 'red': 'black') ?>;"><?php echo number_format($nyuukingaku) /* 入金額 */ ?></td>
+                    <td nowrap align="right" style="color: <?php echo ($zandaka < 0 ? 'red': 'black') ?>;"><?php echo number_format($zandaka) /* 残高 */ ?></td>
+                </tr>
+                <tr bgcolor="#fffcf8">
+                    <td></td>
+                    <td colspan="3" nowrap
+                        class="zoom_meisai cursor_pointer"><?php echo date('Y-m-01', strtotime($kikan)) . '　～　' . date('Y-m-t', strtotime($kikan)) /* 期間 */ ?></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php
+            endfor;
+            ?>
+            </tbody>
+        <?php endif ?>
+    </table>
+</div>
+
+<?php /* 明細表を別タブで表示するためのリンク部分 */
+echo $this->tag->form(
+    array(
+        "tokuisaki_mrs/motochou",
+        "autocomplete" => "off",
+        "class" => "form-horizontal",
+        "target" => "_blank",
+        "id" => "hidden_form"
+    )
+);
+?>
+<input id="hiddenSeikyuusakiMrCd" name="seikyuusaki_mr_cd" hidden>
+<input id="hiddenTokuisakiMrCd" name="tokuisaki_mr_cd" hidden>
+<input id="hiddenHyoujiFlg" name="hyouji_flg" hidden>
+<input id="hiddenKikanSiteiKbnCd" name="kikan_sitei_kbn_cd" hidden>
+<input id="hiddenKikanFrom" name="kikan_from" hidden>
+<input id="hiddenKikanTo" name="kikan_to" hidden>
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="TokuisakiMrsOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<script type="text/javascript">
+    const tokuisaki_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/modal') ?>";
+    const tokuisaki_mrs_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/ajaxGet') ?>";
+    const shouhin_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shouhin_mrs/modal') ?>";
+    const shouhin_mrs_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shouhin_mrs/ajaxGet') ?>";
+    const kikan_sitei_kbns_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kikan_sitei_kbns/ajaxGet') ?>";
+    const nyuukin_kesikomi_dts_ajaxSet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('nyuukin_kesikomi_dts/ajaxSet') ?>";
+    const nyuukin_kesikomi_dts_ajaxAllSet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('nyuukin_kesikomi_dts/ajaxAllSet') ?>";
+</script>
+
+<script type="text/javascript"
+        src="<?php echo $this->url->get('js/views/tokuisaki_mrs_motochou.js'); ?>?var=20210201"></script>

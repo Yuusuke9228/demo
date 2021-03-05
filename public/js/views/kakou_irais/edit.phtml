@@ -1,0 +1,290 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var array $genryou_cds
+ * @var array $genryou_names
+ * @var array $konritsus
+ * @var string $message
+ */
+?>
+<?php $title = "加工依頼書.編集"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="container-fluid">
+    <?php
+    echo $this->tag->form([
+        "kakou_irais/save",
+        "autocomplete" => "off",
+        "method" => "post",
+        "class" => "form-horizontal"
+    ]);
+    ?>
+    <div class="form-group input-lg">
+        <div class="col-sm-10 col-lg-offset-1">
+            <div class="page-header">
+                <h3>加工依頼 編集</h3>
+            </div>
+            <?php if (isset($message)): ?>
+                <div class="center-block" style="display: <?php echo $message === '' ? 'none' : ''; ?>">
+                    <div class="alert alert-success"><?php echo $message; ?></div>
+                </div>
+            <?php endif; ?>
+
+            <table class="table-bordered" style="width: 100%; background-color: floralwhite;">
+                <?php echo $this->tag->hiddenField(['h_id', 'id' => 'h_id']); ?>
+                <?php echo $this->tag->hiddenField(['id', 'id' => 'id']); ?>
+                <?php echo $this->tag->hiddenField(["hacchuubi", "id" => "hacchuubi"]) ?>
+                <?php echo $this->tag->hiddenField(["juchuu_id", "id" => "juchuu_id"]) ?>
+                <?php echo $this->tag->hiddenField(["genryou_cds", "id" => "genryou_cds"]) ?>
+                <?php echo $this->tag->hiddenField(["genryou_names", "id" => "genryou_names"]) ?>
+                <?php echo $this->tag->hiddenField(["konritsu", "id" => "konritsu"]) ?>
+
+                <tr style="background-color: whitesmoke;">
+                    <th style="background-color: lavenderblush; text-align: right;">発注日：</th>
+                    <th colspan="2"><?php echo $this->tag->textField(["hacchuubi", "class" => "form-control input-lg", "style" => "text-align: center;", "readonly" => "readonly", "id" => "hacchuubi"]) ?></th>
+                    <th style="background-color: lavenderblush; text-align: right;">最終更新：</th>
+                    <th colspan="2"><?php echo $this->tag->textField(["kousin_user_id", "class" => "form-control input-lg", "style" => "text-align: center;", "readonly" => "readonly", "id" => "kousin_user_id"]) ?></th>
+                    <th colspan="3"><?php echo $this->tag->textField(["updated", "class" => "form-control input-lg", "style" => "text-align: center;", "readonly" => "readonly", "id" => "updated"]) ?></th>
+
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">発注NO：</td>
+                    <td><?php echo $this->tag->textField(["h_cd", "class" => "form-control input-lg", "id" => "h_cd", "style" => "text-align: center; cursor: pointer; color: blue;", "readonly" => "readonly"]) ?></td>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">明細ID:</td>
+                    <td><?php echo $this->tag->textField(['h_meisai_id', "class" => "form-control input-lg", 'id' => 'h_meisai_id',  "style" => "text-align: center;", "readonly" => "readonly"]); ?></td>
+                    <td><?php echo $this->tag->textField(["meisai_row", "class" => "form-control input-lg", "id" => "meisai_row", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">承認可否：</td>
+                    <td colspan="3">
+                        <?php
+                        // 承認欄は社長のみ触れる
+                        if ((int)$this->getDI()->getSession()->get('auth')['id'] === 4) {
+                            echo $this->tag->textField(["sfn_cd", "class" => "form-control", "id" => "sfn_cd", "style" => "text-align: center;"]);
+                        } else {
+                            echo $this->tag->textField(["sfn_cd", "class" => "form-control", "id" => "sfn_cd", "style" => "text-align: center;", "readonly" => "readonly"]);
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">発注先：</td>
+                    <td colspan="4"><?php echo $this->tag->textField(["shiiresaki_name", "class" => "form-control input-lg", "id" => "shiiresaki_name", "readonly" => "readonly"]) ?></td>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">担当：</td>
+                    <td colspan="2"><?php echo $this->tag->textField(["tantou_name", "class" => "form-control input-lg", "id" => "tantou_name", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                    <td><?php echo $this->tag->select(["asistant", Users::find(["user_group_mr_cd = 'Z1'", "columns" => "id , CONCAT(id , '=' , name) as id_name", "order" => "id"]), "using" => ["id", "id_name"], 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "asistant", "required" => "required"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">ご担当者：</td>
+                    <td colspan="4"><?php echo $this->tag->textField(["gotantousha", "class" => "form-control input-lg", "id" => "gotantousha"]) ?></td>
+                    <td nowrap  style="background-color: lavenderblush; text-align: right;">受注NO：</td>
+                    <td colspan="3"><?php echo $this->tag->textField(["juchuu_no", "class" => "form-control input-lg", "id" => "juchuu_no", "style" => "text-align: center; color: blue; cursor: pointer;", "readonly" => "readonly"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">製品：</td>
+                    <td colspan="2"><?php echo $this->tag->textField(["shouhin_mr_cd", "class" => "form-control input-lg", "id" => "shouhin_mr_cd", "readonly" => "readonly"]) ?></td>
+                    <td colspan="6"><?php echo $this->tag->textField(["tekiyou", "class" => "form-control input-lg", "id" => "tekiyou", "readonly" => "readonly"]) ?></td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <!-- 原料はループで生成-->
+                    <td nowrap rowspan="3" style="background-color: lavenderblush; text-align: right;">使用糸CD：</td>
+                    <td nowrap rowspan="3">
+                        <table id="genryou_cd_table" style="width: 100%">
+                            <?php
+                            $i = 0;
+                            foreach ($genryou_cds as $genryou_cd) {
+                                if ($genryou_cd === '') break;
+                                echo "<tr><td><input id='genryou_cd_{$i}' name='genryou_cd_{$i}' type='text' class='form-control input-lg' style='text-align: center;' value='{$genryou_cd}' readonly /></td></tr>";
+                                $i++;
+                            }
+                            ?>
+                        </table>
+                    </td>
+                    <td nowrap rowspan="3" style="background-color: lavenderblush; text-align: right;">使用糸：</td>
+                    <td nowrap colspan="4">
+                        <table id="genryou_name_table" style="width: 100%; height: 100%;">
+                            <?php
+                            $i = 0;
+                            foreach ($genryou_names as $genryou_name) {
+                                if ($genryou_name === '') break;
+                                echo "<tr><td><input id='genryou_name_{$i}' name='genryou_name_{$i}' type='text' class='form-control input-lg' style='text-align: center;' value='{$genryou_name}' readonly /></td></tr>";
+                                $i++;
+                            }
+                            ?>
+                        </table>
+                    </td>
+                    <td nowrap colspan="2" rowspan="3">
+                        <table id="genryou_konritsu_table" style="width: 100%">
+                            <?php
+                            $i = 0;
+                            foreach ($konritsus as $konritsu) {
+                                if ($konritsu === '') break;
+                                echo "<tr><td><input id='konritsu_{$i}' name='konritsu_{$i}' type='text' class='form-control input-lg' style='text-align: center;' value='{$konritsu}' readonly /></td></tr>";
+                                $i++;
+                            }
+                            ?>
+                        </table>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">数量2：</td>
+                    <td colspan="2"><?php echo $this->tag->textField(["suuryou2", "class" => "form-control input-lg", "id" => "suuryou2", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                    <td><?php echo $this->tag->textField(["tanni2", "class" => "form-control input-lg", "id" => "tanni2", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                    <td></td>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">数量1：</td>
+                    <td colspan="2"><?php echo $this->tag->textField(["suuryou1", "class" => "form-control input-lg", "id" => "suuryou1", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                    <td><?php echo $this->tag->textField(["tanni1", "class" => "form-control input-lg", "id" => "tanni1", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">ロット：</td>
+                    <td colspan="4"><?php echo $this->tag->textField(["lot", "class" => "form-control input-lg", "id" => "lot", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                    <td nowrap style="background-color: lavenderblush; text-align: right;">加工賃：</td>
+                    <td colspan="2"><?php echo $this->tag->textField(["koutin", "class" => "form-control input-lg", "id" => "koutin", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                    <td><?php echo $this->tag->textField(["tanka_tani", "class" => "form-control input-lg", "id" => "tanka_tani", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2"><span class="btn btn-info" onclick="modalstart(detailModal, '商品別加工履歴')">商品選択で内容複写</span></td>
+                    <td colspan="3"></td>
+                    <td colspan="2"><span class="btn btn-info" onclick="modalstart2(noSearch, '発注別加工履歴')">発注選択で内容複写</span></td>
+                </tr>
+                <tr>
+                    <td nowrap colspan="9" style="background-color: lavenderblush; text-align: center;">加工内容</td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_1", "class" => "form-control input-lg", "id" => "naiyou_1"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_2", "class" => "form-control input-lg", "id" => "naiyou_2"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_3", "class" => "form-control input-lg", "id" => "naiyou_3"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_4", "class" => "form-control input-lg", "id" => "naiyou_4"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_5", "class" => "form-control input-lg", "id" => "naiyou_5"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_6", "class" => "form-control input-lg", "id" => "naiyou_6"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_7", "class" => "form-control input-lg", "id" => "naiyou_7"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_8", "class" => "form-control input-lg", "id" => "naiyou_8"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_9", "class" => "form-control input-lg", "id" => "naiyou_9"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_10", "class" => "form-control input-lg", "id" => "naiyou_10"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_11", "class" => "form-control input-lg", "id" => "naiyou_11"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_12", "class" => "form-control input-lg", "id" => "naiyou_12"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["naiyou_13", "class" => "form-control input-lg", "id" => "naiyou_13"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: center;">希望納期：</td>
+                    <td colspan="3"><?php echo $this->tag->textField(["nouki_memo", "class" => "form-control input-lg", "id" => "nouki_memo", "style" => "text-align: center;", "readonly" => "readonly"]) ?></td>
+                    <td colspan="2" nowrap style="background-color: lavenderblush; text-align: center;">生産機種：</td>
+                    <td colspan="3"><?php echo $this->tag->textField(["kishumei", "class" => "form-control input-lg", "id" => "kishumei"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: center;">納期特記：</td>
+                    <td colspan="8"><?php echo $this->tag->textField(["nouki_memo2", "class" => "form-control input-lg", "id" => "nouki_memo2"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: center;">納期返信：</td>
+                    <td colspan="3"><?php echo $this->tag->textField(["nouki_hensin", "class" => "form-control input-lg", "id" => "nouki_hensin"]) ?></td>
+                    <td colspan="2" nowrap style="background-color: lavenderblush; text-align: center;">原料入荷先：</td>
+                    <td colspan="3"><?php echo $this->tag->textField(["gen_hensin", "class" => "form-control input-lg", "id" => "gen_hensin"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap style="background-color: lavenderblush; text-align: center;">原料入荷数：</td>
+                    <td colspan="2">
+                        <?php echo $this->tag->textField(["gen_nyuuka_honsuu", "class" => "form-control input-lg", "style" => "text-align: center;", "id" => "gen_nyuuka_honsuu", "placeholder" => "数量2を入力"]) ?>
+                    </td>
+                    <td>
+                        <?php echo $this->tag->textField(["gen_nyuuka_tanni", "class" => "form-control input-lg", "style" => "text-align: center;", "id" => "gen_nyuuka_tanni", "placeholder" => "数量1を入力"]) ?>
+                    </td>
+                    <td nowrap colspan="2" style="background-color: lavenderblush; text-align: center;">原料入荷日：</td>
+                    <td colspan="3"><?php echo $this->tag->textField(["gen_nyuukabi", "class" => "form-control input-lg", "id" => "gen_nyuukabi"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap colspan="9" style="background-color: lavenderblush; text-align: center;">備考</td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["memo_1", "class" => "form-control input-lg", "id" => "memo_1"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["memo_2", "class" => "form-control input-lg", "id" => "memo_2"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap colspan="9" style="background-color: lavenderblush; text-align: center;">再FAX備考</td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["sai_fax_memo", "class" => "form-control input-lg", "id" => "sai_fax_memo"]) ?></td>
+                </tr>
+                <tr>
+                    <td nowrap colspan="9" style="background-color: lavenderblush; text-align: center;">社内共有メモ</td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["synai_memo1", "class" => "form-control input-lg", "id" => "synai_memo1"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="9"><?php echo $this->tag->textField(["synai_memo2", "class" => "form-control input-lg", "id" => "synai_memo2"]) ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2"><?php echo $this->tag->submitButton(["データを更新する", "id" => "F12", "class" => "btn btn-success"]) ?></td>
+                    <td colspan="3"></td>
+                    <td colspan="2"><button class="submit btn btn-warning" data-action="/demo/kakou_irais/excelPrint">この依頼を印刷</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <?php $this->tag->endform() ?>
+</div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<!--jsへテーブル表示データを渡す ※印刷で使用-->
+<?php
+$genryou_cds = json_encode($genryou_cds);
+$genryou_names = json_encode($genryou_names);
+$konritsus = json_encode($konritsus);
+?>
+
+<script>
+    let genryou_cds = <?php echo $genryou_cds; ?>;
+    let genryou_names = <?php echo $genryou_names; ?>;
+    let konritsus = <?php echo $konritsus; ?>;
+    const this_url_base = '<?php echo $this->url->get() ?>';
+    const getKakouIraiMeisais = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kakou_irais/getKakouIraiMeisais') ?>"; // 使用していない
+    const joukenPrintAction = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kakou_irais/excelPrint') ?>";
+    const delExcelAction = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kakou_irais/delExcel') ?>";
+    const detailModal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kakou_irais/modal_meisai') ?>";
+    const noSearch = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kakou_irais/modal_hacchuu') ?>";
+</script>
+
+<script src="<?php echo $this->url->get('js/views/kakou_irais.js'); ?>?var=20210130"></script>

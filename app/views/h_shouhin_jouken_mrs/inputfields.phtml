@@ -1,0 +1,137 @@
+<div class="panel panel-default">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">基本情報</div>
+ <div class="panel-body">
+    <label for="fieldShouhinMrCd" class="col-sm-1 control-label">商品</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 20, "maxlength" => 20, "class" => "form-control f-cent", "id" => "fieldShouhinMrCd", "list" => "ShouhinMrsOptions")) ?>
+    </div>
+    <label for="fieldShouhinMrName" class="col-sm-1 control-label">名</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("shouhin_mr_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldShouhinMrName")) ?>
+    </div>
+    <!-- label for="fieldShouhinMrKana" class="col-sm-2 control-label">カナ</label -->
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("shouhin_mr_kana", "readonly" => "readonly", "class" => "form-control", "id" => "fieldShouhinMrKana")) ?>
+    </div>
+    <label for="fieldHKishuMrCd" class="col-sm-1 control-label">機種</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("h_kishu_mr_cd", "size" => 20, "maxlength" => 20, "class" => "form-control f-cent", "id" => "fieldHKishuMrCd", "list" => "HKishuMrsOptions")) ?>
+    </div>
+    <label for="fieldHKishuMrName" class="col-sm-1 control-label">名</label>
+    <div class="col-sm-3 ">
+        <?php echo $this->tag->textField(array("h_kishu_mr_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldHKishuMrName")) ?>
+    </div>
+    <label for="fieldHKouteimeiMrCd" class="col-sm-1 control-label">工程</label>
+    <div class="col-sm-1 ">
+        <?php echo $this->tag->textField(array("h_kouteimei_mr_cd", "readonly" => "readonly", "class" => "form-control", "id" => "fieldHKouteimeiMrCd")) ?>
+    </div>
+    <div class="col-sm-2 ">
+        <?php echo $this->tag->textField(array("h_kouteimei_mr_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldHKouteimeiMrName")) ?>
+    </div>
+    <div class="clearfix"></div>
+ </div>
+</div>
+
+ <style scoped>
+ 	table{
+ 		border:1px #ccc solid;
+ 		margin-left:auto;
+ 		margin-right:auto;
+ 	}
+ 	th,td{
+ 		white-space:nowrap;
+ 		border:1px #ccc solid;
+ 		padding: 0px 5px;
+ 	}
+ 	th{
+ 		text-align:center;
+ 		color: #31718f;
+ 		background-color:#d9edf7;
+ 	}
+ </style>
+
+<div class="panel panel-info">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">
+  <a data-toggle="collapse" href="#kousei_buhin">構成部品…</a>
+ </div>
+ <div class="panel-body collapse in" id="kousei_buhin">
+  <table id="kousei_tbl"></table>
+ </div>
+</div>
+
+<input type="text" id="input_hidden" name="idx_hidden" class="form-control" style="display:none;">
+<select id="select_hidden" name="ids_hidden" class="form-control" style="display:none;"></select>
+<div class="panel panel-success">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">
+  <a data-toggle="collapse" href="#koutei_jouken">工程別条件…</a>
+ </div>
+ <div class="panel-body collapse in" id="koutei_jouken">
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-4">
+  </div>
+ </div>
+</div>
+
+<div class="panel panel-warning">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">
+  <a data-toggle="collapse" href="#kishu_jouken">機種別条件…</a>
+ </div>
+ <div class="panel-body collapse in" id="kishu_jouken">
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-4">
+  </div>
+ </div>
+</div>
+
+<div class="panel panel-danger">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">登録情報</div>
+ <div class="panel-body">
+    <label for="fieldCreated" class="col-sm-1 control-label">登録日</label>
+    <div class="col-sm-2 ">
+        <?php echo $this->tag->textField(array("created", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldCreated")) ?>
+    </div>
+    <label for="fieldSakuseiUserName" class="col-sm-1 control-label">登録者</label>
+    <div class="col-sm-2 ">
+        <?php echo $this->tag->textField(array("sakusei_user_name", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldSakuseiUserName")) ?>
+    </div>
+    <label for="fieldUpdated" class="col-sm-1 control-label">修正日</label>
+    <div class="col-sm-2 ">
+        <?php echo $this->tag->textField(array("updated", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldUpdated")) ?>
+    </div>
+    <label for="fieldKousinUserName" class="col-sm-1 control-label">修正者</label>
+    <div class="col-sm-2 ">
+        <?php echo $this->tag->textField(array("kousin_user_name", "readonly" => "readonly", "class" => "form-control f-cent", "id" => "fieldKousinUserName")) ?>
+    </div>
+ </div>
+</div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<datalist id="ShouhinMrsOptions">
+</datalist>
+
+<datalist id="HKishuMrsOptions">
+</datalist>
+
+<script type="text/javascript">
+	var shouhin_mrs_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/edit/') ?>";
+	var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+	var shouhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/ajaxGet') ?>";
+	var kousei_buhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kousei_buhin_mrs/ajaxGet') ?>";
+	var kousei_buhin_mrs_ajaxOya = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kousei_buhin_mrs/ajaxOya') ?>";
+	var h_shouhin_jouken_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('h_shouhin_jouken_mrs/ajaxGet') ?>";
+</script>

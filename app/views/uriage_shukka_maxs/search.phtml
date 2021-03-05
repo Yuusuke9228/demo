@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "VIEW.検索"; ?>
+<div class="page-header">
+    <h3>VIEW 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "uriage_shukka_maxs/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldJuchuuDtId" class="col-sm-2 control-label">受注id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("juchuu_dt_id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJuchuuDtId")) ?>
+    </div>
+
+<label for="fieldShouhinMrCd" class="col-sm-2 control-label">商品コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldShouhinMrCd")) ?>
+    </div>
+
+<label for="fieldIro" class="col-sm-2 control-label">色番</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("iro", "size" => 12, "maxlength" => 12, "style" => "width: 180px;", "class" => "form-control", "id" => "fieldIro")) ?>
+    </div>
+
+<label for="fieldShukkaKbnMax" class="col-sm-2 control-label">出荷</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shukka_kbn_max", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldShukkaKbnMax")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行F12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

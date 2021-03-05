@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "VIEW.一覧"; ?>
+<div class="page-header">
+    <h3>VIEW 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"uriagegaku_vws","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["uriage_dt_id","売上データID"],
+                    ["kingaku","金額"],
+                    ["kesikomi_gaku","消込額"],
+                    ["seikyuusaki_mr_cd","請求先"],
+                    ["uriagebi","売上日"],
+                    ["cd","伝票番号"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $uriagegaku_vw): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("uriagegaku_vws/edit/" . $uriagegaku_vw->uriage_dt_id, $uriagegaku_vw->uriage_dt_id)); ?></td>
+                <td><?php echo $uriagegaku_vw->kingaku ?></td>
+                <td><?php echo $uriagegaku_vw->kesikomi_gaku ?></td>
+                <td><?php echo $uriagegaku_vw->seikyuusaki_mr_cd ?></td>
+                <td><?php echo $uriagegaku_vw->uriagebi ?></td>
+                <td><?php echo $uriagegaku_vw->cd ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"uriagegaku_vws"]) ?>

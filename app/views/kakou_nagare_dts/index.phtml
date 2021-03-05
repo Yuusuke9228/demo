@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "加工流れ詳細データ.一覧"; ?>
+<div class="page-header">
+    <h3>加工流れ詳細データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"kakou_nagare_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","内容"],
+                    ["hacchuu_dt_id","発注書キー"],
+                    ["kakou_nagare_kbn_id","加工流れ見出しID"],
+                    ["naiyou_cd","内容コード"],
+                    ["bikou","備考"],
+                    ["kakunin_kbn","確認欄区分"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $kakou_nagare_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("kakou_nagare_dts/edit/" . $kakou_nagare_dt->id, $kakou_nagare_dt->id)); ?></td>
+                <td><?php echo $kakou_nagare_dt->cd ?></td>
+                <td><?php echo $kakou_nagare_dt->name ?></td>
+                <td><?php echo $kakou_nagare_dt->hacchuu_dt_id ?></td>
+                <td><?php echo $kakou_nagare_dt->kakou_nagare_kbn_id ?></td>
+                <td><?php echo $kakou_nagare_dt->naiyou_cd ?></td>
+                <td><?php echo $kakou_nagare_dt->bikou ?></td>
+                <td><?php echo $kakou_nagare_dt->kakunin_kbn ?></td>
+                <td><?php echo $kakou_nagare_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("kakou_nagare_dts/delete/" . $kakou_nagare_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"kakou_nagare_dts"]) ?>

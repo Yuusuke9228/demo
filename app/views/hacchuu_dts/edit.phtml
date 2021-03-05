@@ -1,0 +1,64 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "発注.修正"; ?>
+<div class="page-header">
+    <h3>発注伝票 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "hacchuu_dts/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "id" => "formTouroku",
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('hacchuu_dts/inputfields'); ?>
+
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("hacchuu_dts/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("hacchuu_dts/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->submitButton(array("登録F12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return final_check();')) ?>
+    </div>
+    <div class="col-sm-2">
+        <button class="btn btn-warning" type="button" id='F5' onclick="f5key()">
+            伝票印刷F5
+        </button>
+    </div>
+    <div class="col-sm-2">
+        <?php /* echo $this->tag->linkTo(array("hacchuu_dts/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) */ ?>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                伝票複写<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><?php echo $this->tag->linkTo(array("hacchuu_dts/new/".$id, "伝票の複写")) ?></li>
+              <li><?php echo $this->tag->linkTo(array("shiire_dts/new/".$id."/Hacchuu", "仕入伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("juchuu_dts/new/".$id."/Hacchuu", "受注伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("uriage_dts/new/".$id."/Hacchuu", "売上伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("shukkairai_dts/new/".$id."/Hacchuu", "出荷依頼伝票へ",'target'=>'_blank')) ?></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("hacchuu_dts/delete/".$id, "伝票削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">var imax = <?php echo $imax ?>;</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/hacchuu_dts.js'); ?>?var=20201224"></script>

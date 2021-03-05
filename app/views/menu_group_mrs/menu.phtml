@@ -1,0 +1,31 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = $menu_group_mr->name; ?>
+<div class="page-header">
+    <h3>メニュー <?php echo $menu_group_mr->name; ?></h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row center-block" style="width:150px;">
+	<table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+		<thead>
+			<tr bgcolor="Lavender">
+				<th nowrap style="text-align:center;"><?php echo $menu_group_mr->name; ?></th>
+			</th>
+		</thead>
+		<tbody>
+        <?php foreach ($menu_group_mr->TableMrs as $table_mr): ?>
+            <tr>
+                <td align="center"><?php echo $this->tag->linkTo(array($table_mr->cd."/index", $table_mr->name, 'target'=>'_blank')); ?></td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+    </table>
+</div>

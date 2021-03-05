@@ -1,0 +1,89 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["itomei_mrs", "Go Back"]) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Create itomei_mrs
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "itomei_mrs/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="field糸種" class="col-sm-2 control-label">糸種</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["糸種", "type" => "number", "class" => "form-control", "id" => "field糸種"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field糸コード" class="col-sm-2 control-label">糸コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["糸コード", "size" => 30, "class" => "form-control", "id" => "field糸コード"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field糸名１" class="col-sm-2 control-label">糸名１</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["糸名１", "size" => 30, "class" => "form-control", "id" => "field糸名１"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field糸名２" class="col-sm-2 control-label">糸名２</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["糸名２", "size" => 30, "class" => "form-control", "id" => "field糸名２"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field糸名３" class="col-sm-2 control-label">糸名３</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["糸名３", "size" => 30, "class" => "form-control", "id" => "field糸名３"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field更新区分" class="col-sm-2 control-label">更新区分</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["更新区分", "type" => "number", "class" => "form-control", "id" => "field更新区分"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field更新日付" class="col-sm-2 control-label">更新日付</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["更新日付", "size" => 30, "class" => "form-control", "id" => "field更新日付"]) ?>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Save", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

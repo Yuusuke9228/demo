@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "発注データ.一覧"; ?>
+<div class="page-header">
+    <h3>発注データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"hacchuu_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["tekiyou","fieldTekiyou","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["cd","発注番号(修正)"],
+                    ["tekiyou","摘要"],
+                    ["hacchuubi","発注日"],
+                    ["nounyuu_kijitu","納入期日"],
+                    ["shiiresaki_mr_cd","仕入先"],
+                    ["tantou_mr_cd","担当者"],
+                    ["","商品1"],
+                    ["","数量"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $hacchuu_dt): ?>
+            <tr>
+                <td align="center"><?php echo $this->tag->linkTo(array("hacchuu_dts/edit/" . $hacchuu_dt->id, $hacchuu_dt->cd)); ?></td>
+                <td><?php echo $hacchuu_dt->tekiyou ?></td>
+                <td align="center"><?php echo $hacchuu_dt->hacchuubi ?></td>
+                <td align="center"><?php echo $hacchuu_dt->nounyuu_kijitu ?></td>
+                <td><?php echo $hacchuu_dt->ShiiresakiMrs->name ?></td>
+                <td><?php echo $hacchuu_dt->TantouMrs->name ?></td>
+                <td><?php echo $hacchuu_dt->HacchuuMeisaiDts[0]->shouhin_mr_cd ?></td>
+                <td align="right"><?php	$tanka_kbn=$hacchuu_dt->HacchuuMeisaiDts[0]->tanka_kbn;$suufld='suuryou'.$tanka_kbn;$tannitb='TanniMr'.$tanka_kbn.'s';
+                						echo $hacchuu_dt->HacchuuMeisaiDts[0]->$suufld.$hacchuu_dt->HacchuuMeisaiDts[0]->$tannitb->name ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"hacchuu_dts"]) ?>

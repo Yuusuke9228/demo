@@ -1,0 +1,66 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php use Phalcon\Tag; ?>
+<!-- 売上単価履歴を確認するためのView Add By Nishiyama 2019/1/9  -->
+<?php $title = "売上明細データ.一覧"; ?>
+<div class="page-header">
+    <h2 style="text-align: center;">売上単価履歴 (選択商品)</h2>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('id'); ?>">伝票NO</a> <?php echo TableSort\Sort::sortIcon('id'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('shouhin_mr_cd'); ?>">商品コード</a> <?php echo TableSort\Sort::sortIcon('shouhin_mr_cd'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('tekiyou'); ?>">商品名/摘要</a> <?php echo TableSort\Sort::sortIcon('tekiyou'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('souko_mr_cd'); ?>">倉庫コード</a> <?php echo TableSort\Sort::sortIcon('souko_mr_cd'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('kikaku'); ?>">規格型番</a> <?php echo TableSort\Sort::sortIcon('kikaku'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('iro'); ?>">色</a> <?php echo TableSort\Sort::sortIcon('iro'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('size'); ?>">サイズ</a> <?php echo TableSort\Sort::sortIcon('size'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('suuryou'); ?>">数量</a> <?php echo TableSort\Sort::sortIcon('suuryou'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('tanka'); ?>">単価</a> <?php echo TableSort\Sort::sortIcon('tanka'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('kingaku'); ?>">金額</a> <?php echo TableSort\Sort::sortIcon('kingaku'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('bikou'); ?>">備考</a> <?php echo TableSort\Sort::sortIcon('bikou'); ?></th>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('updated'); ?>">更新日時</a> <?php echo TableSort\Sort::sortIcon('updated'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($uriage_meisai_dts as $uriage_meisai_dt): ?>
+            <?php $nos = UriageDts::query()
+                ->where("id = :cd:")
+                ->bind(['cd' =>$uriage_meisai_dt['uriage_dt_id']])
+                ->limit(1)
+                ->execute()->toArray();
+            ?>
+            <tr>
+                <?php foreach ($nos as $no): ?>
+                    <td align="center"><?php echo $this->tag->linkTo("uriage_dts/edit/" .$uriage_meisai_dt['uriage_dt_id'],$no['cd']); ?></td>
+                <?php endforeach; ?>
+                <td align="center"><?php echo $uriage_meisai_dt['shouhin_mr_cd'] ?></td>
+                <td><?php echo $uriage_meisai_dt['tekiyou'] ?></td>
+                <td align="center"><?php echo $uriage_meisai_dt['souko_mr_cd'] ?></td>
+                <td><?php echo $uriage_meisai_dt['kikaku']  ?></td>
+                <td><?php echo $uriage_meisai_dt['iro'] ?></td>
+                <td><?php echo $uriage_meisai_dt['size'] ?></td>
+                <td><?php echo $uriage_meisai_dt['suuryou'] ?></td>
+                <td align="right"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $uriage_meisai_dt['tanka']  ?></div></td>
+                <td align="right"><?php echo $uriage_meisai_dt['kingaku'] ?></td>
+                <td><?php echo $uriage_meisai_dt['bikou'] ?></td>
+                <td><?php echo $uriage_meisai_dt['updated'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    //選択された単価を親フォームへ返却
+    $('.returnto').click(function () {
+        window.parent.fromModal($(this).text());
+    });
+</script>
+

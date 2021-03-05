@@ -1,0 +1,54 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "伝票番号マスタ.新規"; ?>
+<div class="page-header">
+    <h3>伝票番号マスタ 新規登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "denpyou_bangou_mrs/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldDenpyouMrCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+<!--        --><?php //echo $this->tag->textField(array("denpyou_mr_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldDenpyouMrCd")) ?>
+        <?php echo $this->tag->select(["denpyou_mr_cd", DenpyouMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => ["cd", "cd_name"], "style" => "width: 276px;", 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldDenpyouMrCd"]) ?>
+    </div>
+
+<label for="fieldNendo" class="col-sm-2 control-label">年度</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nendo", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldNendo")) ?>
+    </div>
+
+<label for="fieldSaishuuBangou" class="col-sm-2 control-label">最終番号</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("saishuu_bangou", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldSaishuuBangou")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

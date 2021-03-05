@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "単価種類.一覧"; ?>
+<div class="page-header">
+    <h3>単価種類 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('id'); ?>">Id</a> <?php echo TableSort\Sort::sortIcon('id'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('cd'); ?>">コード</a> <?php echo TableSort\Sort::sortIcon('cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('name'); ?>">単価種類名</a> <?php echo TableSort\Sort::sortIcon('name'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('updated'); ?>">更新日時</a> <?php echo TableSort\Sort::sortIcon('updated'); ?></th>
+
+                <th><a href=# onclick="$('#F10').focus();return false;" id="F10">修正*10</a></th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $tanka_kbn): ?>
+            <tr>
+                <td><?php echo $tanka_kbn->id ?></td>
+            <td><?php echo $tanka_kbn->cd ?></td>
+            <td><?php echo $tanka_kbn->name ?></td>
+            <td><?php echo $tanka_kbn->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("tanka_kbns/edit/" . $tanka_kbn->id, "修正")); ?></td>
+                <td><?php echo $this->tag->linkTo(array("tanka_kbns/delete/" . $tanka_kbn->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tanka_kbns/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tanka_kbns/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("tanka_kbns/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tanka_kbns/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tanka_kbns/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

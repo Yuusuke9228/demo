@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "伝票番号マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>伝票番号マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"denpyou_bangou_mrs","flds"=>[
+        ["denpyou_mr_cd","fieldDenpyouMrCd","コード",14,14],["nendo","fieldNendo","年度",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["denpyou_mr_cd","コード"],
+                    ["nendo","年度"],
+                    ["saishuu_bangou","最終番号"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $denpyou_bangou_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("denpyou_bangou_mrs/edit/" . $denpyou_bangou_mr->id, $denpyou_bangou_mr->id)); ?></td>
+                <td><?php echo $denpyou_bangou_mr->denpyou_mr_cd ?></td>
+                <td><?php echo $denpyou_bangou_mr->nendo ?></td>
+                <td><?php echo $denpyou_bangou_mr->saishuu_bangou ?></td>
+                <td><?php echo $denpyou_bangou_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("denpyou_bangou_mrs/delete/" . $denpyou_bangou_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("denpyou_bangou_mrs/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("denpyou_bangou_mrs/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("denpyou_bangou_mrs/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("denpyou_bangou_mrs/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("denpyou_bangou_mrs/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

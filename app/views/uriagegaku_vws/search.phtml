@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "VIEW.検索"; ?>
+<div class="page-header">
+    <h3>VIEW 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "uriagegaku_vws/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldUriageDtId" class="col-sm-2 control-label">売上データID</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("uriage_dt_id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldUriageDtId")) ?>
+    </div>
+
+<label for="fieldKingaku" class="col-sm-2 control-label">Kingaku</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kingaku", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKingaku")) ?>
+    </div>
+
+<label for="fieldKesikomiGaku" class="col-sm-2 control-label">Kesikomi Of Gaku</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kesikomi_gaku", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKesikomiGaku")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

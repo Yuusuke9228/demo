@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var integer $id
+ */
+?>
+<?php $title = "実績.修正"; ?>
+<div class="page-header">
+    <h3>実績 修正</h3>
+</div>
+<?php echo $this->getContent(); ?>
+<?php
+echo $this->tag->form(
+    [
+        "g_jisseki/save",
+        "autocomplete" => "off",
+        "class" => "form-horizontal",
+        "id" => "formJisseki",
+    ]
+);
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('g_jisseki/inputfields'); ?>
+
+    <div class="col-sm-2 col-lg-offset-1">
+        <?php echo $this->tag->linkTo(["g_jisseki/prev/" . $id, "前へ", "id" => "F3", "class" => "btn  btn-default"]) ?>
+        <?php echo $this->tag->linkTo(["g_jisseki/next/" . $id, "次へ", "id" => "F4", "class" => "btn  btn-info"]) ?>
+    </div>
+    <div class="col-sm-2 col-lg-offset-3">
+        <?php echo $this->tag->submitButton(["　登録　", "id" => "F12", "class" => "btn  btn-success", "onclick" => "return confirm('更新しても宜しいですか？')"]) ?>
+    </div>
+
+    <div class="col-sm-2 col-lg-offset-2">
+        <?php echo $this->tag->linkTo(["g_jisseki_dts/delete/" . $id, "伝票削除", "class" => "btn  btn-danger", "onclick" => 'return confirm("削除してよいですか？");']) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<script src="<?php echo $this->url->get('js/views/g_jisseki.js'); ?>?var=20200721"></script>

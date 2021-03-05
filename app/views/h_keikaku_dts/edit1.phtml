@@ -1,0 +1,46 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "生産.修正"; ?>
+<div class="page-header">
+    <h3><?php echo $this->tag->linkTo(array("h_keikaku_dts/edit1/".$id, "生産計画 修正")) ?></h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "h_keikaku_dts/save1",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('h_keikaku_dts/inputfields'); ?>
+
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("h_keikaku_dts/prev1/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("h_keikaku_dts/next1/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("h_keikaku_dts/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("h_keikaku_dts/delete/".$id, "削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">var imax = <?php echo $imax ?>;</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/h_keikaku_dts.js'); ?>?var=20170527"></script>

@@ -1,0 +1,191 @@
+<style>
+    .table-wrap {
+        height: 150px;
+        overflow-y: auto;
+    }
+    .print-off {
+        display: none;
+    }
+
+</style>
+
+<div class="container panel" style="font-family: YuGothic;">
+    <!--伝票番号関連-->
+    <div class="row panel-body">
+        <div class="col-sm-12 form-group">
+            <div class="col-sm-4">
+                <label for="cd" class="control-label">伝票番号:</label>
+                <?php echo $this->tag->textField(["cd", "class" => "form-control f-cent ime-d input-sm", "id" => "cd"]); ?>
+            </div>
+            <div class="col-sm-4">
+                <label for="hacchuu_dt_cd" class="control-label">発注ナンバー:</label>
+                <?php echo $this->tag->textField(["hacchuu_dt_cd", "class" => "form-control f-cent ime-d input-sm", "id" => "hacchuu_dt_cd"]); ?>
+            </div>
+            <div class="col-sm-4">
+                <label for="gyoumu_dt_cd" class="control-label">計画ナンバー:</label>
+                <?php echo $this->tag->textField(["gyoumu_dt_cd", "class" => "form-control f-cent ime-d input-sm", "id" => "gyoumu_dt_cd"]); ?>
+            </div>
+        </div>
+    </div>
+    <!--計画詳細(表示のみ)-->
+    <div class="row panel-body" style="background-color: lemonchiffon;">
+        <div class="col-sm-12">
+            <div class="col-sm-1">商品:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["shouhin_mr_cd", "class" => "form-control f-cent input-sm", "id" => "shouhin_mr_cd", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+            <div class="col-sm-1 col-lg-offset-1">摘要:</div>
+            <div class="col-sm-6">
+                <?php echo $this->tag->textField(["tekiyou", "class" => "form-control f-cent input-sm", "id" => "tekiyou", "readonly" => "readonly"]); ?>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-1">ロット:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["lot", "class" => "form-control f-cent input-sm", "id" => "lot", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+            <div class="col-sm-1 col-lg-offset-1">色番:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["iro", "class" => "form-control f-cent input-sm", "id" => "iro", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+            <div class="col-sm-1 col-lg-offset-1">錘数:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["suisuu", "class" => "form-control f-cent input-sm", "id" => "suisuu", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-1">計画数:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["keikakusuu", "class" => "form-control f-cent input-sm", "id" => "keikakusuu", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+            <div class="col-sm-1 col-lg-offset-1">計画量:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["keikakuryou", "class" => "form-control f-cent input-sm", "id" => "keikakuryou", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+            <div class="col-sm-1 col-lg-offset-1">機種名:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["model_name", "class" => "form-control f-cent input-sm", "id" => "model_name", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-1">開始日:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["start_date", "class" => "form-control f-cent input-sm", "id" => "start_date", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+            <div class="col-sm-1 col-lg-offset-1">終了日:</div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->textField(["end_date", "class" => "form-control f-cent input-sm", "id" => "end_date", "style" => "width: 200px;", "readonly" => "readonly"]); ?>
+            </div>
+        </div>
+    </div>
+    <!--入力範囲-->
+    <div class="row panel-body">
+        <div class="col-sm-12">
+            <div class="col-sm-2">実績日:</div>
+            <div class="col-sm-4">
+                <?php echo $this->tag->telField(["jissekibi", "class" => "form-control f-cent ime-d input-sm", "id" => "jissekibi", "style" => "width: 200px;"]); ?>
+            </div>
+            <div class="col-sm-2">品質:</div>
+            <div class="col-sm-4">
+                <?php echo $this->tag->select(["hinsitsu_kbn_cd", HinsituKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]),"style" => "width: 200px;" , "using" => ["cd", "cd_name"], 'useEmpty' => true, 'emptyText' => '', "class" => "form-control f-cent input-sm", "id" => "hinsitsu_kbn_cd"]); ?>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="col-sm-2" id="jisseki_nyuuryoku_suu1">数量1:</div>
+            <div class="col-sm-4">
+                <?php echo $this->tag->textField(["jisseki_suu", "class" => "form-control f-cent ime-d input-sm", "id" => "jisseki_suu", "style" => "width: 200px;"]); ?>
+            </div>
+            <div class="col-sm-2" id="jisseki_nyuuryoku_suu2">数量2:</div>
+            <div class="col-sm-4">
+                <?php echo $this->tag->textField(["jisseki_ryou", "class" => "form-control f-cent ime-d input-sm", "id" => "jisseki_ryou", "style" => "width: 200px;"]); ?>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div class="col-sm-12">
+            <div class="col-sm-2">メモ:</div>
+            <div class="col-sm-6">
+                <?php echo $this->tag->textField(["memo", "class" => "form-control input-sm", "id" => "memo"]); ?>
+            </div>
+            <div class="col-sm-1">完了:</div>
+            <div class="col-sm-1">
+                <?php echo  $this->tag->selectStatic(["kanryou_flg", ["0" => "", "1"   => "完了",], "id" => "kanryou_flg", "class" => "form-control",  "style" => "width: 110px;"]); ?>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-sm-2 col-lg-offset-2">
+            <label for="suu1_kei">
+                　　　　数１計：
+                <input type="text" class="form-control" style="text-align: right;" id="suu1_kei" readonly="readonly" />
+            </label>
+        </div>
+        <div class="col-sm-2">
+            <label for="suu2_kei">
+                　　　　数２計：
+                <input type="text" class="form-control -align-right" style="text-align: right;" id="suu2_kei" readonly="readonly" />
+            </label>
+        </div>
+        <div class="col-sm-2">
+            <label for="sai">
+                　　　　差異１：
+                <input type="text" class="form-control -align-right" style="text-align: right;" id="sai1" readonly="readonly" />
+            </label>
+        </div>
+        <div class="col-sm-2">
+            <label for="sai">
+                　　　　差異２：
+                <input type="text" class="form-control -align-right" style="text-align: right;" id="sai2" readonly="readonly" />
+            </label>
+        </div>
+    </div>
+    <hr />
+    <div class="table-wrap">
+        <div class="print-page">
+            <div class="btn print-btn btn-info col-lg-offset-11">履歴印刷</div>
+            <table id="history" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="text-align: center;">伝票番号</th>
+                    <th style="text-align: center;">品質区分</th>
+                    <th style="text-align: center;">実績日</th>
+                    <th style="text-align: center;">数量１</th>
+                    <th style="text-align: center;">数量２</th>
+                    <th style="text-align: center;">備考</th>
+                    <th style="text-align: center;">完了</th>
+                    <th style="text-align: center;">印刷</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <!--発注ナンバー変更時に取得しJSで描画する-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!--ポスト用隠し項目(各種伝票のidを保持)--->
+<!--伝票種類-->
+<input type="hidden" id="denpyou_cd" name="denpyou_cd" value="jisseki" />
+<!--発注データID-->
+<?php echo $this->tag->hiddenField(["hacchuu_dt_id", "id" => "hacchuu_dt_id"]); ?>
+<!--計画データID-->
+<?php echo $this->tag->hiddenField(["gyoumu_dt_id", "id" => "gyoumu_dt_id"]); ?>
+<!--伝票のID-->
+<?php echo $this->tag->hiddenField(["id", "id" => "id"]); ?>
+<!--データ作成情報など-->
+<?php echo $this->tag->hiddenField(["sakusei_user_id", "id" => "sakusei_user_id"]); ?>
+<?php echo $this->tag->hiddenField(["created", "id" => "created"]); ?>
+<?php echo $this->tag->hiddenField(["kousin_user_id", "id" => "kousin_user_id"]); ?>
+<?php echo $this->tag->hiddenField(["updated", "id" => "updated"]); ?>
+
+<script>
+    const g_jisseki_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('g_jisseki/edit/'); ?>";
+    const g_jisseki_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('g_jisseki/ajaxGet'); ?>";
+    const h_keikaku_dts_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('h_keikaku_dts/ajaxGet'); ?>";
+    const jisseki_dts_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('g_jisseki/ajaxGet'); ?>";
+    const jisseki_dts_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('g_jisseki/edit/') ?>";
+    const jisseki_meisai_print = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('g_jisseki/print'); ?>";
+</script>

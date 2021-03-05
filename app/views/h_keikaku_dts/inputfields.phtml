@@ -1,0 +1,194 @@
+<div class="panel panel-primary bg-blu">
+ <div class="panel-heading pnl-hed" onclick="save_ros()">生産計画<span id="save_ros" style="color:pink;cursor:pointer;">(click→「入力制御の保存」)</span></div>
+ <div class="panel-body" id="aaaa">
+  <div class="col-sm-8">
+    <div  class="col-sm-2">
+        <label for="fieldCd" class="col-sm-12 control-label lbl-blu-up" onclick="switch_roa('Cd')">計画番号></label>
+        <?php echo $this->tag->textField(array("cd", "class" => "form-control f-cent ime-d", 'readonly'=>($readonlys['cd']??0)==1?'readonly':null , "id" => "fieldCd")) ?>
+    </div>
+    <div class="col-sm-2">
+        <label for="fieldSeKeikakubi" class="col-sm-12 control-label lbl-blu-up" onclick="switch_roa('SeKeikakubi')">計画日></label>
+        <?php echo $this->tag->telField(array("se_keikakubi", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", 'readonly'=>($readonlys['h_keikakubi']??0)==1?'readonly':null, "id" => "fieldSeKeikakubi")) ?>
+    </div>
+    <div class="col-sm-2">
+        <label for="fieldNounyuuKijitu" class="col-sm-12 control-label lbl-blu-up" onclick="switch_roa('NounyuuKijitu')">納入期日></label>
+        <?php echo $this->tag->telField(array("nounyuu_kijitu", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", 'readonly'=>($readonlys['nounyuu_kijitu']??0)==1?'readonly':null, "id" => "fieldNounyuuKijitu")) ?>
+    </div>
+    <div class="col-sm-12 pnl-hed">　</div>
+    <label for="fieldTekiyou" class="col-sm-2 control-label lbl-blu" onclick="switch_roa('Tekiyou')">摘要</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tekiyou", "size" => 32, "maxlength" => 32, "class" => "form-control ime-a", 'readonly'=>($readonlys['tekiyou']??0)==1?'readonly':null, "id" => "fieldTekiyou")) ?>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <label for="fieldSakuseiUserName" class="col-sm-4 control-label lbl-blu">入力者</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("sakusei_user_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldSakuseiUserName")) ?>
+    </div>
+    <label for="fieldUpdated" class="col-sm-4 control-label lbl-blu">更新日時</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("updated", "readonly" => "readonly", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+    <label for="fieldShouninJoutaiFlg" class="col-sm-4 control-label lbl-blu" onclick="switch_roa('ShouninJoutaiFlg')">承認状態</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->selectStatic(array("shounin_joutai_flg", array("0" => "0=未承認", "1" => "1=承認済み"), "class" => "form-control", 'readonly'=>($readonlys['shounin_joutai_flg']??0)==1?'readonly':null, "id" => "fieldShouninJoutaiFlg")) ?>
+    </div>
+    <label for="fieldShouninShaMrCd" class="col-sm-4 control-label lbl-blu" onclick="switch_roa('ShouninShaMrCd')">承認者</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->select(array("shounin_sha_mr_cd", Users::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", 'readonly'=>($readonlys['shounin_sha_mr_cd']??0)==1?'readonly':null, "id" => "fieldShouninShaMrCd")) ?>
+    </div>
+    <div class="col-sm-3"><button class="btn btn-info" id="F7" onclick="tenkai(1);return false;", tabindex="-1">単展開f7</button></div>
+    <div class="col-sm-3"><button class="btn btn-info" onclick="tenkai(0);return false;", tabindex="-1">全展開</button></div>
+  </div>
+ </div><!-- panel-body -->
+
+ <?php echo $this->tag->hiddenField("id") ?>
+ <div class="panel-heading pnl-hed">計画明細</div>
+ <div class="panel-body" style="overflow-x: scroll;padding: 0;">
+ <style scoped>
+ 	table{
+ 		table-layout:fixed;
+ 		width:100%;
+ 	}
+ 	th,td{
+ 		white-space:nowrap;
+ 	}
+ 	th{
+ 		border-right:1px #ccc solid;
+ 		font-size:x-small;
+ 		font-weight:normal;
+ 		text-align:center;
+ 		color: #31718f;
+ 		background-color:#d9edf7;
+ 	}
+	th.ot-fixed,td.ot-fixed{
+		position:absolute;
+		left:6px;
+		width:<?php echo $rewidths['[cd']??'30' ?>px;
+	}
+ </style>
+ <table id="meisaiTable">
+  <thead><tr><th width=<?php echo $rewidths['[cd']       ??'"30"'  ?> onclick="switch_ros('Cd')" class="ot-fixed">No
+   </th><th width=<?php echo $rewidths['[kousei']        ??'"50"'  ?> >構造
+   </th><th width=<?php echo $rewidths['[shouhin_mr_cd'] ??'"100"' ?> >商品>
+   </th><th width=<?php echo $rewidths['[tekiyou']       ??'"200"' ?> onclick="switch_ros('Tekiyou')">商品名／摘要
+   </th><th width=<?php echo $rewidths['[kobetucd']      ??'"20"'  ?> onclick="switch_ros('Kobetucd')">個別
+   </th><th width=<?php echo $rewidths['[souko_mr_cd']   ??'"100"' ?> onclick="switch_ros('SoukoMrCd')">倉庫
+   </th><th width=<?php echo $rewidths['[suuryou']       ??'"20"'  ?> onclick="switch_ros('Suuryou')">元数
+   </th><th width=<?php echo $rewidths['[keisu']         ??'"20"'  ?> onclick="switch_ros('Keisu')">係数
+   </th><th width=<?php echo $rewidths['[irisuu']        ??'"20"'  ?> onclick="switch_ros('Irisuu')">入数
+   </th><th width=<?php echo $rewidths['[hituyou_suu1']  ??'"40"'  ?> >必要数
+   </th><th width=<?php echo $rewidths['[zaikoseisan_suu1']??'"40"'?> onclick="switch_ros('zaikoseisanSuuryou1')">備蓄生産数
+   </th><th width=<?php echo $rewidths['[loss_suu1']     ??'"40"'  ?> onclick="switch_ros('lossSuuryou1')">ロス数
+   </th><th width=<?php echo $rewidths['[deme_suu1']     ??'"40"'  ?> onclick="switch_ros('demeSuuryou1')">出目数
+   </th><th width=<?php echo $rewidths['[zaikosiyou_suu1']??'"40"' ?> onclick="switch_ros('zaikosiyouSuuryou1')">備蓄使用数
+   </th><th width=<?php echo $rewidths['[keikaku_suu1']  ??'"40"'  ?> onclick="switch_ros('keikakuSuuryou1')">手当数
+   </th><th width=<?php echo $rewidths['[tanni_mr1_cd']  ??'"40"'  ?> onclick="switch_ros('TanniMr1Cd')">単位
+   </th><th width=<?php echo $rewidths['[hituyou_ryou2'] ??'"50"'  ?> >必要量
+   </th><th width=<?php echo $rewidths['[zaikoseisan_ryou2']??'"50"'?> onclick="switch_ros('ZaikoseisanRyou2')">備蓄生産量
+   </th><th width=<?php echo $rewidths['[loss_ryou2']    ??'"50"'  ?> onclick="switch_ros('LossRyou2')">ロス量
+   </th><th width=<?php echo $rewidths['[deme_ryou2']    ??'"50"'  ?> onclick="switch_ros('DemeRyou2')">出目量
+   </th><th width=<?php echo $rewidths['[zaikosiyou_ryou2']??'"50"'?> onclick="switch_ros('ZaikosiyouRyou2')">備蓄使用量
+   </th><th width=<?php echo $rewidths['[keikaku_ryou2'] ??'"50"'  ?> onclick="switch_ros('KeikakuRyou2')">手当量
+   </th><th width=<?php echo $rewidths['[tanni_mr2_cd']  ??'"40"'  ?> onclick="switch_ros('TanniMr2Cd')">単位
+   </th><th width=<?php echo $rewidths['[bikou']         ??'"100"' ?> onclick="switch_ros('Bikou')">備考
+   </th></tr>
+  </thead>
+  <tbody><style scoped>div[class^="col-sm"],div[class^="panel"]{padding:0 !important;}</style>
+  <?php for ($i = -1; $i < $imax; $i++): /* $imaxはcontrollerから受け取る */ ?>
+  <?php
+    if ($i < 0) {
+      $name_head = "hidden"; // name-hedder nameの前半
+      $id_head = "hidden"; // id-hedder idの前半
+      echo '<tr id="tr_h_keikaku_meisai_dt_hidden" style="display:none;">';
+    } else {
+      $name_head = "data[h_keikaku_meisai_dts][".$i."]";
+      $id_head = "fieldHKeikakuMeisaiDts" . $i;
+      echo '<tr id="tr_h_keikaku_meisai_dt_' . $i . '"'.($kousei_oya < 0 || $this->tag->getValue($name_head . "[kousei]")=='-'?'':(' class="kodomo'.$kousei_oya.'"')) .'>';
+    }
+  ?>
+                 <td class="ot-fixed">
+                     <!-- 行番 --><?php echo $this->tag->textField(array($name_head . "[cd]", "class" => "form-control f-cent ime-d", 'readonly'=>($readonlys['[cd']??0)==1?'readonly':null, "id" => $id_head . "Cd")) ?>
+                     <!--  ID  --><?php echo $this->tag->hiddenField(array($name_head . "[id]", "id" => $id_head . "Id")) ?>
+                     <!--更新時--><?php echo $this->tag->hiddenField(array($name_head . "[updated]", "id" => $id_head . "Updated")) ?>
+                     <!---階層---><?php echo $this->tag->hiddenField(array($name_head . "[kaisou]", "id" => $id_head . "Kaisou")) ?>
+                     <!--数１小数桁数--><?php echo $this->tag->hiddenField(array($name_head . "[suu1_shousuu]", "id" => $id_head . "Suu1Shousuu")) ?>
+                     <!--数２小数桁数--><?php echo $this->tag->hiddenField(array($name_head . "[suu2_shousuu]", "id" => $id_head . "Suu2Shousuu")) ?>
+                     <!--在庫単位区分--><?php echo $this->tag->hiddenField(array($name_head . "[zaiko_kbn]", "id" => $id_head . "ZaikoKbn")) ?>
+
+   </td>         <td><!-- 構造 --><tt><?php echo $this->tag->textField(array($name_head . "[kousei]", "readonly" => "readonly", "class" => "form-control".$kousei_oya_class, "id" => $id_head . "Kousei")) ?></tt>
+   </td>         <td><!-- 商品 --><?php echo $this->tag->textField(array($name_head . "[shouhin_mr_cd]", "maxlength" => 20, "style" => "padding: 0;", "class" => "form-control f-cent ime-i", "id" => $id_head . "ShouhinMrCd", "list" => "ShouhinMrsOptions")) ?>
+   </td>         <td><!-- 摘要 --><?php echo $this->tag->textField(array($name_head . "[tekiyou]", "size" => 40, "maxlength" => 40, "style" => "padding: 0;", "class" => "form-control ime-a", 'readonly'=>($readonlys['[tekiyou']??0)==1?'readonly':null, "id" => $id_head . "Tekiyou")) ?>
+   </td>         <td><!-- 個別 --><?php echo $this->tag->textField(array($name_head . "[kobetucd]", "maxlength" => 20, "style" => "padding: 0;", "class" => "form-control f-cent ime-i", 'readonly'=>($readonlys['[kobetucd']??0)==1?'readonly':null, "id" => $id_head . "Kobetucd", "list" => "ShouhinMrsOptions")) ?>
+   </td>         <td><!-- 倉庫 --><?php echo $this->tag->select(array($name_head . "[souko_mr_cd]", SoukoMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "style" => "padding: 0;", "class" => "form-control f-cent", 'readonly'=>($readonlys['[souko_mr_cd']??0)==1?'readonly':null, "id" => $id_head . "SoukoMrCd")) ?>
+   </td>         <td><!-- 元数 --><?php echo $this->tag->textField(array($name_head . "[suuryou]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-numb", 'readonly'=>($readonlys['[suuryou']??0)==1?'readonly':null, "id" => $id_head . "Suuryou")) ?>
+   </td>         <td><!-- 係数 --><?php echo $this->tag->textField(array($name_head . "[keisu]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-cent ime-d", 'readonly'=>($readonlys['[keisu']??0)==1?'readonly':null, "id" => $id_head . "Keisu")) ?>
+   </td>         <td><!-- 入数 --><?php echo $this->tag->textField(array($name_head . "[irisuu]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-cent ime-d", 'readonly'=>($readonlys['[irisuu']??0)==1?'readonly':null, "id" => $id_head . "Irisuu")) ?>
+   </td>         <td><!-- 必要数 --><?php echo $this->tag->textField(array($name_head . "[hituyou_suu1]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-numb", 'readonly'=>($readonlys['[hituyou_suu1']??0)==1?'readonly':null, "id" => $id_head . "HituyouSuu1")) ?>
+   </td>         <td><!-- 過生産数 --><?php echo $this->tag->textField(array($name_head . "[zaikoseisan_suu1]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-numb", 'readonly'=>($readonlys['[zaikoseisan_suu1']??0)==1?'readonly':null, "id" => $id_head . "ZaikoseisanSuu1")) ?>
+   </td>         <td><!-- ロス数 --><?php echo $this->tag->textField(array($name_head . "[loss_suu1]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-numb", 'readonly'=>($readonlys['[loss_suu1']??0)==1?'readonly':null, "id" => $id_head . "LossSuu1")) ?>
+   </td>         <td><!-- 出目数 --><?php echo $this->tag->textField(array($name_head . "[deme_suu1]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-numb", 'readonly'=>($readonlys['[deme_suu1']??0)==1?'readonly':null, "id" => $id_head . "DemeSuu1")) ?>
+   </td>         <td><!-- 在庫使用数 --><?php echo $this->tag->textField(array($name_head . "[zaikosiyou_suu1]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-numb", 'readonly'=>($readonlys['[zaikosiyou_suu1']??0)==1?'readonly':null, "id" => $id_head . "ZaikosiyouSuu1")) ?>
+   </td>         <td><!-- 手当数 --><?php echo $this->tag->textField(array($name_head . "[keikaku_suu1]", "size" => 10, "style" => "padding: 0;", "class" => "form-control f-numb", 'readonly'=>($readonlys['[keikaku_suu1']??0)==1?'readonly':null, "id" => $id_head . "KeikakuSuu1")) ?>
+   </td>         <td><!--数単位--><?php echo $this->tag->select(array($name_head . "[tanni_mr1_cd]", TanniMrs::find(["columns" => "cd , CONCAT(name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "style" => "padding: 0;", "class" => "form-control f-cent", 'readonly'=>($readonlys['[tanni_mr1_cd']??0)==1?'readonly':null, "id" => $id_head . "TanniMr1Cd")) ?>
+   </td>         <td><!-- 必要量 --><?php echo $this->tag->textField(array($name_head . "[hituyou_ryou2]", "size" => 8, "maxlength" => 10, "class" => "form-control f-numb", "id" => $id_head . "HituyouRyou2")) ?>
+   </td>         <td><!-- 過生産量 --><?php echo $this->tag->textField(array($name_head . "[zaikoseisan_ryou2]", "size" => 8, "maxlength" => 10, "class" => "form-control f-numb", "id" => $id_head . "ZaikoseisanRyou2")) ?>
+   </td>         <td><!-- ロス量 --><?php echo $this->tag->textField(array($name_head . "[loss_ryou2]", "size" => 8, "maxlength" => 10, "class" => "form-control f-numb", "id" => $id_head . "LossRyou2")) ?>
+   </td>         <td><!-- 出目量 --><?php echo $this->tag->textField(array($name_head . "[deme_ryou2]", "size" => 8, "maxlength" => 10, "class" => "form-control f-numb", "id" => $id_head . "DemeRyou2")) ?>
+   </td>         <td><!-- 在庫使用量 --><?php echo $this->tag->textField(array($name_head . "[zaikosiyou_ryou2]", "size" => 8, "maxlength" => 10, "class" => "form-control f-numb", "id" => $id_head . "ZaikosiyouRyou2")) ?>
+   </td>         <td><!-- 手当量 --><?php echo $this->tag->textField(array($name_head . "[keikaku_ryou2]", "size" => 8, "maxlength" => 10, "class" => "form-control f-numb", "id" => $id_head . "KeikakuRyou2")) ?>
+   </td>         <td><!-- 単位 --><?php echo $this->tag->select(array($name_head . "[tanni_mr2_cd]", TanniMrs::find(["columns" => "cd , CONCAT(name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "style" => "padding: 0;", "class" => "form-control f-cent", 'readonly'=>($readonlys['[tanni_mr2_cd']??0)==1?'readonly':null, "id" => $id_head . "TanniMr2Cd")) ?>
+   </td>         <td><!-- 備考 --><?php echo $this->tag->textField(array($name_head . "[bikou]", "size" => 14, "maxlength" => 14, "style" => "padding: 0;", "class" => "form-control ime-a", 'readonly'=>($readonlys['[bikou']??0)==1?'readonly':null, "id" => $id_head . "Bikou")) ?>
+   </td></tr>
+   <?php endfor; ?>
+  </tbody></table>
+ </div>
+
+</div><!-- panel -->
+
+<datalist id="SeikyuusakiMrsOptions">
+</datalist>
+
+<datalist id="NyuukinKbnsOptions">
+<?php
+	$h_keikaku_kbns=NyuukinKbns::find();
+	foreach($h_keikaku_kbns as $h_keikaku_kbn){
+		echo "<option value='"
+			.$h_keikaku_kbn->cd."'>"
+			.$h_keikaku_kbn->cd."="
+			.$h_keikaku_kbn->NyuukinBunruiKbns->name." "
+			.$h_keikaku_kbn->name
+			."</option>\n";
+	}
+?>
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div>
+
+<script type="text/javascript">
+    var h_keikaku_history = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('h_keikaku_meisai_dts/history') ?>";
+	var h_keikaku_dts_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('h_keikaku_dts/modal') ?>";
+	var den_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('zaiko_kakunin_azukari_vws/den_modal') ?>";
+	var h_keikaku_dts_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('h_keikaku_dts/edit/') ?>";
+	var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+	var juchuu_dts_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('juchuu_dts/modal') ?>";
+	var h_keikaku_dts_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('h_keikaku_dts/ajaxGet') ?>";
+	var shouhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/ajaxGet') ?>";
+	var juchuu_dts_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('juchuu_dts/ajaxGet') ?>";
+	var juchuu_meisai_dts_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('juchuu_meisai_dts/ajaxGetSuuryou') ?>";
+	var kousei_buhin_mrs_ajaxTenkai = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kousei_buhin_mrs/ajaxTenkai') ?>";
+	var readonlys_ajaxSave = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('readonly_field_kbns/ajaxSave') ?>";
+	var chouhyou_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('chouhyou_mrs/modal') ?>";
+	var my_id = <?php echo (int)$this->getDI()->getSession()->get('auth')['id']; ?>;
+
+</script>

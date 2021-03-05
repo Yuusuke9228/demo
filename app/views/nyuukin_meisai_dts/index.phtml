@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "入金明細.一覧"; ?>
+<div class="page-header">
+    <h3>入金明細 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"nyuukin_meisai_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","行"],
+                    ["name","入金内容"],
+                    ["nyuukin_dt_id","入金伝票id"],
+                    ["nyuukin_kbn_cd","入金区分"],
+                    ["tegata_kijitu","手形期日"],
+                    ["kingaku","金額"],
+                    ["bikou","備考"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $nyuukin_meisai_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("nyuukin_meisai_dts/edit/" . $nyuukin_meisai_dt->id, $nyuukin_meisai_dt->id)); ?></td>
+                <td><?php echo $nyuukin_meisai_dt->cd ?></td>
+                <td><?php echo $nyuukin_meisai_dt->name ?></td>
+                <td><?php echo $nyuukin_meisai_dt->nyuukin_dt_id ?></td>
+                <td><?php echo $nyuukin_meisai_dt->nyuukin_kbn_cd ?></td>
+                <td><?php echo $nyuukin_meisai_dt->tegata_kijitu ?></td>
+                <td><?php echo $nyuukin_meisai_dt->kingaku ?></td>
+                <td><?php echo $nyuukin_meisai_dt->bikou ?></td>
+                <td><?php echo $nyuukin_meisai_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("nyuukin_meisai_dts/delete/" . $nyuukin_meisai_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"nyuukin_meisai_dts"]) ?>

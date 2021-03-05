@@ -1,0 +1,137 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["iraikiroku_vws/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["iraikiroku_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Kakou Of No</th>
+            <th>Hakkou Of Date</th>
+            <th>Kaisha Of Mei</th>
+            <th>Sf Of Tantou</th>
+            <th>Tantou</th>
+            <th>Agari Of Hinmei</th>
+            <th>Siyousi</th>
+            <th>Kakouo Of Suuryou</th>
+            <th>Tanni</th>
+            <th>Seihin Of Lot</th>
+            <th>Tanni1</th>
+            <th>Nouki</th>
+            <th>Shukkasaki</th>
+            <th>Juusho</th>
+            <th>Tel</th>
+            <th>Naiyou1</th>
+            <th>Naiyou2</th>
+            <th>Naiyou3</th>
+            <th>Naiyou4</th>
+            <th>Naiyou5</th>
+            <th>Naiyou6</th>
+            <th>Naiyou7</th>
+            <th>Naiyou8</th>
+            <th>Naiyou9</th>
+            <th>Naiyou10</th>
+            <th>Naiyou11</th>
+            <th>Bikou1</th>
+            <th>Bikou2</th>
+            <th>Urisaki</th>
+            <th>Urine</th>
+            <th>Shukkameisai</th>
+            <th>Kanryou</th>
+            <th>Gensi Of Nyuukasaki</th>
+            <th>Sofina Of Kakoutin</th>
+            <th>Tanni2</th>
+            <th>Seisan Of Koujoumei</th>
+            <th>Kishumei</th>
+            <th>Bikou</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $iraikiroku_vw): ?>
+            <tr>
+                <td><?php echo $iraikiroku_vw->kakou_no ?></td>
+            <td><?php echo $iraikiroku_vw->hakkou_date ?></td>
+            <td><?php echo $iraikiroku_vw->kaisha_mei ?></td>
+            <td><?php echo $iraikiroku_vw->sf_tantou ?></td>
+            <td><?php echo $iraikiroku_vw->tantou ?></td>
+            <td><?php echo $iraikiroku_vw->agari_hinmei ?></td>
+            <td><?php echo $iraikiroku_vw->siyousi ?></td>
+            <td><?php echo $iraikiroku_vw->kakouo_suuryou ?></td>
+            <td><?php echo $iraikiroku_vw->tanni ?></td>
+            <td><?php echo $iraikiroku_vw->seihin_lot ?></td>
+            <td><?php echo $iraikiroku_vw->tanni1 ?></td>
+            <td><?php echo $iraikiroku_vw->nouki ?></td>
+            <td><?php echo $iraikiroku_vw->shukkasaki ?></td>
+            <td><?php echo $iraikiroku_vw->juusho ?></td>
+            <td><?php echo $iraikiroku_vw->tel ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou1 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou2 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou3 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou4 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou5 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou6 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou7 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou8 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou9 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou10 ?></td>
+            <td><?php echo $iraikiroku_vw->naiyou11 ?></td>
+            <td><?php echo $iraikiroku_vw->bikou1 ?></td>
+            <td><?php echo $iraikiroku_vw->bikou2 ?></td>
+            <td><?php echo $iraikiroku_vw->urisaki ?></td>
+            <td><?php echo $iraikiroku_vw->urine ?></td>
+            <td><?php echo $iraikiroku_vw->shukkameisai ?></td>
+            <td><?php echo $iraikiroku_vw->kanryou ?></td>
+            <td><?php echo $iraikiroku_vw->gensi_nyuukasaki ?></td>
+            <td><?php echo $iraikiroku_vw->sofina_kakoutin ?></td>
+            <td><?php echo $iraikiroku_vw->tanni2 ?></td>
+            <td><?php echo $iraikiroku_vw->seisan_koujoumei ?></td>
+            <td><?php echo $iraikiroku_vw->kishumei ?></td>
+            <td><?php echo $iraikiroku_vw->bikou ?></td>
+
+                <td><?php echo $this->tag->linkTo(["iraikiroku_vws/edit/" . $iraikiroku_vw->kakou_no, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["iraikiroku_vws/delete/" . $iraikiroku_vw->kakou_no, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("iraikiroku_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("iraikiroku_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("iraikiroku_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("iraikiroku_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<?php
+/**
+ * Local variables
+ * @var \Phalcon\Mvc\View\Engine $this
+ * @var null|string $appsDir
+ * @var closure $fileOwner Get file owner/group closure
+ */
+?>
+
+<h1 class="page-header">Dir Views</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <?php echo $this->getContent() ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th width="10%">Size</th>
+                    <th width="15%">Updated</th>
+                    <th width="10%">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php $iterator = new DirectoryIterator('../app'); foreach($iterator as $file): ?>
+                <?php if (!$file->isDot() && 0 !== strrpos($file->getBasename(), '.')): ?>
+                    <tr>
+                        <td><?php echo $file->getFileName(); ?></td>
+                        <td><?php echo $file->getSize() . ' b' ?></td>
+                        <td><?php echo date("Y-m-d H:i:s", $file->getMTime()); ?></td>
+                        <td>
+                            <?php echo $this->tag->linkTo(array('edit_codes/list/'. $file->getFileName(), 'List', 'class' => 'btn btn-link')); ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '仕入.一覧'; ?>
+<div class="page-header">
+    <h3>仕入伝票 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/indexkanni",["table_id"=>"shiire_dts","flds"=>[
+		["cd","fieldCd","伝票番号",14,14],["tekiyou","fieldTekiyou","摘要",24,24]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["cd","伝票番号"],
+					["tekiyou","摘要"],
+	 				["shiirebi","仕入日"],
+	 				["shiiresaki_mr_cd","得意先"],
+	 				["tantou_mr_cd","担当者"],
+                    ["","商品1"],
+                    ["","数量"],
+				]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $shiire_dt): ?>
+            <tr>
+                <td align="center"><?php echo $this->tag->linkTo(array("shiire_dts/edit/" . $shiire_dt->id, $shiire_dt->cd)); ?></td>
+                <td><?php echo $shiire_dt->tekiyou ?></td>
+                <td align="center"><?php echo $shiire_dt->shiirebi ?></td>
+                <td><?php echo $shiire_dt->shiiresaki_mr_cd."=".$shiire_dt->ShiiresakiMrs->name ?></td>
+                <td><?php echo $shiire_dt->tantou_mr_cd.($shiire_dt->tantou_mr_cd==""?"":("=".$shiire_dt->TantouMrs->name)) ?></td>
+                <td><?php echo $shiire_dt->ShiireMeisaiDts[0]->shouhin_mr_cd ?></td>
+                <td align="right"><?php	$tanka_kbn=$shiire_dt->ShiireMeisaiDts[0]->tanka_kbn;$suufld='suuryou'.$tanka_kbn;$tannitb='TanniMr'.$tanka_kbn.'s';
+                						echo $shiire_dt->ShiireMeisaiDts[0]->$suufld.$shiire_dt->ShiireMeisaiDts[0]->$tannitb->name ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"shiire_dts"]) ?>

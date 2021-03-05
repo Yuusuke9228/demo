@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "VIEW.一覧"; ?>
+<div class="page-header">
+    <h3>VIEW 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"shiiregaku_vws","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["shiire_dt_id","仕入データID"],
+                    ["kingaku","Kingaku"],
+                    ["kesikomi_gaku","Kesikomi Of Gaku"],
+                    ["shiiresaki_mr_cd","仕入先"],
+                    ["shiirebi","仕入日"],
+                    ["cd","伝票番号"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $shiiregaku_vw): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("shiiregaku_vws/edit/" . $shiiregaku_vw->id, $shiiregaku_vw->shiire_dt_id)); ?></td>
+                <td><?php echo $shiiregaku_vw->kingaku ?></td>
+                <td><?php echo $shiiregaku_vw->kesikomi_gaku ?></td>
+                <td><?php echo $shiiregaku_vw->shiiresaki_mr_cd ?></td>
+                <td><?php echo $shiiregaku_vw->shiirebi ?></td>
+                <td><?php echo $shiiregaku_vw->cd ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("shiiregaku_vws/delete/" . $shiiregaku_vw->shiire_dt_id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"shiiregaku_vws"]) ?>

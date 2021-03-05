@@ -1,0 +1,247 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php echo $this->getContent(); ?>
+
+<style>
+/* 入力・表示制御するまでコメント
+input.ALLF,select.ALLF {
+	display:none;
+}
+*/
+div.ALLF {
+    background-color: #f0f0f0;
+	display:block;
+}
+/* 入力・表示制御するまでコメント
+div.xALLF {
+	display:block;
+    background-color: #f0f0f0;
+}
+*/
+</style>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<div class="col-sm-6">
+	<label for="onRow" class="col-sm-3 control-label">行</label>
+	<div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='onRow' name='on_row'></div>
+	</div>
+
+	<label for="fieldCd" class="col-sm-3 control-label">№</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("cd", "size" => 5, "maxlength" => 5, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldCd")) ?>
+	</div>
+
+	<label for="fieldKousei" class="col-sm-3 control-label">構造</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("kousei", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control", "id" => "fieldKousei")) ?>
+	</div>
+
+	<label for="fieldShouhinMrCd" class="col-sm-3 control-label">商品</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 150px;", "class" => "form-control", "id" => "fieldShouhinMrCd", "list" => "ShouhinMrsOptions")) ?>
+	</div>
+
+	<label for="fieldShouhinKakouCd" class="col-sm-3 control-label">加工</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("shouhin_kakou_cd", "size" => 14, "maxlength" => 14, "style" => "width: 150px;", "class" => "form-control", "id" => "fieldShouhinKakouCd")) ?>
+	</div>
+
+	<label for="fieldTekiyou" class="col-sm-3 control-label">商品名／摘要</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("tekiyou", "size" => 40, "maxlength" => 40, "class" => "form-control", "id" => "fieldTekiyou")) ?>
+	</div>
+
+	<label for="fieldLot" class="col-sm-3 control-label">Lot</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("lot", "size" => 20, "maxlength" => 20, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldLot")) ?>
+	</div>
+
+	<label for="fieldHKishuMrCd" class="col-sm-3 control-label">機種</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("h_kishu_mr_cd", "size" => 5, "maxlength" => 5, "style" => "width: 100px;", "class" => "form-control f-cent", "id" => "fieldHKishuMrCd")) ?>
+	</div>
+
+	<label for="dispHKishuMrName" class="col-sm-3 control-label">機種名</label>
+	<div class="col-sm-9">
+        <div class='form-control ALLF f-cent' style='width: 150px;' id='dispHKishuMrName' name='h_kishu_mr_name'></div>
+	</div>
+
+	<label for="fieldOyaMeisaiCd" class="col-sm-3 control-label">元行</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("oya_meisai_cd", "size" => 5, "maxlength" => 5, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldOyaMeisaiCd")) ?>
+	</div>
+
+	<label for="fieldSuuryou" class="col-sm-3 control-label">元数</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("suuryou", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldSuuryou")) ?>
+	</div>
+
+	<label for="fieldKeisu" class="col-sm-3 control-label">係数</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("keisu", "size" => 9, "maxlength" => 9, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldKeisu")) ?>
+	</div>
+
+	<label for="dispHituyouRyou" class="col-sm-3 control-label">必要量</label>
+	<div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispHituyouRyou' name='hituyou_ryou'></div>
+	</div>
+
+	<label for="fieldMotoJuchRyou" class="col-sm-3 control-label">+受注量</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("moto_juch_ryou", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldMotoJuchRyou")) ?>
+	</div>
+
+	<label for="fieldZaikoseisanRyou" class="col-sm-3 control-label">+備蓄生産量</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("zaikoseisan_ryou", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldZaikoseisanRyou")) ?>
+	</div>
+
+	<label for="fieldLossRyou" class="col-sm-3 control-label">+ロス量</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("loss_ryou", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldLossRyou")) ?>
+	</div>
+
+	<label for="fieldDemeRyou" class="col-sm-3 control-label">-出目量</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("deme_ryou", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldDemeRyou")) ?>
+	</div>
+
+	<label for="fieldZaikosiyouRyou" class="col-sm-3 control-label">-備蓄使用量</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("zaikosiyou_ryou", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldZaikosiyouRyou")) ?>
+	</div>
+
+	<label for="dispKeikakuRyou" class="col-sm-3 control-label">=計画量</label>
+	<div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispKeikakuRyou' name='keikaku_ryou'></div>
+	</div>
+
+	<label for="dispZaikoTanni" class="col-sm-3 control-label">単位</label>
+	<div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispZaikoTanni' name='zaiko_tanni'></div>
+	</div>
+
+	<label for="fieldKagi" class="col-sm-3 control-label">鍵</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("kagi", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control", "id" => "fieldKagi")) ?>
+	</div>
+
+</div>
+<div class="col-sm-6">
+
+	<label for="fieldKouritu" class="col-sm-3 control-label">効率</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("kouritu", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldKouritu")) ?>
+	</div>
+
+	<label for="fieldKourituTanni" class="col-sm-3 control-label">効率単位</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("kouritu_tanni", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldKourituTanni")) ?>
+	</div>
+
+	<label for="fieldHeiretuSuu" class="col-sm-3 control-label">錘数</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("heiretu_suu", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-numb", "id" => "fieldHeiretuSuu")) ?>
+	</div>
+
+	<label for="fieldKaisiHiduke" class="col-sm-3 control-label">開始日</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->telField(array("kaisi_hiduke", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-cent", "id" => "fieldKaisiHiduke")) ?>
+	</div>
+
+	<label for="fieldShuuryouHiduke" class="col-sm-3 control-label">終了日</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->telField(array("shuuryou_hiduke", "size" => 10, "maxlength" => 10, "style" => "width: 100px;", "class" => "form-control f-cent", "id" => "fieldShuuryouHiduke")) ?>
+	</div>
+
+	<label for="fieldBikou" class="col-sm-3 control-label">備考</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("bikou", "size" => 10, "maxlength" => 10, "style" => "width: 150px;", "class" => "form-control", "id" => "fieldBikou")) ?>
+	</div>
+
+    <label for="dispId" class="col-sm-3 control-label">明細ID</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispId' name='id'></div>
+    </div>
+    <label for="dispUpdated" class="col-sm-3 control-label">更新日時</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF' style='width: 150px;' id='dispUpdated' name='updated'></div>
+    </div>
+    <label for="dispKaisou" class="col-sm-3 control-label">階層</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispKaisou' name='kaisou'></div>
+    </div>
+    <label for="dispSuuShousuu" class="col-sm-3 control-label">小数桁</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispSuuShousuu' name='suu_shousuu'></div>
+    </div>
+    <label for="dispZaikoKbn" class="col-sm-3 control-label">在庫区分</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispZaikoKbn' name='zaiko_kbn'></div>
+    </div>
+    <label for="dispTanniMr1Cd" class="col-sm-3 control-label">単位1</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispTanniMr1Cd' name='tanni_mr1_cd'></div>
+    </div>
+    <label for="dispTanniMr2Cd" class="col-sm-3 control-label">単位2</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispTanniMr2Cd' name='tanni_mr2_cd'></div>
+    </div>
+    <label for="dispKadouNissuu" class="col-sm-3 control-label">稼働日数</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-numb' style='width: 100px;' id='dispKadouNissuu' name='kadou_nissuu'></div>
+    </div>
+    <label for="dispHKishuMrIrowake" class="col-sm-3 control-label">色分け</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-cent' style='width: 100px;' id='dispHKishuMrIrowake' name='h_kishu_mr_irowake'></div>
+    </div>
+    <label for="dispCalendarPatanDtCd" class="col-sm-3 control-label">カレンダー</label>
+    <div class="col-sm-9">
+        <div class='form-control ALLF f-cent' style='width: 100px;' id='disphCalendarPatanDtCd' name='h_calendar_patan_dt_cd'></div>
+    </div>
+</div>
+</div>
+<div class="col-sm-offset-2 col-sm-10"><div style='font-size:xx-large;' id='g1Emsg' name='emsg'></div></div>
+<div class="form-group">
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">戻る</button>
+    </div>
+    <div class="col-sm-4">
+        <a onclick='retParentTr();' id="F12" class="btn  btn-success">登録F12</a>
+    </div>
+    <div class="col-sm-2">
+        <a onclick='prevTr();' id="F3" class="btn btn-default">前へF3</a>
+    </div>
+    <div class="col-sm-4">
+        <a onclick='nextTr();' id="F4" class="btn btn-info">次へF4</a>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="ShouhinMrsOptions">
+</datalist>
+
+<div id='point_1'></div>
+
+<script type="text/javascript">
+	var this_url_base = "<?php echo $this->url->get() ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/h_keikaku_modal1.js'); ?>?var=20200215"></script>
+

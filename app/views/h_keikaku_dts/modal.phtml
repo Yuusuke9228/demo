@@ -1,0 +1,70 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "生産計画参照"; ?>
+
+<?php echo $this->getContent(); ?>
+ <style>
+ 	th,td{
+ 		white-space:nowrap;
+ 		overflow: hidden;
+ 	}
+ 	th{
+ 		text-align:center;
+ 	}
+ </style>
+<div class="row">
+<div id="tbl1">
+    <table class="table table-bordered table-hover table-condens-0 table-striped">
+        <thead>
+            <tr>
+                <th>計画番号</th>
+                <th>摘要</th>
+                <th>計画日</th>
+                <th>担当者</th>
+                <th>商品</th>
+                <th>商品名</th>
+                <th>Lot</th>
+                <th>開始日</th>
+                <th>終了日</th>
+                <th>数</th>
+                <th></th>
+                <th>量</th>
+                <th></th>
+                <th>備考</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($rows as $row): ?>
+            <tr>
+                <td align="center"><?php echo $row->cd; ?></td>
+                <td><?php echo $row->tekiyou ?></td>
+                <td align="center"><?php echo $row->hakkoubi ?></td>
+                <td align="center"><?php echo $row->tantou_mr_cd ?></td>
+                <td><?php echo $row->shouhin_mr_cd ?></td>
+                <td><?php echo $row->shouhin_name ?></td>
+                <td><?php echo $row->lot ?></td>
+                <td align="center"><?php echo $row->kaisi_hiduke ?></td>
+                <td align="center"><?php echo $row->shuuryou_hiduke ?></td>
+                <td align="right"><?php echo $row->keikaku_ryou1 ?></td>
+                <td align="center"><?php echo $row->tanni_name1 ?></td>
+                <td align="right"><?php echo $row->keikaku_ryou2 ?></td>
+                <td align="center"><?php echo $row->tanni_name2 ?></td>
+                <td><?php echo $row->bikou ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+</div>
+<div class="col-sm-2">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+</div>
+<script type="text/javascript">
+	$('.returnto').click(function () {//alert($(this).text());
+		window.parent.fromModal($(this).text());
+	});
+</script>

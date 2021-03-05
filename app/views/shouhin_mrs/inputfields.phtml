@@ -1,0 +1,222 @@
+<div class="panel panel-default">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">基本情報</div>
+ <div class="panel-body">
+    <label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 20, "maxlength" => 20, "style" => "width: 260px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+    <label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 40, "maxlength" => 40, "style" => "width: 520px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+    <label for="fieldKana" class="col-sm-2 control-label">フリガナ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kana", "size" => 40, "maxlength" => 40, "style" => "width: 520px;", "class" => "form-control", "id" => "fieldKana")) ?>
+    </div>
+ </div>
+</div>
+<div class="panel panel-success">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">
+  <a data-toggle="collapse" href="#shousai">詳細情報…</a>
+ </div>
+ <div class="panel-body collapse in" id="shousai"><!-- class に collapse を入れておくと閉じた状態 -->
+  <div class="col-sm-6">
+    <label for="fieldTanniMr1Cd" class="col-sm-4 control-label">単位1</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->select(array("tanni_mr1_cd", TanniMrs::find(["columns" => "cd , CONCAT(name) as cd_tanni"]), "using" => array("cd", "cd_tanni"),'useEmpty' => true, "style" => "width: 80px;", "class" => "form-control", "id" => "fieldTanniMr1Cd")) ?>
+    </div>
+    <label for="fieldTanniMr2Cd" class="col-sm-3 control-label">単位2</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->select(array("tanni_mr2_cd", TanniMrs::find(["columns" => "cd , CONCAT(name) as cd_tanni"]), "using" => array("cd", "cd_tanni"),'useEmpty' => true, "style" => "width: 80px;", "class" => "form-control", "id" => "fieldTanniMr2Cd")) ?>
+    </div>
+    <label for="fieldTankaKbn" class="col-sm-4 control-label">単価区分</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->selectStatic(array("tanka_kbn", array("1" => "1=単位1で金額計算する", "2" => "2=単位2で金額計算する"),'useEmpty' => true, "style" => "width: 100px;", "class" => "form-control", "id" => "fieldTankaKbn")) ?>
+    </div>
+    <label for="fieldZaikoKbn" class="col-sm-3 control-label">在庫区分</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->selectStatic(array("zaiko_kbn", array("1" => "1=単位1で在庫計算する", "2" => "2=単位2で在庫計算する"),'useEmpty' => true, "style" => "width: 100px;", "class" => "form-control", "id" => "fieldZaikoKbn")) ?>
+    </div>
+    <label for="fieldIrisuu" class="col-sm-4 control-label">入数</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("irisuu", "type" => "number", "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldIrisuu")) ?>
+    </div>
+    <label for="fieldKikaku" class="col-sm-4 control-label">規格・型番</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("kikaku", "size" => 20, "maxlength" => 20, "style" => "width: 260px;", "class" => "form-control", "id" => "fieldKikaku")) ?>
+    </div>
+    <label for="fieldIro" class="col-sm-4 control-label">色番</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("iro", "size" => 8, "maxlength" => 8, "style" => "width: 104px;", "class" => "form-control", "id" => "fieldIro")) ?>
+    </div>
+    <label for="fieldIromei" class="col-sm-4 control-label">色名</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("iromei", "size" => 16, "maxlength" => 16, "style" => "width: 208px;", "class" => "form-control", "id" => "fieldIromei")) ?>
+    </div>
+    <label for="fieldSize" class="col-sm-4 control-label">サイズ</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("size", "size" => 8, "maxlength" => 8, "style" => "width: 104px;", "class" => "form-control", "id" => "fieldSize")) ?>
+    </div>
+    <label for="fieldLot" class="col-sm-4 control-label">ロット</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("lot", "size" => 20, "maxlength" => 50, "style" => "width: 260px;", "class" => "form-control", "id" => "fieldLot")) ?>
+    </div>
+
+    <label for="fieldHinsituKbnCd" class="col-sm-4 control-label">標準品質</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->select(array("hinsitu_kbn_cd", HinsituKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, "style" => "width: 130px;", "class" => "form-control", "id" => "fieldHinsituKbnCd")) ?>
+    </div>
+    <label for="fieldSuu1Shousuu" class="col-sm-4 control-label">数量1小数桁</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("suu1_shousuu", "type" => "number", "class" => "form-control f-numb", "id" => "fieldSuu1Shousuu")) ?>
+    </div>
+    <label for="fieldSuu2Shousuu" class="col-sm-4 control-label">数量2小数桁</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("suu2_shousuu", "type" => "number", "class" => "form-control f-numb", "id" => "fieldSuu2Shousuu")) ?>
+	</div>
+    <label for="fieldTankaShousuu" class="col-sm-4 control-label">単価小数桁</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("tanka_shousuu", "type" => "number", "class" => "form-control f-numb", "id" => "fieldTankaShousuu")) ?>
+    </div>
+	<div class="clearfix"></div>
+    <label for="fieldKazeiKbnCd" class="col-sm-4 control-label">課税区分</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->select(array("kazei_kbn_cd", KazeiKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"),'useEmpty' => true, "style" => "width: 130px;", "class" => "form-control", "id" => "fieldKazeiKbnCd")) ?>
+    </div>
+    <label for="fieldZaikokanri" class="col-sm-4 control-label">在庫管理</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->selectStatic(array("zaikokanri", array("1" => "1=在庫管理を行う", "2" => "2=在庫管理を行なわない"),'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldZaikokanri")) ?>
+    </div>
+    <label for="fieldHacchuuLot" class="col-sm-4 control-label">発注ロット</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("hacchuu_lot", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldHacchuuLot")) ?>
+    </div>
+    <label for="fieldLeadTime" class="col-sm-4 control-label">リードタイム</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("lead_time", "type" => "number", "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldLeadTime")) ?>
+    </div>
+    <label for="fieldZaikoTekisei" class="col-sm-4 control-label">在庫適正数</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("zaiko_tekisei", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldZaikoTekisei")) ?>
+    </div>
+    <label for="fieldZaikoHyoukaKbnCd" class="col-sm-4 control-label">在庫評価方法</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->select(array("zaiko_hyouka_kbn_cd", ZaikoHyoukaKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]),'useEmpty' => true, "using" => array("cd", "cd_name"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldZaikoHyoukaKbnCd")) ?>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <label for="fieldShuShiiresakiMrCd" class="col-sm-4 control-label">主たる仕入先</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("shu_shiiresaki_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 182px;", "class" => "form-control", "id" => "fieldShuShiiresakiMrCd")) ?>
+    </div>
+    <label for="fieldShuSoukoMrCd" class="col-sm-4 control-label">主たる倉庫</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->select(array("shu_souko_mr_cd", SoukoMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]),'useEmpty' => true, "using" => array("cd", "cd_name"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldShuSoukoMrCd")) ?>
+    </div>
+    <label for="fieldHacchuuRendou" class="col-sm-4 control-label">発注連動</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->selectStatic(array("hacchuu_rendou", array("1" => "1=非対象", "2" => "2=対象"),'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldHacchuuRendou")) ?>
+    </div>
+    <label for="fieldGenZaiko" class="col-sm-4 control-label">現在庫数</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("gen_zaiko", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldGenZaiko")) ?>
+    </div>
+    <label for="fieldLastShukkoDate" class="col-sm-4 control-label">最終出庫日</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("last_shukko_date", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-cent", "id" => "fieldLastShukkoDate")) ?>
+    </div>
+    <label for="fieldLastNyuukoDate" class="col-sm-4 control-label">最終入庫日</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("last_nyuuko_date", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-cent", "id" => "fieldLastNyuukoDate")) ?>
+    </div>
+    <label for="fieldJoudai" class="col-sm-4 control-label">上代</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("joudai", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldJoudai")) ?>
+    </div>
+    <label for="fieldUriTanka1" class="col-sm-4 control-label">売上単価１</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("uri_tanka1", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldUriTanka1")) ?>
+    </div>
+    <label for="fieldUriTanka2" class="col-sm-4 control-label">売上単価２</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("uri_tanka2", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldUriTanka2")) ?>
+    </div>
+    <label for="fieldUriTanka3" class="col-sm-4 control-label">売上単価３</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("uri_tanka3", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldUriTanka3")) ?>
+    </div>
+    <label for="fieldUriTanka4" class="col-sm-4 control-label">売上単価４</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("uri_tanka4", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldUriTanka4")) ?>
+    </div>
+    <label for="fieldUriGenka" class="col-sm-4 control-label">売上原価</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("uri_genka", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldUriGenka")) ?>
+    </div>
+    <label for="fieldShiireTanka" class="col-sm-4 control-label">仕入単価</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("shiire_tanka", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldShiireTanka")) ?>
+    </div>
+    <label for="fieldHyoujunGenka" class="col-sm-4 control-label">標準原価</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("hyoujun_genka", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldHyoujunGenka")) ?>
+    </div>
+    <label for="fieldHyoukasageGenka" class="col-sm-4 control-label">評価下げ時原価</label>
+    <div class="col-sm-8">
+        <?php echo $this->tag->textField(array("hyoukasage_genka", "size" => 10, "maxlength" => 10, "style" => "width: 130px;", "class" => "form-control f-numb", "id" => "fieldHyoukasageGenka")) ?>
+    </div>
+  </div>
+ </div>
+</div>
+<div class="panel panel-warning">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">
+  <a data-toggle="collapse" href="#bunrui">分類情報…</a>
+ </div>
+ <div class="panel-body collapse in" id="bunrui"><!-- class に collapse を入れておくと閉じた状態 -->
+    <label for="fieldShouhinBunrui1KbnCd" class="col-sm-2 control-label">分類１</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->select(array("shouhin_bunrui1_kbn_cd", ShouhinBunrui1Kbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name") ,'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldShouhinBunrui1KbnCd")) ?>
+    </div>
+    <label for="fieldShouhinBunrui2KbnCd" class="col-sm-2 control-label">分類２</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->select(array("shouhin_bunrui2_kbn_cd", ShouhinBunrui2Kbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldShouhinBunrui2KbnCd")) ?>
+    </div>
+    <label for="fieldShouhinBunrui3KbnCd" class="col-sm-2 control-label">分類３</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->select(array("shouhin_bunrui3_kbn_cd", ShouhinBunrui3Kbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldShouhinBunrui3KbnCd")) ?>
+    </div>
+    <label for="fieldShouhinBunrui4KbnCd" class="col-sm-2 control-label">分類４</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->select(array("shouhin_bunrui4_kbn_cd", ShouhinBunrui4Kbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldShouhinBunrui4KbnCd")) ?>
+    </div>
+    <label for="fieldShouhinBunrui5KbnCd" class="col-sm-2 control-label">分類５</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->select(array("shouhin_bunrui5_kbn_cd", ShouhinBunrui5Kbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldShouhinBunrui5KbnCd")) ?>
+    </div>
+    <label for="fieldSanshouHyouji" class="col-sm-2 control-label">参照表示</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->selectStatic(array("sanshou_hyouji", array("1" => "1=表示する", "0" => "2=表示しない"),'useEmpty' => true, "style" => "width: 200px;", "class" => "form-control", "id" => "fieldSanshouHyouji")) ?>
+    </div>
+    <label for="fieldMemo" class="col-sm-2 control-label">メモ欄</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("memo", "size" => 50, "maxlength" => 50, "style" => "width: 650px;", "class" => "form-control", "id" => "fieldMemo")) ?>
+    </div>
+ </div>
+</div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<script type="text/javascript">
+	var shouhin_mrs_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/edit/') ?>";
+	var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+	var shouhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/ajaxGet') ?>";
+	var shouhin_mrs_getKana = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shouhin_mrs/ajaxGetHurigana');?>"
+</script>

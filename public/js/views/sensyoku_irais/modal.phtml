@@ -1,0 +1,110 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/**@var array $joukens */
+?>
+
+<?php $title = "染色納期報告"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+echo $this->tag->form([
+        "sensyoku_irais/modalsave",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    ]);
+?>
+<br>
+<div class="col-sm-12">
+    <div class="form-group">
+        <label for="tokuisaki_mr_cd" class="col-sm-2 control-label">得意先選択</label>
+        <div class="col-sm-2">
+            <?php echo $this->tag->textField(["tokuisaki_mr_cd", "size" => 14, "maxlength" => 14, "class" => "form-control ime-i", "id" => "tokuisaki_mr_cd", "required" => "required"]) ?>
+        </div>
+        <div class="col-sm-7">
+            <?php echo $this->tag->textField(["tokuisaki_mr_name", "readonly" => "readonly", "class" => "form-control", "id" => "tokuisaki_mr_name"]) ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="shiiresaki_mr_cd" class="col-sm-2 control-label">仕入先選択</label>
+        <div class="col-sm-2">
+            <?php echo $this->tag->textField(["shiiresaki_mr_cd", "size" => 14, "maxlength" => 14, "class" => "form-control ime-i", "id" => "shiiresaki_mr_cd"]) ?>
+        </div>
+        <div class="col-sm-7">
+            <?php echo $this->tag->textField(["shiiresaki_mr_name", "readonly" => "readonly", "class" => "form-control", "id" => "shiiresaki_mr_name"]) ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="shiiresaki_mr_cd" class="col-sm-2 control-label">商品分類</label>
+        <div class="col-sm-2">
+            <?php echo $this->tag->selectStatic(["shouhin_bunrui",[0 => '', '10099' => '商品分類1', '10002' => '商品分類2', '10003' => '商品分類3', '10004' => '商品分類4', '10005' => '商品分類5',], "class" => "form-control ime-i", "id" => "shouhin_bunrui"]) ?>
+        </div>
+        <div class="col-sm-2">
+            <?php echo $this->tag->textField(["shouhin_bunrui_from", "class" => "form-control", "id" => "shouhin_bunrui_from"]) ?>
+        </div>
+        <div class="col-sm-1">
+            ～
+        </div>
+        <div class="col-sm-2">
+            <?php echo $this->tag->textField(["shouhin_bunrui_to", "class" => "form-control", "id" => "shouhin_bunrui_to"]) ?>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6">
+            <span id="getHoukoku" class="btn btn-success">報告データ取得</span>
+            <span id="export" class="btn btn-info">エクセル出力</span>
+            <button type="button" class="btn btn-warning" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">
+                キャンセル
+            </button>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="spacer"><br /></div>
+<?php echo $this->tag->endForm(); ?>
+
+<div class="col-sm-12">
+    <table class="table table-striped">
+        <thead style="background-color: lavender">
+            <tr>
+                <th>発注NO</th>
+                <th>明細ID</th>
+                <th>ユーザーNO</th>
+                <th>染工場</th>
+                <th>製品名</th>
+                <th>色番</th>
+                <th>ロット</th>
+                <th>色名</th>
+                <th>数量</th>
+                <th>本数</th>
+                <th>納期</th>
+            </tr>
+        </thead>
+        <tbody>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    const getTokuisakiName = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/ajaxGet') ?>";
+    const getShiiresakiName = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/ajaxGet') ?>";
+    const junjoKbnsAjaxHanni = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('junjo_kbns/ajaxHanni') ?>";
+    const exportExcel = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('sensyoku_irais/exportExcel') ?>";
+    const getHoukokuData = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('sensyoku_irais/getHoukokuData') ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/sensyoku_irais_export.js'); ?>?var=20210217"></script>

@@ -1,0 +1,128 @@
+<?php use Phalcon\Tag; ?>
+
+<?php $title = 'ナビ.導入'; ?>
+
+<?php echo $this->getContent(); ?>
+
+<p />
+<div class="panel panel-primary center-block" style="width:600px">
+ <div class="panel-heading" style="font-size: 24px; padding:0px 15px;">導入</div>
+    <table class="table navis">
+      <tr>
+        <th colspan=5 class="active" style="height: 20px; padding:0px 15px;">自社の設定</th>
+      </tr>
+      <tr>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('kihon_mrs/edit/1', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />基本情報</div>', /* 'target'=>'_blank' , */
+          'title' => '事業所名や住所など自社の基本的な情報を登録します。伝票番号の付番方法や端数処理方法など販売管理の運用に関する情報もここで設定します。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('tantou_mrs', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />担当者</div>', /* 'target'=>'_blank' , */
+          'title' => '伝票の入力者や得意先に対する営業担当者など自社の従業員を登録します。レポートを作成する際、担当者別に集計することができます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('kihon_mrs/edit/1', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />帳票自社名<br />の設定</div>', /* 'target'=>'_blank' , */
+          'title' => '伝票や請求書などに印刷する自社名欄を編集します。自社名欄は、帳票ごとに設定することができます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('menu_group_mrs/menu/2', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />分類台帳</div>', /* 'target'=>'_blank' , */
+          'title' => '得意先や仕入先、商品をグループ分けするための分類を登録します。また、担当者の部門を登録することもできます。レポートを作成する際、分類別に集計することができます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('souko_mrs', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />倉庫</div>', /* 'target'=>'_blank' , */
+          'title' => '名称や住所など倉庫の情報を登録します。倉庫の情報は、伝票作成時にコード入力をすると自動的に表示されます。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <th colspan=5 class="active" style="height: 20px; padding:0px 15px;">台帳の設定</th>
+      </tr>
+      <tr>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('tokuisaki_mrs/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />得意先</div>', /* 'target'=>'_blank' , */
+          'title' => '名称や住所、取引条件など得意先の情報を登録します。得意先の情報は、伝票作成時にコードを入力すると自動で表示されます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('shiiresaki_mrs/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />仕入先</div>', /* 'target'=>'_blank' , */
+          'title' => '名称や住所、取引条件など仕入先の情報を登録します。仕入先の情報は、伝票作成時にコードを入力すると自動で表示されます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />商品</div>', /* 'target'=>'_blank' , */
+          'title' => '名称や単価など商品の情報を登録します。商品の情報は、伝票作成時にコードを入力すると自動で表示されます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('joukenhyou_mrs/editg', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />条件表</div>', /* 'target'=>'_blank' , */
+          'title' => '商品の加工条件などの情報を登録します。条件表の情報は、発注伝票に添付して加工条件を指定します。')); ?>
+        </td>
+
+          <td align="center" width="120px">
+              <?php echo $this->tag->linkTo(array('/index/export_excel', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />台帳EXCEL出力</div>', /* 'target'=>'_blank' , */
+                  'title' => '各種台帳類をExcel出力します。新規にファイルが作成されダウンロードされます。')); ?>
+          </td>
+      </tr>
+      <tr>
+        <th colspan=5 class="active" style="height: 20px; padding:0px 15px;">残高の設定</th>
+      </tr>
+      <tr>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('tokuisaki_mrs/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />売掛残高</div>', /* 'target'=>'_blank' , */
+          'title' => '請求先の売掛金を月ごとに確認できます。販売管理の導入時の売掛金の入力や残高の修正をすることもできます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('shiiresaki_mrs/new', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />買掛残高</div>', /* 'target'=>'_blank' , */
+          'title' => '仕入先の買掛金を月ごとに確認できます。販売管理の導入時の買掛金の入力や残高の修正をすることもできます。')); ?>
+        </td>
+        <td align="center" width="120px">
+          <?php echo $this->tag->linkTo(array('zaiko_henkan_dts/new?kbn=5', '<div>'.Phalcon\Tag::image("img/sample/f_f_business_63_s32_f_business_63_2nbg.png"). '<br />導入時在庫<br />入力</div>', /* 'target'=>'_blank' , */
+          'title' => '販売管理の導入時の在庫を商品別に登録します。')); ?>
+        </td>
+        <td colspan=2 width="240px">
+          <?php echo Phalcon\Tag::image(array("img/navigators/sitaya.gif", 'style'=>'position: relative; top: -37px; left: -87px;')); ?>
+        </td>
+      </tr>
+      <tr>
+        <th colspan=5 class="active" style="height: 20px; padding:0px 15px;">設定</th>
+      </tr>
+      <tr>
+        <td colspan=5 class="active">
+          <table class="table active">
+            <tr class="table active">
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('shimegrp_kbns', '<div><i class="far fa-check-circle mr-1"></i>請求締グループ</div>', /* 'target'=>'_blank' , */
+                'title' => '請求締日が同じ請求先のグループを登録します。グループ単位で請求先の請求締切処理を実行することができます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('nyuukin_kbns/new', '<div><i class="far fa-check-circle mr-1"></i>入金区分</div>', /* 'target'=>'_blank' , */
+                'title' => '売掛金を回収する際の入金の種類を登録します。登録した入金区分は入金伝票の入力時に選択することができます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('mijissou', '<div><i class="far fa-check-circle mr-1"></i>環境設定</div>', /* 'target'=>'_blank' , */
+                'title' => '販売管理のバックアップなどの設定をします。')); ?>
+              </td>
+            </tr>
+            <tr class="table active">
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('shimegrp_kbns', '<div><i class="far fa-check-circle mr-1"></i>支払締グループ</div>', /* 'target'=>'_blank' , */
+                'title' => '支払締日が同じ仕入先のグループを登録します。グループ単位で仕入先の支払締切処理を実行することができます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+                <?php echo $this->tag->linkTo(array('shiharai_kbns/new', '<div><i class="far fa-check-circle mr-1"></i>支払区分</div>', /* 'target'=>'_blank' , */
+                'title' => '買掛金を支払う際の支払の種類を登録します。登録した支払区分は出金伝票の入力時に選択することができます。')); ?>
+              </td>
+              <td width="200px" style="border-style: none;">
+              </td>
+            </tr>
+            <tr class="table active">
+              <td width="200px" style="border-style: none;">
+                 
+              </td>
+              <td width="200px" style="border-style: none;">
+              </td>
+              <td width="200px" style="border-style: none;">
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+</div>
+

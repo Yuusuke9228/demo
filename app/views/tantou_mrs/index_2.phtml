@@ -1,0 +1,170 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+
+/*
+ * アクセスライクな更新を実装(テーブル)
+ * Add By Nishiyama 2019/1/11
+ * 井浦さんに確認してもらってから最終実装調整する。
+ * Jquery Handsontable 使用。
+ * Controllerのアクション部は更新部をコメント化することで更新を抑制
+ */
+?>
+<?php use Phalcon\Tag; ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->get('css/handsontable.full.css') ?>">
+<script src="<?php echo $this->url->get('js/jquery/handsontable.full.js') ?>"></script>
+
+<?php $title = "担当者マスタ.一覧"; ?>
+
+<div class="page-header">
+    <h3>担当者マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+<?php $this->partial("common/indexkanni",["table_id"=>"tantou_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]);
+?>
+<div id="grid" class="handsontable"></div>
+<div id="msg" class="msg"></div>
+<?php
+    //ControllerBaseのindexCdより受け取った値をjsonに変換してjsに渡す。
+    $buff = $page->items;
+    $data_php = json_encode($buff);
+?>
+<script>
+    $(document).ready(function () {
+        //PHPから値の受け取り
+        var js_array = <?php echo $data_php; ?>;
+        //console.log(js_array);
+
+        //Tableを表示するdiv要素
+        var grid = document.getElementById('grid');
+        //status message 表示用div要素
+        var msg = document.getElementById("msg");
+        //表要素指定
+        var hot = new Handsontable(grid, {
+            data: js_array,         //表示data指定
+            minSpareRows: 1,       //表の一番下空行数
+            colHeaders: ['id','cd','name','kana_mei','bumon_mr_cd','user_cd','id_moto','hikae_dltflg','hikae_user_id','hikae_nichiji','sakusei_user_id','created','kousin_user_id','updated'],
+            colWidths: [60,100,200,200,100,120,100,100,120,200,100,200,100,200],
+            columnSorting: true,
+            contextMenu: true,
+            enterMoves: { row: 0, col: 1 },
+            outsideClickDeselects: true,
+            manualColumnResize: true,
+            fillHandle: false,
+            fixedColumnsLeft: 3,
+            undo: true,
+            customBorders: [
+                {
+                    range: {
+                        from: {col: 0, row: 0},
+                        to: {col: 15, row: 0}
+                    },
+                    top: {
+                        width: 1.5,
+                        color: 'Blue'
+                    },
+                }
+            ],
+            //値が変更されたときの処理
+            afterChange: function(change, source) {
+                if (source === 'loadData') {
+                    return;
+                }
+                var row = change[0][0];
+                //編集されたデータ行をDBのkeyと結合させる
+                row_data = this.getDataAtRow(row);
+                var keys = ['id','cd','name','kana_mei','bumon_mr_cd','user_cd','id_moto','hikae_dltflg','hikae_user_id','hikae_nichiji','sakusei_user_id','created','kousin_user_id','updated'],
+                    values = row_data,
+                    array = [];
+                for (var i = 0, l = keys.length, obj = Object.create(null); i < l; ++i) {
+                    if (values.hasOwnProperty(i)) {
+                        obj[keys[i]] = values[i];
+                    }
+                }
+                //PHPへ渡すObject
+                row_data = obj;
+                //console.log(row_data);
+                $.ajax({
+                    url: "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('tantou_mrs/saveAjax') ?>",
+                    dataType: "json",
+                    type: "POST",
+                    data: row_data,
+                    success: function(res) {
+                        console.log(res);       //更新したidを確認用の返却値として受け取る。
+                        console.log("updated!!");
+                        msg.innerText = "データベースへの更新処理が成功しました。";
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        msg.innerText = textStatus;
+                        console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+                        console.log("textStatus     : " + textStatus);
+                        console.log("errorThrown    : " + errorThrown.message);
+                    }
+                });
+            }
+        });
+        function bindDumpButton() {
+            Handsontable.Dom.addEvent(document.body, 'click', function (e) {
+                var element = e.target || e.srcElement;
+                if (element.nodeName == "BUTTON" && element.name == 'dump') {
+                    var name = element.getAttribute('data-dump');
+                    var instance = element.getAttribute('data-instance');
+                    var hot = window[instance];
+                    console.log('data of ' + name, hot.getData());
+                }
+            });
+        }
+        bindDumpButton();
+    });
+</script>
+
+<!-- 元のテーブル -->
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+        <tr>
+            <?php $this->partial("common/indexsort",["flds"=>[
+                ["id","Id"],
+                ["cd","担当コード"],
+                ["name","担当者名"],
+                ["kana_mei","フリガナ"],
+                ["bumon_mr_cd","部門"],
+                ["bumon_mr_cd","部門名"],
+                ["updated","更新日時"],
+            ]])
+            ?>
+
+            <th>削除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $tantou_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("tantou_mrs/edit/" . $tantou_mr->id, $tantou_mr->id)); ?></td>
+                <td><div id="myTD" contentEditable><?php echo $tantou_mr->cd ?></div></td>
+                <td><div id="myTD" contentEditable><?php echo $tantou_mr->name ?></div></td>
+                <td><div id="myTD" contentEditable><?php echo $tantou_mr->kana_mei ?></div></td>
+                <td><div id="myTD" contentEditable><?php echo $tantou_mr->bumon_mr_cd ?></div></td>
+                <td><div id="myTD" contentEditable><?php echo $tantou_mr->BumonMrs->name ?></div></td>
+                <td><div id="myTD" contentEditable><?php echo $tantou_mr->updated ?></div></td>
+                <td><?php echo $this->tag->linkTo(array("tantou_mrs/delete/" . $tantou_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+    <ul class="pagination">
+        <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tantou_mrs/index", "<<最初*11", "id"=>"F11")) ?></li>
+        <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tantou_mrs/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+        <li class="active"><?php echo $this->tag->linkTo("tantou_mrs/index?page=" . $page->current, $page->current . "頁") ?></li>
+        <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tantou_mrs/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+        <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("tantou_mrs/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+    </ul>
+</div>
+

@@ -1,0 +1,140 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["hisasip2_dts", "Back"]) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Edit hisasip2_dts
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "hisasip2_dts/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="field指図番号2" class="col-sm-2 control-label">指図番号2</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["指図番号2", "type" => "number", "class" => "form-control", "id" => "field指図番号2"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field指図本数" class="col-sm-2 control-label">指図本数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["指図本数", "type" => "number", "class" => "form-control", "id" => "field指図本数"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field合格本数" class="col-sm-2 control-label">合格本数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["合格本数", "type" => "number", "class" => "form-control", "id" => "field合格本数"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field小玉本数" class="col-sm-2 control-label">小玉本数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["小玉本数", "type" => "number", "class" => "form-control", "id" => "field小玉本数"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field納品本数" class="col-sm-2 control-label">納品本数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["納品本数", "type" => "number", "class" => "form-control", "id" => "field納品本数"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldワインダ行" class="col-sm-2 control-label">ワインダ行</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["ワインダ行", "size" => 30, "class" => "form-control", "id" => "fieldワインダ行"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field小玉量" class="col-sm-2 control-label">小玉量</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["小玉量", "size" => 30, "class" => "form-control", "id" => "field小玉量"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field指図量" class="col-sm-2 control-label">指図量</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["指図量", "size" => 30, "class" => "form-control", "id" => "field指図量"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field生産量" class="col-sm-2 control-label">生産量</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["生産量", "size" => 30, "class" => "form-control", "id" => "field生産量"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field納品量" class="col-sm-2 control-label">納品量</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["納品量", "size" => 30, "class" => "form-control", "id" => "field納品量"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field先造り指図分" class="col-sm-2 control-label">先造り指図分</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["先造り指図分", "size" => 30, "class" => "form-control", "id" => "field先造り指図分"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldフリー払出量" class="col-sm-2 control-label">フリー払出量</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["フリー払出量", "size" => 30, "class" => "form-control", "id" => "fieldフリー払出量"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field在庫調整量" class="col-sm-2 control-label">在庫調整量</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["在庫調整量", "size" => 30, "class" => "form-control", "id" => "field在庫調整量"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="field空白" class="col-sm-2 control-label">空白</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["空白", "size" => 30, "class" => "form-control", "id" => "field空白"]) ?>
+    </div>
+</div>
+
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Save", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

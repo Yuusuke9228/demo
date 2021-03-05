@@ -1,0 +1,154 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["higenr_vws", "Back"]) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Edit higenr_vws
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "higenr_vws/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldSasizuNo" class="col-sm-2 control-label">Sasizu Of No</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["sasizu_no", "type" => "number", "class" => "form-control", "id" => "fieldSasizuNo"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldGenryouJun" class="col-sm-2 control-label">Genryou Of Jun</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["genryou_jun", "type" => "number", "class" => "form-control", "id" => "fieldGenryouJun"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldItoshu" class="col-sm-2 control-label">Itoshu</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["itoshu", "type" => "number", "class" => "form-control", "id" => "fieldItoshu"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldItocode" class="col-sm-2 control-label">Itocode</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["itocode", "size" => 30, "class" => "form-control", "id" => "fieldItocode"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldGentanni" class="col-sm-2 control-label">Gentanni</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["gentanni", "size" => 30, "class" => "form-control", "id" => "fieldGentanni"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldChokuyoriKbn" class="col-sm-2 control-label">Chokuyori Of Kbn</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["chokuyori_kbn", "type" => "number", "class" => "form-control", "id" => "fieldChokuyoriKbn"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldChokuyoriSasizuNo" class="col-sm-2 control-label">Chokuyori Of Sasizu Of No</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["chokuyori_sasizu_no", "type" => "number", "class" => "form-control", "id" => "fieldChokuyoriSasizuNo"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUkeireSasizu" class="col-sm-2 control-label">Ukeire Of Sasizu</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["ukeire_sasizu", "size" => 30, "class" => "form-control", "id" => "fieldUkeireSasizu"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUkeireZumi" class="col-sm-2 control-label">Ukeire Of Zumi</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["ukeire_zumi", "size" => 30, "class" => "form-control", "id" => "fieldUkeireZumi"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldFreeUkeireSasizu" class="col-sm-2 control-label">Free Of Ukeire Of Sasizu</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["free_ukeire_sasizu", "size" => 30, "class" => "form-control", "id" => "fieldFreeUkeireSasizu"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldFreeUkeireZumi" class="col-sm-2 control-label">Free Of Ukeire Of Zumi</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["free_ukeire_zumi", "size" => 30, "class" => "form-control", "id" => "fieldFreeUkeireZumi"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldShouhiChouseiSasizu" class="col-sm-2 control-label">Shouhi Of Chousei Of Sasizu</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["shouhi_chousei_sasizu", "size" => 30, "class" => "form-control", "id" => "fieldShouhiChouseiSasizu"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldShouhiChouseiZumi" class="col-sm-2 control-label">Shouhi Of Chousei Of Zumi</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["shouhi_chousei_zumi", "size" => 30, "class" => "form-control", "id" => "fieldShouhiChouseiZumi"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldShouhiZumi" class="col-sm-2 control-label">Shouhi Of Zumi</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["shouhi_zumi", "size" => 30, "class" => "form-control", "id" => "fieldShouhiZumi"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldKanryouKbn" class="col-sm-2 control-label">Kanryou Of Kbn</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["kanryou_kbn", "type" => "number", "class" => "form-control", "id" => "fieldKanryouKbn"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldKuuhaku" class="col-sm-2 control-label">Kuuhaku</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["kuuhaku", "size" => 30, "class" => "form-control", "id" => "fieldKuuhaku"]) ?>
+    </div>
+</div>
+
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Save", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

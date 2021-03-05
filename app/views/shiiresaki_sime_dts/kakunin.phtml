@@ -1,0 +1,182 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "出金.確認"; ?>
+<div class="page-header">
+    <h3>出金内容の確認</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+<?php
+    echo $this->tag->form(
+        array(
+            "shiiresaki_sime_dts/kakunin",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+  <div class="col-sm-8">
+    <label for="fieldKikanFlg" class="col-sm-3 control-label">期間</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->select(array("kikan_flg", array("0" => "0=支払予定日", "1" => "1=支払締日"), "class" => "form-control", "id" => "fieldKikanFlg")) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->textField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent", "id" => "fieldKikanFrom")) ?>
+    </div>
+    <div class="col-sm-1">～
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->textField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent", "id" => "fieldKikanTo")) ?>
+    </div>
+    <label for="fieldShimegrpKbnCd" class="col-sm-3 control-label">締グループ</label>
+    <div class="col-sm-5">
+        <?php echo $this->tag->select(array("shimegrp_kbn_cd", ShimegrpKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldShimegrpKbnCd")) ?>
+    </div>
+	<div class="clearfix"></div>
+
+	<label for="fieldShiharaiKbnCd" class="col-sm-3 control-label">支払区分</label>
+    <div class="col-sm-5">
+        <?php echo $this->tag->select(array("shiharai_kbn_cd", ShiharaiKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldShiharaiKbnCd")) ?>
+    </div>
+	<div class="clearfix"></div>
+  </div>
+  <div class="col-sm-4">
+    <div class="col-sm-6">
+        <?php echo $this->tag->submitButton(array("集計F12", "id" => "F12", "name" => "simekiri_btn", "class" => "btn btn-warning", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+	<div class="clearfix"></div>
+  </div>
+
+</div>
+<?php
+	$kingaku1k = 0;
+	$kingaku2k = 0;
+	$kingaku3k = 0;
+	$kingakuk = 0;
+	$kakuteik = 0;
+?>
+<div class="form-group">
+ <div style="overflow-x: scroll;padding: 0;width:1210px;">
+<style>.tb-naiyou>tbody>tr>td {padding:0px 5px;}</style>
+    <table width="1210px" id="tb_naiyou" class="table-bordered tb-naiyou table-striped table-hover">
+        <thead style="display: block;">
+            <tr class="tr-blu">
+				<th class="t-cent" width="95px">仕入先コード</th>
+				<th class="t-cent" width="200px">仕入先名</th>
+				<th class="t-cent" width="85px">支払予定日</th>
+				<th class="t-cent" width="30px">1</th>
+				<th class="t-cent" width="80px">支払区分1</th>
+				<th class="t-cent" width="80px">金額1</th>
+				<th class="t-cent" width="30px">2</th>
+				<th class="t-cent" width="80px">支払区分2</th>
+				<th class="t-cent" width="80px">金額2</th>
+				<th class="t-cent" width="30px">3</th>
+				<th class="t-cent" width="80px">支払区分3</th>
+				<th class="t-cent" width="80px">金額3</th>
+				<th class="t-cent" width="80px">手形期日</th>
+				<th class="t-cent" width="80px">予定額</th>
+				<th class="t-cent" width="80px">確定額</th>
+            </tr>
+        </thead>
+        <tbody style="display: block;overflow-y: scroll;height: 200px;">
+        <?php foreach ($shukkin_naiyous as $shukkin_naiyou): ?>
+            <tr>
+                <td width="95px"><?php echo $shukkin_naiyou['cd'] ?></td>
+                <td width="200px"><?php echo $shukkin_naiyou['name'] ?></td>
+                <td class="t-cent" width="85px"><?php echo $shukkin_naiyou['shiharai_yoteibi'] ?></td>
+                <td class="t-cent" width="30px"><?php echo $shukkin_naiyou['shiharai_kbn1_cd'] ?></td>
+                <td width="80px"><?php echo $shukkin_naiyou['shiharai_kbn1_name'] ?></td>
+                <td class="t-right" width="80px"><?php echo number_format($kingaku1 = $shukkin_naiyou['kingaku1']); $kingaku1k += $kingaku1 ?></td>
+                <td class="t-cent" width="30px"><?php echo $shukkin_naiyou['shiharai_kbn2_cd'] ?></td>
+                <td width="80px"><?php echo $shukkin_naiyou['shiharai_kbn2_name'] ?></td>
+                <td class="t-right" width="80px"><?php echo number_format($kingaku2 = $shukkin_naiyou['kingaku2']); $kingaku2k += $kingaku2 ?></td>
+                <td class="t-cent" width="30px"><?php echo $shukkin_naiyou['shiharai_kbn3_cd'] ?></td>
+                <td width="80px"><?php echo $shukkin_naiyou['shiharai_kbn3_name'] ?></td>
+                <td class="t-right" width="80px"><?php echo number_format($kingaku3 = $shukkin_naiyou['kingaku3']); $kingaku3k += $kingaku3 ?></td>
+                <td class="t-cent" width="80px"><?php echo $shukkin_naiyou['tegata_sight'] ?></td>
+                <td class="t-right" width="80px"><?php echo number_format($kingaku = $shukkin_naiyou['kingaku']); $kingakuk += $kingaku ?></td>
+                <td class="t-right" width="80px"><?php echo number_format($kingaku1+$kingaku2+$kingaku3) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <table width="1210px" class="table-bordered tb_naiyou">
+        <tbody style="display: block;">
+            <tr>
+				<td class="t-cent" width="295px" colspan="2">総合計</td>
+				<td width="85px"></td>
+				<td width="30px"></td>
+				<td width="80px"></td>
+				<td class="t-right" width="80px"><?php echo number_format($kingaku1k) ?></td>
+				<td width="30px"></td>
+				<td width="80px"></td>
+				<td class="t-right" width="80px"><?php echo number_format($kingaku2k) ?></td>
+				<td width="30px"></td>
+				<td width="80px"></td>
+				<td class="t-right" width="80px"><?php echo number_format($kingaku3k) ?></td>
+				<td width="80px"></td>
+				<td class="t-right" width="80px"><?php echo number_format($kingakuk) ?></td>
+				<td class="t-right" width="80px"><?php echo number_format($kingaku1k+$kingaku2k+$kingaku3k) ?></td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+<div class="form-group">
+    <label for="fieldShiiresakiMrCd" class="col-sm-1 control-label">仕入先</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("shiiresaki_mr_cd", "class" => "form-control ime-i", "id" => "fieldShiresakiMrCd")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("shiiresaki_mr_name", "class" => "form-control ime-i", "id" => "fieldShiresakiMrName")) ?>
+    </div>
+    <label for="fieldZenShimebi" class="col-sm-1 control-label">締日</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("zen_shimebi", "class" => "form-control ime-i", "id" => "fieldZenShimebi")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("shimebi", "class" => "form-control ime-i", "id" => "fieldShimebi")) ?>
+    </div>
+</div>
+<div class="form-group">
+  <div class="col-sm-10">
+    <div class="col-sm-2">
+        <label for="fieldZengetuMatuZan" class="col-sm-12 control-label lbl-grn-up">前月末残</label>
+        <?php echo $this->tag->telField(array("zengetu_matu_zan", "class" => "form-control f-cent", 'readonly'=>'readonly', "id" => "fieldZengetuMatuZan")) ?>
+    </div>
+    <div class="col-sm-2">
+        <label for="fieldZengetuMatuZan" class="col-sm-12 control-label lbl-grn-up">当月払予定額</label>
+        <?php echo $this->tag->telField(array("zengetu_matu_zan", "class" => "form-control f-cent", 'readonly'=>'readonly', "id" => "fieldZengetuMatuZan")) ?>
+    </div>
+    <div class="col-sm-2">
+        <label for="fieldZengetuMatuZan" class="col-sm-12 control-label lbl-grn-up">要支払額</label>
+        <?php echo $this->tag->telField(array("zengetu_matu_zan", "class" => "form-control f-cent", 'readonly'=>'readonly', "id" => "fieldZengetuMatuZan")) ?>
+    </div>
+    <div class="col-sm-2">
+        <label for="fieldZengetuMatuZan" class="col-sm-12 control-label lbl-grn-up">当月支払額</label>
+        <?php echo $this->tag->telField(array("zengetu_matu_zan", "class" => "form-control f-cent", 'readonly'=>'readonly', "id" => "fieldZengetuMatuZan")) ?>
+    </div>
+    <div class="col-sm-2">
+        <label for="fieldZengetuMatuZan" class="col-sm-12 control-label lbl-grn-up">以前滞納額</label>
+        <?php echo $this->tag->telField(array("zengetu_matu_zan", "class" => "form-control f-cent", 'readonly'=>'readonly', "id" => "fieldZengetuMatuZan")) ?>
+    </div>
+    <div class="col-sm-2">
+        <label for="fieldZengetuMatuZan" class="col-sm-12 control-label lbl-grn-up">当月滞納額</label>
+        <?php echo $this->tag->telField(array("zengetu_matu_zan", "class" => "form-control f-cent", 'readonly'=>'readonly', "id" => "fieldZengetuMatuZan")) ?>
+    </div>
+  </div>
+  <div class="col-sm-2">
+        <label for="fieldZengetuMatuZan" class="col-sm-12 control-label lbl-grn-up">当月末残</label>
+        <?php echo $this->tag->telField(array("zengetu_matu_zan", "class" => "form-control f-cent", 'readonly'=>'readonly', "id" => "fieldZengetuMatuZan")) ?>
+  </div>
+
+</div>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/shiiresaki_sime_kakunin.js'); ?>"></script>

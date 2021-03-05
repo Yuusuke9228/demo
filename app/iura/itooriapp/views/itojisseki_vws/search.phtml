@@ -1,0 +1,102 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["itojisseki_vws/index", "Go Back"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["itojisseki_vws/copyseisanoya", "複写親"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["itojisseki_vws/copyseisanko", "複写子"]); ?></li>
+            <li><a href="#" onclick="window.close()">閉じる</a></li>
+            <li class="next"><?php echo $this->tag->linkTo(["itojisseki_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nichiji</th>
+            <th>Rec Of Kbn</th>
+            <th>Seikei Of No</th>
+            <th>Genryou Of Jun</th>
+            <th>Sasizu Of No</th>
+            <th>Itoshu</th>
+            <th>Ito Of Code</th>
+            <th>Itoryou</th>
+            <th>Honsuu</th>
+            <th>Kishu</th>
+            <th>Floor</th>
+            <th>Gouki</th>
+            <th>Moto Of Kishu</th>
+            <th>Moto Of Frool</th>
+            <th>Denpyou Of No</th>
+            <th>Denpyou Of Eda</th>
+            <th>Sagyousha Of Code</th>
+            <th>Nouhinn Of Kbn</th>
+            <th>Oodama</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $itojisseki_vw): ?>
+            <tr>
+                <td><?php echo $itojisseki_vw->nichiji ?></td>
+            <td><?php echo $itojisseki_vw->rec_kbn ?></td>
+            <td><?php echo $itojisseki_vw->seikei_no ?></td>
+            <td><?php echo $itojisseki_vw->genryou_jun ?></td>
+            <td><?php echo $itojisseki_vw->sasizu_no ?></td>
+            <td><?php echo $itojisseki_vw->itoshu ?></td>
+            <td><?php echo $itojisseki_vw->ito_code ?></td>
+            <td><?php echo $itojisseki_vw->itoryou ?></td>
+            <td><?php echo $itojisseki_vw->honsuu ?></td>
+            <td><?php echo $itojisseki_vw->kishu ?></td>
+            <td><?php echo $itojisseki_vw->floor ?></td>
+            <td><?php echo $itojisseki_vw->gouki ?></td>
+            <td><?php echo $itojisseki_vw->moto_kishu ?></td>
+            <td><?php echo $itojisseki_vw->moto_floor ?></td>
+            <td><?php echo $itojisseki_vw->denpyou_no ?></td>
+            <td><?php echo $itojisseki_vw->denpyou_eda ?></td>
+            <td><?php echo $itojisseki_vw->sagyousha_code ?></td>
+            <td><?php echo $itojisseki_vw->nouhinn_kbn ?></td>
+            <td><?php echo $itojisseki_vw->oodama ?></td>
+
+                <td><?php echo $this->tag->linkTo(["itojisseki_vws/edit/" . $itojisseki_vw->nichiji, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["itojisseki_vws/delete/" . $itojisseki_vw->nichiji, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("itojisseki_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("itojisseki_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("itojisseki_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("itojisseki_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

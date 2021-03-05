@@ -1,0 +1,86 @@
+<?php
+//コントローラーで処理完結
+//		// Excel出力用ライブラリ
+//		include __DIR__ . '/../../vendor/PHPExcel/Classes/PHPExcel.php';
+//		include __DIR__ . '/../../vendor/PHPExcel/Classes/PHPExcel/Writer/Excel5.php';
+////		include __DIR__ . '/../../vendor/PHPExcel/Classes/PHPExcel/Writer/Excel2007.php';
+//		include __DIR__ . '/../../vendor/PHPExcel/Classes/PHPExcel/IOFactory.php'; //Include PHPExcel_IOFactory
+//
+//		//PHPExcelオブジェクトの作成
+//		//新規の場合
+//		$PHPExcel = new PHPExcel();
+//		$sheet = $PHPExcel->getActiveSheet();
+//
+//		$shu_titles = ["id","伝票番号","摘要","売上日","受注番号","見積番号","承認状態","承認者","税率適用日"
+//					,"得意先","取引区分","税転嫁","納入先","担当者","締切","単価種類","回収予定日","請求書番号"
+//					,"消込状態","納入期日","分類コード","伝票区分","元ID","控え時削除フラグ","控え操作者"
+//					,"控え日付","作成者","作成日時","更新者","更新日時"];
+//		$shu_nums = [1,1,0,0,1,1,1,0,0 ,0,0,0,0,0,0,0,0,0 ,1,0,0,0,1,1,0 ,0,0,0,0,0 ,0,0,0,0,]; //1=数値,0=文字列
+//		$shu_flds = ["id","cd","tekiyou","uriagebi","juchuu_cd","mitumori_cd","shounin_joutai_flg","shounin_sha_mr_cd","zeiritu_tekiyoubi"
+//					,"tokuisaki_mr_cd","torihiki_kbn_cd","zei_tenka_kbn_cd","nounyuusaki_mr_cd","tantou_mr_cd","shimekiri_flg","tanka_shurui_kbn_cd","kaishuu_yoteibi","seikyuusho_dt_cd"
+//					,"keshikomi_flg","nounyuu_kijitu","bunrui_cd","denpyou_kbn","id_moto","hikae_dltflg","hikae_user_id"
+//					,"hikae_nichiji","sakusei_user_id","created","kousin_user_id","updated"];
+//		$meisai_titles = ["id","行番","内訳","売上データID","出荷","商品コード","単位"
+//					,"入数","ケース","商品名/摘要","倉庫コード","規格型番","色","サイズ","数量","原単価","単価"
+//					,"金額","プロジェクトコード","課税区分","備考","元ID","控え時削除フラグ","控え操作者"
+//					,"控え日付","作成者","作成日時","更新者","更新日時"];
+//		$meisai_nums = [1,1,0,0,0,0,0 ,1,1,0,0,0,0,0,1,1,1 ,1,0,0,0,1,1,0,0,0,0,0,0 ,0,0,0,0,0,0,]; //1=数値,0=文字列
+//		$meisai_flds = ["id","cd","utiwake_kbn_cd","uriage_dt_id","shukka_kbn_cd","shouhin_mr_cd","tanni_mr_cd"
+//					,"irisuu","keisu","tekiyou","souko_mr_cd","kikaku","iro","size","suuryou","gentanka","tanka"
+//					,"kingaku","project_mr_cd","zeiritu_mr_cd","bikou","id_moto","hikae_dltflg","hikae_user_id"
+//					,"hikae_nichiji","sakusei_user_id","created","kousin_user_id","updated"];
+//		$sakuin_titles = ["得意先名","得意先部署名","得意先役職","得意先ご担当","得意先敬称","得意先郵便番","得意先住所1","得意先住所2","得意先売掛金"
+//					,"納入先名","納入先部署名","納入先役職","納入先ご担当","納入先敬称","納入先郵便番","納入先住所1","納入先住所2","納入先カナ"
+//					,"取引区分","税転嫁","担当者","単価種類","承認者","作成者","更新者"];
+//		$sakuin_nums = [0,0,0,0,0,0,0,0,0 ,0,0,0,0,0,0,0,0,0 ,0,0,0,0,0,0,0 ,0,0,0,0,]; //1=数値,0=文字列
+//		$sakuin_flds = [["TokuisakiMrs","name"],["TokuisakiMrs","bushomei"],["TokuisakiMrs","yakushoku"],["TokuisakiMrs","gotantousha"],["TokuisakiMrs","keishou"],["TokuisakiMrs","yuubin_bangou"],["TokuisakiMrs","juusho1"],["TokuisakiMrs","juusho2"],["TokuisakiMrs","kake_zandaka"]
+//					,["NounyuusakiMrs","name"],["NounyuusakiMrs","bushomei"],["NounyuusakiMrs","yakushoku"],["NounyuusakiMrs","gotantousha"],["NounyuusakiMrs","keishou"],["NounyuusakiMrs","yuubin_bangou"],["NounyuusakiMrs","juusho1"],["NounyuusakiMrs","juusho2"],["NounyuusakiMrs","kana"]
+//					,["TorihikiKbns","name"],["ZeitenkaKbns","name"],["TantouMrs","name"],["TankaShuruiKbns","name"],["Users","name"],["SakuseiUsers","name"],["KousinUsers","name"]];
+//		$meisaku_titles = ["内訳","商品名","単位","倉庫","課税区分","税率"];
+//		$meisaku_nums = [0,0,0,0,0,1 ,0,0,0,0,]; //1=数値,0=文字列
+//		$meisaku_flds = [["UtiwakeKbns","name"],["ShouhinMrs","name"],["TanniMrs","name"],["SoukoMrs","name"],["ZeirituMrs","name"],["ZeirituMrs","zeiritu"]];
+//
+//		$row = 1;
+//		$col = 0;
+//		foreach ($shu_titles as $shu_title) {
+//			$sheet->setCellValueByColumnAndRow($col++, $row, $shu_title);
+//		}
+//		foreach ($meisai_titles as $meisai_title) {
+//			$sheet->setCellValueByColumnAndRow($col++, $row, $meisai_title);
+//		}
+//		foreach ($sakuin_titles as $sakuin_title) {
+//			$sheet->setCellValueByColumnAndRow($col++, $row, $sakuin_title);
+//		}
+//		foreach ($meisaku_titles as $meisaku_title) {
+//			$sheet->setCellValueByColumnAndRow($col++, $row, $meisaku_title);
+//		}
+//		$row++;
+////		foreach ($uriage_dt->UriageMeisaiDts as $uriage_meisai_dt) {
+////			$col = 0;
+////			$i = 0;
+////			$row++;
+////		}//end foreach
+//
+//		// Excelファイルの保存 ------------------------------------------
+//
+//		//保存ファイル名
+//		$filename = uniqid("uridt", true) . '.xls';
+//
+//		// 保存ファイルパス
+//		$upload = __DIR__ . '/temp/';
+//		$path = $upload . $filename;
+//
+//		$objWriter = new PHPExcel_Writer_Excel5( $PHPExcel );   //2003形式で保存
+//		$objWriter->save( $path );
+//
+//		// Excelファイルをクライアントに出力 ----------------------------
+////		$response = new \Phalcon\Http\Response(); // Redirect output to a client's web browser (Excel2005)
+////		$response->setHeader('Content-Type', 'application/vnd.ms-excel');
+////		$response->setHeader('Content-Disposition', 'attachment;filename="' . $filename . '"');
+////		$response->setHeader('Cache-Control', 'max-age=0');
+////		$response->setHeader('Cache-Control', 'max-age=1'); // If you're serving to IE 9, then the following may be needed
+////		$response->setContent(file_get_contents($path)); //Set the content of the response
+////		unlink($path); // delete temp file
+////		return $response; //Return the response
+//		'php://output');//
+?>

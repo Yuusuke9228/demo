@@ -1,0 +1,105 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "カレンダーデータ.登録"; ?>
+<div class="page-header">
+    <h3>カレンダーデータ 登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+        )
+    );
+?>
+
+<style type="text/css">
+table,div.footer {
+    width: 95%;
+    margin: auto ;
+}
+td.tuki {
+    vertical-align: top;
+}
+
+table th {
+    background: #EEEEEE;
+}
+table th,
+table td {
+    border: 1px solid #CCCCCC;
+    text-align: center;
+    font-size: 16px;
+    padding: 3px;
+}
+a.shuk { /* 祝日 */
+	color: red !important;
+}
+a.sunday,
+th.sunday {
+	color: red !important;
+}
+a.sataday,th.sataday {
+	color: blue !important;
+}
+td.kyuugyou {
+	background: pink !important;
+}
+.ul {
+	text-decoration: underline;
+}
+a.bikou {
+	color: black;
+}
+select.font-big {
+	font-size: 24px;
+    border: 0;
+}
+.newpage {
+	page-break-before: always;
+}
+
+@media print{ /* 印刷時は非表示 */
+    .no_print{
+        display: none;
+    }
+}
+</style>
+
+<div class="form-group">
+<div class="col-sm-2 text-right newpage">
+    <?php echo $this->tag->select(array("cd", Konnnenndo::find(["columns" => "cd , CONCAT(cd , ' 年') as cd_nen", "order" => "cd DESC"]), "using" => array("cd", "cd_nen"), 'useEmpty' => true, 'emptyText' => '', "class" => "font-big", "id" => "fieldNen")) ?>
+</div>
+<label for="fieldNen" class="col-sm-3 control-label h4">Ｃａｌｅｎｄａｒ</label>
+<label for="fieldCd" class="col-sm-2 control-label h4 text-right"><span class="no_print">適用:</span></label>
+<div class="col-sm-5 text-center">
+    <?php echo $this->tag->select(array("cd", HCalendarPatanDts::find(["columns" => "cd, name, CONCAT(cd , '=' , name) as cd_name", "order" => "cd"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "class" => "font-big", "id" => "fieldCd")) ?>
+</div>
+<div>　</div>
+<div id='calendar'></div>
+
+<div class="col-sm-offset-2 col-sm-10 newpage"><div style='font-size:xx-large;' id='dispEmsg' name='emsg'></div></div>
+
+<div class="form-group">
+	<label for="fieldCopy" class="col-sm-offset-7 col-sm-1 control-label text-right">制御:</label>
+	<div class="col-sm-2">
+	    <?php echo $this->tag->selectStatic(array("copy", array("0"=>"0:通常", "1"=>"1:複写中"), 'useEmpty' => false, "class" => "form-control", "id" => "fieldCopy")) ?>
+	</div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->submitButton(array("登録F12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'save();return false;')) ?>
+    </div>
+</div>
+<div id='point_1' class='no_print'>※印刷には適度に縮小して2ページ目だけを印刷する。</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">
+	var this_url_base = "<?php echo $this->url->get() ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/h_calendar_dts_kantan.js'); ?>?var=20200306"></script>

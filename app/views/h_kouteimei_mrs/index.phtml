@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "工程名マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>工程名マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_kouteimei_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","名称"],
+                    ["shouhin_bunrui1_kbn_cd","商品分類1cd"],
+                    ["jun","並び順"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_kouteimei_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_kouteimei_mrs/edit/" . $h_kouteimei_mr->id, $h_kouteimei_mr->id)); ?></td>
+                <td><?php echo $h_kouteimei_mr->cd ?></td>
+                <td><?php echo $h_kouteimei_mr->name ?></td>
+                <td><?php echo $h_kouteimei_mr->shouhin_bunrui1_kbn_cd ?></td>
+                <td><?php echo $h_kouteimei_mr->jun ?></td>
+                <td><?php echo $h_kouteimei_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_kouteimei_mrs/delete/" . $h_kouteimei_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_kouteimei_mrs"]) ?>

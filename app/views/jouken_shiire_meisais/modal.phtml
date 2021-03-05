@@ -1,0 +1,256 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "条件仕入明細"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "jouken_shiire_nippous/modalsave",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+<br>
+<div class="form-group">
+<label for="fieldCd" class="col-sm-3 control-label">条件名</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->selectStatic(array("cd", $joukens, "style" => "width: 400px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+</div>
+<?php echo $this->tag->hiddenField("id") ?>
+<?php echo $this->tag->hiddenField("name") ?>
+<?php echo $this->tag->hiddenField("junjo_kbn_table") ?>
+<?php echo $this->tag->hiddenField("tuujou_flg"); /*通常*/ ?>
+<?php echo $this->tag->hiddenField("henpin_flg"); /*返品*/ ?>
+<?php echo $this->tag->hiddenField("nebiki_flg"); /*値引*/ ?>
+<?php echo $this->tag->hiddenField("shokeihi_flg"); /*諸経費*/ ?>
+<?php echo $this->tag->hiddenField("seisan_flg"); /*加工生産*/ ?>
+<?php echo $this->tag->hiddenField("shouhi_flg"); /*支給消費*/ ?>
+<?php echo $this->tag->hiddenField("sikyuu_flg"); /*支給受入*/ ?>
+<?php echo $this->tag->hiddenField("azukair_flg"); /*預り*/ ?>
+<?php echo $this->tag->hiddenField("tekiyou_flg"); /*摘要*/ ?>
+<?php echo $this->tag->hiddenField("memo_flg"); /*メモ*/ ?>
+<?php echo $this->tag->hiddenField("shouhizei_flg"); /*消費税*/ ?>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-3 col-sm-3">
+        <?php echo $this->tag->submitButton(array("名前を付けて保存", "class" => "btn btn-info", "onclick" => 'return new_name();')) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->submitButton(array("上書き保存", "class" => "btn btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-3">
+        <button type="button", class="btn btn-warning", onclick='init_del();'>初期化/削除</button>
+    </div>
+</div>
+
+<div class="form-group">
+  <ul class="nav nav-tabs" style="display: flex; justify-content: center;">
+    <li class="nav-item active">
+      <a href="#tab1" class="nav-link bg-info" data-toggle="tab">　集計　</a>
+    </li>
+    <li class="nav-item">
+      <a href="#tab2" class="nav-link bg-info" data-toggle="tab">　絞込　</a>
+    </li>
+    <li class="nav-item">
+      <a href="#tab3" class="nav-link bg-info" data-toggle="tab">　期間　</a>
+    </li>
+    <li class="nav-item">
+      <a href="#tab4" class="nav-link bg-info" data-toggle="tab">　その他　</a>
+    </li>
+  </ul>
+</div>
+<div class="bg-yel">
+<div class="form-group">
+  <!--タブのコンテンツ部分-->
+  <div class="tab-content">
+   <div id="tab1" class="tab-pane active">
+    <label for="fieldJunjoKbnCd" class="col-sm-3 control-label">順序</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->select(array("junjo_kbn_cd", JunjoKbns::find(["columns" => "cd , name", "order" => "cd", "conditions" => "yobidasi_tbl = 'jouken_shiire_meisais'"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "style" => "width: 132px;", "class" => "form-control", "id" => "fieldJunjoKbnCd")) ?>
+    </div>
+    <label for="fieldKoujunFlg" class="col-sm-3 control-label">降順指定</label>
+    <div class="col-sm-1">
+        <?php echo $this->tag->checkField(array("koujun_flg", "value" => "1", "style" => "width: 20px;", "class" => "form-control", "id" => "fieldKoujunFlg")) ?>
+    </div>
+    <div class="col-sm-2
+    ">
+    </div>
+
+    <label for="fieldHanniFrom" class="col-sm-3 control-label">範囲自</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("hanni_from", "size" => 20, "maxlength" => 20, "class" => "form-control ime-i", "list" => "fieldHanniFromOptions", "id" => "fieldHanniFrom")) ?>
+    </div>
+    <div class="col-sm-5">
+        <?php echo $this->tag->textField(array("hanni_from_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldHanniFromName")) ?>
+    </div>
+
+    <label for="fieldHanniTo" class="col-sm-3 control-label">範囲至</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("hanni_to", "size" => 20, "maxlength" => 20, "class" => "form-control ime-i", "list" => "fieldHanniToOptions", "id" => "fieldHanniTo")) ?>
+    </div>
+    <div class="col-sm-5">
+        <?php echo $this->tag->textField(array("hanni_to_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldHanniToName")) ?>
+    </div>
+   </div>
+   <div id="tab2" class="tab-pane">
+
+    <label for="fieldShiiresakiMrCd" class="col-sm-2 control-label">仕入先</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("shiiresaki_mr_cd", "size" => 20, "maxlength" => 14, "style" => "width: 200px;", "class" => "form-control ime-i", "id" => "fieldShiiresakiMrCd")) ?>
+    </div>
+    <div class="col-sm-6">
+        <?php echo $this->tag->textField(array("shiiresaki_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldShiiresakiMrName")) ?>
+    </div>
+
+    <label for="fieldShouhinMrCd" class="col-sm-2 control-label">商品</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 20, "maxlength" => 20, "style" => "width: 200px;", "class" => "form-control ime-i", "id" => "fieldShouhinMrCd")) ?>
+    </div>
+    <div class="col-sm-6">
+        <?php echo $this->tag->textField(array("shouhin_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldShouhinMrName")) ?>
+    </div>
+
+    <label for="fieldTantouMrCd" class="col-sm-2 control-label">担当者</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("tantou_mr_cd", "size" => 20, "maxlength" => 3, "style" => "width: 200px;", "class" => "form-control ime-i", "id" => "fieldTantouMrCd")) ?>
+    </div>
+    <div class="col-sm-6">
+        <?php echo $this->tag->textField(array("tantou_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldTantouMrNmae")) ?>
+    </div>
+
+    <label for="fieldSoukoMrCd" class="col-sm-2 control-label">倉庫</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("souko_mr_cd", "size" => 20, "maxlength" => 4, "style" => "width: 200px;", "class" => "form-control ime-i", "id" => "fieldSoukoMrCd")) ?>
+    </div>
+    <div class="col-sm-6">
+        <?php echo $this->tag->textField(array("souko_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldSoukoMrName")) ?>
+    </div>
+
+    <label for="fieldProjectMrCd" class="col-sm-2 control-label">プロジェクト</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("project_mr_cd", "size" => 20, "maxlength" => 10, "style" => "width: 200px;", "class" => "form-control ime-i", "id" => "fieldProjectMrCd")) ?>
+    </div>
+    <div class="col-sm-6">
+        <?php echo $this->tag->textField(array("project_mr_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldProjectMrName")) ?>
+    </div>
+
+    </div>
+    <div id="tab3" class="tab-pane">
+
+    <label for="fieldSimekiriKbn" class="col-sm-3 control-label">任意の締切</label>
+    <div class="col-sm-9">
+        <?php echo $this->tag->selectStatic(array("simekiri_kbn", array("0" => "0=期間指定", "1" => "1=前回締切以降", "2" => "2=今回締切分"), "style" => "width: 150px;", "class" => "form-control", "id" => "fieldSimekiriKbn")) ?>
+    </div>
+
+    <label for="fieldKikanSiteiKbnCd" class="col-sm-3 control-label">仕入日</label>
+    <div class="col-sm-2">
+      <?php echo $this->tag->select(array("kikan_sitei_kbn_cd", KikanSiteiKbns::find(["columns" => "cd , name", "order" => "cd"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldKikanSiteiKbnCd")) ?>
+    </div>
+
+    <div class="col-sm-3">
+      <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom")) ?>
+    </div>
+
+    <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+    <div class="col-sm-3">
+      <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo")) ?>
+    </div>
+
+    <label for="fieldCdFrom" class="col-sm-3 control-label">伝票番号</label>
+    <div class="col-sm-offset-2 col-sm-3">
+        <?php echo $this->tag->textField(array("cd_from", "type" => "number", "class" => "form-control f-cent", "id" => "fieldCdFrom")) ?>
+    </div>
+
+    <label for="fieldCdTo" class="col-sm-1 control-label">～</label>
+    <div class="col-sm-3">
+        <?php echo $this->tag->textField(array("cd_to", "type" => "number", "class" => "form-control f-cent", "id" => "fieldCdTo")) ?>
+    </div>
+
+   </div>
+
+   <div id="tab4" class="tab-pane">
+
+    <div class="col-sm-6">
+      <div class="col-sm-12">
+        <label for="fieldUtiwakeKbns" class="col-sm-6 control-label">内訳</label>
+        <div class="col-sm-6">
+          <select name="utiwake_kbn[]" multiple size="7" id="fieldUtiwakeKbns"><!-- class="selectpicker" multiple data-selected-text-format="count" -->
+            <option value="tuujou_flg">通常</option>
+            <option value="henpin_flg">返品</option>
+            <option value="nebiki_flg">値引</option>
+            <option value="shokeihi_flg">諸経費</option>
+            <option value="seisan_flg">加工生産</option>
+            <option value="shouhi_flg">支給消費</option>
+            <option value="sikyuu_flg">支給受入</option>
+            <option value="azukari_flg">預り</option>
+            <option value="tekiyou_flg">摘要</option>
+            <option value="memo_flg">メモ</option>
+            <option value="shouhizei_flg">消費税</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="fieldJinyuuryokuFlg" class="col-sm-6 control-label">入力者</label>
+      <div class="col-sm-6">
+          <?php echo $this->tag->selectStatic(array("jinyuuryoku_flg", array("0" => "0=全入力者分", "1" => "1=自入力分のみ"), "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJinyuuryokuFlg")) ?>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <label for="fieldMeisaigyouFlg" class="col-sm-12 checkbox">
+          <?php echo $this->tag->checkField(array("meisaigyou_flg", "value" => "1", "id" => "fieldMeisaigyouFlg")) ?>
+          伝票計、伝票摘要を表示する
+      </label>
+      <label for="fieldGoukeigyouFlg" class="col-sm-12 checkbox">
+          <?php echo $this->tag->checkField(array("goukeigyou_flg", "value" => "1", "id" => "fieldGoukeigyouFlg")) ?>
+          合計を表示する
+      </label>
+    </div>
+   </div>
+  </div>
+
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+<hr>
+<datalist id="fieldHanniFromOptions">
+</datalist>
+<datalist id="fieldHanniToOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle" style="width:800px; height:400px; left:60%;">
+	<div class="modal-header" style="padding: 0; background-color: #ddd;">
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+</div><!-- end class bg-yel -->
+<div class="col-sm-offset-6 col-sm-3">
+    <button type="button" class="btn btn-default" data-dismiss="modal" id="F12" onclick="return_value();">　 ＯＫ*12 　</button>
+</div>
+<div class="col-sm-3">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">キャンセル</button>
+</div>
+
+<script type="text/javascript">
+	var base_uri = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->getBaseUri() ?>";
+	var jouken_shiire_meisais = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('jouken_shiire_meisais') ?>";
+	var jouken_shiire_meisais_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('jouken_shiire_meisais/ajaxGet') ?>";
+	var kikan_sitei_kbns_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('kikan_sitei_kbns/ajaxGet') ?>";
+	var junjo_kbns_ajaxHanni = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('junjo_kbns/ajaxHanni') ?>";
+	var junjo_kbns_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('junjo_kbns/ajaxGet') ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/jouken_shiire_meisais.js'); ?>?var=20160731"></script>

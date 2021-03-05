@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "入金消込.一覧"; ?>
+<div class="page-header">
+    <h3>入金消込 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"nyuukin_kesikomi_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["uriage_meisai_dt_id","売上明細id"],
+                    ["kesikomi_gaku","消込金額"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $nyuukin_kesikomi_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("nyuukin_kesikomi_dts/edit/" . $nyuukin_kesikomi_dt->id, $nyuukin_kesikomi_dt->id)); ?></td>
+                <td><?php echo $nyuukin_kesikomi_dt->uriage_meisai_dt_id ?></td>
+                <td><?php echo $nyuukin_kesikomi_dt->kesikomi_gaku ?></td>
+                <td><?php echo $nyuukin_kesikomi_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("nyuukin_kesikomi_dts/delete/" . $nyuukin_kesikomi_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"nyuukin_kesikomi_dts"]) ?>

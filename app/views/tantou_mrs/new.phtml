@@ -1,0 +1,68 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "担当者マスタ.新規"; ?>
+<div class="page-header">
+    <h3>担当者マスタ 新規登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "tantou_mrs/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldCd" class="col-sm-2 control-label">担当コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 3, "maxlength" => 3, "style" => "width: 72px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">担当者名</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 30, "maxlength" => 30, "style" => "width: 396px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldKanaMei" class="col-sm-2 control-label">フリガナ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kana_mei", "size" => 30, "maxlength" => 30, "style" => "width: 396px;", "class" => "form-control", "id" => "fieldKanaMei")) ?>
+    </div>
+
+<label for="fieldBumonMrCd" class="col-sm-2 control-label">部門code</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("bumon_mr_cd", BumonMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), "style" => "width: 396px;", "class" => "form-control", "id" => "fieldBumonMrCd")) ?>
+    </div>
+
+<label for="fieldUserCd" class="col-sm-2 control-label">ユーザーcode</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("user_cd", Users::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), "style" => "width: 396px;", 'useEmpty' => true, "class" => "form-control", "id" => "fieldUserCd")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+<script type="text/javascript">
+    var tantoumrs_ajaxKana = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('tantou_mrs/ajaxGetHurigana') ?>";
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/lib.js'); ?>?var=20191023"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/tantou_mrs.js'); ?>?var=20191023"></script>

@@ -1,0 +1,107 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $shiiresaki_mrs */
+?>
+<?php $title = "仕入締切"; ?>
+<div class="page-header">
+    <h3>仕入締切</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+<?php
+echo $this->tag->form(
+    array(
+        "shiiresaki_sime_dts/shiharai_simekiri",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    )
+);
+?>
+<div class="form-group">
+    <div class="col-sm-4">
+        <label for="fieldShimegrpKbnCd" class="col-sm-5 control-label">締グループ</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->select(array("shimegrp_kbn_cd", ShimegrpKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldShimegrpKbnCd")) ?>
+        </div>
+
+        <label for="fieldSimeHiduke" class="col-sm-5 control-label">締日</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->telField(array("sime_hiduke", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldSimeHiduke")) ?>
+        </div>
+        <label for="fieldKaishuuYoteibi" class="col-sm-5 control-label">支払予定日</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->telField(array("shiharai_yoteibi", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldKaishuuYoteibi")) ?>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="col-sm-4">
+            <?php echo $this->tag->submitButton(array("集計F3", "id" => "F3", "name" => "shuukei_btn", "class" => "btn btn-lg btn-success")) ?>
+        </div>
+        <div class="col-sm-4">
+            <?php echo $this->tag->submitButton(array("締切F12", "id" => "F12", "name" => "simekiri_btn", "class" => "btn btn-warning", "onclick" => 'return confirm("よろしいですか？");')) ?>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+</div>
+<div style="overflow-x: scroll;padding: 0;width:750px;">
+    <style>
+        .tb-shiharaisaki > tbody > tr > td {
+            padding: 0 5px;
+        }
+    </style>
+    <table width="750px" id="tb_shiharaisaki" class="table-bordered tb-shiharaisaki">
+        <thead style="display: block;">
+        <tr class="tr-blu">
+            <th class="t-cent" style="width: 30px;">レ</th>
+            <th class="t-cent" style="width: 100px;">仕入先コード</th>
+            <th class="t-cent" style="width: 400px;">仕入先名</th>
+            <th class="t-cent" style="width: 100px;">前回締日</th>
+            <th class="t-cent" style="width: 100px;">今回仕入額</th>
+        </tr>
+        </thead>
+        <tbody style="display: block;overflow-y: scroll;height: 400px;">
+        <tr><label><input type="checkbox" id="all"/> Check all!!</label></li></tr>
+        <?php $i = 0; ?>
+        <?php foreach ($shiiresaki_mrs as $shiiresaki_mr): ?>
+            <tr class="tr_pattern">
+                <td style="width: 30px;"><input <?php echo 'name="code_' . $shiiresaki_mr['cd'] . '" id="code_' . $shiiresaki_mr['cd'] . '"' ?>type="checkbox" class="form-control shimechk" style="height:14px !important;"></td>
+                <td id="shiiresaki_cd<?php echo $i; ?>" class="shiiresaki_cd" style="width: 100px;text-align: center;cursor: pointer;color: blue;"><?php echo $shiiresaki_mr['cd'] ?></td>
+                <td style="width: 400px;"><?php echo $shiiresaki_mr['name'] ?></td>
+                <td style="width: 100px;text-align: center;"><?php echo $shiiresaki_mr['zenkai_hiduke'] ?></td>
+                <td style="width: 100px;text-align: center;"><?php echo number_format($shiiresaki_mr['siiregaku']); ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<?php echo $this->tag->endForm(); ?>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<div id="PgDn"></div>
+<div id="PgUp"></div>
+
+<script type="text/javascript">
+    var shiiresaki_sime_dts_modal_menu = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_sime_dts/modal_menu') ?>";
+    var shiharai_meisai = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_sime_dts/shiharai_meisai'); ?>";
+    const shime_rireki = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_sime_dts/modal'); ?>";
+    const getShiiresakiGroupLastShimeHiduke = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/ajax_last_shimebi') ?>";
+</script>
+<script>
+    $('#all').on('change', function () {
+        $('input').prop('checked', this.checked);
+    });
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/shiharai_simekiri.js'); ?>?var=2020129"></script>

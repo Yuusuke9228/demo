@@ -1,0 +1,142 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "VIEW.一覧"; ?>
+<div class="page-header">
+    <h3>VIEW 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"zaiko_kakunin_azukari_vws","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["shouhin_mr_cd","Shouhin Of Mr Of Cd"],
+                    ["tantou_mr_cd","Tantou Of Mr Of Cd"],
+                    ["tanni_mr1_cd","Tanni Of Mr1 Of Cd"],
+                    ["tanni_mr2_cd","Tanni Of Mr2 Of Cd"],
+                    ["iro","Iro"],
+                    ["iromei","Iromei"],
+                    ["lot","Lot"],
+                    ["kobetucd","Kobetucd"],
+                    ["hinsitu_kbn_cd","Hinsitu Of Kbn Of Cd"],
+                    ["hinsitu_hyouka_kbn_cd","Hinsitu Of Hyouka Of Kbn Of Cd"],
+                    ["souko_mr_cd","Souko Of Mr Of Cd"],
+                    ["nyuukobis","Nyuukobis"],
+                    ["shukkobis","Shukkobis"],
+                    ["nyuushukkobi","Nyuushukkobi"],
+                    ["nyuushukkoym","Nyuushukkoym"],
+                    ["denpyou_mr_cd","Denpyou Of Mr Of Cd"],
+                    ["id","Id"],
+                    ["cd","Cd"],
+                    ["meisai_id","Meisai"],
+                    ["meisai_cd","Meisai Of Cd"],
+                    ["utiwake_kbn_cd","Utiwake Of Kbn Of Cd"],
+                    ["torihikisaki_cd","Torihikisaki Of Cd"],
+                    ["bikou","Bikou"],
+                    ["zaiko_ryou1s","Zaiko Of Ryou1s"],
+                    ["zaiko_ryou2s","Zaiko Of Ryou2s"],
+                    ["shiirebi_tankas","Shiirebi Of Tankas"],
+                    ["shiire_gakus","Shiire Of Gakus"],
+                    ["shiire_ryou1s","Shiire Of Ryou1s"],
+                    ["shiire_ryou2s","Shiire Of Ryou2s"],
+                    ["hokanyuuko_ryou1s","Hokanyuuko Of Ryou1s"],
+                    ["hokanyuuko_ryou2s","Hokanyuuko Of Ryou2s"],
+                    ["uriage_ryou1s","Uriage Of Ryou1s"],
+                    ["uriage_ryou2s","Uriage Of Ryou2s"],
+                    ["hokashukko_ryou1s","Hokashukko Of Ryou1s"],
+                    ["hokashukko_ryou2s","Hokashukko Of Ryou2s"],
+                    ["shiiresaki_mr_cd","Shiiresaki Of Mr Of Cd"],
+                    ["tokuisaki_mr_cd","Tokuisaki Of Mr Of Cd"],
+                    ["nounyuu_kijitu","Nounyuu Of Kijitu"],
+                    ["nouki","Nouki"],
+                    ["hacchuu_dt_id","Hacchuu Of Dt"],
+                    ["juchuu_dt_id","Juchuu Of Dt"],
+                    ["hacchuuzan_ryou1","Hacchuuzan Of Ryou1"],
+                    ["hacchuuzan_ryou2","Hacchuuzan Of Ryou2"],
+                    ["juchuuzan_ryou1","Juchuuzan Of Ryou1"],
+                    ["juchuuzan_ryou2","Juchuuzan Of Ryou2"],
+                    ["azukari_zan1s","Azukari Of Zan1s"],
+                    ["azukari_zan2s","Azukari Of Zan2s"],
+                    ["azukari_tasi1s","Azukari Of Tasi1s"],
+                    ["azukari_tasi2s","Azukari Of Tasi2s"],
+                    ["azukari_hiki1s","Azukari Of Hiki1s"],
+                    ["azukari_hiki2s","Azukari Of Hiki2s"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $zaiko_kakunin_azukari_vw): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("zaiko_kakunin_azukari_vws/edit/" . $zaiko_kakunin_azukari_vw->id, $zaiko_kakunin_azukari_vw->shouhin_mr_cd)); ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->tantou_mr_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->tanni_mr1_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->tanni_mr2_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->iro ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->iromei ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->lot ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->kobetucd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hinsitu_kbn_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hinsitu_hyouka_kbn_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->souko_mr_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->nyuukobis ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->shukkobis ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->nyuushukkobi ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->nyuushukkoym ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->denpyou_mr_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->id ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->meisai_id ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->meisai_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->utiwake_kbn_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->torihikisaki_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->bikou ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->zaiko_ryou1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->zaiko_ryou2s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->shiirebi_tankas ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->shiire_gakus ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->shiire_ryou1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->shiire_ryou2s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hokanyuuko_ryou1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hokanyuuko_ryou2s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->uriage_ryou1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->uriage_ryou2s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hokashukko_ryou1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hokashukko_ryou2s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->shiiresaki_mr_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->tokuisaki_mr_cd ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->nounyuu_kijitu ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->nouki ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hacchuu_dt_id ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->juchuu_dt_id ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hacchuuzan_ryou1 ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->hacchuuzan_ryou2 ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->juchuuzan_ryou1 ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->juchuuzan_ryou2 ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->azukari_zan1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->azukari_zan2s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->azukari_tasi1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->azukari_tasi2s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->azukari_hiki1s ?></td>
+                <td><?php echo $zaiko_kakunin_azukari_vw->azukari_hiki2s ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("zaiko_kakunin_azukari_vws/delete/" . $zaiko_kakunin_azukari_vw->shouhin_mr_cd, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"zaiko_kakunin_azukari_vws"]) ?>

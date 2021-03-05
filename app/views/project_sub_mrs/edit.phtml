@@ -1,0 +1,100 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["project_sub_mrs", "Back"]) ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>
+        Edit project_sub_mrs
+    </h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "project_sub_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldProjectId" class="col-sm-2 control-label">プロジェクトコード:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(["project_id", "style" => "width: 180px;", ProjectMrs::find(["columns" => "id,cd"]), "using" => ["id","cd"], "useEmpty" => true, "emptyText" => '', "class" => "form-control f-cent", "id" => "fieldProjectId"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldCd" class="col-sm-2 control-label">副プロジェクトコード:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["cd", "style" => "width: 180px;", "class" => "form-control", "id" => "fieldCd"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldName" class="col-sm-2 control-label">名称:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["name", "style" => "width: 180px;", "class" => "form-control", "id" => "fieldName"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUriageYosan" class="col-sm-2 control-label">売上予算:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["uriage_yosan", "style" => "width: 180px;","type" => "number", "class" => "form-control", "id" => "fieldUriageYosan"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldKaishibi" class="col-sm-2 control-label">開始日:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->telField(["kaishibi", "style" => "width: 180px;", "class" => "form-control", "id" => "fieldKaishibi"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldShuuryoubi" class="col-sm-2 control-label">終了予定日:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->telField(["shuuryoubi", "style" => "width: 180px;", "class" => "form-control", "id" => "fieldShuuryoubi"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldStatus" class="col-sm-2 control-label">ステータス:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->selectStatic(["status", array("0" => "継続中", "1" => "終了"), "style" => "width: 130px;", "class" => "form-control", "id" => "fieldStatus"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldMemo" class="col-sm-2 control-label">メモ:</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textArea(["memo", "style" => "width: 400px;", "class" => "form-control", "id" => "fieldMemo"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div align="center" class="form-group">
+    <div class="col-sm-3">
+        <?php echo $this->tag->linkTo(array("project_sub_mrs/index", "一覧へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->submitButton(array("更新*12", "id" => "F12", "class" => "btn btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

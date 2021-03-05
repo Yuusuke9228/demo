@@ -1,0 +1,100 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "個別在庫"; ?>
+<div class="page-header">
+    <h3><?php echo $rows?$rows[0]["shouhin_mr_cd"]." ".$rows[0]["name"]:""; ?></h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed head_fix">
+        <thead>
+            <tr bgcolor="Lavender">
+				<th style="text-align:center;">選択</th>
+				<th style="text-align:center;">個別番号</th>
+				<th style="text-align:center;">在庫数量1</th>
+				<th style="text-align:center;">単位</th>
+				<th style="text-align:center;">在庫数量2</th>
+				<th style="text-align:center;">単位</th>
+				<th style="text-align:center;">格付</th>
+				<th style="text-align:center;">最終入庫日</th>
+				<th style="text-align:center;">ロット</th>
+				<th style="text-align:center;">色番</th>
+				<th style="text-align:center;">色名</th>
+				<th style="text-align:center;">倉庫</th>
+            </tr>
+		</thead>
+		<tbody>
+			<?php $i=0;foreach ($rows as $row): ?>
+				<?php if ($row["zaiko_ryou1"] != 0 || $row["zaiko_ryou2"] != 0): ?>
+					<tr>
+						<td align="center"><?php echo $this->tag->checkField(array("data[meisai][".$i."][sentaku_chk]", "class" => "form-control kesuchk", "value" => $row["kobetucd"], "style" => "height:14px !important;", "id"=>"Meisai".$i."SentakuChk")) ?></td>
+						<td align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $row["kobetucd"]; ?></div></td>
+						<td align="right"><?php echo round($row["zaiko_ryou1"],2); ?></td>
+						<td align="center"><?php echo $row["name1"]; ?></td>
+						<td align="right"><?php echo round($row["zaiko_ryou2"],2); ?></td>
+						<td align="center"><?php echo $row["name2"]; ?></td>
+						<td align="center"><?php echo $row["name3"]; ?></td>
+						<td align="center"><?php echo $row["nyuukobi"]; ?></td>
+						<td align="center"><?php echo $row["lot"]; ?></td>
+						<td align="center"><?php echo $row["iro"]; ?></td>
+						<td align="center"><?php echo $row["iromei"]; ?></td>
+						<td align="center"><?php echo $row["name4"]; ?></td>
+						<td style="display:none;"><?php echo $row["shukkobi"]; ?></td>
+						<td style="display:none;"><?php echo $row["tanni_mr1_cd"]; ?></td>
+						<td style="display:none;"><?php echo $row["tanni_mr2_cd"]; ?></td>
+						<td style="display:none;"><?php echo $row["hinsitu_kbn_cd"]; ?></td>
+						<td style="display:none;"><?php echo $row["souko_mr_cd"]; ?></td>
+					</tr>
+				<?php endif; ?>
+			<?php $i++;endforeach; ?>
+		</tbody>
+    </table>
+    <div class="col-sm-6">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+    </div>
+    <div class="col-sm-6">
+        <button type="button" class="btn  btn-success" id="F12" data-dismiss="modal" onclick="return_to_parent();">反映F12</button>
+    </div>
+</div><!-- end class="row" -->
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div>
+
+<script type="text/javascript">
+
+function return_to_parent() {
+	var retary=[];
+	$('input:checked').each(function() {
+		var ary1=[];
+		ary1.kobetucd=$(this).val();
+		ary1.suuryou1=$(this).parent().nextAll().eq(1).text();
+		ary1.suuryou2=$(this).parent().nextAll().eq(3).text();
+		ary1.lot=$(this).parent().nextAll().eq(7).text();
+		ary1.iroban=$(this).parent().nextAll().eq(8).text();
+		ary1.iromei=$(this).parent().nextAll().eq(9).text();
+		ary1.tanni1cd=$(this).parent().nextAll().eq(12).text();
+		ary1.tanni2cd=$(this).parent().nextAll().eq(13).text();
+		ary1.hinsitucd=$(this).parent().nextAll().eq(14).text();
+		ary1.soukocd=$(this).parent().nextAll().eq(15).text();
+		retary.push(ary1);
+	});
+	window.parent.fromModalKobetu(retary);
+}
+// 転記ボタンを押したらデータをセットして親に戻る
+$('.returnto').click(function () {
+	return_to_parent();
+});
+
+$(function(){ // テーブルのヘッドを消えなくする
+  $('table.head_fix').floatThead({
+  	top: 0
+  });
+});
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/chkcursol.js'); ?>?var=20160723"></script>

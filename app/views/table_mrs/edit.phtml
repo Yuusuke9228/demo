@@ -1,0 +1,113 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "テーブルマスタ.修正"; ?>
+<div class="page-header">
+    <h3>テーブルマスタ 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "table_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldDatabaseCd" class="col-sm-2 control-label">データーベースｃｄ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("database_cd", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldDatabaseCd")) ?>
+    </div>
+
+<label for="fieldJun" class="col-sm-2 control-label">順</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("jun", "size" => 10, "maxlength" => 10, "style" => "width: 136px;", "class" => "form-control", "id" => "fieldJun")) ?>
+    </div>
+
+<label for="fieldMenuGroupMrCd" class="col-sm-2 control-label">メニューグループ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("menu_group_mr_cd", MenuGroupMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "style" => "width: 276px;", "class" => "form-control", "id" => "fieldMenuGroupMrCd")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("table_mrs/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("table_mrs/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("table_mrs/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<?php echo $this->tag->linkTo(array("koumoku_mrs/autogen/".$id, "自動項目登録*6", "id" => "F6")); ?>
+<div class="row">
+    <table class="table table-bordered table-condens-0">
+        <thead>
+            <tr>
+            <th>コード</th>
+            <th>名称</th>
+            <th>並び順</th>
+            <th>データ型</th>
+            <th>長さ</th>
+            <th>照合順序</th>
+            <th>属性</th>
+            <th>ヌル可</th>
+            <th>デフォルト値</th>
+            <th>その他</th>
+            <th>インデックス</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($koumoku_mrs as $koumoku_mr): ?>
+            <tr>
+            <td><?php echo $koumoku_mr->cd ?></td>
+            <td><?php echo $koumoku_mr->name ?></td>
+            <td><?php echo $koumoku_mr->jun ?></td>
+            <td><?php echo $koumoku_mr->data_kata ?></td>
+            <td><?php echo $koumoku_mr->nagasa ?></td>
+            <td><?php echo $koumoku_mr->shougoujunjo ?></td>
+            <td><?php echo $koumoku_mr->zokusei ?></td>
+            <td><?php echo $koumoku_mr->nullka ?></td>
+            <td><?php echo $koumoku_mr->default_ti ?></td>
+            <td><?php echo $koumoku_mr->sonota ?></td>
+            <td><?php echo $koumoku_mr->indekkusu ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+

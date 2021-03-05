@@ -1,0 +1,79 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["gouki_vws/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["gouki_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Koutei Of Kbn</th>
+            <th>Kishu</th>
+            <th>Kishu Of Yobi</th>
+            <th>Koujou</th>
+            <th>Gouki</th>
+            <th>Gouki Of Eda</th>
+            <th>Kai</th>
+            <th>Suisuu</th>
+            <th>Bikou</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $gouki_vw): ?>
+            <tr>
+                <td><?php echo $gouki_vw->koutei_kbn ?></td>
+            <td><?php echo $gouki_vw->kishu ?></td>
+            <td><?php echo $gouki_vw->kishu_yobi ?></td>
+            <td><?php echo $gouki_vw->koujou ?></td>
+            <td><?php echo $gouki_vw->gouki ?></td>
+            <td><?php echo $gouki_vw->gouki_eda ?></td>
+            <td><?php echo $gouki_vw->kai ?></td>
+            <td><?php echo $gouki_vw->suisuu ?></td>
+            <td><?php echo $gouki_vw->bikou ?></td>
+
+                <td><?php echo $this->tag->linkTo(["gouki_vws/edit/" . $gouki_vw->koutei_kbn, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["gouki_vws/delete/" . $gouki_vw->koutei_kbn, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("gouki_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("gouki_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("gouki_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("gouki_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

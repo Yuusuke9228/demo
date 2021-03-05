@@ -1,0 +1,48 @@
+<?php $title = 'Edit.View'; ?>
+<h1 class="page-header">Editing View: <?php echo $name; ?></h1>
+<h5><?php echo str_replace('/','\\','W:/html/erphalcon/app/views/'.$name); ?></h5>
+
+<div class="row">
+    <div class="col-md-12">
+        <?php echo $this->getContent() ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <?php echo $this->tag->form(array("edit_views/save", "autocomplete" => "off", "class" => "form-horizontal")); ?>
+            <div class="row">
+                <div class="col-md-6">
+                    <?php echo $this->tag->linkTo(array('edit_views/list/'. $name, 'Dir Source List', 'class' => 'btn btn-link')); ?>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php echo $this->tag->textArea(array('code', 'cols' => 50, 'rows' => 20)) ?>
+
+                    <?php echo $this->tag->hiddenField('name') ?>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->get('css/codemirror/ambiance.css'); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->get('css/codemirror/codemirror.css'); ?>" />
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/lib/codemirror.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/addon/edit/matchbrackets.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/addon/selection/active-line.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/mode/clike/clike.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/mode/htmlmixed/htmlmixed.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/mode/xml/xml.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/mode/css/css.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/mode/php/php.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/codemirror/lib/codephalcon.js'); ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->get('css/codemirror/codephalcon.css'); ?>" />

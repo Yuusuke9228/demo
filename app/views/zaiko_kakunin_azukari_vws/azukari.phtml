@@ -1,0 +1,88 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "預り.集計"; ?>
+<div class="page-header">
+    <h3>預り残集計表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $index_or = "azukari";
+    $this->partial("common/indexkanni", ["table_id" => "zaiko_kakunin_azukari_vws", "flds" => [
+        ["torihikisaki_cd", "fieldTorihikisakiCd", "取引先コード", 14, 14],
+        ["torihikisaki_name", "fieldTorihikisakiName", "名", 14, 14],
+        ["shouhin_mr_cd", "fieldShouhinMrCd", "商品コード", 14, 14],
+        ["shouhin_name", "fieldShouhinName", "名", 14, 14],
+        ["simebi", "fieldShimebi", "日付", 10, 10],]
+    ,"index_or" => $index_or,
+    ]) ?>
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead>
+        <tr bgcolor="Lavender">
+            <?php $this->partial("common/indexsort", ["flds" => [
+                ["torihikisaki1_cd", "取引先コード"],
+                ["", "取引先名"],
+                ["shouhin_mr_cd", "商品コード"],
+                ["", "商品名"],
+                ["azukari_zan2", "預り数量"],
+                ["", "単位"],
+            ]]) ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $item): ?>
+            <tr>
+                <td align='center'><?php echo $item->torihikisaki1_cd ?></td>
+                <td><?php echo $item->torihikisaki_name ?></td>
+                <td class="zoom_nyuushukko" style="cursor:pointer;color:blue;" align='center'><?php echo $item->shouhin_mr_cd ?></td>
+                <td class="zoom_nyuushukko_name" style="cursor:pointer;" ><?php echo $item->shouhin_name ?></td>
+                <td align='right' <?php if ($item->azukari_zan2 < -0.004) {
+                    echo 'style="color:red;"';
+                } ?> ><?php echo number_format($item->azukari_zan2+0.004, 2) ?></td>
+                <td align='center'><?php echo $item->tanni_name2 ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail", ["table_id" => "zaiko_kakunin_azukari_vws", "index_or" => $index_or,]) ?>
+
+<?php echo $this->tag->form(array("report_zaiko_vws/nyuushukko", "id" => "nyuushukko_post", "method" => "post", "target" => "_blank")); ?>
+<!--	<input type=hidden name="shouhin_mr_cd"> -->
+<input type='hidden' name="cd" id="nyuushukkoCd">
+<input type='hidden' name="souko_mr_cd" id="nyuushukkoSoukoMrCd">
+<?php echo $this->tag->endForm(); ?>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){ // テーブルのヘッドを消えなくする
+  $('table.head_fix').floatThead({
+  	top: 50
+  });
+});
+</script>
+<script type="text/javascript">
+	var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+    var tokuisaki_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('tokuisaki_mrs/modal') ?>";
+</script>
+<script type="text/javascript"
+        src="<?php echo $this->url->get('js/views/zaiko_azukari.js'); ?>?var=20160723"></script>
+
+

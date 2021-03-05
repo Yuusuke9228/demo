@@ -1,0 +1,137 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+
+/** @var Array $shouhin_list */
+
+use Phalcon\Tag;
+
+$title = '仕入先別単価表';
+?>
+<div class="page-header">
+    <h2>仕入先別単価設定</h2>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="panel panel-success bg-yel">
+    <br/>
+    <?php
+    echo $this->tag->form(
+        [
+            "shiiresaki_tanka_dts/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "name" => "form_jouken"
+        ]
+    );
+    ?>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="shiiresaki_mr_cd" class="col-sm-2 control-label">仕入先 : </label>
+            <div class="col-sm-4">
+                <?php echo $this->tag->textField(["shiiresaki_mr_cd", "class" => "form-control", "id" => "shiiresaki_mr_cd", "required" => "required"]); ?>
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <label for="shiiresaki_name" class="col-sm-2 control-label">仕入先名称 : </label>
+            <div class="col-sm-4">
+                <?php echo $this->tag->textField(["shiiresaki_name", "class" => "form-control", "id" => "shiiresaki_name", "readonly" => "readonly"]); ?>
+            </div>
+            <div><br/></div>
+        </div>
+        <div class="col-sm-10">
+            <label for="shouhin_mr_cd_from" class="col-sm-2 control-label">商品 ></label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(["shouhin_mr_cd_from", "size" => 20, "maxlength" => 20, "class" => "form-control f-cent ime-d", "id" => "shouhin_mr_cd_from"]) ?>
+            </div>
+            <label for="shouhin_mr_cd_to" class="col-sm-1 control-label">～</label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->textField(["shouhin_mr_cd_to", "size" => 20, "maxlength" => 20, "class" => "form-control f-cent ime-d", "id" => "shouhin_mr_cd_to"]) ?>
+            </div>
+        </div>
+        <div><br/></div>
+        <div class="col-sm-10">
+            <label for="flg" class="col-sm-2 control-label">表示区分 : </label>
+            <div class="col-sm-3">
+                <?php echo $this->tag->selectStatic(["flg", ["0" => "仕入履歴・有のみ", "1" => "全商品"], "class" => "form-control", "id" => "flg"]); ?>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="col-sm-12">
+                <button id="dl-xlsx" class="submit btn btn-warning">EXCEL*出力</button>
+            </div>
+            <br/><br/>
+            <div class="col-sm-12">
+                <?php echo $this->tag->submitButton(["集計*F12", "id" => "F12", "class" => "btn  btn-success"]) ?>
+            </div>
+        </div>
+    </div>
+    <?php echo $this->tag->endForm(); ?>
+</div>
+
+<div class="row">
+    <table id="target-table" class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead>
+        <tr style="background-color: lavender;">
+            <input type="hidden" id="dummy" />
+            <th style="text-align: center;">商品コード</th>
+            <th style="text-align:center;">商品名称</th>
+            <th style="text-align:center;">単位</th>
+            <th style="text-align:center;">標準原価</th>
+            <th style="text-align:center;">仕入単価</th>
+            <th style="text-align:center;">売上原価</th>
+            <th style="text-align:center;">最終仕入単価</th>
+            <th style="text-align:center;">仕入先単価</th>
+            <th style="text-align:center;">更新日時</th>
+        </tr>
+        </thead>
+        <?php $i = 0; ?>
+        <tbody>
+        <?php foreach ($shouhin_list as $list): ?>
+            <tr>
+                <input type="hidden" id="shouhin_id<?php echo $i; ?>" class="shouhin_id"  value="<?php if (isset($list['id'])) echo $list['id']; ?>"/>
+                <td id="cd<?php echo $i ?>" class="shouhin_mr_cd"
+                    style="text-align: center; color: blue; cursor: pointer;"><?php if (isset($list['cd'])) echo $list['cd']; ?></td>
+                <td style="text-align:left;"><?php if (isset($list['name'])) echo $list['name']; ?></td>
+                <td style="text-align:center;"><?php if (isset($list['tani1'])) echo $list['tanka_kbn'] === '1' ? $list['tani1'] : $list['tani2']; ?></td>
+                <td style="text-align:right;"><?php if (isset($list['hyoujun_genka'])) echo $list['hyoujun_genka']; ?></td>
+                <td style="text-align:right;"><?php if (isset($list['shiire_tanka'])) echo $list['shiire_tanka']; ?></td>
+                <td style="text-align:right;"><?php if (isset($list['uri_genka'])) echo $list['uri_genka']; ?></td>
+                <td style="text-align:right;"><?php if (isset($list['saisyuu_tanka'])) echo $list['saisyuu_tanka']; ?></td>
+                <td id="tanka<?php echo $i ?>" class="tanka" style="text-align:right;" contenteditable=true>
+                    <?php if (isset($list['shiiresaki_betsu_tanka'])) {
+                        echo $list['shiiresaki_betsu_tanka'] === '' ?: $list['shiiresaki_betsu_tanka'];
+                    } else {
+                        echo 0;
+                    } ?>
+                </td>
+                <td style="text-align:right;"><?php if (isset($list['updated_at'])) echo $list['updated_at']; ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div id="iframe-bg" class="bgStyle"></div>
+    <div id="iframe-wrap" class="wrapStyle">
+        <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+            <span id="iframe-title"></span>
+            <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+        </div>
+        <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+        </div>
+    </div>
+    <!-- end modal -->
+
+    <script>
+        var shiiresaki_tanka_save_ajax = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_tanka_dts/saveAjax') ?>";
+        var shiiresaki_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/modal') ?>";
+        var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+        var shiiresaki_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shiiresaki_mrs/ajaxGet') ?>";
+        var shouhin_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/edit/') ?>";
+    </script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.10/xlsx.full.min.js"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+    <script type="text/javascript"
+            src="<?php echo $this->url->get('js/views/shiiresaki_tanka.js'); ?>?var=20200410"></script>

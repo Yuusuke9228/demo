@@ -1,0 +1,159 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+//debug
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_NOTICE);
+?>
+<?php use Phalcon\Tag; ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.blue.min.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
+<script>
+    $(document).ready(function () {
+            $("#zaiko_table").tablesorter();
+        }
+    );
+</script>
+<?php $title = $shouhin_name . ' 在庫場所一覧'; ?>
+<div class="page-header">
+    <h3><?php echo $shouhin_cd . ' : ' . $shouhin_name . ' 在庫場所一覧'; ?></h3>
+</div>
+<?php echo $this->getContent(); ?>
+<?php
+//小計行用に倉庫コードで、グルーピング
+$groups = [];
+$keyName = 'souko_mr_cd';
+foreach ($rows as $item) {
+    $key = $item[$keyName];
+    if (array_key_exists($key, $groups)) {
+        $groups[$key][] = $item;
+    } else {
+        $groups[$key] = [$item];
+    }
+}
+$sum_suu1 = 0.0;    //小計
+$sum_suu2 = 0.0;    //小計
+$result_suu1 = 0.0; //総計
+$result_suu2 = 0.0; //総計
+//var_dump($groups);    debug
+?>
+<div class="row">
+    <table id="zaiko_table" class="tablesorter tablesorter-blue head_fix">
+        <thead>
+        <tr>
+            <th nowrap style="text-align:center">No</th>
+            <th nowrap style="text-align:center">倉庫コード</th>
+            <th nowrap style="text-align:center">倉庫名</th>
+            <th nowrap style="text-align:center;">ロット</th>
+            <th nowrap style="text-align:center;">色番</th>
+            <th nowrap style="text-align:center;">色名</th>
+            <th nowrap style="text-align:center;">個別コード</th>
+            <th nowrap style="text-align:center;">品質</th>
+            <th nowrap style="text-align:center;">在庫数量1</th>
+            <th nowrap style="text-align:center;">単位1</th>
+            <th nowrap style="text-align:center;">在庫数量2</th>
+            <th nowrap style="text-align:center;">単位2</th>
+            <th nowrap style="text-align:center;">最終出入日</th>
+        </tr>
+        </thead>
+        <?php $i = 1; ?>
+        <?php foreach ($groups as $key => $items): ?>
+            <?php foreach ($items as $row): ?>
+                <!--明細行-->
+                <tr>
+                    <?php
+                    //0在庫行は表示しない
+                    if ((round((float)$row['zaikoryou1'],4) === 0.000)){
+                       if ((round((float)$row['zaikoryou2'],4) === 0.000)) {
+                           continue;
+                       }
+                    }
+                    ?>
+
+                    <td nowrap style="text-align: center;"><?php echo $i; ?></td>
+                    <td nowrap style="text-align: center"><?php echo $row['souko_mr_cd']; ?></td>
+                    <td nowrap style="text-align: center"><?php echo $row['souko_name']; ?></td>
+                    <td nowrap style="text-align:left;"><?php echo $row['lot']; ?></td>
+                    <td nowrap style="text-align:left;"><?php echo $row['iro']; ?></td>
+                    <td nowrap style="text-align:left;"><?php echo $row['iromei']; ?></td>
+                    <td nowrap style="text-align:left;"><?php echo $row['kobetucd']; ?></td>
+                    <td nowrap style="text-align:center;"><?php echo $row['hinshitu_name']; ?></td>
+                    <?php
+                    if ((round((float)$row['zaikoryou1'],4)) < 0.000) {
+                        $color = 'red';
+                    } else {
+                        $color = 'black';
+                    }
+                    ?>
+                    <td nowrap
+                        style="text-align:right;color:<?php echo $color; ?>;"><?php echo number_format(round((float)$row['zaikoryou1'], 3), 2) == 0.00 ? 0 :number_format(round((float)$row['zaikoryou1'], 3), 2); ?></td>
+                    <td nowrap style="text-align:center;"><?php echo $row['tanni1']; ?></td>
+                    <?php
+                    if ((round((float)$row['zaikoryou2'],4)) < 0.000) {
+                        $color1 = 'red';
+                    } else {
+                        $color1 = 'black';
+                    }
+                    ?>
+                    <td nowrap
+                        style="text-align:right;color:<?php echo $color1; ?>;"><?php echo number_format(round((float)$row['zaikoryou2'], 3), 2) == 0.00 ? 0 :number_format(round((float)$row['zaikoryou2'], 3), 2); ?></td>
+                    <td nowrap style="text-align:center;"><?php echo $row['tanni2']; ?></td>
+                    <td nowrap style="text-align:right;"><?php echo $row['saisyuudeiri']; ?></td>
+                    <?php
+                    $sum_suu1 += round((float)$row['zaikoryou1'],4);
+                    $sum_suu2 += round((float)$row['zaikoryou2'],4);
+                    ?>
+                </tr>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+            <!--小計行-->
+            <tr>
+                <td nowrap style="text-align: center;background-color: #FFFFEF;!important;font-weight: bold;">小</td>
+                <td nowrap style="text-align: center;background-color: #FFFFEF;!important;font-weight: bold;"><?php echo $key; ?></td>
+                <td nowrap style="text-align: right;background-color: #FFFFEF;!important;font-weight: bold;">小計：</td>
+                <td nowrap style="text-align:left;background-color: #FFFFEF;!important;"></td>
+                <td nowrap style="text-align:left;background-color: #FFFFEF;!important;"></td>
+                <td nowrap style="text-align:left;background-color: #FFFFEF;!important;"></td>
+                <td nowrap style="text-align:left;background-color: #FFFFEF;!important;"></td>
+                <td nowrap style="text-align:center;background-color: #FFFFEF;!important;"></td>
+                <td nowrap style="text-align:right;background-color: #FFFFEF;!important;font-weight: bold;"><?php echo number_format($sum_suu1, 2); ?></td>
+                <td nowrap style="text-align:center;background-color: #FFFFEF;!important;"></td>
+                <td nowrap style="text-align:right;background-color: #FFFFEF;!important;font-weight: bold;"><?php echo number_format($sum_suu2, 2); ?></td>
+                <td nowrap style="text-align:center;background-color: #FFFFEF;!important;"></td>
+                <td nowrap style="text-align:right;background-color: #FFFFEF;!important;"></td>
+                <?php
+                $result_suu1 += round($sum_suu1,4);
+                $result_suu2 += round($sum_suu2,4);
+                $sum_suu1 = 0.0;
+                $sum_suu2 = 0.0;
+                ?>
+            </tr>
+        <?php endforeach; ?>
+        <!--総計-->
+        <tr>
+            <td nowrap style="text-align: center;background-color: #DAF2F2;!important;font-weight: bold;">総</td>
+            <td nowrap style="text-align: center;background-color: #DAF2F2;!important;font-weight: bold;"></td>
+            <td nowrap style="text-align: right;background-color: #DAF2F2;!important;font-weight: bold;">総計：</td>
+            <td nowrap style="text-align:left;background-color: #DAF2F2;!important;"></td>
+            <td nowrap style="text-align:left;background-color: #DAF2F2;!important;"></td>
+            <td nowrap style="text-align:left;background-color: #DAF2F2;!important;"></td>
+            <td nowrap style="text-align:left;background-color: #DAF2F2;!important;"></td>
+            <td nowrap style="text-align:center;background-color: #DAF2F2;!important;"></td>
+            <td nowrap style="text-align:right;background-color: #DAF2F2;!important;font-weight: bold;"><?php echo number_format(round($result_suu1,4), 2); ?></td>
+            <td nowrap style="text-align:center;background-color: #DAF2F2;!important;"></td>
+            <td nowrap style="text-align:right;background-color: #DAF2F2;!important;font-weight: bold;"><?php echo number_format(round($result_suu2,4), 2); ?></td>
+            <td nowrap style="text-align:center;background-color: #DAF2F2;!important;"></td>
+            <td nowrap style="text-align:right;background-color: #DAF2F2;!important;"></td>
+        </tr>
+    </table>
+
+    <script>
+        $(function () {
+            $('table.head_fix').floatThead({
+                top: 50
+            });
+        });
+    </script>

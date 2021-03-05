@@ -1,0 +1,71 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php
+
+?>
+<?php $title = '売上.修正'; ?>
+<div class="page-header">
+    <h3>売上伝票 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "uriage_dts/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "id" => "formTouroku",
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('uriage_dts/inputfields'); ?>
+
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("uriage_dts/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("uriage_dts/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $this->tag->submitButton(array("登録F12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return final_check();'
+        	,($this->tag->getValue("uriagebi")<=$simezumibi?"disabled":"enabled")=>"true" )) ?>
+    </div>
+    <div class="col-sm-2">
+        <button class="btn btn-warning" type="button" id='F5' onclick="final_check_test()">
+            伝票印刷F5
+        </button>
+    </div>
+    <div class="col-sm-2">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                伝票複写<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><?php echo $this->tag->linkTo(array("uriage_dts/new/".$id, "1.伝票の複写")) ?></li>
+              <li><?php echo $this->tag->linkTo(array("uriage_dts/new/".$id."/-Uriage", "2.赤伝票発行",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("juchuu_dts/new/".$id."/Uriage", "3.受注伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("hacchuu_dts/new/".$id."/Uriage", "4.発注伝票へ",'target'=>'_blank')) ?></li>
+              <li><?php echo $this->tag->linkTo(array("shiire_dts/new/".$id."/Uriage", "5.仕入伝票へ",'target'=>'_blank')) ?></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("uriage_dts/delete/".$id, "伝票削除", "class" => "btn btn-danger", "onclick" => "return final_del_check(" . $id . ");"
+        	,($this->tag->getValue("uriagebi")<=$simezumibi?"disabled":"enabled")=>"true" )) ?>
+    </div>
+
+</div><!-- form-group -->
+
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">
+	var imax = <?php echo $imax ?>;
+	var simezumibi = <?php echo $simezumibi??'0000-00-00' ?>;
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/uriage_dts.js'); ?>?var=20200522"></script>

@@ -1,0 +1,78 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "条件在庫一覧.一覧"; ?>
+<div class="page-header">
+    <h3>条件在庫一覧 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"jouken_zaiko_kakunins","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","表示順"],
+                    ["name","名称"],
+                    ["junjo_kbn_cd","順序区分コード"],
+                    ["hanni_from","範囲自"],
+                    ["hanni_to","範囲至"],
+                    ["junjo2_kbn_cd","順序2区分コード"],
+                    ["hanni2_from","範囲2自"],
+                    ["hanni2_to","範囲2至"],
+                    ["koujun_flg","降順フラグ"],
+                    ["meisaigyou_flg","明細行表示フラグ"],
+                    ["soukohyouji_flg","倉庫表示フラグ"],
+                    ["goukeigyou_flg","合計行表示フラグ"],
+                    ["zaikoari_flg","在庫ありフラグ"],
+                    ["zaikonasi_flg","在庫なしフラグ"],
+                    ["kabusoku_check_flg","過不足チェックフラグ"],
+                    ["kajou_ryou","過剰量"],
+                    ["husoku_ryou","不足量"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $jouken_zaiko_kakunin): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("jouken_zaiko_kakunins/edit/" . $jouken_zaiko_kakunin->id, $jouken_zaiko_kakunin->id)); ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->cd ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->name ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->junjo_kbn_cd ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->hanni_from ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->hanni_to ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->junjo2_kbn_cd ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->hanni2_from ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->hanni2_to ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->koujun_flg ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->meisaigyou_flg ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->soukohyouji_flg ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->goukeigyou_flg ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->zaikoari_flg ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->zaikonasi_flg ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->kabusoku_check_flg ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->kajou_ryou ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->husoku_ryou ?></td>
+                <td><?php echo $jouken_zaiko_kakunin->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("jouken_zaiko_kakunins/delete/" . $jouken_zaiko_kakunin->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"jouken_zaiko_kakunins"]) ?>

@@ -1,0 +1,109 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "項目マスタ.修正"; ?>
+<div class="page-header">
+    <h3>項目マスタ 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "koumoku_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 60, "maxlength" => 60, "style" => "width: 756px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldTableMrCd" class="col-sm-2 control-label">テーブルコード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("table_mr_cd", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldTableMrCd")) ?>
+    </div>
+
+<label for="fieldJun" class="col-sm-2 control-label">並び順</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("jun", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJun")) ?>
+    </div>
+
+<label for="fieldDataKata" class="col-sm-2 control-label">データ型</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("data_kata", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldDataKata")) ?>
+    </div>
+
+<label for="fieldNagasa" class="col-sm-2 control-label">長さ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nagasa", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldNagasa")) ?>
+    </div>
+
+<label for="fieldShougoujunjo" class="col-sm-2 control-label">照合順序</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shougoujunjo", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldShougoujunjo")) ?>
+    </div>
+
+<label for="fieldZokusei" class="col-sm-2 control-label">属性</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("zokusei", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldZokusei")) ?>
+    </div>
+
+<label for="fieldNullka" class="col-sm-2 control-label">ヌル可</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nullka", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldNullka")) ?>
+    </div>
+
+<label for="fieldDefaultTi" class="col-sm-2 control-label">デフォルト値</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("default_ti", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldDefaultTi")) ?>
+    </div>
+
+<label for="fieldSonota" class="col-sm-2 control-label">その他</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("sonota", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldSonota")) ?>
+    </div>
+
+<label for="fieldIndekkusu" class="col-sm-2 control-label">インデックス</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("indekkusu", "size" => 11, "maxlength" => 11, "style" => "width: 168px;", "class" => "form-control", "id" => "fieldIndekkusu")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("koumoku_mrs/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("koumoku_mrs/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("koumoku_mrs/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

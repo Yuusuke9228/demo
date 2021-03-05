@@ -1,0 +1,45 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "条件.登録"; ?>
+<div class="page-header">
+    <h3>生産条件 登録修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "h_shouhin_jouken_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('h_shouhin_jouken_mrs/inputfields'); ?>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("h_shouhin_jouken_mrs/prev/".$id, "前へF1", "id" => "F1", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("h_shouhin_jouken_mrs/next/".$id, "次へF2", "id" => "F2", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行F12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("h_shouhin_jouken_mrs/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("h_shouhin_jouken_mrs/delete/".$id, "削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/mrp/h_shouhin_jouken_mrs.js'); ?>?var=20191217"></script>

@@ -1,0 +1,343 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var array $yosan_settei_rows
+ * @var array $sankou_kei
+ * @var array $yosan_kei
+ * @var string $year
+ * @var string $month
+ */
+
+use Phalcon\Tag;
+
+ini_set('display_errors', 'On');
+error_reporting(E_ALL | E_NOTICE);
+
+$title = "予算設定";
+$header = <<<HEAD
+<div class="page-header">
+    <h2>予算設定</h2>
+</div>
+HEAD;
+echo $header, $this->getContent();
+?>
+
+<div class="container">
+    <div class="row bg-yel" style="border: solid 1px #e7e7e7;">
+        <div class="card form-group">
+            <?php
+            echo $this->tag->form(
+                [
+                    "yosan_dts/index",
+                    "autocomplete" => "off",
+                    "class" => "form-horizontal",
+                    "id" => "form_yosan"
+                ]
+            );
+            ?>
+            <div class="col-sm-12" style="padding-top: 1em; border-radius: 3px;">
+                <label for="fieldHyoujiKbn" class="col-sm-2 control-label">設定対象>></label>
+                <div class="col-sm-10">
+                    <?php echo $this->tag->selectStatic(["hyouji_kbn", ["0" => "純売上額", "1" => "粗利益"], "style" => "width: 130px;", "class" => "form-control", "id" => "fieldHyoujiKbn"]) ?>
+                </div>
+
+                <label for="fieldJunjoFlg" class="col-sm-2 control-label">設定区分>></label>
+                <div class="col-sm-2">
+                    <?php echo $this->tag->selectStatic(["junjo_flg", ["0" => "", "1" => "得意先", "2" => "担当", "3" => "商品"], "style" => "width: 130px;", "class" => "form-control", "id" => "fieldJunjoFlg"]) ?>
+                </div>
+                <div class="col-sm-2">
+                    <?php echo $this->tag->textField(["hanni_from", "size" => 20, "maxlength" => 20, "class" => "form-control ime-i", "list" => "fieldHanniFromOptions", "id" => "fieldHanniFrom"]) ?>
+                </div>
+                <div class="col-sm-6">
+                    <?php echo $this->tag->textField(["hanni_from_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldHanniFromName"]) ?>
+                </div>
+                <div class="col-sm-offset-4 col-sm-2">
+                    <?php echo $this->tag->textField(["hanni_to", "size" => 20, "maxlength" => 20, "class" => "form-control ime-i", "list" => "fieldHanniToOptions", "id" => "fieldHanniTo"]) ?>
+                </div>
+                <div class="col-sm-6">
+                    <?php echo $this->tag->textField(["hanni_to_name", "readonly" => "readonly", "class" => "form-control ime-i", "id" => "fieldHanniToName"]) ?>
+                </div>
+
+                <label for="fieldKikanSiteiKbnCd" class="col-sm-2 control-label">設定年度>></label>
+                <div class="col-sm-2">
+                    <?php echo $this->tag->select(["kikan_sitei_kbn_cd", Konnnenndo::find(["columns" => "cd , name", "order" => "cd",]), "using" => ["cd", "name"], 'useEmpty' => true, 'emptyText' => '', "style" => "width: 130px;", "class" => "form-control", "id" => "fieldKikanSiteiKbnCd"]) ?>
+                </div>
+                <div class="col-sm-3">
+                    <?php echo $this->tag->telField(["kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom", "readonly" => "readonly", "value" => $setdts['kikan_from'] ?? '',]) ?>
+                </div>
+                <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+                <div class="col-sm-3">
+                    <?php echo $this->tag->telField(["kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo", "readonly" => "readonly", "value" => $setdts['kikan_to'] ?? '',]) ?>
+                </div>
+                <label for="fieldKikanSitei2KbnCd" class="col-sm-2 control-label">参考年度>></label>
+                <div class="col-sm-2">
+                    <?php echo $this->tag->select(["kikan_sitei2_kbn_cd", Konnnenndo::find(["columns" => "cd , name", "order" => "cd",]), "using" => ["cd", "name"], 'useEmpty' => true, 'emptyText' => '', "style" => "width: 130px;", "class" => "form-control", "id" => "fieldKikan2SiteiKbnCd"]) ?>
+                </div>
+                <div class="col-sm-3">
+                    <?php echo $this->tag->telField(["kikan2_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikan2From", "readonly" => "readonly", "value" => $setdts['kikan2_from'] ?? '',]) ?>
+                </div>
+                <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+                <div class="col-sm-3">
+                    <?php echo $this->tag->telField(["kikan2_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikan2To", "readonly" => "readonly", "value" => $setdts['kikan2_to'] ?? '',]) ?>
+                </div>
+
+                <div class="col-sm-offset-10 col-sm-2" style="padding-top: 1em;padding-bottom: 1em;">
+                    <?php echo $this->tag->submitButton(["表示", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return form_validation();']) ?>
+                </div>
+            </div>
+            <?php echo $this->tag->endForm(); ?>
+        </div>
+    </div>
+</div>
+
+<?php if ($this->request->isPost()): ?>
+    <div class="rows">
+        <div class="col-sm-12">
+            <p style="text-align: right;text-decoration: underline;font-size: 1.8rem; padding-top: 1em;">&nbsp;（上段：参考実績）&nbsp;</p>
+        </div>
+    </div>
+    <!-- 更新時使用する (nendo) -->
+    <!-- 更新用の月は、<td>内の<input>の、id(tuki_{row}_1)から取得する -->
+    <input type="hidden" id="nendo" value="<?php  echo $year; ?>" />
+
+    <table style="width: 100% !important; " id="yosan-table"
+           class="table table-bordered table-condens-0 table-striped head_fix">
+        <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="text-align: right;">参考実績>>総合計：</th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['1']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['2']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['3']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['4']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['5']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['6']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['7']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['8']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['9']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['10']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['11']); ?></th>
+            <th nowrap style="text-align: right; width: 110px;"><?php if (isset($sankou_kei)) echo number_format($sankou_kei['12']); ?></th>
+            <th rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        </tr>
+        <tr style="background-color: #f2f2f2;">
+            <th style="text-align: right;">予算設定>>総合計：</th>
+            <th id="tmp1kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['1']); ?></th>
+            <th id="tmp2kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['2']); ?></th>
+            <th id="tmp3kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['3']); ?></th>
+            <th id="tmp4kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['4']); ?></th>
+            <th id="tmp5kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['5']); ?></th>
+            <th id="tmp6kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['6']); ?></th>
+            <th id="tmp7kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['7']); ?></th>
+            <th id="tmp8kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['8']); ?></th>
+            <th id="tmp9kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['9']); ?></th>
+            <th id="tmp10kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['10']); ?></th>
+            <th id="tmp11kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['11']); ?></th>
+            <th id="tmp12kei" nowrap style="text-align: right;"><?php if (isset($yosan_kei)) echo number_format($yosan_kei['12']); ?></th>
+        </tr>
+
+        <tr style="background-color: Lavender; ">
+            <th nowrap id="th_sankou_cd" style="text-align: center; width: 600px;">区分</th>
+            <th nowrap style="text-align: center;">11月度参考</th>
+            <th nowrap style="text-align: center;">12月度参考</th>
+            <th nowrap style="text-align: center;">1月度参考</th>
+            <th nowrap style="text-align: center;">2月度参考</th>
+            <th nowrap style="text-align: center;">3月度参考</th>
+            <th nowrap style="text-align: center;">4月度参考</th>
+            <th nowrap style="text-align: center;">5月度参考</th>
+            <th nowrap style="text-align: center;">6月度参考</th>
+            <th nowrap style="text-align: center;">7月度参考</th>
+            <th nowrap style="text-align: center;">8月度参考</th>
+            <th nowrap style="text-align: center;">9月度参考</th>
+            <th nowrap style="text-align: center;">10月度参考</th>
+            <th nowrap rowspan="2" style="text-align: center;">期間合計</th>
+        </tr>
+        <tr style="background-color: Lavender; ">
+            <th id="th_sankou_name" style="text-align: center;">名称</th>
+            <th id="tuki_1" style="text-align: center;">11月度予算</th>
+            <th id="tuki_2" style="text-align: center;">12月度予算</th>
+            <th id="tuki_3" style="text-align: center;">1月度予算</th>
+            <th id="tuki_4" style="text-align: center;">2月度予算</th>
+            <th id="tuki_5" style="text-align: center;">3月度予算</th>
+            <th id="tuki_6" style="text-align: center;">4月度予算</th>
+            <th id="tuki_7" style="text-align: center;">5月度予算</th>
+            <th id="tuki_8" style="text-align: center;">6月度予算</th>
+            <th id="tuki_9" style="text-align: center;">7月度予算</th>
+            <th id="tuki_10" style="text-align: center;">8月度予算</th>
+            <th id="tuki_11" style="text-align: center;">9月度予算</th>
+            <th id="tuki_12" style="text-align: center;">10月度予算</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $row_total = 0;
+        $yosan_total = 0;
+
+        for ($row = 0; $row < count($yosan_settei_rows); $row++):
+            ?>
+            <tr>
+                <!-- 更新時使用 (yosan_junjo_cd) -->
+                <input type="hidden" id="key_cd_<?php echo $row; ?>" value="<?php echo $yosan_settei_rows[$row]['key']; ?>" />
+                <td>
+                    <input id="key_<?php echo $row; ?>" type="text" class="form-control" readonly="readonly"
+                           value="<?php echo $row % 2 === 0 ? $yosan_settei_rows[$row]['key'] : $yosan_settei_rows[$row]['key_name'] ?>"
+                    />
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_1"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['1']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['1'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_2"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['2']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['2'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_3"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['3']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['3'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_4"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['4']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['4'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_5"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['5']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['5'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_6"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['6']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['6'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_7"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['7']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['7'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_8"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['8']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['8'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_9"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['9']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['9'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_10"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['10']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['10'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_11"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['11']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['11'];
+                    ?>
+                </td>
+                <td>
+                    <input type="text" style="text-align: right;"
+                           id="tuki_<?php echo $row; ?>_12"
+                           class="form-control yosan-input" <?php echo $row % 2 === 0 ? 'readonly="readonly"' : '' ?>
+                           value="<?php echo number_format($yosan_settei_rows[$row]['12']); ?>"
+                    />
+                    <?php
+                    $row_total += $yosan_settei_rows[$row]['12'];
+                    ?>
+                </td>
+                <td>
+                    <input id="kikan_goukei<?php echo $row; ?>" type="text" class="form-control"
+                           style="text-align: right;"
+                           readonly="readonly"
+                           value="<?php echo number_format($row_total); ?>"
+                    />
+                </td>
+            </tr>
+            <?php
+            $row_total = 0;
+            ?>
+        <?php endfor; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+
+<!-- Modal -->
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle" style="width:80%; height:100%;">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 100%; padding: 0;">
+    </div>
+</div>
+<script>
+    const konnnendo_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('konnnenndo/ajaxGet') ?>";
+    const junjo_kbns_ajaxHanni = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('junjo_kbns/ajaxHanni') ?>";
+    const shouhin_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shouhin_mrs/modal') ?>";
+    const shouhin_mrs_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shouhin_mrs/ajaxGet') ?>";
+    const tantou_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tantou_mrs/modal') ?>";
+    const tantou_mrs_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tantou_mrs/ajaxGet') ?>";
+    const tokuisaki_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/modal') ?>";
+    const tokuisaki_mrs_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/ajaxGet') ?>";
+    const yosan_dts_ajaxSave = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('yosan_dts/saveAjax') ?>";
+</script>
+
+<script type="text/javascript"
+        src="<?php echo $this->url->get('js/views/yosan_index.js'); ?>?var=2020611"></script>

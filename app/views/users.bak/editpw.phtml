@@ -1,0 +1,82 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = 'パスワ.変更'; ?>
+<div class="page-header">
+    <h3>ユーザーパスワード 変更</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "users/savepw",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldCd" class="col-sm-2 control-label">ユーザーコード</label>
+    <div class="col-sm-2">
+        <?php echo $this->tag->textField(array("cd", "size" => 30, "class" => "form-control", "readonly" => "readonly", "id" => "fieldCd")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldPassword" class="col-sm-2 control-label">パスワード</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->passwordField(array("password", "size" => 30, "class" => "form-control", "id" => "fieldPassword")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldRepeatPassword" class="col-sm-2 control-label">パスワード再入力</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->passwordField(array("repeatPassword", "size" => 30, "class" => "form-control", "id" => "fieldRepeatPassword")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldName" class="col-sm-2 control-label">ユーザー名</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("name", "size" => 30, "class" => "form-control", "readonly" => "readonly", "id" => "fieldName")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUserGroupMrCd" class="col-sm-2 control-label">ユーザーグループ</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("user_group_mr_name", "size" => 30, "class" => "form-control", "readonly" => "readonly", "id" => "fieldUserGroupMrCd")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldCreated" class="col-sm-2 control-label">作成日時</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("created", "size" => 30, "class" => "form-control", "readonly" => "readonly", "id" => "fieldCreated")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("updated", "size" => 30, "class" => "form-control", "readonly" => "readonly", "id" => "fieldUpdated")) ?>
+    </div>
+</div>
+
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

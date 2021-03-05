@@ -1,0 +1,83 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "受注明細.一覧"; ?>
+<div class="page-header">
+    <h3>受注明細 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"juchuu_meisai_dts","flds"=>[
+        ["shouhin_mr_cd","fieldShouhinMrCd","商品コード",14,14],["tekiyou","fieldTekiyou","商品名/摘要",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["juchuu_dt_id","受注番号"],
+                    ["cd","行番"],
+                    ["utiwake_kbn_cd","内訳"],
+                    ["shouhin_mr_cd","商品コード"],
+                  //  ["suu_tanni_mr_cd","数単位"],
+                  //  ["irisuu","入数"],
+                  //  ["keisu","ケース"],
+                    ["tekiyou","商品名/摘要"],
+                    ["lot","ロット"],
+                  //  ["kobetucd","個別コード"],
+                  //  ["hinsitu_kbn_cd","品質コード"],
+                    ["souko_mr_cd","倉庫コード"],
+                  //  ["kikaku","規格型番"],
+                    ["iro","色番"],
+                    ["iromei","色名"],
+                  //  ["size","サイズ"],
+                    ["suuryou","数量"],
+                    ["tanni_mr_cd","単位"],
+                  //  ["gentanka","原単価"],
+                    ["tanka","単価"],
+                    ["kingaku","金額"],
+                  //  ["genkagaku","原価額"],
+                  //  ["zeinukigaku","税抜額"],
+                  //  ["zeigaku","税額"],
+                  //  ["project_mr_cd","プロジェクトコード"],
+                  //  ["zeiritu_mr_cd","税率コード"],
+                    ["bikou","備考"],
+                    ["nouki","納期"],
+                  //  ["hacchuurendou_flg","発注連動"],
+                  //  ["updated","更新日時"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $juchuu_meisai_dt): ?>
+            <tr>
+                <td align='center'><?php echo $this->tag->linkTo(array("juchuu_meisai_dts/edit/" . $juchuu_meisai_dt->id, $juchuu_meisai_dt->id)); ?></td>
+                <td align='center'><?php echo $this->tag->linkTo(array("juchuu_dts/edit/" . $juchuu_meisai_dt->JuchuuDts->id, $juchuu_meisai_dt->JuchuuDts->cd)); ?></td>
+                <td align='center'><?php echo $juchuu_meisai_dt->cd ?></td>
+                <td align='center'><?php echo $juchuu_meisai_dt->UtiwakeKbns->name ?></td>
+                <td><?php echo $juchuu_meisai_dt->shouhin_mr_cd ?></td>
+                <td><?php echo $juchuu_meisai_dt->tekiyou ?></td>
+                <td><?php echo $juchuu_meisai_dt->lot ?></td>
+                <td><?php echo $juchuu_meisai_dt->souko_mr_cd ?></td>
+                <td><?php echo $juchuu_meisai_dt->iro ?></td>
+                <td><?php echo $juchuu_meisai_dt->iromei ?></td>
+                <td align='right'><?php echo number_format($juchuu_meisai_dt->suuryou,2) ?></td>
+                <td align='center'><?php echo $juchuu_meisai_dt->TanniMrs->name ?></td>
+                <td align='right'><?php echo number_format($juchuu_meisai_dt->tanka,2) ?></td>
+                <td align='right'><?php echo number_format($juchuu_meisai_dt->kingaku) ?></td>
+                <td><?php echo $juchuu_meisai_dt->bikou ?></td>
+                <td align='center'><?php echo $juchuu_meisai_dt->nouki ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"juchuu_meisai_dts"]) ?>

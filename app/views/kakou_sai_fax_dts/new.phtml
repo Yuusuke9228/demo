@@ -1,0 +1,63 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "再ファックス追加連絡データ.新規"; ?>
+<div class="page-header">
+    <h3>再ファックス追加連絡データ 新規登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "kakou_sai_fax_dts/create",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldCd" class="col-sm-2 control-label">行番</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">内容</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 80, "maxlength" => 250, "style" => "width: 996px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldHacchuuDtId" class="col-sm-2 control-label">発注書キー</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hacchuu_dt_id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHacchuuDtId")) ?>
+    </div>
+
+<label for="fieldHiduke" class="col-sm-2 control-label">日付</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("hiduke", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldHiduke")) ?>
+    </div>
+
+<label for="fieldTantouMrCd" class="col-sm-2 control-label">連絡者コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tantou_mr_cd", "size" => 3, "maxlength" => 3, "style" => "width: 72px;", "class" => "form-control", "id" => "fieldTantouMrCd")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行F12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

@@ -1,0 +1,76 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "条件売上日報.一覧"; ?>
+<div class="page-header">
+    <h3>条件売上日報 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"jouken_uriage_geppous","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","表示順"],
+                    ["name","名称"],
+                    ["junjo_kbn_cd","順序区分コード"],
+                    ["koujun_flg","降順フラグ"],
+                    ["hanni_from","範囲自"],
+                    ["hanni_to","範囲至"],
+                    ["kikan_sitei_kbn_cd","期間指定コード"],
+                    ["kikan_from","期間自"],
+                    ["kikan_to","期間至"],
+                    ["zeikomi_flg","税込表示フラグ"],
+                    ["meisaigyou_flg","明細行表示フラグ"],
+                    ["goukeigyou_flg","合計行表示フラグ"],
+                    ["torihikiari_flg","期間内取引有フラグ"],
+                    ["torihikinasi_flg","期間内取引無フラグ"],
+                    ["hokakei_flg","その他計フラグ"],
+                    ["zennnen_flg","前年比較フラグ"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $jouken_uriage_geppou): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("jouken_uriage_geppous/edit/" . $jouken_uriage_geppou->id, $jouken_uriage_geppou->id)); ?></td>
+                <td><?php echo $jouken_uriage_geppou->cd ?></td>
+                <td><?php echo $jouken_uriage_geppou->name ?></td>
+                <td><?php echo $jouken_uriage_geppou->junjo_kbn_cd ?></td>
+                <td><?php echo $jouken_uriage_geppou->koujun_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->hanni_from ?></td>
+                <td><?php echo $jouken_uriage_geppou->hanni_to ?></td>
+                <td><?php echo $jouken_uriage_geppou->kikan_sitei_kbn_cd ?></td>
+                <td><?php echo $jouken_uriage_geppou->kikan_from ?></td>
+                <td><?php echo $jouken_uriage_geppou->kikan_to ?></td>
+                <td><?php echo $jouken_uriage_geppou->zeikomi_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->meisaigyou_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->goukeigyou_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->torihikiari_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->torihikinasi_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->hokakei_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->zennnen_flg ?></td>
+                <td><?php echo $jouken_uriage_geppou->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("jouken_uriage_geppous/delete/" . $jouken_uriage_geppou->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"jouken_uriage_geppous"]) ?>

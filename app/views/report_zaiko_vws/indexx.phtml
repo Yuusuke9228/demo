@@ -1,0 +1,100 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "VIEW.一覧"; ?>
+<div class="page-header">
+    <h3>VIEW 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"report_zaiko_vws","flds"=>[
+        ["shouhin_mr_cd","fieldShouhinMrCd","コード",14,14],["bikou","fieldBikou","備考",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["shouhin_mr_cd","Shouhin Of Mr Of Cd"],
+                    ["tantou_mr_cd","Tantou Of Mr Of Cd"],
+                    ["tanni_mr_cd","Tanni Of Mr Of Cd"],
+                    ["suu_tanni_mr_cd","Suu Of Tanni Of Mr Of Cd"],
+                    ["lot","Lot"],
+                    ["kobetucd","Kobetucd"],
+                    ["hinsitu_kbn_cd","Hinsitu Of Kbn Of Cd"],
+                    ["souko_mr_cd","Souko Of Mr Of Cd"],
+                    ["zaiko_ryous","Zaiko Of Ryous"],
+                    ["zaiko_suus","Zaiko Of Suus"],
+                    ["shiirebi_tankas","Shiirebi Of Tankas"],
+                    ["shiire_gakus","Shiire Of Gakus"],
+                    ["shiire_ryous","Shiire Of Ryous"],
+                    ["shiire_suus","Shiire Of Suus"],
+                    ["hokanyuuko_ryous","Hokanyuuko Of Ryous"],
+                    ["hokanyuuko_suus","Hokanyuuko Of Suus"],
+                    ["uriage_ryous","Uriage Of Ryous"],
+                    ["uriage_suus","Uriage Of Suus"],
+                    ["hokashukko_ryous","Hokashukko Of Ryous"],
+                    ["hokashukko_suus","Hokashukko Of Suus"],
+                    ["nyuukobis","Nyuukobis"],
+                    ["shukkobis","Shukkobis"],
+                    ["nyuushukkobi","Nyuushukkobi"],
+                    ["nyuushukkoym","Nyuushukkoym"],
+                    ["denpyou_mr_cd","Denpyou Of Mr Of Cd"],
+                    ["oya_id","Oya"],
+                    ["oya_cd","Oya Of Cd"],
+                    ["gyou_cd","Gyou Of Cd"],
+                    ["utiwake_kbn_cd","Utiwake Of Kbn Of Cd"],
+                    ["torihikisaki_cd","Torihikisaki Of Cd"],
+                    ["bikou","Bikou"],
+                    ["hinsitu_hyouka_kbn_cd","Hinsitu Of Hyouka Of Kbn Of Cd"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $report_zaiko_vw): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("report_zaiko_vws/edit/" . $report_zaiko_vw->shouhin_mr_cd, $report_zaiko_vw->shouhin_mr_cd)); ?></td>
+                <td><?php echo $report_zaiko_vw->tantou_mr_cd ?></td>
+                <td><?php echo $report_zaiko_vw->tanni_mr_cd ?></td>
+                <td><?php echo $report_zaiko_vw->suu_tanni_mr_cd ?></td>
+                <td><?php echo $report_zaiko_vw->lot ?></td>
+                <td><?php echo $report_zaiko_vw->kobetucd ?></td>
+                <td><?php echo $report_zaiko_vw->hinsitu_kbn_cd ?></td>
+                <td><?php echo $report_zaiko_vw->souko_mr_cd ?></td>
+                <td><?php echo $report_zaiko_vw->zaiko_ryous ?></td>
+                <td><?php echo $report_zaiko_vw->zaiko_suus ?></td>
+                <td><?php echo $report_zaiko_vw->shiirebi_tankas ?></td>
+                <td><?php echo $report_zaiko_vw->shiire_gakus ?></td>
+                <td><?php echo $report_zaiko_vw->shiire_ryous ?></td>
+                <td><?php echo $report_zaiko_vw->shiire_suus ?></td>
+                <td><?php echo $report_zaiko_vw->hokanyuuko_ryous ?></td>
+                <td><?php echo $report_zaiko_vw->hokanyuuko_suus ?></td>
+                <td><?php echo $report_zaiko_vw->uriage_ryous ?></td>
+                <td><?php echo $report_zaiko_vw->uriage_suus ?></td>
+                <td><?php echo $report_zaiko_vw->hokashukko_ryous ?></td>
+                <td><?php echo $report_zaiko_vw->hokashukko_suus ?></td>
+                <td><?php echo $report_zaiko_vw->nyuukobis ?></td>
+                <td><?php echo $report_zaiko_vw->shukkobis ?></td>
+                <td><?php echo $report_zaiko_vw->nyuushukkobi ?></td>
+                <td><?php echo $report_zaiko_vw->nyuushukkoym ?></td>
+                <td><?php echo $report_zaiko_vw->denpyou_mr_cd ?></td>
+                <td><?php echo $report_zaiko_vw->oya_id ?></td>
+                <td><?php echo $report_zaiko_vw->oya_cd ?></td>
+                <td><?php echo $report_zaiko_vw->gyou_cd ?></td>
+                <td><?php echo $report_zaiko_vw->utiwake_kbn_cd ?></td>
+                <td><?php echo $report_zaiko_vw->torihikisaki_cd ?></td>
+                <td><?php echo $report_zaiko_vw->bikou ?></td>
+                <td><?php echo $report_zaiko_vw->hinsitu_hyouka_kbn_cd ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"report_zaiko_vws"]) ?>

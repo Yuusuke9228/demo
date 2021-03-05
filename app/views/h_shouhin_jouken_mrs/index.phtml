@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "商品条件マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>商品条件マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_shouhin_jouken_mrs","flds"=>[
+        ["shouhin_mr_cd","fieldShouhinMrCd","商品コード",14,14],["jouken","fieldJouken3","条件摘要",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["shouhin_mr_cd","商品cd"],
+                    ["h_kishu_mr_cd","機種cd"],
+                    ["h_jouken_midasi_mr_id","条件見出しid"],
+                    ["jouken","条件摘要"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>修正</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_shouhin_jouken_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_shouhin_jouken_mrs/edit/" . $h_shouhin_jouken_mr->id, $h_shouhin_jouken_mr->id)); ?></td>
+                <td><?php echo $h_shouhin_jouken_mr->shouhin_mr_cd ?></td>
+                <td><?php echo $h_shouhin_jouken_mr->h_kishu_mr_cd ?></td>
+                <td><?php echo $h_shouhin_jouken_mr->h_jouken_midasi_mr_id ?></td>
+                <td><?php echo $h_shouhin_jouken_mr->jouken ?></td>
+                <td><?php echo $h_shouhin_jouken_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_shouhin_jouken_mrs/new?shouhin=" . $h_shouhin_jouken_mr->shouhin_mr_cd . "&kishu=" . $h_shouhin_jouken_mr->h_kishu_mr_cd, "修正")); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_shouhin_jouken_mrs"]) ?>

@@ -1,0 +1,296 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var object $data
+ */
+?>
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '加工依頼'; ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->get('css/jquery/handsontable.full.min.css') ?>">
+<script src="<?php echo $this->url->get('js/jquery/handsontable.full.min.js') ?>"></script>
+<style>
+    .currentRow {
+        background-color: #fcf8e3 !important;
+    }
+    .linkText {
+        color: blue !important;
+        cursor: pointer;
+    }
+</style>
+<?php echo $this->getContent(); ?>
+<div class="container-fluid">
+    <div class="page-header">
+        <h3>加工依頼一覧</h3>
+    </div>
+    <div class="panel">
+        <div class="panel-heading panel-info">
+            <div class="col-sm-12" style="border-bottom: #9999cc 1px solid; padding-bottom: 2px; margin-bottom: 10px;">
+                <div class="col-sm-2">
+                    <span class="h3 panel-tilte">表示期間指定</span>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php
+                echo $this->tag->form([
+                    "kakou_irais/index",
+                    "autocomplete" => "off",
+                    "class" => "form-inline"
+                ]);
+                ?>
+                <div class="col-sm-12">
+                    <label class="col-sm-3 for="start_date" style="text-align: right;">表示期間</label>
+                    <div class="col-sm-4">
+                        <?php echo $this->tag->telField(["start_date", "class" => "form-control f-cent ime-d", "id" => "start_date", "required" => "required"]); ?>
+                    </div>
+                    <div class="col-sm-1">
+                        <label for="end_date">～</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <?php echo $this->tag->telField(["end_date", "class" => "form-control f-cent ime-d", "id" => "end_date",  "required" => "required"]); ?>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-12">
+                    <div class="col-sm-2 col-md-offset-10">
+                        <?php echo $this->tag->submitButton(["期間内発注表示", "id" => "F12", "class" => "btn btn-info btn-sm"]); ?>
+                    </div>
+                </div>
+                <?php echo $this->tag->endForm(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='container-fluid' style="width: 100% !important; margin: 0 !important; padding: 0 !important;">
+    <div class="row">
+        <div id="hot" class="handsontable" style="width: 100% !important; margin: 0 !important; padding: 0 !important;  overflow-x: scroll !important;"></div>
+    </div>
+</div>
+
+<!--jsへテーブル表示データを渡す-->
+<?php $data_php = json_encode($data); ?>
+
+<script>
+    const kakouIraisEdit = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kakou_irais/edit') ?>";
+</script>
+
+<script>
+    var dataObject = <?php echo $data_php; ?>;
+    var hotElement = document.querySelector('#hot');
+    var hotElementContainer = hotElement.parentNode;
+    var hotSettings = {
+        data: dataObject,
+        columns: [
+            {
+                data: 'h_id',
+                type: 'numeric',
+                readOnly: true
+            },
+            {
+                data: 'konritsu',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'genryou_cd',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'genryou_name',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'h_cd',
+                type: 'numeric',
+                width: 100,
+                className: "linkText",
+                readOnly: true
+            },
+            {
+                data: 'h_meisai_id',
+                type: 'numeric',
+                className: 'htCenter',
+                numericFormat: {
+                    pattern: '0,0',
+                    culture: 'ja-JP'
+                },
+                readOnly: true
+            },
+            {
+                data: 'row',
+                width: 50,
+                type: 'numeric',
+                readOnly: true
+            },
+            {
+                data: 'nyuuka_kbn',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'shiiresaki_mr_cd',
+                type: 'text',
+                className: "htCenter",
+                width: 100,
+                readOnly: true
+            },
+            {
+                data: 'shiiresaki_name',
+                type: 'text',
+                readOnly: true
+            },
+            {
+                data: 'hacchuubi',
+                type: 'text',
+                className: "htCenter",
+                readOnly: true
+            },
+            {
+                data: 'nounyuu_kijitu',
+                type: 'text',
+                className: "htCenter",
+                readOnly: true
+            },
+            {
+                data: 'nouki_hensin',
+                type: 'text',
+                className: "htCenter",
+                readOnly: true
+            },
+            {
+                data: 'shouhin_mr_cd',
+                type: 'text',
+                className: "htCenter",
+                width: 100,
+                readOnly: true
+            },
+            {
+                data: 'tekiyou',
+                type: 'text',
+                readOnly: true
+            },
+            {
+                data: 'lot',
+                type: 'text',
+                readOnly: true
+            },
+            {
+                data: 'iro',
+                type: 'text',
+                readOnly: true
+            },
+            {
+                data: 'suuryou1',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0,0.00',
+                    culture: 'ja-JP'
+                },
+                readOnly: true
+            },
+            {
+                data: 'tanni1',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'suuryou2',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0,0.00',
+                    culture: 'ja-JP'
+                },
+                readOnly: true
+            },
+            {
+                data: 'tanni2',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'kouchin',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0,0.00',
+                    culture: 'ja-JP'
+                },
+                readOnly: true
+            },
+            {
+                data: 'tanka_tani',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+        ],
+        stretchH: 'all',
+        autoColumnSize: true,
+        autoRowHeights: true,
+        maxRows: 100000000,
+        height: 460,
+        manualRowResize: true,
+        manualColumnResize: true,
+        currentRowClassName: 'currentRow',
+        rowHeaders: false,
+        colHeaders: ['id', '混率', '原料コード', '原料名', '発注ナンバー', '明細ID', '行', '完了', '発注先', '名称', '発注日','納入期日' , '納期返信', '商品コード', '摘要', 'ロット', '色番', '数量１', '単', '数量２', '単','工賃', '単'],
+        fixedRows: true,
+        fixedRowsTop: 0,
+        fixedColumnsLeft: 7,
+        manualRowMove: true,
+        manualColumnMove: false,
+        hiddenColumns: {
+            columns: [0, 1, 2, 3, 16],
+            indicators: true
+        },
+        contextMenu: false,
+        filters: true,
+        multiColumnSorting: true,
+        dropdownMenu: {
+            items: {'filter_by_value': { name: '値で条件絞り込み' }, 'filter_action_bar': {name: 'アクション'},},
+        },
+        language: 'en-US',
+        licenseKey: 'non-commercial-and-evaluation',
+        hotElementContainer,
+        hotElement,
+        afterOnCellMouseDown: function (event, coords, TD) {
+            if (coords.row === -1) return;
+            if (coords.col === 4) {
+                data = hot.getDataAtRow(coords.row);
+                const params = {
+                    h_id: data[0],
+                    h_cd: data[4],
+                    h_meisai_id: data[5],
+                    meisai_row: data[6],
+                    genryou_cd: data[2],
+                    genryou_name: data[3],
+                    konritsu: data[1],
+                    koutin: data[21],
+                    tanka_tani: data[22],
+                };
+                getParamStr = $.param(params);
+                window.open(kakouIraisEdit + '?' + getParamStr);
+                hot.deselectCell();
+            }
+        },
+    }
+    var hot = new Handsontable(hotElement, hotSettings);
+
+    function idFormat(row, col) {
+        return String(hot.getDataAtCell(row, col)).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    }
+</script>

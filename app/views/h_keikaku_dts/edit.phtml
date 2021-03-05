@@ -1,0 +1,510 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var \Phalcon\Mvc\Model $denpyou_mr
+ */
+?>
+
+<?php $title = "生産計画"; ?>
+<div class="page-header">
+    <h3>生産計画 登録</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<style>
+    input.ALLF, select.ALLF {
+        display: none;
+    }
+
+    div.ALLF {
+        background-color: #f8f8f8;
+        display: block;
+    }
+
+    div.xALLF {
+        display: block;
+        background-color: #f0f0f0;
+    }
+
+    table.meisai {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th, td {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    th {
+        border-right: 1px #ccc solid;
+        font-size: x-small;
+        font-weight: normal;
+        text-align: center;
+        color: #3d773d;
+        background-color: #dff0d8;
+    }
+
+    th.ot-fixed, td.ot-fixed {
+        position: absolute;
+        left: 6px;
+        width: <?php echo $rewidths['[cd']??'30' ?>px;
+    <?php $ot_fix_left = 6 ?> <?php $ot_fix_left += $rewidths['[cd']??30 ?>
+    }
+
+    th.ot-fixed1, td.ot-fixed1 {
+        position: absolute;
+        left: <?php echo $ot_fix_left ?>px;
+        width: <?php echo $rewidths['[kousei']??'60' ?>px;
+    <?php $ot_fix_left += $rewidths['[kousei']??60 ?>
+    }
+
+    th.ot-fixed2, td.ot-fixed2 {
+        position: absolute;
+        left: <?php echo $ot_fix_left ?>px;
+        width: <?php echo $rewidths['[shouhin_mr_cd']??'100' ?>px;
+    }
+</style>
+
+<?php
+echo $this->tag->form(
+    [
+        "",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    ]);
+?>
+<div class="form-group">
+    <?php echo $this->tag->hiddenField("id") ?>
+
+    <div class="panel panel-primary bg-yel">
+        <div class="panel-heading pnl-hed" onclick="save_ros()">生産計画<span id="save_ros"
+                                                                          style="color:pink;cursor:pointer;">(click→「入力制御の保存」)</span>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-2">
+                <label for="fieldCd" class="col-sm-12 control-label lbl-grn-up switch-roa">計画番号></label>
+                <?php echo $this->tag->textField(array("cd", "class" => "form-control f-cent ime-d ALLF HEAD", 'readonly' => ($readonlys['cd'] ?? null), "id" => "fieldCd")) ?>
+                <div class='col-sm-12 form-control f-cent xALLF xHEAD' id='xdispCd'></div>
+            </div>
+            <div class="col-sm-2">
+                <label for="fieldHakkoubi" class="col-sm-12 control-label lbl-grn-up" onclick="switch_roa('Hakkoubi')">計画日></label>
+                <?php echo $this->tag->telField(array("hakkoubi", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d ALLF BODY", 'readonly' => ($readonlys['hakkoubi'] ?? null), "id" => "fieldHakkoubi")) ?>
+                <div class='col-sm-12 form-control f-cent xALLF xBODY' id='xdispHakkoubi'></div>
+            </div>
+            <div class="col-sm-2">
+                <label for="fieldNounyuuKijitu" class="col-sm-12 control-label lbl-grn-up"
+                       onclick="switch_roa('NounyuuKijitu')">納入期限</label>
+                <?php echo $this->tag->telField(array("nounyuu_kijitu", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d ALLF BODY", 'readonly' => ($readonlys['nounyuu_kijitu'] ?? null), "id" => "fieldNounyuuKijitu")) ?>
+                <div class='col-sm-12 form-control f-cent xALLF xBODY' id='xdispNounyuuKijitu'></div>
+            </div>
+            <div class="col-sm-2">
+                <label for="fieldTantouMrCd" class="col-sm-12 control-label lbl-grn-up">担当者</label>
+                <?php echo $this->tag->select(array("tantou_mr_cd", TantouMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name", "order" => "cd"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control ALLF BODY", "id" => "fieldTantouMrCd")) ?>
+                <div class='col-sm-12 form-control xALLF xBODY' id='xdispTantouMrCd'></div>
+            </div>
+            <div class="col-sm-4">
+                <label for="fieldTekiyou" class="col-sm-12 control-label lbl-grn-up"
+                       onclick="switch_roa('Tekiyou')">摘要</label>
+                <?php echo $this->tag->textField(array("tekiyou", "size" => 32, "maxlength" => 32, "class" => "form-control ime-a ALLF BODY", 'readonly' => ($readonlys['tekiyou'] ?? null), "id" => "fieldTekiyou")) ?>
+                <div class='col-sm-12 form-control xALLF xBODY' id='xdispTekiyou'></div>
+            </div>
+
+            <!-- 発注と紐づける -->
+            <div class="col-sm-12">
+                <div class="col-sm-2">
+                    <label for="shiiresaki_mr_cd" class="form-control lbl-grn-up">発注先</label>
+                </div>
+                <div class="col-sm-2">
+                    <?php echo $this->tag->select(["shiiresaki_mr_cd", ShiiresakiMrs::find(["columns" => "cd, CONCAT(cd , '=' , name) as cd_name", "order" => "cd"]), "using" => ["cd", "cd_name"], "useEmpty" => true, "emptyText" => "", "class" => "form-control ALLF BODY", "id" => "shiiresaki_mr_cd", "onchange" => "getOrderData()"]); ?>
+                    <div class='col-sm-12 form-control f-cent xALLF xBODY' id='xdispshiiresaki_mr_cd'></div>
+                </div>
+                <div class="col-sm-2">
+                    <label for="hacchuu_no" class="form-control lbl-grn-up">発注番号</label>
+                </div>
+                <div class="col-sm-2">
+                    <!--発注ナンバーは表示だけ-->
+                    <input type="text" class="form-control f-cent" readonly="readonly" id="hacchuu_no"
+                           name="hacchuu_no"/>
+                </div>
+            </div>
+
+            <div class="col-sm-8" style="overflow: scroll; height: 120px;">
+                <div id="hacchuu_data">
+                    <input type="hidden" id="tmp_hacchuu_id" name="hacchuu_dt_id" value=""/>
+                    <table id="hacchuu_table" class="table">
+                        <thead>
+                        <tr>
+                            <th>発注番号</th>
+                            <th>納期</th>
+                            <th>担当</th>
+                            <th>数量</th>
+                            <th>商品</th>
+                            <th>備考</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--jsで動的に作る-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <label for="dispSakuseiUserName" class="col-sm-5 control-label lbl-grn">登録者</label>
+                <div class="col-sm-7">
+                    <div class='form-control ALLF' id='dispSakuseiUserName' name='sakusei_user_name'></div>
+                </div>
+                <label for="fieldCreated" class="col-sm-5 control-label lbl-grn">登録日時</label>
+                <div class="col-sm-7">
+                    <div class='form-control ALLF' id='dispCreated' name='created'></div>
+                </div>
+                <label for="fieldKousinUserName" class="col-sm-5 control-label lbl-grn">更新者</label>
+                <div class="col-sm-7">
+                    <div class='form-control ALLF' id='dispKousinUserName' name='kousin_user_name'></div>
+                </div>
+                <label for="fieldUpdated" class="col-sm-5 control-label lbl-grn">更新日時</label>
+                <div class="col-sm-7">
+                    <div class='form-control ALLF' id='dispUpdated' name='updated'></div>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-success" onclick="TENKAI(1);return false;" tabindex="-1">単展開</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-success" onclick="TENKAI(0);return false;" tabindex="-1">全展開</button>
+                </div>
+            </div>
+        </div><!-- panel-body -->
+
+        <div class="panel-heading pnl-hed">計画明細</div>
+        <div id='meisaiBody' class="panel-body" style="overflow-x: scroll;padding: 0;">
+            <table>
+                <tr style="height:22px;">
+                    <td style="text-align:right;">目盛:
+                        <input type="radio" name="radFormat" onclick='gFormat="day";JSGantt.changeFormat("day",g);'
+                               value="day">日
+                        <input type="radio" name="radFormat" onclick='gFormat="week";JSGantt.changeFormat("week",g);'
+                               value="week" checked="">週
+                        <input type="radio" name="radFormat" onclick='gFormat="month";JSGantt.changeFormat("month",g);'
+                               value="month">月
+                    </td>
+                    <td rowspan=2 style='vertical-align:top;'>
+                        <div style="position:relative" class="gantt" id="GanttChartDIV"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align:top;'>
+                        <table id="meisaiTable" class="meisai">
+                            <thead>
+                            <tr>
+                                <th onclick="switch_ros('Cd')" class="ot-fixed">No
+                                </th>
+                                <th class="ot-fixed1">構造
+                                </th>
+                                <th class="ot-fixed2">商品>
+                                </th>
+                                <th width=<?php echo $rewidths['[shouhin_kakou_cd'] ?? '"10"' ?>>加工
+                                </th>
+                                <th width=<?php echo $rewidths['[tekiyou'] ?? '"200"' ?> onclick="switch_ros('Tekiyou')">
+                                    商品名／摘要
+                                </th>
+                                <th width=<?php echo $rewidths['[lot'] ?? '"10"' ?> onclick="switch_ros('Lot')">Lot
+                                </th>
+                                <th width=<?php echo $rewidths['[h_kishu_mr_cd'] ?? '"50"' ?> onclick="switch_ros('HKishuMrCd')">
+                                    機種
+                                </th>
+                                <th width=<?php echo $rewidths['[h_kishu_mr_name'] ?? '"10"' ?>>名
+                                </th>
+                                <th width=<?php echo $rewidths['[gouki'] ?? '"10"' ?>>
+                                    号機
+                                </th>
+                                <th width=<?php echo $rewidths['[oya_meisai_cd'] ?? '"10"' ?> onclick="switch_ros('OyaMeisaiCd')">
+                                    元行
+                                </th>
+                                <th width=<?php echo $rewidths['[suuryou'] ?? '"10"' ?>>元数
+                                </th>
+                                <th width=<?php echo $rewidths['[keisu'] ?? '"10"' ?> onclick="switch_ros('Keisu')">係数
+                                </th>
+                                <th width=<?php echo $rewidths['[hituyou_ryou'] ?? '"10"' ?>>必要量
+                                </th>
+                                <th width=<?php echo $rewidths['[moto_juch_ryou'] ?? '"60"' ?> onclick="switch_ros('MotoJuchRyou')">
+                                    +発注量
+                                </th>
+                                <th width=<?php echo $rewidths['[zaikoseisan_ryou'] ?? '"30"' ?> onclick="switch_ros('ZaikoseisanRyou')">
+                                    +備蓄生産量
+                                </th>
+                                <th width=<?php echo $rewidths['[loss_ryou'] ?? '"10"' ?> onclick="switch_ros('LossRyou')">
+                                    +ロス量
+                                </th>
+                                <th width=<?php echo $rewidths['[deme_ryou'] ?? '"10"' ?> onclick="switch_ros('DemeRyou')">
+                                    -出目量
+                                </th>
+                                <th width=<?php echo $rewidths['[zaikosiyou_ryou'] ?? '"30"' ?> onclick="switch_ros('ZaikosiyouRyou')">
+                                    -備蓄使用量
+                                </th>
+                                <th width=<?php echo $rewidths['[keikaku_ryou'] ?? '"60"' ?>>=計画
+                                </th>
+                                <th width=<?php echo $rewidths['[zaiko_tanni'] ?? '"30"' ?>>単位
+                                </th>
+                                <th width=<?php echo $rewidths['[kagi'] ?? '"30"' ?> onclick="switch_ros('Kagi')">鍵
+                                </th>
+                                <th width=<?php echo $rewidths['[kouritu'] ?? '"10"' ?> onclick="switch_ros('Kouritu')">
+                                    効率
+                                </th>
+                                <th width=<?php echo $rewidths['[kouritu_tanni'] ?? '"10"' ?>>単位
+                                </th>
+                                <th width=<?php echo $rewidths['[heiretu_suu'] ?? '"40"' ?> onclick="switch_ros('HeiretuSuu')">
+                                    錘数
+                                </th>
+                                <th width=<?php echo $rewidths['[kaisi_hiduke'] ?? '"120"' ?> onclick="switch_ros('KaisiHiduke')">
+                                    開始日
+                                </th>
+                                <th width=<?php echo $rewidths['[shuuryou_hiduke'] ?? '"120"' ?> onclick="switch_ros('ShuuryouHiduke')">
+                                    終了日
+                                </th>
+                                <th width=<?php echo $rewidths['[bikou'] ?? '"80"' ?> onclick="switch_ros('Bikou')">備考
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr id="tr_h_keikaku_meisai_dts_hidden" style="display:none;">
+                                <td class="ot-fixed">
+                                    <!--行番    --><?php echo $this->tag->textField(array("hidden[cd]", "class" => "form-control ALLF BODY open-modal1 ime-d f-cent", 'readonly' => ($readonlys['[cd'] ?? null), "id" => "field0hiddenCd")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenCd'></div>
+                                </td>
+                                <td class="ot-fixed1"><!--構造-->
+                                    <div class='form-control tt ALLF' id='disp0hiddenKousei'
+                                         name='hidden[kousei]'></div>
+                                </td>
+                                <td class="ot-fixed2">
+                                    <!--商品--><?php echo $this->tag->textField(array("hidden[shouhin_mr_cd]", "maxlength" => 20, "style" => "padding: 0;", "class" => "form-control ALLF BODY ime-i f-cent", "id" => "field0hiddenShouhinMrCd", "list" => "ShouhinMrsOptions")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenShouhinMrCd'></div>
+                                </td>
+                                <td><!--加工CD  -->
+                                    <div class='form-control ALLF f-cent' id='disp0hiddenShouhinKakouCd'
+                                         name='hidden[shouhin_kakou_cd]'></div>
+                                </td>
+                                <td>
+                                    <!--摘要    --><?php echo $this->tag->textField(array("hidden[tekiyou]", "size" => 40, "maxlength" => 40, "style" => "padding: 0;", "class" => "form-control ALLF BODY ime-a", 'readonly' => ($readonlys['[tekiyou'] ?? null), "id" => "field0hiddenTekiyou")) ?>
+                                    <div class='form-control xALLF xBODY' id='xdisp0hiddenTekiyou'></div>
+                                </td>
+                                <td>
+                                    <!--ロット  --><?php echo $this->tag->textField(array("hidden[lot]", "size" => 8, "maxlength" => 40, "style" => "padding: 0;", "class" => "form-control ALLF BODY ime-i f-cent", 'readonly' => ($readonlys['[lot'] ?? null), "id" => "field0hiddenLot")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenLot'></div>
+                                </td>
+                                <td>
+<!--                                    --><?php //echo $this->tag->textField(array("hidden[h_kishu_mr_cd]", "maxlength" => 12, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-cent ime-i", 'readonly' => ($readonlys['[h_kishu_mr_cd'] ?? null), "id" => "field0hiddenHKishuMrCd", "list" => "HKishuMrsOptions")) ?>
+                                    <!--機種    --><?php echo $this->tag->select(array("hidden[h_kishu_mr_cd]", HKishuMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name", "order" => "cd"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control ALLF BODY", "id" => "field0hiddenHKishuMrCd")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenHKishuMrCd'></div>
+                                </td>
+                                <td><!--機種名  -->
+                                    <div class='form-control ALLF f-cent' id='disp0hiddenHKishuMrName'
+                                         name='hidden[h_kishu_mr_name]'></div>
+                                </td>
+                                <td><!--号機-->
+                                    <!--号機--><?php echo $this->tag->textField(array("hidden[gouki]", "size" => 20, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[gouki'] ?? null), "id" => "field0hiddenGouki")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenGouki'></div>
+                                </td>
+                                <td>
+                                    <!--親明細CD--><?php echo $this->tag->textField(array("hidden[oya_meisai_cd]", "size" => 10, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[oya_meisai_cd'] ?? null), "id" => "field0hiddenOyaMeisaiCd")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenOyaMeisaiCd'></div>
+                                </td>
+                                <td><!--元数    -->
+                                    <div class='form-control ALLF f-numb' id='disp0hiddenSuuryou'
+                                         name='hidden[suuryou]'></div>
+                                </td>
+                                <td>
+                                    <!--係数    --><?php echo $this->tag->textField(array("hidden[keisu]", "size" => 10, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-cent ime-d", 'readonly' => ($readonlys['[keisu'] ?? null), "id" => "field0hiddenKeisu")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenKeisu'></div>
+                                </td>
+                                <td><!--必要量  -->
+                                    <div class='form-control ALLF f-numb' id='disp0hiddenHituyouRyou'
+                                         name='hidden[hituyou_ryou]'></div>
+                                </td>
+                                <td>
+                                    <!--受注量  --><?php echo $this->tag->textField(array("hidden[moto_juch_ryou]", "size" => 8, "maxlength" => 10, "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[moto_juch_ryou'] ?? null), "id" => "field0hiddenMotoJuchRyou")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenMotoJuchRyou'></div>
+                                </td>
+                                <td>
+                                    <!--過生産量--><?php echo $this->tag->textField(array("hidden[zaikoseisan_ryou]", "size" => 8, "maxlength" => 10, "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[zaikoseisan_ryou'] ?? null), "id" => "field0hiddenZaikoseisanRyou")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenZaikoseisanRyou'></div>
+                                </td>
+                                <td>
+                                    <!--ロス量  --><?php echo $this->tag->textField(array("hidden[loss_ryou]", "size" => 8, "maxlength" => 10, "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[loss_ryou'] ?? null), "id" => "field0hiddenLossRyou")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenLossRyou'></div>
+                                </td>
+                                <td>
+                                    <!--出目量  --><?php echo $this->tag->textField(array("hidden[deme_ryou]", "size" => 8, "maxlength" => 10, "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[deme_ryou'] ?? null), "id" => "field0hiddenDemeRyou")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenDemeRyou'></div>
+                                </td>
+                                <td>
+                                    <!--在庫使用量--><?php echo $this->tag->textField(array("hidden[zaikosiyou_ryou]", "size" => 8, "maxlength" => 10, "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[zaikosiyou_ryou'] ?? null), "id" => "field0hiddenZaikosiyouRyou")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenZaikosiyouRyou'></div>
+                                </td>
+                                <td><!--手当量  -->
+                                    <div class='form-control ALLF f-numb' id='disp0hiddenKeikakuRyou'
+                                         name='hidden[keikaku_ryou]'></div>
+                                </td>
+                                <td><!--在庫単位-->
+                                    <div class='form-control ALLF f-cent' id='disp0hiddenZaikoTanni'
+                                         name='hidden[zaiko_tanni]'></div>
+                                </td>
+                                <td>
+
+                                    <!--鍵      --><?php echo $this->tag->textField(array("hidden[kagi]", "size" => 4, "maxlength" => 4, "class" => "form-control ALLF BODY f-cent ime-d", 'readonly' => ($readonlys['[kagi'] ?? null), "id" => "field0hiddenKagi")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenKagi'></div>
+                                </td>
+                                <td>
+                                    <!--効率    --><?php echo $this->tag->textField(array("hidden[kouritu]", "size" => 8, "maxlength" => 10, "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[kouritu'] ?? null), "id" => "field0hiddenKouritu")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenKouritu'></div>
+                                </td>
+                                <td><!--効率単位-->
+                                    <div class='form-control ALLF f-cent' id='disp0hiddenKourituTanni'
+                                         name='hidden[kouritu_tanni]'></div>
+                                </td>
+                                <td>
+                                    <!--錘数    --><?php echo $this->tag->textField(array("hidden[heiretu_suu]", "size" => 14, "type" => "datetime-local", "maxlength" => 20, "class" => "form-control ALLF BODY f-numb", 'readonly' => ($readonlys['[daisuu'] ?? null), "id" => "field0hiddenHeiretuSuu")) ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenHeiretuSuu'></div>
+                                </td>
+                                <td>
+<!--                                    --><?php //echo $this->tag->telField(array("hidden[kaisi_hiduke]", "size" => 10, "maxlength" => 10, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-cent ime-d", 'readonly' => ($readonlys['[kaisi_hiduke'] ?? null), "id" => "field0hiddenKaisiHiduke")) ?>
+                                    <!--開始日  --><?php echo $this->tag->textField(["hidden[kaisi_hiduke]","size" => 20, "type" => "datetime-local","maxlength" => 20, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-cent ime-d", 'readonly' => ($readonlys['[kaisi_hiduke'] ?? null), "id" => "field0hiddenKaisiHiduke"]); ?>
+
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenKaisiHiduke'></div>
+                                </td>
+                                <td>
+<!--                                    --><?php //echo $this->tag->telField(array("hidden[shuuryou_hiduke]", "size" => 10, "maxlength" => 10, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-cent ime-d", 'readonly' => ($readonlys['[shuuryou_hiduke'] ?? null), "id" => "field0hiddenShuuryouHiduke")) ?>
+                                    <!--終了日  --><?php echo $this->tag->textField(["hidden[shuuryou_hiduke]","size" => 20, "maxlength" => 20, "style" => "padding: 0;", "class" => "form-control ALLF BODY f-cent ime-d", 'readonly' => ($readonlys['[shuuryou_hiduke'] ?? null), "id" => "field0hiddenShuuryouHiduke"]); ?>
+                                    <div class='form-control xALLF xBODY f-cent' id='xdisp0hiddenShuuryouHiduke'></div>
+                                </td>
+                                <td>
+                                    <!--備考    --><?php echo $this->tag->textField(array("hidden[bikou]", "size" => 14, "maxlength" => 14, "style" => "padding: 0;", "class" => "form-control ALLF BODY ime-a", 'readonly' => ($readonlys['[bikou'] ?? null), "id" => "field0hiddenBikou")) ?>
+                                    <div class='form-control xALLF xBODY' id='xdisp0hiddenBikou'></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-offset-2 col-sm-10">
+            <div style='font-size:xx-large;' id='dispEmsg' name='emsg'></div>
+        </div>
+
+        <div id="PgDn"></div>
+        <div id="PgUp"></div>
+        <div id="END"></div>
+        <div id="ESC"></div>
+        <div class="col-sm-2">
+            <input type="button" value="前へF3" id="F3" onclick="BACK();" class="btn btn-default" tabindex="-1"
+                   title='前の計画番号を表示:F3キー'/>
+            <input type="button" value="次へF4" id="F4" onclick="NEXT();" class="btn btn-success" tabindex="-1"
+                   title='次の計画番号を表示:F4キー'/>
+        </div>
+        <div class="col-sm-8">
+            <?php echo $this->tag->submitButton(array("実行F12", "id" => "F12", "class" => "btn  btn-success fALLF fHEAD fBODY fTAIL", "onclick" => 'ENTER();return false;')) ?>
+            <input type="button" value="取消F9" id="F9" onclick="CANCEL();" class="btn btn-default" tabindex="-1"
+                   title='ブラウザの機能が起動:F9キー'/>
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </div>
+</div>
+
+<datalist id="KeikakuDtsOptions">
+</datalist>
+
+<datalist id="ShouhinMrsOptions">
+</datalist>
+
+<datalist id="SoukoMrsOptions">
+</datalist>
+<div id='point_1'></div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<!-- 商品展開時に機種の現在の計画情報を出すテーブルを表示 -->
+<div class="container" style="width: 100% !important;">
+    <div class="row">
+
+        <div class="col-sm-12" style="padding-bottom: 0;">
+            <div class="panel-heading pnl-hed h4">計画明細</div>
+            <div id='planBody' class="panel-body" style="overflow-x: scroll;padding: 0;">
+                <table style="width: 100%;">
+                    <tr style="height: 22px !important;background-color: #e3d7a3;">
+                        <td style="text-align:right;">目盛:
+                            <input type="radio" name="radFormat2" onclick='ganttFormat="day";JSGantt.changeFormat("day",gantt);'
+                                   value="day">日
+                            <input type="radio" name="radFormat2"
+                                   onclick='ganttFormat="week";JSGantt.changeFormat("week",gantt);'
+                                   value="week" checked="checked">週
+                            <input type="radio" name="radFormat2"
+                                   onclick='ganttFormat="month";JSGantt.changeFormat("month",gantt);'
+                                   value="month">月
+                        </td>
+                        <td rowspan=2 style='vertical-align:top;'>
+                            <div style="position:relative" class="gantt" id="ProcessChart"></div>
+                        </td>
+                    </tr>
+                    <tr style="height: 22px !important;">
+                        <td style="vertical-align: top;">
+                            <table id="plan_table" class="meisai">
+                                <thead style="background-color: lavenderblush; text-align: center;">
+                                <tr>
+                                    <th nowrap style="width: 50px;">発注NO</th>
+                                    <th nowrap style="width: 60px;">機種名</th>
+                                    <th nowrap style="width: 120px;">商品コード</th>
+                                    <th nowrap style="text-align: width: 130px;">摘要</th>
+                                    <th nowrap style="width: 120px;">開始日</th>
+                                    <th nowrap style="width: 120px;">終了日</th>
+                                    <th nowrap style="width: 60px;">号機</th>
+                                </tr>
+                                </thead>
+                                <tbody style="background-color: whitesmoke;">
+                                    <!--GanttChartはJSで描画-->
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    const this_url_base = "<?php echo $this->url->get() ?>";
+    const denpyou_mr_id = <?php echo $denpyou_mr->id; ?>;
+    const testAjax = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('hacchuu_dts/getOrderData') ?>";
+    const getModelPlan = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('h_keikaku_dts/getModelPlan') ?>";
+</script>
+
+<?php echo $this->tag->endForm(); ?>
+<link rel="stylesheet" type="text/css" href="<?= $this->url->get('css/jsgantt_v12/jsgantt.css'); ?>"/>
+<script type="text/javascript" src="<?php echo $this->url->get('js/jsgantt_v12/jsgantt.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/h_keikaku_dts_edit.js'); ?>?var=20200106"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/updnkey.js'); ?>?var=20190321"></script>
+
+<style scoped>
+    div[class^="col-sm"], div[class^="panel"] {
+        padding: 0 !important;
+    }
+
+    /* うっとうしい */
+    #point_1 {
+        display: none;
+    }
+</style>

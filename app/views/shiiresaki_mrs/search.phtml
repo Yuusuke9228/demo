@@ -1,0 +1,42 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = '仕入先.検索'; ?>
+<div class="page-header">
+    <h3>仕入先台帳 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    if (strpos($_SERVER['HTTP_REFERER'], '/shiiresaki_mrs/modal')) {
+        $formurl = "shiiresaki_mrs/modal";
+    } else {
+        $formurl = "shiiresaki_mrs/index";
+    }
+
+    echo $this->tag->form(
+        array(
+            $formurl,
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+
+    <?php $this->partial('shiiresaki_mrs/inputfields'); ?>
+
+    <?php $this->partial('common/panel_search_bottom'); ?>
+
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+
+</div><!-- class="form-group" -->
+
+<?php echo $this->tag->endForm(); ?>

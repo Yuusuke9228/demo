@@ -1,0 +1,97 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["hisasip1_dts/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["hisasip1_dts/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>整経番号</th>
+            <th>分解番号</th>
+            <th>指図順</th>
+            <th>指図番号</th>
+            <th>備考</th>
+            <th>ワインダ区分</th>
+            <th>ボビン色</th>
+            <th>完了区分</th>
+            <th>確定指図区分</th>
+            <th>糸機種</th>
+            <th>工場</th>
+            <th>糸種</th>
+            <th>コード</th>
+            <th>生産開始</th>
+            <th>生産完了</th>
+            <th>直撚り区分</th>
+            <th>色付け</th>
+            <th>真空セット</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $hisasip1_dt): ?>
+            <tr>
+                <td><?php echo $hisasip1_dt->整経番号 ?></td>
+            <td><?php echo $hisasip1_dt->分解番号 ?></td>
+            <td><?php echo $hisasip1_dt->指図順 ?></td>
+            <td><?php echo $hisasip1_dt->指図番号 ?></td>
+            <td><?php echo $hisasip1_dt->備考 ?></td>
+            <td><?php echo $hisasip1_dt->ワインダ区分 ?></td>
+            <td><?php echo $hisasip1_dt->ボビン色 ?></td>
+            <td><?php echo $hisasip1_dt->完了区分 ?></td>
+            <td><?php echo $hisasip1_dt->確定指図区分 ?></td>
+            <td><?php echo $hisasip1_dt->糸機種 ?></td>
+            <td><?php echo $hisasip1_dt->工場 ?></td>
+            <td><?php echo $hisasip1_dt->糸種 ?></td>
+            <td><?php echo $hisasip1_dt->コード ?></td>
+            <td><?php echo $hisasip1_dt->生産開始 ?></td>
+            <td><?php echo $hisasip1_dt->生産完了 ?></td>
+            <td><?php echo $hisasip1_dt->直撚り区分 ?></td>
+            <td><?php echo $hisasip1_dt->色付け ?></td>
+            <td><?php echo $hisasip1_dt->真空セット ?></td>
+
+                <td><?php echo $this->tag->linkTo(["hisasip1_dts/edit/" . $hisasip1_dt->整経番号, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["hisasip1_dts/delete/" . $hisasip1_dt->整経番号, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("hisasip1_dts/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("hisasip1_dts/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("hisasip1_dts/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("hisasip1_dts/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

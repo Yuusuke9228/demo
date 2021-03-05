@@ -1,0 +1,97 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "仕入先締データ.取消"; ?>
+<div class="page-header">
+    <h3>仕入先締データ 取消</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+<?php
+echo $this->tag->form(
+    array(
+        "shiiresaki_sime_dts/torikesi",
+        "autocomplete" => "off",
+        "class" => "form-horizontal"
+    )
+);
+?>
+<div class="form-group">
+    <div class="col-sm-4">
+        <label for="fieldShimegrpKbnCd" class="col-sm-5 control-label">締グループ</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->select(array("shimegrp_kbn_cd", ShimegrpKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "fieldShimegrpKbnCd")) ?>
+        </div>
+
+        <label for="fieldSimeHiduke" class="col-sm-5 control-label">締日</label>
+        <div class="col-sm-7">
+            <?php echo $this->tag->telField(array("sime_hiduke", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldSimeHiduke")) ?>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="col-sm-4">
+            <?php echo $this->tag->submitButton(array("抽出", "id" => "F12", "name" => "simekiri_btn","class" => "btn btn-lg btn-success")) ?>
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <?php $total = 0; ?>
+        <thead>
+        <tr bgcolor="Lavender">
+            <th style="text-align:center;">年度</th>
+            <th style="text-align:center;">仕入先CD</th>
+            <th style="text-align:center;">名称</th>
+            <th style="text-align:center;">締日付</th>
+            <th style="text-align:center;">支払予定日</th>
+            <th style="text-align:center;">今回仕入額</th>
+            <th style="text-align:center;">削除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if(isset($rows))$rows = $rows->toArray(); ?>
+        <?php if(isset($rows)): ?>
+            <?php $i = 0; ?>
+            <?php foreach ($rows as $row): ?>
+                <tr class="tr_pattern" id="t-row<?php echo $i ?>">
+                    <td style="text-align:center;"><?php if(isset($row['nendo']))echo $row['nendo'] ?></td>
+                    <td id="shiiresaki_<?php echo $row['id'] ?>" style="text-align:center;"><?php if(isset($row['shiiresaki_mr_cd']))echo $this->tag->linkTo(array("shiiresaki_sime_dts/shiharai_meisai/" . $row['id'], $row['shiiresaki_mr_cd'], 'target'=>'_blank')) ?></td>
+                    <td style="text-align:left;"><?php if(isset($row['name']))echo $row['name'] ?></td>
+                    <td id="sime_hiduke_<?php echo $row['id'] ?>" style="text-align:center;"><?php if(isset($row['sime_hiduke']))echo $row['sime_hiduke'] ?></td>
+                    <td style="text-align:center;"><?php if(isset($row['shiharai_yoteibi']))echo $row['shiharai_yoteibi'] ?></td>
+                    <td style="text-align:right;color: <?php echo (int)$row['konkai_siiregaku'] > -0.1 ? 'black' : 'red'; ?>"><?php if(isset($row['konkai_siiregaku']))echo number_format($row['konkai_siiregaku']) ?></td>
+                    <td style="text-align:center;">
+                        <span id="id_<?php echo $row['id'] ?>" data-row="<?php echo $i; ?>" style="color: blue; cursor: pointer;" onclick="delRow(this)">
+                            削除
+                        </span>
+                    </td>
+                </tr>
+                <?php $i++; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(function () {
+        $('table.head_fix').floatThead({
+            top: 50
+        });
+    });
+</script>
+
+<script>
+    const getShiiresakiGroupLastShimeHiduke = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_mrs/ajax_last_shimebi') ?>";
+    const delShimeData = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('shiiresaki_sime_dts/ajax_del') ?>";
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/shiharai_sime_torikesi.js'); ?>?var=20201009"></script>
+

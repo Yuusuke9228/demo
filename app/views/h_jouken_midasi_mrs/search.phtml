@@ -1,0 +1,128 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "条件見出しマスタ.検索"; ?>
+<div class="page-header">
+    <h3>条件見出しマスタ 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "h_jouken_midasi_mrs/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldId" class="col-sm-2 control-label">Id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldId")) ?>
+    </div>
+
+<label for="fieldHKouteimeiMrCd" class="col-sm-2 control-label">工程名コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("h_kouteimei_mr_cd", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHKouteimeiMrCd")) ?>
+    </div>
+
+<label for="fieldCd" class="col-sm-2 control-label">条件コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">条件名</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldTanniMrCd" class="col-sm-2 control-label">単位</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tanni_mr_cd", "size" => 4, "maxlength" => 4, "style" => "width: 84px;", "class" => "form-control", "id" => "fieldTanniMrCd")) ?>
+    </div>
+
+<label for="fieldRetu" class="col-sm-2 control-label">表示列</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("retu", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldRetu")) ?>
+    </div>
+
+<label for="fieldGyou" class="col-sm-2 control-label">表示行</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("gyou", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldGyou")) ?>
+    </div>
+
+<label for="fieldValType" class="col-sm-2 control-label">値タイプ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("val_type", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldValType")) ?>
+    </div>
+
+<label for="fieldSeisuuketa" class="col-sm-2 control-label">整数桁</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("seisuuketa", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldSeisuuketa")) ?>
+    </div>
+
+<label for="fieldShousuuketa" class="col-sm-2 control-label">小数桁</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shousuuketa", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShousuuketa")) ?>
+    </div>
+
+<label for="fieldHJoukenKouhoMrCd" class="col-sm-2 control-label">条件候補コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("h_jouken_kouho_mr_cd", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldHJoukenKouhoMrCd")) ?>
+    </div>
+
+<label for="fieldYuuikey" class="col-sm-2 control-label">有意キー</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("yuuikey", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldfieldYuuikey")) ?>
+    </div>
+
+<label for="fieldJikanKeisan" class="col-sm-2 control-label">時間計算方法</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("jikan_keisan", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJikanKeisan")) ?>
+    </div>
+
+<label for="fieldJikanKeisanJun" class="col-sm-2 control-label">計算順</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("jikan_keisan_jun", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldJikanKeisanJun")) ?>
+    </div>
+
+<label for="fieldSagyouKeisan" class="col-sm-2 control-label">作業量計算方法</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("sagyou_keisan", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldSagyouKeisan")) ?>
+    </div>
+
+<label for="fieldSagyouKeisanJun" class="col-sm-2 control-label">計算順</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("sagyou_keisan_jun", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldSagyouKeisanJun")) ?>
+    </div>
+
+<label for="fieldKoutinKeisan" class="col-sm-2 control-label">工賃計算方法</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("koutin_keisan", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKoutinKeisan")) ?>
+    </div>
+
+<label for="fieldKoutinKeisanJun" class="col-sm-2 control-label">計算順</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("koutin_keisan_jun", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKoutinKeisanJun")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

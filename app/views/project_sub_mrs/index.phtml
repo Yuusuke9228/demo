@@ -1,0 +1,64 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $page */
+?>
+<?php use Phalcon\Tag; ?>
+<div class="page-header">
+    <h3>副プロジェクト一覧</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead>
+        <tr style="background-color: lavender;">
+            <th style="text-align: center;">副プロジェクトコード</th>
+            <th style="text-align: center;">プロジェクトコード</th>
+            <th style="text-align: center;">名称</th>
+            <th style="text-align: center;">売上予算</th>
+            <th style="text-align: center;">開始日</th>
+            <th style="text-align: center;">終了予定日</th>
+            <th style="text-align: center;">ステータス</th>
+            <th style="text-align: center;">メモ</th>
+            <th style="text-align: center;">削除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page as $project_sub_mr): ?>
+            <tr>
+                <td style="text-align: center;"><?php echo $this->tag->linkTo(["project_sub_mrs/edit/" . $project_sub_mr->id, $project_sub_mr->cd]); ?></td>
+                <td style="text-align: center;">
+                    <?php
+                    $project = ProjectMrs::find('id = ' . $project_sub_mr->project_id);
+                    $project = $project->toArray();
+                    echo $project[0]['cd'];
+                    ?>
+                </td>
+                <td><?php echo $project_sub_mr->name ?></td>
+                <td style="text-align: right;"><?php echo number_format($project_sub_mr->uriage_yosan) ?></td>
+                <td style="text-align: center;"><?php echo $project_sub_mr->kaishibi ?></td>
+                <td style="text-align: center;"><?php echo $project_sub_mr->shuuryoubi ?></td>
+                <td style="text-align: center;"><?php echo $project_sub_mr->status === '0' ? '継続中' : '終了' ?></td>
+                <td><?php echo $project_sub_mr->memo ?></td>
+                <td style="text-align: center;"><?php echo $this->tag->linkTo(["project_sub_mrs/delete/" . $project_sub_mr->id, "削除"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div align="center" class="row">
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo(["project_sub_mrs/search", "|<<", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["project_sub_mrs/search?page=" . $page->before, "<", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["project_sub_mrs/search?page=" . $page->next, ">", 'class' => 'page-link']) ?></li>
+                <li><?php echo $this->tag->linkTo(["project_sub_mrs/search?page=" . $page->last, ">>|", 'class' => 'page-link']) ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

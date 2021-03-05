@@ -1,0 +1,10 @@
+<?php if (empty($index_or)) {$index_or = "index";} /* $index_or に 'modal'と入れるとモーダル用に使える。 */ ?>
+<div class="col-sm-12" align="center"><!-- 一覧表の頁制御部分 -->
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array($table_id."/".$index_or."?page=1" . $parasort, "<<最初")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array($table_id."/".$index_or."?page=" . $page->before . $parasort, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo($table_id."/".$index_or."?page=" . $page->current . $parasort, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array($table_id."/".$index_or."?page=" . $page->next . $parasort, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array($table_id."/".$index_or."?page=" . $page->last . $parasort, "(".$page->total_pages."頁)最後>>")) ?></li>
+        </ul>
+</div>

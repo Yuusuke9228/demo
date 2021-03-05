@@ -1,0 +1,61 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "税率マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>税率マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th><a href="?<?php echo TableSort\Sort::sortLink('id'); ?>">Id</a> <?php echo TableSort\Sort::sortIcon('id'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('cd'); ?>">コード</a> <?php echo TableSort\Sort::sortIcon('cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('name'); ?>">名称</a> <?php echo TableSort\Sort::sortIcon('name'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('ryakushou'); ?>">略称</a> <?php echo TableSort\Sort::sortIcon('ryakushou'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('kazei_kbn_cd'); ?>">課税区分</a> <?php echo TableSort\Sort::sortIcon('kazei_kbn_cd'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('zeiritu'); ?>">税率</a> <?php echo TableSort\Sort::sortIcon('zeiritu'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('kijunbi'); ?>">基準日</a> <?php echo TableSort\Sort::sortIcon('kijunbi'); ?></th>
+            <th><a href="?<?php echo TableSort\Sort::sortLink('updated'); ?>">更新日時</a> <?php echo TableSort\Sort::sortIcon('updated'); ?></th>
+
+                <th><a href=# onclick="$('#F10').focus();return false;" id="F10">修正*10</a></th>
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $zeiritu_mr): ?>
+            <tr>
+                <td><?php echo $zeiritu_mr->id ?></td>
+            <td><?php echo $zeiritu_mr->cd ?></td>
+            <td><?php echo $zeiritu_mr->name ?></td>
+            <td><?php echo $zeiritu_mr->ryakushou ?></td>
+            <td><?php echo $zeiritu_mr->kazei_kbn_cd ?></td>
+            <td><?php echo $zeiritu_mr->zeiritu ?></td>
+            <td><?php echo $zeiritu_mr->kijunbi ?></td>
+            <td><?php echo $zeiritu_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("zeiritu_mrs/edit/" . $zeiritu_mr->id, "修正")); ?></td>
+                <td><?php echo $this->tag->linkTo(array("zeiritu_mrs/delete/" . $zeiritu_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zeiritu_mrs/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zeiritu_mrs/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("zeiritu_mrs/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zeiritu_mrs/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zeiritu_mrs/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

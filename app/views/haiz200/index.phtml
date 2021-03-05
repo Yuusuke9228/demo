@@ -1,0 +1,1058 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "織.設計"; ?>
+<div class="page-header" style="margin-top:5px;padding-bottom:5px;">
+    <!-- h3>織設計マスタ 修正</h3 -->
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<style>
+table{
+    border-collapse:collapse;
+    width:640px;
+    table-layout:fixed;
+}
+td,th{
+	height:21px;
+	font-family:monospace;
+}
+.nowrap{
+    white-space:nowrap;
+    overflow:hidden;
+}
+.td-I{
+    border-left:1px solid #666666;
+}
+.td-L{
+    border-left:1px solid #666666;
+    border-bottom:1px solid #666666;
+}
+.td-U{
+    border-bottom:1px solid #666666;
+}
+input, textarea{
+    font-family:monospace;
+}
+span{
+    margin-left: 4px;
+}
+input.ALLF {
+	display:none;
+}
+input.TAIL {
+    display:inline;
+}
+</style>
+<div id="HAIZ201G" align="center">
+
+<table>
+<tbody>
+<tr>
+<td colspan=30 name='td_s0001' style='width:180pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=15 name='td_title' style='width:90pt' class='nowrap'>
+<b>
+<span class='' id='dispTitle'></span>
+</b>
+</td>
+<td colspan=19 style='width:114pt'></td>
+<td colspan=15 name='td_f038' style='width:90pt' class='nowrap'>
+<span id='dispYMDHM'>YY/MM/DD HH:MM</span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_misino' style='width:54pt' class='nowrap td-L'>
+<b>
+<span class='' id='dispMisino'></span>
+</b>
+</td>
+<td colspan=7 name='td_sino' style='width:42pt' class='nowrap td-U'>
+<span class=' xALLF xHEAD' id='dispSino'></span>
+<input type='text' id='fieldSino' name='g1_sino' class='form-control ime-i ALLF HEAD' style='width:45pt' maxlength='6' />
+</td>
+<td colspan=3 name='td_sied' style='width:18pt' class='nowrap td-L'>
+<span class=' xALLF xHEAD' id='dispSied'></span>
+<input type='text' id='fieldSied' name='g1_sied' class='form-control ime-i ALLF HEAD' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_f064' style='width:54pt' class='nowrap td-L'>
+<span>処理区分</span>
+</td>
+<td colspan=2 name='td_skbn' style='width:12pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xHEAD' id='dispSkbn'></span>
+<input type='text' id='fieldSkbn' name='g1_skbn' class='form-control f-numb ALLF HEAD' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=40 name='td_f065' style='width:240pt' class='nowrap td-L'>
+<span>←0照会,1登録,2修正,3印刷,4現反写,9削除</span>
+</td>
+<td name='td_s0002' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=6 name='td_f00002' style='width:36pt' class='nowrap td-U'>
+<span>ﾍﾟｰｼﾞ</span>
+</td>
+<td colspan=2 name='td_page' style='width:12pt' class='nowrap td-U f-numb'>
+<span class=' ALLF HEAD' id='dispPage'></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f006' style='width:54pt' class='nowrap td-L'>
+<span>試織目的</span>
+</td>
+<td colspan=39 name='td_moku' style='width:234pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispMoku'></span>
+<input type='text' id='fieldMoku' name='g1_moku' class='form-control ime-a ALLF BODY' style='width:237pt' maxlength='40' />
+</td>
+<td name='td_s0003' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=7 name='td_f008' style='width:42pt' class='nowrap td-L'>
+<span>設計日</span>
+</td>
+<td colspan=10 name='td_symd' style='width:60pt' class='nowrap td-U f-cent'>
+<span class=' xALLF xBODY' id='dispSymd'></span>
+<input type='tel' id='fieldSymd' name='g1_symd' class='form-control f-cent ime-d ALLF BODY' style='width:63pt' maxlength='10' />
+</td>
+<td colspan=3 name='td_f014' style='width:18pt' class='nowrap td-L'>
+<span>改</span>
+</td>
+<td colspan=10 name='td_kymd' style='width:60pt' class='nowrap td-U f-cent'>
+<span class=' xALLF xBODY' id='dispKymd'></span>
+<input type='tel' id='fieldKymd' name='g1_kymd' class='form-control f-cent ime-d ALLF BODY' style='width:63pt' maxlength='10' />
+</td>
+<td name='td_s0004' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f003' style='width:54pt' class='nowrap td-L'>
+<span>織物ﾀｲﾌﾟ</span>
+</td>
+<td colspan=21 name='td_type' style='width:126pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispType'></span>
+<input type='text' id='fieldType' name='g1_type' class='form-control ime-a ALLF BODY' style='width:129pt' maxlength='20' />
+</td>
+<td colspan=7 name='td_f004' style='width:42pt' class='nowrap td-L'>
+<span>依頼先</span>
+</td>
+<td colspan=21 name='td_irai' style='width:126pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispIrai'></span>
+<input type='text' id='fieldIrai' name='g1_irai' class='form-control ime-a ALLF BODY' style='width:129pt' maxlength='20' />
+</td>
+<td colspan=5 name='td_f005' style='width:30pt' class='nowrap td-L'>
+<span>担当</span>
+</td>
+<td colspan=5 name='td_f015' style='width:30pt' class='nowrap td-L'>
+<span>営業</span>
+</td>
+<td colspan=2 name='td_etnt' style='width:12pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispEtnt'></span>
+<input type='text' id='fieldEtnt' name='g1_etnt' class='form-control ime-i ALLF BODY' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_f007' style='width:30pt' class='nowrap td-L'>
+<span>企画</span>
+</td>
+<td colspan=4 name='td_ktnt' style='width:24pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispKtnt'></span>
+<input type='text' id='fieldKtnt' name='g1_ktnt' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td name='td_s0005' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f009' style='width:54pt' class='nowrap td-I'>
+<b>
+<span>経緯糸名</span>
+</b>
+</td>
+<td colspan=9 name='td_mikibo' style='width:54pt' class='nowrap td-L'>
+<span class='' id='dispMikibo'></span>
+</td>
+<td colspan=6 name='td_kibo' style='width:36pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispKibo'></span>
+<input type='text' id='fieldKibo' name='g1_kibo' class='form-control ime-i ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=5 name='td_miinou' style='width:30pt' class='nowrap td-L'>
+<span class='' id='dispMiinou'></span>
+</td>
+<td colspan=6 name='td_inou' style='width:36pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispInou'></span>
+<input type='text' id='fieldInou' name='g1_inou' class='form-control ime-i ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=5 name='td_misnou' style='width:30pt' class='nowrap td-L'>
+<span class='' id='dispMisnou'></span>
+</td>
+<td colspan=6 name='td_snou' style='width:36pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispSnou'></span>
+<input type='text' id='fieldSnou' name='g1_snou' class='form-control ime-i ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=5 name='td_mitnou' style='width:30pt' class='nowrap td-L'>
+<span class='' id='dispMitnou'></span>
+</td>
+<td colspan=6 name='td_tnou' style='width:36pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispTnou'></span>
+<input type='text' id='fieldTnou' name='g1_tnou' class='form-control ime-i ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=5 name='td_miynou' style='width:30pt' class='nowrap td-L'>
+<span class='' id='dispMiynou'></span>
+</td>
+<td colspan=6 name='td_ynou' style='width:36pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispYnou'></span>
+<input type='text' id='fieldYnou' name='g1_ynou' class='form-control ime-i ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=5 name='td_mianou' style='width:30pt' class='nowrap td-L'>
+<span class='' id='dispMianou'></span>
+</td>
+<td colspan=6 name='td_anou' style='width:36pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispAnou'></span>
+<input type='text' id='fieldAnou' name='g1_anou' class='form-control ime-i ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td name='td_s0006' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=2 name='td_tjun_1' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispTjun_1'></span>
+</td>
+<td colspan=2 name='td_yjun_1' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispYjun_1'></span>
+</td>
+<td colspan=5 name='td_itcd_1' style='width:30pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispItcd_1'></span>
+</td>
+<td colspan=64 name='td_imei_1' style='width:384pt' class='nowrap'>
+<span class=' ALLF BODY' id='dispImei_1'></span>
+</td>
+<td colspan=6 name='td_iryo_1' style='width:36pt' class='nowrap f-numb'>
+<span class=' xALLF xBODY' id='dispIryo_1'></span>
+<input type='text' id='fieldIryo_1' name='g1_iryo_1' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td name='td_s0007' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=2 name='td_tjun_2' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispTjun_2'></span>
+</td>
+<td colspan=2 name='td_yjun_2' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispYjun_2'></span>
+</td>
+<td colspan=5 name='td_itcd_2' style='width:30pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispItcd_2'></span>
+</td>
+<td colspan=64 name='td_imei_2' style='width:384pt' class='nowrap'>
+<span class=' ALLF BODY' id='dispImei_2'></span>
+</td>
+<td colspan=6 name='td_iryo_2' style='width:36pt' class='nowrap f-numb'>
+<span class=' xALLF xBODY' id='dispIryo_2'></span>
+<input type='text' id='fieldIryo_2' name='g1_iryo_2' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td name='td_s0008' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=2 name='td_tjun_3' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispTjun_3'></span>
+</td>
+<td colspan=2 name='td_yjun_3' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispYjun_3'></span>
+</td>
+<td colspan=5 name='td_itcd_3' style='width:30pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispItcd_3'></span>
+</td>
+<td colspan=64 name='td_imei_3' style='width:384pt' class='nowrap'>
+<span class=' ALLF BODY' id='dispImei_3'></span>
+</td>
+<td colspan=6 name='td_iryo_3' style='width:36pt' class='nowrap f-numb'>
+<span class=' xALLF xBODY' id='dispIryo_3'></span>
+<input type='text' id='fieldIryo_3' name='g1_iryo_3' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td name='td_s0009' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=2 name='td_tjun_4' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispTjun_4'></span>
+</td>
+<td colspan=2 name='td_yjun_4' style='width:12pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispYjun_4'></span>
+</td>
+<td colspan=5 name='td_itcd_4' style='width:30pt' class='nowrap td-I'>
+<span class=' ALLF BODY' id='dispItcd_4'></span>
+</td>
+<td colspan=64 name='td_imei_4' style='width:384pt' class='nowrap'>
+<span class=' ALLF BODY' id='dispImei_4'></span>
+</td>
+<td colspan=6 name='td_iryo_4' style='width:36pt' class='nowrap f-numb'>
+<span class=' xALLF xBODY' id='dispIryo_4'></span>
+<input type='text' id='fieldIryo_4' name='g1_iryo_4' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td name='td_s0010' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=2 name='td_tjun_5' style='width:12pt' class='nowrap td-L'>
+<span class=' ALLF BODY' id='dispTjun_5'></span>
+</td>
+<td colspan=2 name='td_yjun_5' style='width:12pt' class='nowrap td-L'>
+<span class=' ALLF BODY' id='dispYjun_5'></span>
+</td>
+<td colspan=5 name='td_itcd_5' style='width:30pt' class='nowrap td-L'>
+<span class=' ALLF BODY' id='dispItcd_5'></span>
+</td>
+<td colspan=64 name='td_imei_5' style='width:384pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispImei_5'></span>
+</td>
+<td colspan=6 name='td_iryo_5' style='width:36pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispIryo_5'></span>
+<input type='text' id='fieldIryo_5' name='g1_iryo_5' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td name='td_s0011' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=5 name='td_f048' style='width:30pt' class='nowrap td-L'>
+<b>
+<span>配列</span>
+</b>
+</td>
+<td colspan=5 name='td_f017' style='width:30pt' class='nowrap td-L'>
+<span>経糸</span>
+</td>
+<td colspan=5 name='td_htme' style='width:30pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispHtme'></span>
+</td>
+<td colspan=26 name='td_htkg' style='width:156pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispHtkg'></span>
+</td>
+<td name='td_s0012' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=5 name='td_f072' style='width:30pt' class='nowrap td-L'>
+<span>緯糸</span>
+</td>
+<td colspan=5 name='td_hyme' style='width:30pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispHyme'></span>
+</td>
+<td colspan=26 name='td_hykg' style='width:156pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispHykg'></span>
+</td>
+<td name='td_s0013' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td name='td_s0014' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=7 name='td_f016' style='width:42pt' class='nowrap td-L'>
+<b>
+<span>組織図</span>
+</b>
+</td>
+<td colspan=17 name='td_some' style='width:102pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispSome'></span>
+</td>
+<td colspan=5 name='td_f047' style='width:30pt' class='nowrap td-L'>
+<span>ｺｰﾄﾞ</span>
+</td>
+<td colspan=9 name='td_socd' style='width:54pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispSocd'></span>
+</td>
+<td name='td_s0015' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=9 name='td_f018' style='width:54pt' class='nowrap td-L'>
+<b>
+<span>綾通し順</span>
+</b>
+</td>
+<td colspan=3 name='td_ayma' style='width:18pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispAyma'></span>
+</td>
+<td colspan=3 name='td_f077' style='width:18pt' class='nowrap td-U'>
+<span>枚</span>
+</td>
+<td colspan=17 name='td_ayme' style='width:102pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispAyme'></span>
+</td>
+<td colspan=5 name='td_f046' style='width:30pt' class='nowrap td-L'>
+<span>区分</span>
+</td>
+<td colspan=3 name='td_aykb' style='width:18pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispAykb'></span>
+</td>
+<td name='td_s0016' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=5 name='td_f019' style='width:30pt' class='nowrap td-L'>
+<b>
+<span>規格</span>
+</b>
+</td>
+<td colspan=7 name='td_f067' style='width:42pt' class='nowrap td-L'>
+<span>整経巾</span>
+</td>
+<td colspan=5 name='td_shab' style='width:30pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispShab'></span>
+<input type='text' id='fieldShab' name='g1_shab' class='form-control f-numb ALLF BODY' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_f021' style='width:18pt' class='nowrap td-U'>
+<span>寸</span>
+</td>
+<td colspan=3 name='td_f023' style='width:18pt' class='nowrap td-L'>
+<span>長</span>
+</td>
+<td colspan=3 name='td_snag' style='width:18pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispSnag'></span>
+<input type='text' id='fieldSnag' name='g1_snag' class='form-control f-numb ALLF BODY' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_mikai' style='width:18pt' class='nowrap td-U'>
+<span class='' id='dispMikai'></span>
+</td>
+<td colspan=3 name='td_f025' style='width:18pt' class='nowrap td-L'>
+<span>筬</span>
+</td>
+<td colspan=4 name='td_osa' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispOsa'></span>
+<input type='text' id='fieldOsa' name='g1_osa' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=8 name='td_f026' style='width:48pt' class='nowrap td-U'>
+<span>羽/鯨寸</span>
+</td>
+<td colspan=5 name='td_f027' style='width:30pt' class='nowrap td-L'>
+<span>打込</span>
+</td>
+<td colspan=4 name='td_uti' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispUti'></span>
+<input type='text' id='fieldUti' name='g1_uti' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=8 name='td_f028' style='width:48pt' class='nowrap td-U'>
+<span>X2/鯨寸</span>
+</td>
+<td name='td_s0017' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=5 name='td_f053' style='width:30pt' class='nowrap td-L'>
+<span>仕上</span>
+</td>
+<td colspan=4 name='td_auti' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispAuti'></span>
+<input type='text' id='fieldAuti' name='g1_auti' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=8 name='td_f054' style='width:48pt' class='nowrap td-U'>
+<span>X2/鯨寸</span>
+</td>
+<td name='td_s0018' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=5 name='td_f068' style='width:30pt' class='nowrap td-L'>
+<span>耳2X</span>
+</td>
+<td colspan=3 name='td_miha' style='width:18pt' class='nowrap td-L f-numb'>
+<span class=' xALLF xBODY' id='dispMiha'></span>
+<input type='text' id='fieldMiha' name='g1_miha' class='form-control f-numb ALLF BODY' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_f030' style='width:18pt' class='nowrap td-U'>
+<span>羽</span>
+</td>
+<td colspan=3 name='td_mihk' style='width:18pt' class='nowrap td-L f-numb'>
+<span class=' xALLF xBODY' id='dispMihk'></span>
+<input type='text' id='fieldMihk' name='g1_mihk' class='form-control f-numb ALLF BODY' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_f031' style='width:30pt' class='nowrap td-U'>
+<span>本入</span>
+</td>
+<td colspan=4 name='td_miho' style='width:24pt' class='nowrap td-L f-numb'>
+<span class=' xALLF xBODY' id='dispMiho'></span>
+<input type='text' id='fieldMiho' name='g1_miho' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_f032' style='width:18pt' class='nowrap td-U'>
+<span>本</span>
+</td>
+<td colspan=3 name='td_f033' style='width:18pt' class='nowrap td-L'>
+<span>地</span>
+</td>
+<td colspan=5 name='td_jiha' style='width:30pt' class='nowrap td-L f-numb'>
+<span class=' ALLF BODY' id='dispJiha'></span>
+</td>
+<td colspan=3 name='td_f034' style='width:18pt' class='nowrap td-U'>
+<span>羽</span>
+</td>
+<td colspan=3 name='td_jihk' style='width:18pt' class='nowrap td-L f-numb'>
+<span class=' xALLF xBODY' id='dispJihk'></span>
+<input type='text' id='fieldJihk' name='g1_jihk' class='form-control f-numb ALLF BODY' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=10 name='td_f035' style='width:60pt' class='nowrap td-U'>
+<span>本入(同口</span>
+</td>
+<td colspan=3 name='td_dohk' style='width:18pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispDohk'></span>
+<input type='text' id='fieldDohk' name='g1_dohk' class='form-control f-numb ALLF BODY' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=10 name='td_f037' style='width:60pt' class='nowrap td-U'>
+<span>本入)綾筬</span>
+</td>
+<td colspan=7 name='td_hiki' style='width:42pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispHiki'></span>
+</td>
+<td colspan=6 name='td_jiho' style='width:36pt' class='nowrap td-L f-numb'>
+<span class=' ALLF BODY' id='dispJiho'></span>
+</td>
+<td colspan=3 name='td_f036' style='width:18pt' class='nowrap td-U'>
+<span>本</span>
+</td>
+<td name='td_s0019' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=7 name='td_f069' style='width:42pt' class='nowrap td-L'>
+<span>生機巾</span>
+</td>
+<td colspan=6 name='td_khab' style='width:36pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispKhab'></span>
+<input type='text' id='fieldKhab' name='g1_khab' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=3 name='td_f041' style='width:18pt' class='nowrap td-U'>
+<span>㎝</span>
+</td>
+<td colspan=3 name='td_f042' style='width:18pt' class='nowrap td-L'>
+<span>長</span>
+</td>
+<td colspan=6 name='td_knag' style='width:36pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispKnag'></span>
+<input type='text' id='fieldKnag' name='g1_knag' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=2 name='td_f00012' style='width:12pt' class='nowrap td-U'>
+<span>M</span>
+</td>
+<td colspan=5 name='td_f051' style='width:30pt' class='nowrap td-L'>
+<span>織縮</span>
+</td>
+<td colspan=5 name='td_tiji' style='width:30pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispTiji'></span>
+<input type='text' id='fieldTiji' name='g1_tiji' class='form-control f-numb ALLF BODY' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_f056' style='width:18pt' class='nowrap td-U'>
+<span>％</span>
+</td>
+<td colspan=7 name='td_f020' style='width:42pt' class='nowrap td-L'>
+<span>仕上巾</span>
+</td>
+<td colspan=6 name='td_ahab' style='width:36pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispAhab'></span>
+<input type='text' id='fieldAhab' name='g1_ahab' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=3 name='td_miahab' style='width:18pt' class='nowrap td-U'>
+<span class='' id='dispMiahab'></span>
+</td>
+<td colspan=3 name='td_f049' style='width:18pt' class='nowrap td-L'>
+<span>長</span>
+</td>
+<td colspan=6 name='td_anag' style='width:36pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispAnag'></span>
+<input type='text' id='fieldAnag' name='g1_anag' class='form-control f-numb ALLF BODY' style='width:39pt' maxlength='5' />
+</td>
+<td colspan=3 name='td_mianag' style='width:18pt' class='nowrap td-U'>
+<span class='' id='dispMianag'></span>
+</td>
+<td colspan=3 name='td_f040' style='width:18pt' class='nowrap td-L'>
+<span>重</span>
+</td>
+<td colspan=5 name='td_jury' style='width:30pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispJury'></span>
+<input type='text' id='fieldJury' name='g1_jury' class='form-control f-numb ALLF BODY' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_f052' style='width:18pt' class='nowrap td-U'>
+<span>ｇ</span>
+</td>
+<td name='td_s0020' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=5 name='td_f055' style='width:30pt' class='nowrap td-L'>
+<b>
+<span>工費</span>
+</b>
+</td>
+<td colspan=5 name='td_f062' style='width:30pt' class='nowrap td-L'>
+<span>整経</span>
+</td>
+<td colspan=4 name='td_tkoh' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispTkoh'></span>
+<input type='text' id='fieldTkoh' name='g1_tkoh' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=5 name='td_f063' style='width:30pt' class='nowrap td-L'>
+<span>製織</span>
+</td>
+<td colspan=4 name='td_ykoh' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispYkoh'></span>
+<input type='text' id='fieldYkoh' name='g1_ykoh' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=5 name='td_f070' style='width:30pt' class='nowrap td-L'>
+<span>染色</span>
+</td>
+<td colspan=4 name='td_dkoh' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispDkoh'></span>
+<input type='text' id='fieldDkoh' name='g1_dkoh' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=5 name='td_f071' style='width:30pt' class='nowrap td-L'>
+<span>整理</span>
+</td>
+<td colspan=4 name='td_skoh' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xALLF xBODY' id='dispSkoh'></span>
+<input type='text' id='fieldSkoh' name='g1_skoh' class='form-control f-numb ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=6 name='td_f00006' style='width:36pt' class='nowrap td-L'>
+<span>ﾎﾟｲﾝﾄ</span>
+</td>
+<td colspan=5 name='td_nnfk' style='width:30pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispNnfk'></span>
+</td>
+<td colspan=5 name='td_f00010' style='width:30pt' class='nowrap td-L'>
+<span>糸量</span>
+</td>
+<td colspan=6 name='td_itry' style='width:36pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispItry'></span>
+</td>
+<td colspan=3 name='td_f00011' style='width:18pt' class='nowrap td-U'>
+<span>㎏</span>
+</td>
+<td colspan=5 name='td_f075' style='width:30pt' class='nowrap td-L'>
+<span>製品</span>
+</td>
+<td colspan=5 name='td_kjur' style='width:30pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispKjur'></span>
+</td>
+<td colspan=3 name='td_f076' style='width:18pt' class='nowrap td-U'>
+<span>㎏</span>
+</td>
+<td name='td_s0021' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=7 name='td_f00005' style='width:42pt' class='nowrap td-L'>
+<span>加工順</span>
+</td>
+<td colspan=4 name='td_kako_1' style='width:24pt' class='nowrap td-U'>
+<span class=' xALLF xBODY' id='dispKako_1'></span>
+<input type='text' id='fieldKako_1' name='g1_kako_1' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_kako_2' style='width:24pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispKako_2'></span>
+<input type='text' id='fieldKako_2' name='g1_kako_2' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_kako_3' style='width:24pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispKako_3'></span>
+<input type='text' id='fieldKako_3' name='g1_kako_3' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_kako_4' style='width:24pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispKako_4'></span>
+<input type='text' id='fieldKako_4' name='g1_kako_4' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_kako_5' style='width:24pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispKako_5'></span>
+<input type='text' id='fieldKako_5' name='g1_kako_5' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_kako_6' style='width:24pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispKako_6'></span>
+<input type='text' id='fieldKako_6' name='g1_kako_6' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_kako_7' style='width:24pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispKako_7'></span>
+<input type='text' id='fieldKako_7' name='g1_kako_7' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_kako_8' style='width:24pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispKako_8'></span>
+<input type='text' id='fieldKako_8' name='g1_kako_8' class='form-control ime-i ALLF BODY' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=5 name='td_f00003' style='width:30pt' class='nowrap td-L'>
+<span>混率</span>
+</td>
+<td colspan=3 name='td_kon_1' style='width:18pt' class='nowrap td-U'>
+<span class=' ALLF BODY' id='dispKon_1'></span>
+</td>
+<td colspan=4 name='td_rit_1' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispRit_1'></span>
+</td>
+<td colspan=3 name='td_kon_2' style='width:18pt' class='nowrap td-L'>
+<span class=' ALLF BODY' id='dispKon_2'></span>
+</td>
+<td colspan=4 name='td_rit_2' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispRit_2'></span>
+</td>
+<td colspan=3 name='td_kon_3' style='width:18pt' class='nowrap td-L'>
+<span class=' ALLF BODY' id='dispKon_3'></span>
+</td>
+<td colspan=4 name='td_rit_3' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispRit_3'></span>
+</td>
+<td colspan=3 name='td_kon_4' style='width:18pt' class='nowrap td-L'>
+<span class=' ALLF BODY' id='dispKon_4'></span>
+</td>
+<td colspan=4 name='td_rit_4' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispRit_4'></span>
+</td>
+<td colspan=3 name='td_kon_5' style='width:18pt' class='nowrap td-L'>
+<span class=' ALLF BODY' id='dispKon_5'></span>
+</td>
+<td colspan=4 name='td_rit_5' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' ALLF BODY' id='dispRit_5'></span>
+</td>
+<td name='td_s0022' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_f058' style='width:18pt' class='nowrap td-I'>
+<span>注</span>
+</td>
+<td colspan=9 name='td_tais_1' style='width:54pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispTais_1'></span>
+<input type='text' id='fieldTais_1' name='g1_tais_1' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_1' style='width:174pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispChui_1'></span>
+<input type='text' id='fieldChui_1' name='g1_chui_1' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=9 name='td_tais_2' style='width:54pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispTais_2'></span>
+<input type='text' id='fieldTais_2' name='g1_tais_2' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_2' style='width:174pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispChui_2'></span>
+<input type='text' id='fieldChui_2' name='g1_chui_2' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s0023' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_f059' style='width:18pt' class='nowrap td-I'>
+<span>意</span>
+</td>
+<td colspan=9 name='td_tais_3' style='width:54pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispTais_3'></span>
+<input type='text' id='fieldTais_3' name='g1_tais_3' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_3' style='width:174pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispChui_3'></span>
+<input type='text' id='fieldChui_3' name='g1_chui_3' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=9 name='td_tais_4' style='width:54pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispTais_4'></span>
+<input type='text' id='fieldTais_4' name='g1_tais_4' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_4' style='width:174pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispChui_4'></span>
+<input type='text' id='fieldChui_4' name='g1_chui_4' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s0024' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_f060' style='width:18pt' class='nowrap td-I'>
+<span>事</span>
+</td>
+<td colspan=9 name='td_tais_5' style='width:54pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispTais_5'></span>
+<input type='text' id='fieldTais_5' name='g1_tais_5' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_5' style='width:174pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispChui_5'></span>
+<input type='text' id='fieldChui_5' name='g1_chui_5' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=9 name='td_tais_6' style='width:54pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispTais_6'></span>
+<input type='text' id='fieldTais_6' name='g1_tais_6' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_6' style='width:174pt' class='nowrap td-I'>
+<span class=' xALLF xBODY' id='dispChui_6'></span>
+<input type='text' id='fieldChui_6' name='g1_chui_6' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s0025' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_f061' style='width:18pt' class='nowrap td-L'>
+<span>項</span>
+</td>
+<td colspan=9 name='td_tais_7' style='width:54pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispTais_7'></span>
+<input type='text' id='fieldTais_7' name='g1_tais_7' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_7' style='width:174pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispChui_7'></span>
+<input type='text' id='fieldChui_7' name='g1_chui_7' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=9 name='td_tais_8' style='width:54pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispTais_8'></span>
+<input type='text' id='fieldTais_8' name='g1_tais_8' class='form-control ime-a ALLF BODY' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=29 name='td_chui_8' style='width:174pt' class='nowrap td-L'>
+<span class=' xALLF xBODY' id='dispChui_8'></span>
+<input type='text' id='fieldChui_8' name='g1_chui_8' class='form-control ime-a ALLF BODY' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s0026' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=70 name='td_f043' style='width:420pt' class='nowrap'>
+<span></span>
+</td>
+<td colspan=4 name='td_metk' style='width:24pt' class='nowrap f-numb'>
+<span class=' xALLF xBODY' id='dispMetk'></span>
+</td>
+<td colspan=5 name='td_f044' style='width:30pt' class='nowrap'>
+<span>G/㎡</span>
+</td>
+</tr><tr>
+<td colspan=70 name='td_s0034' style='width:420pt' class='nowrap'>
+<span></span>
+</td>
+<td colspan=4 name='td_said' style='width:24pt' class='nowrap f-numb'>
+<span class='' id='dispSaid'></span>
+</td>
+<td colspan=3 name='td_f045' style='width:18pt' class='nowrap'>
+<span>㎝</span>
+</td>
+</tr><tr>
+<td colspan=6 style='width:36pt'></td>
+<td colspan=69 name='td_emsg' style='width:414pt' class='nowrap'>
+<b>
+<span class=' ALLF TAIL' id='dispEmsg'></span>
+</b>
+</td>
+<td colspan=2 style='width:12pt'></td>
+<td colspan=2 name='td_kaku' style='width:12pt' class='nowrap'>
+<span class=' xALLF xTAIL' id='dispKaku'></span>
+<input type='text' id='fieldKaku' name='g1_kaku' class='form-control ime-i ALLF TAIL' style='width:15pt' maxlength='1' />
+</td>
+</tr>
+</tbody>
+</table>
+</div><span id='point_1'></span>
+<?php echo $this->tag->hiddenField("id") ?>
+
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="CdOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"><div id="ESC"></div>
+
+<div class="navbar navbar-default navbar-fixed-bottom" style="background-color:#e8e0d0;">
+ <div class="container" style="width:800px;">
+  <span class="navbar-text">
+	<input type="button" value="" id="F0" class="btn btn-default btn-xs" />
+	<input type="button" value="再入F1" id="F1" onclick="grp_READ();" class="btn btn-default btn-xs" title='ブラウザのHELP起動:F1キー' />
+	<input type="button" value="新規F2" id="X2" onclick="alert('F2');" class="btn btn-default btn-xs fALLF fHEAD" title='新規入力用画面にします:F2キー' />
+	<input type="button" value="前へF3" id="F3" onclick="BACK();" class="btn btn-default btn-xs" title='前番号の伝票を表示します:F3キー' />
+	<input type="button" value="次へF4" id="F4" onclick="NEXT();" class="btn btn-info btn-xs" title='次番号の伝票を表示します:F4キー' />　
+	<input type="button" value="糸使F5" id="F5" onclick="f5key();" class="btn btn-default btn-xs fALLF fBODY fTAIL" title='糸構成画面が出ます:F5キー' />
+	<input type="button" value="配列F6" id="F6" onclick="f6key();" class="btn btn-warning btn-xs fALLF fBODY fTAIL" title='修正入力可能になります:F6キー' />
+	<input type="button" value="組織F7" id="F7" onclick="f7key();" class="btn btn-default btn-xs fALLF fBODY fTAIL" title='表示モードになります:F7キー' />
+	<input type="button" value="一覧F8" id="X8" onclick="alert('F8');" class="btn btn-default btn-xs fALLF fHEAD fBODY" title='参照可能の時、参照画面を開きます:F8キー' />　
+	<input type="button" value="取消F9" id="F9" onclick="CANCEL();" class="btn btn-default btn-xs" title='ブラウザの機能が起動:F9キー' />
+	<input type="button" value="－－F10" id="F10" onclick="alert('F10');" class="btn btn-default btn-xs fALLF fHEAD" title='ブラウザの機能が起動:F10キー' />
+	<input type="button" value="－－F11" id="F11" onclick="alert('F11');" class="btn btn-default btn-xs" disabled="true" title='ブラウザの機能が起動:F11キー' />
+	<input type="submit" value="実行F12" id="F12" onclick="ENTER();" class="btn btn-success" title='新規登録や修正を更新します:F12キー' />
+  </span>
+ </div>
+</div>
+
+<script type="text/javascript">
+	var haiz200_ajaxGrpDo = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('haiz200/ajaxGrpDo') ?>";
+	var user_name_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('../users/name_ajaxGet') ?>";
+	var audio = new Audio("<?php echo $this->url->get('js/views/beep.mp3'); ?>");
+	var user_me={};
+	user_me['name'] = "<?php echo $user_me->name ?>";
+	user_me['cd'] = "<?php echo $user_me->cd ?>";
+	user_me['id'] = "<?php echo $user_me->id ?>";
+	var modal_ito = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz210/index') ?>";
+	var modal_hairetu = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz220/index') ?>";
+	var modal_sosiki = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz230/index') ?>";
+	var modal_sino = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz200/sino') ?>";
+	var print_out = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz200/print') ?>";
+	var modal_print = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz200/modal_print/') ?>";
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/mrp/haiz200.js'); ?>?var=000002"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/updnkey.js'); ?>?var=000001"></script>
+
+<script type='text/javascript'>
+  var formGRP={};
+  formGRP['ALLF']=['Title','Misino','Sino','Sied','Skbn','Page','Moku','Symd','Kymd','Type','Irai','Etnt','Ktnt','Mikibo','Kibo',
+  					'Miinou','Inou','Misnou','Snou','Mitnou','Tnou','Miynou','Ynou','Mianou','Anou',
+  					'Tjun_1','Yjun_1','Itcd_1','Imei_1','Iryo_1','Tjun_2','Yjun_2','Itcd_2','Imei_2','Iryo_2',
+  					'Tjun_3','Yjun_3','Itcd_3','Imei_3','Iryo_3','Tjun_4','Yjun_4','Itcd_4','Imei_4','Iryo_4',
+  					'Tjun_5','Yjun_5','Itcd_5','Imei_5','Iryo_5','Htme','Htkg','Hyme','Hykg','Some','Socd',
+  					'Ayma','Ayme','Aykb','Shab','Snag','Mikai','Osa','Uti','Auti','Miha','Mihk','Miho','Jiha','Jihk',
+  					'Dohk','Hiki','Jiho','Khab','Knag','Tiji','Ahab','Miahab','Anag','Mianag','Jury','Tkoh','Ykoh',
+  					'Dkoh','Skoh','Nnfk','Itry','Kjur','Kako_1','Kako_2','Kako_3','Kako_4','Kako_5','Kako_6','Kako_7','Kako_8',
+  					'Kon_1','Rit_1','Kon_2','Rit_2','Kon_3','Rit_3','Kon_4','Rit_4','Kon_5','Rit_5',
+  					'Tais_1','Chui_1','Tais_2','Chui_2','Tais_3','Chui_3','Tais_4','Chui_4','Tais_5','Chui_5',
+  					'Tais_6','Chui_6','Tais_7','Chui_7','Tais_8','Chui_8','Metk','Said','Emsg','Kaku',];
+  formGRP['HEAD']=['Sino','Sied','Skbn','Page',];
+  formGRP['BODY']=['Moku','Symd','Kymd','Type','Irai','Etnt','Ktnt','Kibo','Inou','Snou','Tnou','Ynou','Anou',
+  					'Tjun_1','Yjun_1','Itcd_1','Imei_1','Iryo_1','Tjun_2','Yjun_2','Itcd_2','Imei_2','Iryo_2',
+  					'Tjun_3','Yjun_3','Itcd_3','Imei_3','Iryo_3','Tjun_4','Yjun_4','Itcd_4','Imei_4','Iryo_4',
+  					'Tjun_5','Yjun_5','Itcd_5','Imei_5','Iryo_5','Htme','Htkg','Hyme','Hykg','Some','Socd',
+  					'Ayma','Ayme','Aykb','Shab','Snag','Osa','Uti','Auti','Miha','Mihk','Miho','Jiha','Jihk',
+  					'Dohk','Hiki','Jiho','Khab','Knag','Tiji','Ahab','Anag','Jury','Tkoh','Ykoh',
+  					'Dkoh','Skoh','Nnfk','Itry','Kjur','Kako_1','Kako_2','Kako_3','Kako_4','Kako_5','Kako_6','Kako_7','Kako_8',
+  					'Kon_1','Rit_1','Kon_2','Rit_2','Kon_3','Rit_3','Kon_4','Rit_4','Kon_5','Rit_5',
+  					'Tais_1','Chui_1','Tais_2','Chui_2','Tais_3','Chui_3','Tais_4','Chui_4','Tais_5','Chui_5',
+  					'Tais_6','Chui_6','Tais_7','Chui_7','Tais_8','Chui_8','Metk',];
+  formGRP['TAIL']=['Emsg','Kaku',];
+//                '入力1出力0,数字1文字0日付2,整数長,小数長,編集(カンマ有1無0,マイナス可否,ゼロ非表示,年月か月日)
+  var koumokus={
+    title:['Title',0,0,14,0,0],
+    misino:['Misino',0,0,8,0,0],
+    sino:['Sino',1,0,6,0,0],
+    sied:['Sied',1,0,2,0,0],
+    skbn:['Skbn',1,1,1,0,0],
+    page:['Page',0,1,1,0,0],
+    moku:['Moku',1,0,40,0,0],
+    symd:['Symd',1,2,6,0,0],
+    kymd:['Kymd',1,2,6,0,0],
+    type:['Type',1,0,20,0,0],
+    irai:['Irai',1,0,20,0,0],
+    etnt:['Etnt',1,0,1,0,0],
+    ktnt:['Ktnt',1,0,3,0,0],
+    mikibo:['Mikibo',0,0,8,0,0],
+    kibo:['Kibo',1,0,5,0,0],
+    miinou:['Miinou',0,0,4,0,0],
+    inou:['Inou',1,0,5,0,0],
+    misnou:['Misnou',0,0,4,0,0],
+    snou:['Snou',1,0,5,0,0],
+    mitnou:['Mitnou',0,0,4,0,0],
+    tnou:['Tnou',1,0,5,0,0],
+    miynou:['Miynou',0,0,4,0,0],
+    ynou:['Ynou',1,0,5,0,0],
+    mianou:['Mianou',0,0,4,0,0],
+    anou:['Anou',1,0,5,0,0],
+    tjun_1:['Tjun_1',0,0,1,0,0],
+    yjun_1:['Yjun_1',0,0,1,0,0],
+    itcd_1:['Itcd_1',0,0,4,0,0],
+    imei_1:['Imei_1',0,0,63,0,0],
+    iryo_1:['Iryo_1',1,1,5,0,0],
+    tjun_2:['Tjun_2',0,0,1,0,0],
+    yjun_2:['Yjun_2',0,0,1,0,0],
+    itcd_2:['Itcd_2',0,0,4,0,0],
+    imei_2:['Imei_2',0,0,63,0,0],
+    iryo_2:['Iryo_2',1,1,5,0,0],
+    tjun_3:['Tjun_3',0,0,1,0,0],
+    yjun_3:['Yjun_3',0,0,1,0,0],
+    itcd_3:['Itcd_3',0,0,4,0,0],
+    imei_3:['Imei_3',0,0,63,0,0],
+    iryo_3:['Iryo_3',1,1,5,0,0],
+    tjun_4:['Tjun_4',0,0,1,0,0],
+    yjun_4:['Yjun_4',0,0,1,0,0],
+    itcd_4:['Itcd_4',0,0,4,0,0],
+    imei_4:['Imei_4',0,0,63,0,0],
+    iryo_4:['Iryo_4',1,1,5,0,0],
+    tjun_5:['Tjun_5',0,0,1,0,0],
+    yjun_5:['Yjun_5',0,0,1,0,0],
+    itcd_5:['Itcd_5',0,0,4,0,0],
+    imei_5:['Imei_5',0,0,63,0,0],
+    iryo_5:['Iryo_5',1,1,5,0,0],
+    htme:['Htme',0,0,4,0,0],
+    htkg:['Htkg',0,0,25,0,0],
+    hyme:['Hyme',0,0,4,0,0],
+    hykg:['Hykg',0,0,25,0,0],
+    some:['Some',0,0,16,0,0],
+    socd:['Socd',0,0,8,0,0],
+    ayma:['Ayma',0,1,2,0,0],
+    ayme:['Ayme',0,0,16,0,0],
+    aykb:['Aykb',0,0,2,0,0],
+    shab:['Shab',1,1,2,1,0],
+    snag:['Snag',1,1,2,0,0],
+    mikai:['Mikai',0,0,2,0,0],
+    osa:['Osa',1,1,3,0,0],
+    uti:['Uti',1,1,3,0,0],
+    auti:['Auti',1,1,3,0,0],
+    miha:['Miha',1,1,2,0,0],
+    mihk:['Mihk',1,1,2,0,0],
+    miho:['Miho',1,1,3,0,0],
+    jiha:['Jiha',0,1,4,0,0],
+    jihk:['Jihk',1,1,2,0,0],
+    dohk:['Dohk',1,1,2,0,0],
+    hiki:['Hiki',0,0,6,0,0],
+    jiho:['Jiho',0,1,5,0,0],
+    khab:['Khab',1,1,3,1,0],
+    knag:['Knag',1,1,2,2,0],
+    tiji:['Tiji',1,1,2,1,0],
+    ahab:['Ahab',1,1,3,1,0],
+    miahab:['Miahab',0,0,2,0,0],
+    anag:['Anag',1,1,3,1,0],
+    mianag:['Mianag',0,0,2,0,0],
+    jury:['Jury',1,1,4,0,0],
+    tkoh:['Tkoh',1,1,3,0,0],
+    ykoh:['Ykoh',1,1,3,0,0],
+    dkoh:['Dkoh',1,1,3,0,0],
+    skoh:['Skoh',1,1,3,0,0],
+    nnfk:['Nnfk',0,1,4,0,0],
+    itry:['Itry',0,1,2,2,0],
+    kjur:['Kjur',0,1,2,1,0],
+    kako_1:['Kako_1',1,0,3,0,0],
+    kako_2:['Kako_2',1,0,3,0,0],
+    kako_3:['Kako_3',1,0,3,0,0],
+    kako_4:['Kako_4',1,0,3,0,0],
+    kako_5:['Kako_5',1,0,3,0,0],
+    kako_6:['Kako_6',1,0,3,0,0],
+    kako_7:['Kako_7',1,0,3,0,0],
+    kako_8:['Kako_8',1,0,3,0,0],
+    kon_1:['Kon_1',0,0,2,0,0],
+    rit_1:['Rit_1',0,1,3,0,0],
+    kon_2:['Kon_2',0,0,2,0,0],
+    rit_2:['Rit_2',0,1,3,0,0],
+    kon_3:['Kon_3',0,0,2,0,0],
+    rit_3:['Rit_3',0,1,3,0,0],
+    kon_4:['Kon_4',0,0,2,0,0],
+    rit_4:['Rit_4',0,1,3,0,0],
+    kon_5:['Kon_5',0,0,2,0,0],
+    rit_5:['Rit_5',0,1,3,0,0],
+    tais_1:['Tais_1',1,0,8,0,0],
+    chui_1:['Chui_1',1,0,28,0,0],
+    tais_2:['Tais_2',1,0,8,0,0],
+    chui_2:['Chui_2',1,0,28,0,0],
+    tais_3:['Tais_3',1,0,8,0,0],
+    chui_3:['Chui_3',1,0,28,0,0],
+    tais_4:['Tais_4',1,0,8,0,0],
+    chui_4:['Chui_4',1,0,28,0,0],
+    tais_5:['Tais_5',1,0,8,0,0],
+    chui_5:['Chui_5',1,0,28,0,0],
+    tais_6:['Tais_6',1,0,8,0,0],
+    chui_6:['Chui_6',1,0,28,0,0],
+    tais_7:['Tais_7',1,0,8,0,0],
+    chui_7:['Chui_7',1,0,28,0,0],
+    tais_8:['Tais_8',1,0,8,0,0],
+    chui_8:['Chui_8',1,0,28,0,0],
+    metk:['Metk',0,1,3,0,0],
+    said:['Said',0,1,3,0,0],
+    emsg:['Emsg',0,0,68,0,0],
+    kaku:['Kaku',1,0,1,0,0],
+    id:['Id',1,1,0,0,0],
+  };
+</script>

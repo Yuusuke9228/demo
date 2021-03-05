@@ -1,0 +1,187 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var array $rows
+ */
+?>
+
+<?php $title = '計画ガントチャート'; ?>
+<style>
+    table.meisai {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th, td {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    th {
+        border-right: 1px #ccc solid;
+        font-size: x-small;
+        font-weight: normal;
+        text-align: center;
+        color: #fffffe;
+        background-color: #ac9cb3;
+    }
+
+    th.ot-fixed, td.ot-fixed {
+        position: absolute;
+        left: 6px;
+        width: <?php echo $rewidths['[cd']??'30' ?>px;
+    <?php $ot_fix_left = 6 ?> <?php $ot_fix_left += $rewidths['[cd']??30 ?>
+    }
+
+    th.ot-fixed1, td.ot-fixed1 {
+        position: absolute;
+        left: <?php echo $ot_fix_left ?>px;
+        width: <?php echo $rewidths['[kousei']??'60' ?>px;
+    <?php $ot_fix_left += $rewidths['[kousei']??60 ?>
+    }
+
+    th.ot-fixed2, td.ot-fixed2 {
+        position: absolute;
+        left: <?php echo $ot_fix_left ?>px;
+        width: <?php echo $rewidths['[shouhin_mr_cd']??'100' ?>px;
+    }
+</style>
+<div class="page-header">
+    <link rel="stylesheet" type="text/css" href="<?= $this->url->get('css/jsgantt_v12/jsgantt.css'); ?>"/>
+    <h3>計画チャート</h3>
+</div>
+<?php echo $this->getContent(); ?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                    <?php
+                    echo $this->tag->form(
+                        [
+                            "h_keikaku_dts/chart_output_excel",
+                            "autocomplete" => "off",
+                            "class" => "form-horizontal",
+                            "id" => "excel_form"
+                        ]
+                    );
+                    ?>
+                    <div class="form-group">
+                        <div class="col-sm-12 col-md-offset-5">
+                            <h3>描画条件指定</h3>
+                        </div>
+                        <br />
+                        <label for="model_cd" class="col-sm-2 control-label">機種名:</label>
+                        <div class="col-sm-10">
+                            <div class="col-sm-4">
+                                <?php echo $this->tag->select(["model_cd", HKishuMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name", "order" => "cd"]), "using" => ["cd", "cd_name"], 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "model_cd"]); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">日付範囲:</label>
+                        <div class="col-sm-10">
+                            <div class="col-sm-4">
+                                <input type="tel" class="form-control input-group" id="startDate" name="startDate" required />
+                            </div>
+                            <div class="col-sm-1 -align-center">
+                                <span>　　～</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="tel" class="form-control input-group" id="endDate" name="endDate" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="supplier" class="col-sm-2 control-label">発注先:</label>
+                        <div class="col-sm-10">
+                            <div class="col-sm-4">
+                                <?php echo $this->tag->select(["supplier", ShiiresakiMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name", "order" => "cd"]), "using" => ["cd", "cd_name"], 'useEmpty' => true, 'emptyText' => '', "class" => "form-control", "id" => "supplier"]); ?>
+                            </div>
+                            <div class="col-sm-3 col-lg-offset-2">
+                                <span class="btn btn-info" onclick="productionPlan()">チャート描画</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <?php echo $this->tag->submitButton(["EXCEL", "id" => "F12", "class" => "btn btn-success"]) ?>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php echo $this->tag->endform(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="border: #c0c0c0 solid 1px;" />
+
+<!-- 商品展開時に機種の現在の計画情報を出すテーブルを表示 -->
+<div class="container" style="width: 100% !important;">
+    <div class="row">
+
+        <div class="col-sm-12" style="padding-bottom: 0;">
+            <div class="panel-heading pnl-hed h4">計画明細</div>
+            <div id='planBody' class="panel-body" style="overflow-x: scroll;padding: 0;">
+                <table style="width: 100%;">
+                    <tr style="height: 22px !important;background-color: #e3d7a3;">
+                        <td style="text-align:right;">目盛:
+                            <input type="radio" name="radFormat2"
+                                   onclick='gFormat="hour";JSGantt.changeFormat("hour", g);'
+                                   value="hour" />時間
+                            <input type="radio" name="radFormat2"
+                                   onclick='gFormat="day";JSGantt.changeFormat("day", g);'
+                                   value="day" checked="checked">日
+                            <input type="radio" name="radFormat2"
+                                   onclick='ganttFormat="week";JSGantt.changeFormat("week", g);'
+                                   value="week">週
+                            <input type="radio" name="radFormat2"
+                                   onclick='ganttFormat="month";JSGantt.changeFormat("month", g);'
+                                   value="month">月
+                        </td>
+                        <td rowspan=2 style='vertical-align:top;'>
+                            <div style="position:relative" class="gantt" id="ProcessChart"></div>
+                        </td>
+                    </tr>
+                    <tr style="height: 22px !important;">
+                        <td style="vertical-align: top;">
+                            <table id="plan_table" class="meisai">
+                                <thead style="background-color: lavenderblush; text-align: center;">
+                                <tr>
+                                    <th nowrap style="width: 50px;">発注NO</th>
+                                    <th nowrap style="width: 100px;">機種名</th>
+                                    <th nowrap style="width: 120px;">商品コード</th>
+                                    <th nowrap style="text-align: width: 130px;">摘要</th>
+                                    <th nowrap style="width: 120px;">開始日</th>
+                                    <th nowrap style="width: 120px;">終了日</th>
+                                    <th nowrap style="width: 60px;">号機</th>
+                                </tr>
+                                </thead>
+                                <tbody style="background-color: whitesmoke;">
+                                <!--GanttChartはJSで描画-->
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    const this_url_base = "<?php echo $this->url->get() ?>";
+    const productionsPlanningChart = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('h_keikaku_dts/productionsPlanningChart') ?>";
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/jsgantt_v12/jsgantt.js'); ?>"></script>
+<script type="text/javascript"
+        src="<?php echo $this->url->get('js/views/h_keikaku_dts_chart.js'); ?>?var=20200720"></script>
+
+<style scoped>
+    div[class^="col-sm"], div[class^="panel"] {
+        padding: 0 !important;
+    }
+</style>
+
+
+

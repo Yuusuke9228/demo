@@ -1,0 +1,68 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "レポート条件明細.一覧"; ?>
+<div class="page-header">
+    <h3>レポート条件明細 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"report_jouken_meisai_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","表示名"],
+                    ["report_jouken_mr_id","レポート条件見出しID"],
+                    ["jun","列順"],
+                    ["koumoku_mr_cd","項目コード"],
+                    ["sortkeys","ソートキー順"],
+                    ["grouping_kbn","グループ化区分"],
+                    ["siyou_kbn","使用集計区分"],
+                    ["henshuu_cd","編集コード"],
+                    ["shousuu","少数桁"],
+                    ["zero_flg","ゼロ表示フラグ"],
+                    ["align","横位置区分"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $report_jouken_meisai_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("report_jouken_meisai_mrs/edit/" . $report_jouken_meisai_mr->id, $report_jouken_meisai_mr->id)); ?></td>
+                <td><?php echo $report_jouken_meisai_mr->cd ?></td>
+                <td><?php echo $report_jouken_meisai_mr->name ?></td>
+                <td><?php echo $report_jouken_meisai_mr->report_jouken_mr_id ?></td>
+                <td><?php echo $report_jouken_meisai_mr->jun ?></td>
+                <td><?php echo $report_jouken_meisai_mr->koumoku_mr_cd ?></td>
+                <td><?php echo $report_jouken_meisai_mr->sortkeys ?></td>
+                <td><?php echo $report_jouken_meisai_mr->grouping_kbn ?></td>
+                <td><?php echo $report_jouken_meisai_mr->siyou_kbn ?></td>
+                <td><?php echo $report_jouken_meisai_mr->henshuu_cd ?></td>
+                <td><?php echo $report_jouken_meisai_mr->shousuu ?></td>
+                <td><?php echo $report_jouken_meisai_mr->zero_flg ?></td>
+                <td><?php echo $report_jouken_meisai_mr->align ?></td>
+                <td><?php echo $report_jouken_meisai_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("report_jouken_meisai_mrs/delete/" . $report_jouken_meisai_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"report_jouken_meisai_mrs"]) ?>

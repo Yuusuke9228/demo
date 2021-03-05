@@ -1,0 +1,108 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "条件売上明細.一覧"; ?>
+<div class="page-header">
+    <h3>条件売上明細 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"jouken_uriage_meisais","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","表示順"],
+                    ["name","名称"],
+                    ["junjo_kbn_cd","順序区分コード"],
+                    ["koujun_flg","降順フラグ"],
+                    ["hanni_from","範囲自"],
+                    ["hanni_to","範囲至"],
+                    ["tokuisaki_mr_cd","絞込得意先コード"],
+                    ["shouhin_mr_cd","絞込商品コード"],
+                    ["tantou_mr_cd","絞込担当者コード"],
+                    ["souko_mr_cd","絞込倉庫コード"],
+                    ["project_mr_cd","絞込プロジェクト"],
+                    ["project_sub_cd","絞込プロジェクトサブ"],
+                    ["kikan_sitei_flg","期間指定コード"],
+                    ["kikan_from","期間自"],
+                    ["kikan_to","期間至"],
+                    ["cd_from","伝票番号自"],
+                    ["cd_to","伝票番号至"],
+                    ["simekiri_kbn","締切区分"],
+                    ["tuujou_flg","内訳通常フラグ"],
+                    ["henpin_flg","内訳返品フラグ"],
+                    ["nebiki_flg","内訳値引フラグ"],
+                    ["shokeihi_flg","内訳諸経費フラグ"],
+                    ["tekiyou_flg","内訳摘要フラグ"],
+                    ["memo_flg","内訳メモフラグ"],
+                    ["shouhizei_flg","内訳消費税フラグ"],
+                    ["jinyuuryoku_flg","自入力分フラグ"],
+                    ["keitekiyou_flg","伝票計摘要フラグ"],
+                    ["goukeigyou_flg","合計行表示フラグ"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $jouken_uriage_meisai): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("jouken_uriage_meisais/edit/" . $jouken_uriage_meisai->id, $jouken_uriage_meisai->id)); ?></td>
+                <td><?php echo $jouken_uriage_meisai->cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->name ?></td>
+                <td><?php echo $jouken_uriage_meisai->junjo_kbn_cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->koujun_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->hanni_from ?></td>
+                <td><?php echo $jouken_uriage_meisai->hanni_to ?></td>
+                <td><?php echo $jouken_uriage_meisai->tokuisaki_mr_cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->shouhin_mr_cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->tantou_mr_cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->souko_mr_cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->project_mr_cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->project_sub_cd ?></td>
+                <td><?php echo $jouken_uriage_meisai->kikan_sitei_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->kikan_from ?></td>
+                <td><?php echo $jouken_uriage_meisai->kikan_to ?></td>
+                <td><?php echo $jouken_uriage_meisai->cd_from ?></td>
+                <td><?php echo $jouken_uriage_meisai->cd_to ?></td>
+                <td><?php echo $jouken_uriage_meisai->simekiri_kbn ?></td>
+                <td><?php echo $jouken_uriage_meisai->tuujou_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->henpin_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->nebiki_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->shokeihi_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->tekiyou_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->memo_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->shouhizei_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->jinyuuryoku_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->keitekiyou_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->goukeigyou_flg ?></td>
+                <td><?php echo $jouken_uriage_meisai->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("jouken_uriage_meisais/delete/" . $jouken_uriage_meisai->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_meisais/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_meisais/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("jouken_uriage_meisais/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_meisais/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_meisais/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

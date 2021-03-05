@@ -1,0 +1,183 @@
+<?php use Phalcon\Tag; ?>
+
+<?php $title = 'ナビ.仕在レポ'; ?>
+
+<?php echo $this->getContent(); ?>
+<p />
+<div class="panel panel-primary center-block" style="width:600px">
+ <div class="panel-heading" style="font-size: 24px; padding:0px 15px;">仕入在庫レポート</div>
+    <table class="table navis">
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">発注</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('hacchuu_dts/summary','<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;発注明細書</div>', /* 'target'=>'_blank' , */
+              'title' => '発注伝票を一覧表示します。')); ?>
+        </td>
+        <td width="200px">
+            <?php echo $this->tag->linkTo(array('shukkairai_dts/list','<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;出荷依頼明細表</div>', /* 'target'=>'_blank' , */
+                'title' => '出荷依頼伝票を、一覧表示します。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">仕入</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('report_shiire/index', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;仕入明細書</div>', /* 'target'=>'_blank' , */
+          'title' => '仕入伝票を日付別、仕入先別、商品別、担当者別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('report_shiire/nippou', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;仕入日報</div>', /* 'target'=>'_blank' , */
+          'title' => '総仕入額、返品額、値引額などを日付別、仕入先別、商品別、担当者別、取引区分別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('report_shiire/geppou', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;仕入月報</div>', /* 'target'=>'_blank' , */
+          'title' => '総仕入額、返品額、値引額などを月度別、仕入先別、商品別、担当者別に集計します。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('report_shiire/suii', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;仕入推移表</div>', /* 'target'=>'_blank' , */
+          'title' => '指定期間の純仕入額の月度ごとの推移を集計します')); ?>
+        </td>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('report_shiire/juni', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;仕入順位表</div>', /* 'target'=>'_blank' , */
+          'title' => '指定期間の純仕入額や仕入数量などの順位を集計します。')); ?>
+        </td>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('report_shiire/bunseki', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;仕入分析表</div>', /* 'target'=>'_blank' , */
+          'title' => '指定期間の仕入先からの商品の仕入や仕入先別、商品別、担当者別の仕入を集計します。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">支払</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;支払予定表</div>', /* 'target'=>'_blank' , */
+          'title' => '買掛金の支払予定日や支払予定額などを仕入先別、担当者別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;出金予定表</div>', /* 'target'=>'_blank' , */
+          'title' => '仕入先への買掛金の支払による出金予定を５日単位で支払区分別に集計することができます。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;支払状況一覧表</div>', /* 'target'=>'_blank' , */
+          'title' => '指定月度の仕入先への買掛金や支払実績や滞納額、支払予定を集計することができます。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;支払手形一覧表</div>', /* 'target'=>'_blank' , */
+          'title' => '仕入先に買掛金の支払いで振り出した手形を手形期日別、仕入先別、担当者別、支払区分別に集計します。')); ?>
+        </td>
+        <td width="200px" style="border-style: none;">
+        </td>
+        <td width="200px" style="border-style: none;">
+        </td>
+      </tr>
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">出金</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;出金明細書</div>', /* 'target'=>'_blank' , */
+          'title' => '出金伝票を日付別、仕入先別、担当者別、支払区分別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;出金日報</div>', /* 'target'=>'_blank' , */
+          'title' => '出金伝票を支払区分別に日付別、仕入先別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;出金月報</div>', /* 'target'=>'_blank' , */
+          'title' => '出金伝票を支払区分別に月度別、仕入先別に集計します。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">在庫</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('report_zaiko_vws/shukko', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;出庫明細表</div>', /* 'target'=>'_blank' , */
+          'title' => '出庫伝票を日付別、出庫先別、商品別、担当者別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('report_zaiko_vws/idou', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;倉庫移動明細表</div>', /* 'target'=>'_blank' , */
+          'title' => '倉庫移動伝票を月度別、倉庫別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('report_zaiko_vws/nyuushukko', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;入出庫明細表</div>', /* 'target'=>'_blank' , */
+          'title' => '商品ごとの入庫と出庫の状況を集計します。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('report_zaiko_vws/suii', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;在庫推移表</div>', /* 'target'=>'_blank' , */
+          'title' => '在庫数、入出庫数の推移を月度別に集計します。')); ?>
+        </td>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('report_zaiko_vws/juni', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;在庫順位表</div>', /* 'target'=>'_blank' , */
+          'title' => '指定月度の在庫数、在庫金額の順位を集計します。')); ?>
+        </td>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('report_zaiko_vws/index', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;在庫一覧表</div>', /* 'target'=>'_blank' , */
+          'title' => '商品ごとの在庫の状況を集計します。')); ?>
+        </td>
+      </tr>
+      <tr>
+        <td width="200px" style="border-style: none;">
+          <?php echo $this->tag->linkTo(array('zaiko_kakunin_azukari_vws/tairyuu_shouhin', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;滞留商品一覧表</div>', /* 'target'=>'_blank' , */
+          'title' => '指定日以降に出荷、または出庫がない商品を集計します。')); ?>
+        </td>
+        <td width="200px" style="border-style: none;">
+        </td>
+        <td width="200px" style="border-style: none;">
+        </td>
+      </tr>
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">生産</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;生産明細書</div>', /* 'target'=>'_blank' , */
+          'title' => '生産伝票を日付別、完成商品別、構成部品別、担当者別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;生産日報</div>', /* 'target'=>'_blank' , */
+          'title' => '生産伝票の受入金額、部品金額などを日付別、完成商品別、構成部品別、担当者別に集計します。')); ?>
+        </td>
+        <td width="200px">
+        </td>
+      </tr>
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">その他</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('zaiko_kakunin_azukari_vws/uri_shiire_hikaku', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;売上仕入比較表</div>', /* 'target'=>'_blank' , */
+          'title' => '売上と仕入の期間を指定して、純売上と純仕入の数量や金額などを商品別に集計します。')); ?>
+        </td>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('shouhin_mrs', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;消費税集計表</div>', /* 'target'=>'_blank' , */
+          'title' => '売上伝票、または仕入伝票から消費税を税区分別に集計します。')); ?>
+        </td>
+        <td width="200px">
+        </td>
+      </tr>
+      <tr>
+        <th colspan=3 class="active" style="height: 20px; padding:0px 15px;">プロジェクト</th>
+      </tr>
+      <tr>
+        <td width="200px">
+          <?php echo $this->tag->linkTo(array('project_mrs/summary', '<div><i class="fas fa-chart-line fa-lg" style="color: #808080;"></i>&nbsp;&nbsp;実績一覧表</div>', /* 'target'=>'_blank' , */
+          'title' => '売上達成率や利益率をプロジェクト別に集計します。')); ?>
+        </td>
+        <td width="200px">
+        </td>
+        <td width="200px">
+        </td>
+      </tr>
+    </table>
+</div>

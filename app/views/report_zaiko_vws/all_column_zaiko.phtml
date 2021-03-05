@@ -1,0 +1,234 @@
+<?php
+/** @var array $rows */
+use Phalcon\Tag;
+?>
+<?php $title = '在庫一覧'; ?>
+<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/css/theme.blue.min.css"
+      xmlns="http://www.w3.org/1999/html">
+
+<style>
+    input[type=text]:focus {
+        outline: none;
+        background: #FFFC99;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+            $("#zaiko_table").tablesorter();
+        }
+    );
+
+    function jouken_submit() {
+        document.post_form.submit();
+    }
+    $(function () {
+        $('table.head_fix').floatThead({
+            top: 50
+        });
+    });
+
+    window.onload = function() {
+        document.body.onbeforeprint = function(){
+            $('table#zaiko_table thead tr :nth-child(1)').text("id");
+            $('table#zaiko_table thead tr :nth-child(2)').text("倉庫コード");
+            $('table#zaiko_table thead :nth-child(3)').text("倉庫");
+            $('table#zaiko_table thead :nth-child(4)').text("担当コード");
+            $('table#zaiko_table thead :nth-child(5)').text("担当");
+            $('table#zaiko_table thead :nth-child(6)').text("商品コード");
+            $('table#zaiko_table thead :nth-child(7)').text("商品");
+            $('table#zaiko_table thead :nth-child(8)').text("ロット");
+            $('table#zaiko_table thead :nth-child(9)').text("色番");
+            $('table#zaiko_table thead :nth-child(10)').text("色名");
+            $('table#zaiko_table thead :nth-child(11)').text("個別");
+            $('table#zaiko_table thead :nth-child(12)').text("品質");
+            $('table#zaiko_table thead :nth-child(13)').text("在庫１");
+            $('table#zaiko_table thead :nth-child(14)').text("単");
+            $('table#zaiko_table thead :nth-child(15)').text("在庫２");
+            $('table#zaiko_table thead :nth-child(16)').text("単");
+            $('table#zaiko_table thead :nth-child(17)').text("売原価");
+        }
+    }
+</script>
+
+<style media="print">
+    .conditions {
+        display: none;
+    }
+
+    th {
+        text-align: center !important;
+        background-color: lavender !important;
+        border-bottom: #3D3D3D 2px solid !important;
+    }
+ 
+</style>
+
+<div class="page-header ">
+    <h3><?php echo '全商品ロット在庫一覧'; ?></span></h3>
+    <br/>
+    <div class="conditions" style="border:2px solid #8eb0e7;padding:10px;border-radius:10px;">
+        <strong style="font-size:18px;">
+            <?php echo $this->tag->form(array("report_zaiko_vws/all_column_zaiko", "id" => "all_column_zaiko_post", "name" => "post_form", "method" => "post")); ?>
+            <div>
+                <label for="fieldKikanSiteiKbnCd" style="text-align: center;margin-left: 15px;">期間指定 >></label>
+                <input type="tel" style="text-align: center;margin-left: 15px;" id ="fieldKikanTo" name="kikan_to" value="<?php echo $this->request->getPost('kikan_to') ?? date('Y-m-d'); ?>">
+                <br>
+                <input type="radio" style="margin-left: 15px;" id="zero_flg" name="zero_flg" value="0" <?php if (!$this->request->isPost() || $this->request->getPost('zero_flg') == '0') {
+                    echo("checked='checked'");
+                }
+                ?>> 0在庫を表示する
+                <input type="radio" style="margin-left: 30px;" id="zero_flg" name="zero_flg" value="1" <?php if (!$this->request->isPost() || $this->request->getPost('zero_flg') == '1') {
+                    echo("checked='checked'");
+                }?>> 0在庫を表示しない
+
+            </div>
+            <input type="radio" style="margin-left: 15px;" id="book_flg" name="book_flg" value="0" <?php if (!$this->request->isPost() || $this->request->getPost('book_flg') == '0') {echo("checked='checked'");} ?>> 分類3を除いて表示
+            <input type="radio" style="margin-left: 15px;" id="kanryou_flg" name="book_flg" value="1" <?php if (!$this->request->isPost() || $this->request->getPost('book_flg') == '1') {echo("checked='checked'");}?> > 分類3のみ表示
+            <input type="radio" style="margin-left: 15px;" id="book_flg" name="book_flg" value="2" <?php if (!$this->request->isPost() || $this->request->getPost('book_flg') == '2') {echo("checked='checked'");}?>> 全てのデータを表示
+            <span style="margin-left: 200px;padding-bottom: 100px;">
+                <button id="initialize" class="btn  btn-success" style="background-color: #1c2d3f">初期化</button>
+                <button id="F12" class="btn  btn-success" onclick="jouken_submit();">抽出</button>
+                <button id="dl-xlsx" class="submit btn  btn-warning">EXCEL出力</button>
+            </span>
+        </strong>
+        <br>
+    </div>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table id="zaiko_table" class="tablesorter tablesorter-blue head_fix">
+        <thead class="conditions">
+        <tr class="th_tr">
+            <th nowrap style="text-align:center;">No</th>
+            <th nowrap style="text-align:center">倉庫コード</th>
+            <th nowrap style="text-align:center">倉庫名</th>
+            <th nowrap style="text-align:center">担当コード</th>
+            <th nowrap style="text-align:center">担当名</th>
+            <th nowrap style="text-align:center">商品コード</th>
+            <th nowrap style="text-align:center">商品名称</th>
+            <th nowrap style="text-align:center;">ロット</th>
+            <th nowrap style="text-align:center;">色番</th>
+            <th nowrap style="text-align:center;">色名</th>
+            <th nowrap style="text-align:center;">個別コード</th>
+            <th nowrap style="text-align:center;">品質</th>
+            <th nowrap style="text-align:center;">在庫数量1</th>
+            <th nowrap style="text-align:center;">単位1</th>
+            <th nowrap style="text-align:center;">在庫数量2</th>
+            <th nowrap style="text-align:center;">単位2</th>
+            <th nowrap style="text-align:center;">売り原価</th>
+        </tr>
+        </thead>
+        <tr class="conditions" style="background: #ffffff;">
+            <td nowrap style="position:relative"><input type="text" name="row_from" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: right;" readonly="readonly" value="Like："></td>
+            <td nowrap style="position:relative"><input type="text" id="souko_cd" name="souko_cd_from" style="text-align:center;width:100%; box-sizing:border-box;" value="<?php if($this->request->isPost()) echo($this->request->getPost('souko_cd_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="souko_name_from" name="souko_name_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('souko_name_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="tantou_cd_from" name="tantou_cd_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('tantou_cd_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="tantou_name_from" name="tantou_name_from"style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('tantou_name_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="shouhin_cd" name="shouhin_cd_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('shouhin_cd_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="shouhin_name_from" name="shouhin_name_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('shouhin_name_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="lot_from" name="lot_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('lot_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="iro_from" name="iro_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('iro_from')); ?>"></td>
+            <td nowrap style="position:relative"><input id="iromei_from" type="text" name="iromei_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('iromei_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="kobetucd_from" name="kobetucd_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('kobetucd_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="hinshitu_from" name="hinshitu_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('hinshitu_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="zaiko1_from" name="zaiko1_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('zaiko1_from')); ?>"></td>
+            <td nowrap style="position:relative"><input id="tanni1_from" type="text" name="tanni1_from" style="text-align:center;width:100%; box-sizing:border-box;background-color: #F2F2F2;" readonly="readonly"></td>
+            <td nowrap style="position:relative"><input type="text" id="zaiko2_from" name="zaiko2_from" style="text-align:center;width:100%; box-sizing:border-box" value="<?php if($this->request->isPost()) echo($this->request->getPost('zaiko2_from')); ?>"></td>
+            <td nowrap style="position:relative"><input type="text" id="tanni2_from" name="tanni2_from" style="text-align:center;width:100%; box-sizing:border-box;background-color: #F2F2F2;" readonly="readonly"></td>
+            <td nowrap style="position:relative"><input type="text" id="tanni2_from" name="shiire_tanka" style="text-align:center;width:100%; box-sizing:border-box;background-color: #F2F2F2;" readonly="readonly"></td>
+        </tr>
+        <tr class="conditions" style="background: #ffffff;border-bottom: #1c2529 2px;">
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="text" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: right;" readonly="readonly" value="Group："></td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="checkbox" name="souko_group" <?php if (!$this->request->isPost() || $this->request->getPost('souko_group') != '') {echo("checked='checked'");} ?>style="width:100%; box-sizing:border-box;background-color: #FFFFFF;" value="souko_group"></td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="text" name="souko_name" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: left;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="checkbox" name="tantou_group" <?php if ($this->request->isPost() && $this->request->getPost('tantou_group') != '') {echo("checked='checked'");} ?>style="width:100%; box-sizing:border-box;background-color: #FFFFFF;" value="tantou_group"></td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="text" name="tantou_name" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: left;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="checkbox" name="shouhin_group" <?php if ($this->request->isPost() && $this->request->getPost('shouhin_group') != '') {echo("checked='checked'");} ?>style="width:100%; box-sizing:border-box;background-color: #FFFFFF;" value="shouhin_group"></td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="text" name="shouhin_name" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="checkbox" name="lot_group" <?php if ($this->request->isPost() && $this->request->getPost('lot_group') != '') {echo("checked='checked'");} ?>style="width:100%; box-sizing:border-box;background-color: #FFFFFF;" value="lot_group"></td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="checkbox" name="iro_group" <?php if ($this->request->isPost() && $this->request->getPost('iro_group') != '') {echo("checked='checked'");} ?>style="width:100%; box-sizing:border-box;background-color: #FFFFFF;" value="iro_group"></td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="text" name="iromei_group" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="checkbox" name="kobetsucd_group" <?php if ($this->request->isPost() && $this->request->getPost('kobetsucd_group') != '') {echo("checked='checked'");} ?>style="width:100%; box-sizing:border-box;background-color: #FFFFFF;" value="kobetsucd_group"></td>
+            <td nowrap style="position:relative;background-color: #FFFFFF;"><input type="checkbox" name="hinsitsu_group" <?php if ($this->request->isPost() && $this->request->getPost('hinsitsu_group') != '') {echo("checked='checked'");} ?>style="width:100%; box-sizing:border-box;background-color: #FFFFFF;" value="hinsitsu_group"></td>
+            <td nowrap style="position:relative"><input type="text" name="zaiko1" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: right;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative"><input type="text" name="tani1" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: right;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative"><input type="text" name="zaiko2" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: right;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative"><input type="text" name="tani2" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: right;" readonly="readonly">　　</td>
+            <td nowrap style="position:relative"><input type="text" name="tanka" style="width:100%; box-sizing:border-box;background-color: #F2F2F2;text-align: right;" readonly="readonly">　　</td>
+        </tr>
+        <?php echo $this->tag->endForm(); ?> <!--条件Form End-->
+        <tbody>
+        <?php $i = 1; ?>
+        <?php foreach ($rows as $row): ?>
+            <?php
+                if (!$this->request->isPost() || $this->request->getPost('zero_flg') === '1') {
+                    if (round((float)$row['zaikoryou1'], 3) == 0.00 && round((float)$row['zaikoryou2'],3) == 0.00) {
+                        continue;
+                    }
+                }
+            ?>
+            <tr id="row<?php echo  $i + 2; ?>">
+                <td id="rowno<?php echo $i; ?>" class="rowno" nowrap style="color:blue;text-align: center;cursor: pointer;"><?php echo $i; ?></td>
+                <td id="souko<?php echo $i; ?>" class="souko" nowrap style="text-align: center;cursor: pointer;"><?php echo $row['souko_mr_cd'] ?? ''; ?></td>
+                <td nowrap style="text-align: left"><?php echo $row['souko_name'] ?? ''; ?></td>
+                <td id="tantou<?php echo $i; ?>" class="tantou" nowrap style="text-align: center;cursor: pointer;"><?php echo $row['tantou_mr_cd'] ?? ''; ?></td>
+                <td nowrap style="text-align: left"><?php echo $row['tantou_name'] ?? ''; ?></td>
+                <td id="shouhin<?php echo $i; ?>" class="shouhin" nowrap style="text-align: center;cursor: pointer;"><?php echo $row['shouhin_mr_cd'] ?? ''; ?></td>
+                <td nowrap style="text-align: left"><?php echo $row['shouhin_name'] ?? ''; ?></td>
+                <td id="lot<?php echo $i; ?>" class="lot" nowrap style="text-align:left;cursor: pointer;"><?php echo $row['lot'] ?? ''; ?></td>
+                <td id="iro<?php echo $i; ?>" class="iro" nowrap style="text-align:left;cursor: pointer;"><?php echo $row['iro'] ?? ''; ?></td>
+                <td nowrap style="text-align:left;"><?php echo $row['iromei'] ?? ''; ?></td>
+                <td id="kobetucd<?php echo $i; ?>" class="kobetucd" nowrap style="text-align:left;cursor: pointer;"><?php echo $row['kobetucd'] ?? ''; ?></td>
+                <td id="hinshitu_name<?php echo $i; ?>" class="hinshitu_name" nowrap style="text-align:center;cursor: pointer;"><?php echo $row['hinshitu_name'] ?? ''; ?></td>
+                <?php
+                    if ((round((float)$row['zaikoryou1'], 4)) < 0.000) {
+                        $color = 'red';
+                    } else {
+                        $color = 'black';
+                    }
+                ?>
+                <td nowrap style="text-align:right;color:<?php echo $color; ?>;"><?php echo number_format(round((float)$row['zaikoryou1'], 4), 2) == 0.00 ? 0 :number_format(round((float)$row['zaikoryou1'], 3), 2); ?></td>
+                <td nowrap style="text-align:center;"><?php echo $row['tanni1']; ?></td>
+                <?php
+                    if ((round((float)$row['zaikoryou2'], 4)) < 0.000) {
+                        $color1 = 'red';
+                    } else {
+                        $color1 = 'black';
+                    }
+                ?>
+                <td nowrap style="text-align:right;color:<?php echo $color1; ?>;"><?php echo number_format(round((float)$row['zaikoryou2'], 4), 2) == 0.00 ? 0 :number_format(round((float)$row['zaikoryou2'], 3), 2); ?></td>
+                <td nowrap style="text-align:center;"><?php echo $row['tanni2']; ?></td>
+                <td nowrap style="text-align:right;"><?php if (isset($row['cost'])) {echo number_format($row['cost'],2) ?? 0;} else {echo 0;} /* 単価 */ ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<!--モーダル部分-->
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+<!--入出庫へのポスト-->
+<?php echo $this->tag->form(array("report_zaiko_vws/nyuushukko", "id" => "nyuushukko_post", "method" => "post", "target" => "_blank")); ?>
+<input type='hidden' name="cd" id="nyuushukkoCd">
+<input type='hidden' name="souko_mr_cd" id="nyuushukkoSoukoMrCd">
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.10/xlsx.full.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/all_column.js'); ?>?var=20191107"></script>
+
+<script>
+    var shouhin_lot_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('report_zaiko_vws/shouhin_lot_modal') ?>";
+</script>

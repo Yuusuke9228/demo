@@ -1,0 +1,303 @@
+﻿html, body {
+    font-family: "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro", "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "メイリオ", sans-serif !important;
+}
+
+@media print {
+    /* 印刷にリンク先を出すbootstrapを打ち消す */
+    a[href]:after {
+        content: "" !important;
+    }
+
+    abbr[title]:after {
+        content: "" !important;
+    }
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover > a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+.bg-yel { /* パネル等：背景：イエロー */
+    background-color: #ffffee;
+}
+
+.bg-blu { /* パネル等：背景：水色 */
+    background-color: #eeffff;
+}
+
+.pnl-hed { /* パネル：ヘッダー：スリム */
+    height: 20px;
+    padding: 0px 15px;
+}
+
+.lbl-grn-up { /* ラベル：グリーン：上見出し */
+    color: #3d773d;
+    background-color: #dff1d9;
+    text-align: center !important;
+}
+
+.lbl-grn { /* ラベル：グリーン：左見出し: 改行不可 */
+    color: #3d773d;
+    background-color: #dff1d9;
+    white-space: nowrap;
+}
+
+.tr-grn { /* テーブルレコード：グリーン */
+    color: #3d773d;
+    background-color: #dff1d9;
+}
+
+.lbl-pnk-up { /* ラベル：ピンク：上見出し */
+    color: #773d3d;
+    background-color: #f1dfd9;
+    text-align: center !important;
+}
+
+.lbl-pnk { /* ラベル：ピンク：左見出し: 改行不可 */
+    color: #773d3d;
+    background-color: #f1dfd9;
+    white-space: nowrap;
+}
+
+.tr-pnk { /* テーブルレコード：ピンク */
+    color: #773d3d;
+    background-color: #f1dfd9;
+}
+
+.lbl-blu-up { /* ラベル：ブルー：上見出し */
+    color: #31718f;
+    background-color: #d9edf7;
+    text-align: center !important;
+}
+
+.lbl-blu { /* ラベル：ブルー：左見出し: 改行不可 */
+    color: #31718f;
+    background-color: #d9edf7;
+    white-space: nowrap;
+}
+
+.tr-blu { /* テーブルレコード：ブルー */
+    color: #31718f;
+    background-color: #d9edf7;
+}
+
+.tb-w100 { /* テーブル：幅100%：ボーダーグレー */
+    width: 100%;
+    border: 1px #CCCCCC solid;
+}
+
+.t-cent { /* センター：テーブルth,td */
+    text-align: center;
+    border: 1px #CCCCCC solid;
+}
+
+.t-right { /* センター：テーブルth,td */
+    text-align: right;
+    border: 1px #CCCCCC solid;
+}
+
+.frm0c { /* フォーム高密度センター */
+    padding: 0;
+    text-align: center;
+}
+
+.f-cent { /* フォームセンター */
+    text-align: center;
+    /* ime-mode: inactive; */
+}
+
+.f-numb { /* フォーム右寄せ数値など */
+    text-align: right;
+    ime-mode: disabled;
+}
+
+.ime-d { /* IME=disable datepikker日付入力など */
+    ime-mode: disabled;
+}
+
+.ime-i { /* IME=inactive コード入力など */
+    ime-mode: inactive;
+}
+
+.ime-a { /* IME=active 備考入力など */
+    ime-mode: active;
+}
+
+.navis div:hover { /* ナビゲータ画面でリンクを見えやすくする */
+    background-color: Wheat;
+}
+
+.font-08 { /* フォントサイズ80% */
+    font-size: 80%;
+}
+
+/* モーダルダイヤログ用 参考http://b-risk.jp/blog/2013/04/modal-window/  */
+.bgStyle { /* 元画面隠す */
+    display: none;
+    width: 100%;
+    height: 2000px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: #333;
+}
+
+.wrapStyle { /* ダイヤログ中身本体 */
+    display: none;
+    width: 1000px;
+    height: 90%;
+    margin: 0 0 0 -500px;
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    z-index: 9999;
+    background: #fff;
+}
+
+.btnStyle { /* 中止ボタン右肩 …使わない */
+    display: none;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: #999;
+    border-radius: 50%;
+    cursor: pointer;
+    line-height: 40px;
+    text-align: center;
+    color: #fff
+}
+
+input.bg_pink, select.bg_pink { /* tableの上行を目立つようにする */
+    background-color: #fff0f0;
+}
+
+/* 入力項目の高さが少し小さくなる */
+.form-control {
+    height: 21px !important;
+    padding: 1px 6px !important;
+}
+
+.control-label {
+    padding-top: 0px !important;
+}
+
+.table-condens-0 > tbody > tr > td,
+.table-condens-0 > tbody > tr > th,
+.table-condens-0 > tfoot > tr > td,
+.table-condens-0 > tfoot > tr > th,
+.table-condens-0 > thead > tr > td,
+.table-condens-0 > thead > tr > th {
+    padding: 0px;
+}
+
+/* タブ表示をスリムにする */
+.nav-tabs > li > a {
+    /* adjust padding for height*/
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.nav-tabs > li.active > a:focus, .nav-tabs > li.active > a {
+    margin-top: 1px;
+}
+
+.nav-tabs > li {
+    margin-bottom: 0px;
+}
+
+.nav-tabs > li.active {
+    margin-bottom: -1px;
+}
+
+/* datepickerを最前面に表示したい */
+.ui-datepicker {
+    z-index: 1010 !important;
+}
+
+/* 発注へつなぐリンクを指さしマークにする */
+.cursor_pointer {
+    cursor: pointer;
+}
+
+.zoom_hacchuu {
+    cursor: pointer;
+}
+
+.zoom_hacchuu_all {
+    cursor: pointer;
+}
+
+/*  */
+.row-0 {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.row-0 > div {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+/* 標準では認識しにくいため濃くする */
+.table-hover tbody tr:hover > td,
+.table-hover tbody tr:hover > th {
+  background-color: #c0c0c0;
+}
+
+/* 指定した行などを目立たせる。jsで制御 */
+.activetr {
+  background-color: #ffff80 !important;
+}
+
+input:focus,tel:focus,select:focus {
+  background-color: #fffc99;
+}
+

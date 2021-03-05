@@ -1,0 +1,209 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $row_zenkai */
+/** @var array $seikyuu_meisais */
+$title = "請求明細";
+?>
+<div class="page-header">
+    <h3>請求明細書</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+echo $this->tag->form(
+    array(
+        "tokuisaki_sime_dts/seikyuu_meisai",
+        "autocomplete" => "off",
+        "class" => "form-horizontal",
+        "id" => "formMeisai",
+    )
+);
+?>
+
+<div class="form-group">
+    <div class="col-sm-6">
+        <div class="col-sm-12">
+            <label id="sime_joutai" class="col-sm-6 control-label" style="color: darkred; font-size: 16px;"><?php if (isset($sime_joutai)) { echo $sime_joutai; } ?></label>
+        </div>
+        <label for="fieldShuukeiTanni" class="col-sm-3 control-label">集計単位</label>
+        <div class="col-sm-3">
+            <?php echo $this->tag->select(array("seikyuu_tanni", array("0" => "0=請求先毎", "1" => "1=請求書合算毎"), "class" => "form-control", "id" => "fieldShuukeiTanni")) ?>
+        </div>
+        <div class="clearfix"></div>
+        <label for="fieldSeikyuusakiMrCd" class="col-sm-3 control-label">請求先</label>
+        <div class="col-sm-3">
+            <?php echo $this->tag->textField(array("seikyuusaki_mr_cd", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldSeikyuusakiMrCd")) ?>
+        </div>
+        <div class="col-sm-6">
+            <?php echo $this->tag->textField(array("seikyuusaki_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldSeikyuusakiName")) ?>
+        </div>
+        <label for="fieldSimebi" class="col-sm-3 control-label">締日</label>
+        <div class="col-sm-3">
+            <?php echo $this->tag->telField(array("simebi", "type" => "date", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent", "id" => "fieldSimebi")) ?>
+        </div>
+        <label for="fieldSeikyuushoBangou" class="col-sm-3 control-label">請求書番号</label>
+        <div class="col-sm-3">
+            <?php echo $this->tag->textField(array("seikyuusho_bangou", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent", "id" => "fieldSeikyuushoBangou")) ?>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="col-sm-6">
+            <?php echo $this->tag->submitButton(array("集計F12", "id" => "F12", "name" => "shuukei_btn", "class" => "btn btn-success")) ?>
+            <span id="shimerireki" class="btn btn-info" onclick="rireki($('#fieldSeikyuusakiMrCd').val())">締切履歴</span>
+            <span id="dl-xlsx" data-action="<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/print_meisai') ?>" class="btn btn-warning">　印刷　
+            </span>
+        </div>
+    </div>
+</div>
+<?php $last_row = count($seikyuu_meisais) - 1; ?>
+<div class="form-group">
+    <table id="table1">
+        <thead>
+        <tr class="tr-pnk">
+            <th class="t-cent" width="150px">前回請求額</th>
+            <th class="t-cent" width="150px">入金額</th>
+            <th class="t-cent" width="150px">繰越金額</th>
+            <th class="t-cent" width="150px">今回売上額</th>
+            <th class="t-cent" width="150px">内消費税額</th>
+            <th class="t-cent" width="150px">今回請求額</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="t-cent"><?php echo number_format($zenkaigaku = $row_zenkai->zenkai_seikyuugaku - $row_zenkai->nyuukingaku + $row_zenkai->konkai_uriagegaku) ?></td>
+            <td class="t-cent"><?php echo number_format($nyuukingaku = $seikyuu_meisais[$last_row]["nyuukingakuk"]) ?></td>
+            <td class="t-cent"><?php echo number_format($kurikosigaku = $zenkaigaku - $nyuukingaku) ?></td>
+            <td class="t-cent"><?php echo number_format($konkaiuriage = $seikyuu_meisais[$last_row]["zeinukigakuk"] + $seikyuu_meisais[$last_row]["zeigakuk"]) ?></td>
+            <td class="t-cent"><?php echo number_format($utishouhizei = $seikyuu_meisais[$last_row]["zeigakuk"]) ?></td>
+            <td class="t-cent"><?php echo number_format($konkaiseikyuu = $kurikosigaku + $konkaiuriage) ?></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div style="overflow-x: scroll;padding: 0;width:982px;">
+        <style>
+            .tb-seikyuusaki > tbody > tr > td {
+                padding: 0 5px;
+            }
+        </style>
+        <table width="982px" id="tb_seikyuusaki" class="table-bordered tb-seikyuusaki table-striped table-hover">
+            <thead style="display: block;">
+            <tr class="tr-pnk">
+                <th class="t-cent" width="80px">日付</th>
+                <th class="t-cent" width="80px">伝票番号</th>
+                <th class="t-cent" width="80px">区分</th>
+                <th class="t-cent" width="400px">商品名・入金内容</th>
+                <th class="t-cent" width="80px">課税区分</th>
+                <th class="t-cent" width="80px">数量</th>
+                <th class="t-cent" width="80px">単価</th>
+                <th class="t-cent" width="80px">金額</th>
+            </tr>
+            </thead>
+            <tbody style="display: block;overflow-y: scroll;height: 400px;">
+            <?php $sotozei = 0; ?>
+            <?php foreach ($seikyuu_meisais as $seikyuu_meisai): ?>
+                <?php if ($seikyuu_meisai['denpyou_bangou']): ?>
+                    <?php if ($seikyuu_meisai['gyou']): ?>
+                        <tr class="tr_pattern">
+                            <td width="80px" class="t-cent"><?php echo $seikyuu_meisai['hiduke'] ?></td>
+                            <td width="80px" class="t-cent"><?php echo $seikyuu_meisai['denpyou_bangou'] ?></td>
+                            <td width="80px" class="t-cent"><?php echo $seikyuu_meisai['kubun'] ?></td>
+                            <td width="400px"><?php echo $seikyuu_meisai['naiyou'] ?></td>
+                            <td width="80px" class="t-cent"><?php echo $seikyuu_meisai['kazeikubun'] ?></td>
+                            <td width="80px" class="t-right"><?php echo number_format($seikyuu_meisai['suuryouk'], 2) !== '0.00' ? number_format($seikyuu_meisai['suuryouk'], 2) : '' ?></td>
+                            <td width="80px" class="t-right"><?php echo number_format($seikyuu_meisai['tanka'], 2) !== '0.00' ? number_format($seikyuu_meisai['tanka'], 2) : '' ?>
+                                <?php
+                                if ($seikyuu_meisai['zei_tenka_kbn_cd'] < 20) {
+                                    $sotozei += $seikyuu_meisai['zeigakuk'];
+                                } else {
+                                    $utizei = $seikyuu_meisai['zeigakuk'];
+                                }
+                                ?>
+                            </td>
+                            <td width="80px"
+                                class="t-right"><?php echo number_format($seikyuu_meisai['zeinukigakuk'] + $utizei + $seikyuu_meisai['nyuukingakuk']) ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <?php if ($seikyuu_meisai['denpyou_kbn'] == 1 && $seikyuu_meisai['zei_tenka_kbn_cd'] < 20): ?>
+                            <tr class="tr_pattern">
+                                <td class="t-cent"><?php echo $seikyuu_meisai['hiduke'] ?></td>
+                                <td class="t-cent"><?php echo $seikyuu_meisai['denpyou_bangou'] ?></td>
+                                <td class="t-cent">消費税</td>
+                                <td></td>
+                                <td class="t-cent"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"><?php echo number_format($sotozei);
+                                    $sotozei = 0; ?></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if ($seikyuu_meisai['denpyou_kbn'] == 1): ?>
+                            <tr class="tr_pattern">
+                                <td class="t-cent"><?php echo $seikyuu_meisai['hiduke'] ?></td>
+                                <td class="t-cent"><?php echo $seikyuu_meisai['denpyou_bangou'] ?></td>
+                                <td class="t-cent">摘要</td>
+                                <td><?php echo $seikyuu_meisai['uri_memo'] ?></td>
+                                <td class="t-cent"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if ($seikyuu_meisai['denpyou_kbn'] == 1): ?>
+                            <tr class="tr_pattern">
+                                <td class="t-cent"><?php echo $seikyuu_meisai['hiduke'] ?></td>
+                                <td class="t-cent"><?php echo $seikyuu_meisai['denpyou_bangou'] ?></td>
+                                <td class="t-cent">納入先</td>
+                                <td><?php echo $seikyuu_meisai['nounyuusaki'] ?></td>
+                                <td class="t-cent"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                                <td class="t-right"></td>
+                            </tr>
+                        <?php endif; ?>
+                        <tr class="tr_pattern" style="color:blue;">
+                            <td class="t-cent"><?php echo $seikyuu_meisai['hiduke'] ?></td>
+                            <td class="t-cent"><?php echo $this->tag->linkTo(array(($seikyuu_meisai['denpyou_kbn'] == 1 ? "uriage_dts/edit/" : "nyuukin_dts/edit/") . $seikyuu_meisai['denpyou_id'], $seikyuu_meisai['denpyou_bangou'], "target" => "_blank")); ?></td>
+                            <td class="t-cent"></td>
+                            <td>≪伝票計≫</td>
+                            <td class="t-cent"></td>
+                            <td class="t-right"></td>
+                            <td class="t-right"></td>
+                            <td class="t-right"><?php echo number_format($seikyuu_meisai['zeinukigakuk'] + $seikyuu_meisai['zeigakuk'] + $seikyuu_meisai['nyuukingakuk']) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php echo $this->tag->hiddenField(array("chouhyou_mr_id", "id" => "fieldChouhyouMrId")) ?>
+<?php echo $this->tag->endForm(); ?>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<div id="PgDn"></div>
+<div id="PgUp"></div>
+
+<script type="text/javascript">
+    var tokuisaki_sime_dts_modal_menu = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/modal_menu') ?>";
+    const getTokuisakiShimeHiduke = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/ajax_shimebi') ?>";
+    var tokuisaki_mrs_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/modal') ?>";
+    var tokuisaki_mrs_ajaxget = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_mrs/ajaxGet') ?>";
+    const shime_rireki = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('tokuisaki_sime_dts/modal'); ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/seikyuu_meisai.js'); ?>?var=20210129"></script>

@@ -1,0 +1,4 @@
+PHPでPDF帳票を出力する方法（TCPDF + FPDI）
+http://qiita.com/emegane/items/486975a79ebb267c2b8e
+
+

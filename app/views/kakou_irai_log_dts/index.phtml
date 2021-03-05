@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "加グ.一覧"; ?>
+<div class="page-header">
+    <h3>加工依頼変更ログ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"kakou_irai_log_dts","flds"=>[
+        ["cd","fieldCd","発注番号",14,14],["name","fieldName","変更後",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["hacchuu_dt_id","発注データID"],
+                    ["cd","発注番号"],
+                    ["table_ryaku","テーブル略号"],
+                    ["gyou_ix","行位置"],
+                    ["koumoku_cd","項目コード"],
+                    ["henkou_mae","変更前"],
+                    ["name","変更後"],
+                    ["cleated","変更日時"],
+                    ["sakusei_user_id","変更者"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $kakou_irai_log_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("kakou_irai_log_dts/edit/" . $kakou_irai_log_dt->id, $kakou_irai_log_dt->id)); ?></td>
+                <td><?php echo $kakou_irai_log_dt->hacchuu_dt_id ?></td>
+                <td><?php echo $kakou_irai_log_dt->cd ?></td>
+                <td><?php echo $kakou_irai_log_dt->table_ryaku ?></td>
+                <td><?php echo $kakou_irai_log_dt->gyou_ix ?></td>
+                <td><?php echo $kakou_irai_log_dt->koumoku_cd ?></td>
+                <td><?php echo $kakou_irai_log_dt->henkou_mae ?></td>
+                <td><?php echo $kakou_irai_log_dt->name ?></td>
+                <td><?php echo $kakou_irai_log_dt->created ?></td>
+                <td><?php echo $kakou_irai_log_dt->SakuseiUser->name ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"kakou_irai_log_dts"]) ?>

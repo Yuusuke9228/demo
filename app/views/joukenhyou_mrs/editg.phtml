@@ -1,0 +1,80 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "条件台帳.修正"; ?>
+<div class="page-header">
+    <h3>条件台帳 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "joukenhyou_mrs/saveg",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+<!-- まだ、数値フィールドはつかえないし、追加行もつかえない。 -->
+<div class="form-group">
+	<label for="fieldShouhinMrCd" class="col-sm-2 control-label">商品コード</label>
+	<div class="col-sm-10">
+		<?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldShouhinMrCd")) ?>
+	</div>
+	<label for="fieldShouhinMrName" class="col-sm-2 control-label">商品名</label>
+	<div class="col-sm-10">
+		<?php echo $this->tag->textField(array("shouhin_mr_name", "readonly" => "readonly", "class" => "form-control", "id" => "fieldShouhinMrName")) ?>
+	</div>
+</div>
+<div class="form-group">
+	<?php for ($i = 1; $i <= count($midasi_cds); $i++): ?>
+		<?php echo $this->tag->hiddenField(array("data[meisais][$i][id]", 'id'=>'fieldMeisais'.$i.'Id')) ?>
+		<?php echo $this->tag->hiddenField(array("data[meisais][$i][midasi_cd]", 'value'=>$midasi_cds[$i], 'id'=>'fieldMeisais'.$i.'MidasiCd')) ?>
+		<?php echo $this->tag->hiddenField(array("data[meisais][$i][updated]", 'id'=>'fieldMeisais'.$i.'Updated')) ?>
+		<label for=<?php echo "fieldMeisais".$i."Name" ?> class="col-sm-2 control-label"><?php echo $midasis[$midasi_cds[$i]]["name"] ?></label>
+		<div class="col-sm-10">
+			<?php echo $this->tag->textField(array("data[meisais][$i][name]", "size" => $midasis[$midasi_cds[$i]]["ketasuu"], "maxlength" => $midasis[$midasi_cds[$i]]["ketasuu"], /*"style" => "width: 996px;",*/ "class" => "form-control", "id" => "fieldMeisais".$i."Name")) ?>
+		</div>
+	<?php endfor ?>
+	<?php echo $this->tag->hiddenField("id") ?>
+</div>
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("joukenhyou_mrs/prevg/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("joukenhyou_mrs/nextg/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");', ($id?'enabled':'disabled')=>'true')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("joukenhyou_mrs/editg/".$id."/new", "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("joukenhyou_mrs/deleteg/".$id, "削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<script type="text/javascript">
+	var joukenhyou_mrs_editg = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('joukenhyou_mrs/editg/') ?>";
+	var shouhin_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/modal') ?>";
+	var shouhin_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('shouhin_mrs/ajaxGet') ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/joukenhyou_mrs.js'); ?>?var=20170214"></script>

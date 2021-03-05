@@ -1,0 +1,50 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "構成部品マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>構成部品マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"kousei_buhin_mrs","flds"=>[
+        ["shouhin_mr_cd","fieldShouhinMrCd","製品",14,14],["gen_shouhin_mr_cd","fieldGenshouhinMrCd","原料",14,14]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["shouhin_mr_cd","製品コード"],
+                    ["","製品名"],
+                    ["cd","行番号"],
+                    ["gen_shouhin_mr_cd","原料コード"],
+                    ["","原料名"],
+                    ["suuryou","数量"],
+                    ["tanni_mr_cd","単位"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $kousei_buhin_mr): ?>
+            <tr>
+                <td align="center"><?php echo $this->tag->linkTo(array("kousei_buhin_mrs/edit/" . $kousei_buhin_mr->id, $kousei_buhin_mr->shouhin_mr_cd)); ?></td>
+                <td><?php echo $kousei_buhin_mr->ShouhinMrs->name ?></td>
+                <td align="center"><?php echo $kousei_buhin_mr->cd ?></td>
+                <td align="center"><?php echo $kousei_buhin_mr->gen_shouhin_mr_cd ?></td>
+                <td><?php echo $kousei_buhin_mr->GenShouhinMrs->name ?></td>
+                <td align="center"><?php echo $kousei_buhin_mr->suuryou ?></td>
+                <td><?php echo $kousei_buhin_mr->TanniMrs->name ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"kousei_buhin_mrs"]) ?>

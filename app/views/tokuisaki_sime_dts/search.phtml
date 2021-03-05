@@ -1,0 +1,93 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "得意先締データ.検索"; ?>
+<div class="page-header">
+    <h3>得意先締データ 検索条件</h3>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "tokuisaki_sime_dts/index",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldId" class="col-sm-2 control-label">Id</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("id", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldId")) ?>
+    </div>
+
+<label for="fieldCd" class="col-sm-2 control-label">請求書番号</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldTokuisakiMrCd" class="col-sm-2 control-label">得意先ＣＤ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tokuisaki_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldTokuisakiMrCd")) ?>
+    </div>
+
+<label for="fieldSimeHiduke" class="col-sm-2 control-label">締日付</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("sime_hiduke", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldSimeHiduke")) ?>
+    </div>
+
+<label for="fieldNendo" class="col-sm-2 control-label">年度</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nendo", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldNendo")) ?>
+    </div>
+
+<label for="fieldKaishuuYoteibi" class="col-sm-2 control-label">回収予定日</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kaishuu_yoteibi", "type" => "date", "size" => 10, "maxlength" => 10, "style" => "width: 132px;", "class" => "form-control", "id" => "fieldKaishuuYoteibi")) ?>
+    </div>
+
+<label for="fieldZenkaiSeikyuugaku" class="col-sm-2 control-label">前回請求額</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("zenkai_seikyuugaku", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldZenkaiSeikyuugaku")) ?>
+    </div>
+
+<label for="fieldNyuukingaku" class="col-sm-2 control-label">入金額</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("nyuukingaku", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldNyuukingaku")) ?>
+    </div>
+
+<label for="fieldKonkaiUriagegaku" class="col-sm-2 control-label">今回売上額</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("konkai_uriagegaku", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKonkaiUriagegaku")) ?>
+    </div>
+
+<label for="fieldUtiShouhizeigaku" class="col-sm-2 control-label">内消費税額</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("uti_shouhizeigaku", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldUtiShouhizeigaku")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行F12", "id" => "F12", "class" => "btn btn-default")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

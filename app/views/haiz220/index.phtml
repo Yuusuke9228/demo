@@ -1,0 +1,642 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "試織.配列"; ?>
+<div class="page-header" style="margin-top:5px;padding-bottom:5px;">
+    <!-- h3>試織配列画面</h3 -->
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<style>
+table{
+    border-collapse:collapse;
+    width:640px;
+    table-layout:fixed;
+}
+td,th{
+    height:21px;
+    font-family:monospace;
+}
+.nowrap{
+    white-space:nowrap;
+    overflow:hidden;
+}
+.td-I{
+    border-left:1px solid #666666;
+}
+.td-L{
+    border-left:1px solid #666666;
+    border-bottom:1px solid #666666;
+}
+.td-U{
+    border-bottom:1px solid #666666;
+}
+input, textarea{
+    font-family:monospace;
+}
+span{
+    margin-left: 4px;
+}
+input.ALLF {
+    display:none;
+}
+input.TAIL {
+    display:inline;
+}
+</style>
+<div id='HAIZ220G' align=center>
+<table>
+<tbody>
+<tr>
+<td colspan=19 name='td_s0001' style='width:114pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=12 style='width:72pt'></td>
+<td colspan=13 name='td_f001' style='width:78pt' class='nowrap'>
+<b>
+<span>試織配列画面</span>
+</b>
+</td>
+<td colspan=20 style='width:120pt'></td>
+<td colspan=15 name='td_f012' style='width:90pt' class='nowrap'>
+<span id='dispYMDHM'>YY/MM/DD HH:MM</span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f002' style='width:54pt' class='nowrap td-L'>
+<span>試織番号</span>
+</td>
+<td colspan=7 name='td_sino' style='width:42pt' class='nowrap td-U'>
+<span class=' ALLF' id='dispSino'></span>
+</td>
+<td colspan=3 name='td_sied' style='width:18pt' class='nowrap td-L'>
+<span class=' ALLF' id='dispSied'></span>
+</td>
+<td colspan=11 name='td_s0002' style='width:66pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=41 style='width:246pt'></td>
+<td colspan=6 name='td_f00001' style='width:36pt' class='nowrap'>
+<span>ﾍﾟｰｼﾞ</span>
+</td>
+<td colspan=2 name='td_page' style='width:12pt' class='nowrap f-numb'>
+<span class=' ALLF' id='dispPage'></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f006' style='width:54pt' class='nowrap td-L'>
+<span>経糸配列</span>
+</td>
+<td colspan=5 name='td_f003' style='width:30pt' class='nowrap td-L'>
+<span>区分</span>
+</td>
+<td colspan=2 name='td_htkb' style='width:12pt' class='nowrap td-U f-numb'>
+<span class=' xBODY xALLF' id='dispHtkb'></span>
+<input type='text' id='fieldHtkb' name='g1_htkb' class='form-control f-numb BODY ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_htme' style='width:30pt' class='nowrap td-L'>
+<span class=' BODY ALLF' id='dispHtme'></span>
+</td>
+<td colspan=5 name='td_f015' style='width:30pt' class='nowrap td-L'>
+<span>中心</span>
+</td>
+<td colspan=4 name='td_htsi' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY xALLF' id='dispHtsi'></span>
+<input type='text' id='fieldHtsi' name='g1_htsi' class='form-control f-numb BODY ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=16 name='td_f016' style='width:96pt' class='nowrap td-L'>
+<span>区分0:柄,1:無地</span>
+</td>
+<td name='td_s0003' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=32 name='td_f005' style='width:192pt' class='nowrap td-U'>
+<span>A=| B=. C=S D=# E=$ F=F G=G H=H</span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f011' style='width:54pt' class='nowrap td-L'>
+<span>注意事項</span>
+</td>
+<td colspan=29 name='td_tchu_1' style='width:174pt' class='nowrap td-U'>
+<span class=' xBODY xALLF' id='dispTchu_1'></span>
+<input type='text' id='fieldTchu_1' name='g1_tchu_1' class='form-control ime-a BODY ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=29 name='td_tchu_2' style='width:174pt' class='nowrap td-L'>
+<span class=' xBODY xALLF' id='dispTchu_2'></span>
+<input type='text' id='fieldTchu_2' name='g1_tchu_2' class='form-control ime-a BODY ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s0004' style='width:6pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=7 name='td_f009' style='width:42pt' class='nowrap td-U'>
+<span>大きさ</span>
+</td>
+<td colspan=4 name='td_htho' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' BODY ALLF' id='dispHtho'></span>
+</td>
+<td name='td_s0005' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_1' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHtkg_1'></span>
+<input type='text' id='fieldHtkg_1' name='g1_htkg_1' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkig_1' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTkig_1'></span>
+</td>
+<td colspan=3 name='td_tjun_1' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTjun_1'></span>
+</td>
+<td colspan=4 name='td_thon_1' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispThon_1'></span>
+</td>
+<td name='td_s0006' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_2' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHtkg_2'></span>
+<input type='text' id='fieldHtkg_2' name='g1_htkg_2' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkur_1' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTkur_1'></span>
+</td>
+<td colspan=3 name='td_tjun_2' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTjun_2'></span>
+</td>
+<td colspan=4 name='td_thon_2' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispThon_2'></span>
+</td>
+<td name='td_s0007' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_3' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHtkg_3'></span>
+<input type='text' id='fieldHtkg_3' name='g1_htkg_3' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkig_2' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTkig_2'></span>
+</td>
+<td colspan=3 name='td_tjun_3' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTjun_3'></span>
+</td>
+<td colspan=4 name='td_thon_3' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispThon_3'></span>
+</td>
+<td name='td_s0008' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_4' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHtkg_4'></span>
+<input type='text' id='fieldHtkg_4' name='g1_htkg_4' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkur_2' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTkur_2'></span>
+</td>
+<td colspan=3 name='td_tjun_4' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTjun_4'></span>
+</td>
+<td colspan=4 name='td_thon_4' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispThon_4'></span>
+</td>
+<td name='td_s0009' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_5' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHtkg_5'></span>
+<input type='text' id='fieldHtkg_5' name='g1_htkg_5' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkig_3' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTkig_3'></span>
+</td>
+<td colspan=3 name='td_tjun_5' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTjun_5'></span>
+</td>
+<td colspan=4 name='td_thon_5' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispThon_5'></span>
+</td>
+<td name='td_s0010' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_6' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHtkg_6'></span>
+<input type='text' id='fieldHtkg_6' name='g1_htkg_6' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkur_3' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTkur_3'></span>
+</td>
+<td colspan=3 name='td_tjun_6' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTjun_6'></span>
+</td>
+<td colspan=4 name='td_thon_6' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispThon_6'></span>
+</td>
+<td name='td_s0011' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_7' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHtkg_7'></span>
+<input type='text' id='fieldHtkg_7' name='g1_htkg_7' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkig_4' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTkig_4'></span>
+</td>
+<td colspan=3 name='td_tjun_7' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispTjun_7'></span>
+</td>
+<td colspan=4 name='td_thon_7' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispThon_7'></span>
+</td>
+<td name='td_s0012' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_htkg_8' style='width:156pt' class='nowrap td-L'>
+<span class=' xBODY xALLF' id='dispHtkg_8'></span>
+<input type='text' id='fieldHtkg_8' name='g1_htkg_8' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_tkur_4' style='width:276pt' class='nowrap td-L'>
+<span class=' BODY ALLF' id='dispTkur_4'></span>
+</td>
+<td colspan=3 name='td_tjun_8' style='width:18pt' class='nowrap td-L'>
+<span class=' BODY ALLF' id='dispTjun_8'></span>
+</td>
+<td colspan=4 name='td_thon_8' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' BODY ALLF' id='dispThon_8'></span>
+</td>
+<td name='td_s0013' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f007' style='width:54pt' class='nowrap td-L'>
+<span>緯糸配列</span>
+</td>
+<td colspan=5 name='td_f008' style='width:30pt' class='nowrap td-L'>
+<span>区分</span>
+</td>
+<td colspan=2 name='td_hykb' style='width:12pt' class='nowrap td-U f-numb'>
+<span class=' xBODY xALLF' id='dispHykb'></span>
+<input type='text' id='fieldHykb' name='g1_hykb' class='form-control f-numb BODY ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_hyme' style='width:30pt' class='nowrap td-L'>
+<span class=' BODY ALLF' id='dispHyme'></span>
+</td>
+<td colspan=27 name='td_f017' style='width:162pt' class='nowrap td-L'>
+<span>区分0:柄,1:無地,2:経と共通</span>
+</td>
+<td colspan=2 name='td_s0014' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=28 name='td_f004' style='width:168pt' class='nowrap td-U'>
+<span>A=| B=. C=S D=# E=$ F=F G=G</span>
+</td>
+<td name='td_s0015' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f014' style='width:54pt' class='nowrap td-L'>
+<span>注意事項</span>
+</td>
+<td colspan=29 name='td_ychu_1' style='width:174pt' class='nowrap td-U'>
+<span class=' xBODY xALLF' id='dispYchu_1'></span>
+<input type='text' id='fieldYchu_1' name='g1_ychu_1' class='form-control ime-a BODY ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=29 name='td_ychu_2' style='width:174pt' class='nowrap td-L'>
+<span class=' xBODY xALLF' id='dispYchu_2'></span>
+<input type='text' id='fieldYchu_2' name='g1_ychu_2' class='form-control ime-a BODY ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s0016' style='width:6pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=7 name='td_f010' style='width:42pt' class='nowrap td-U'>
+<span>大きさ</span>
+</td>
+<td colspan=4 name='td_hyho' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' BODY ALLF' id='dispHyho'></span>
+</td>
+<td name='td_s0017' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_1' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHykg_1'></span>
+<input type='text' id='fieldHykg_1' name='g1_hykg_1' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykig_1' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYkig_1'></span>
+</td>
+<td colspan=3 name='td_yjun_1' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYjun_1'></span>
+</td>
+<td colspan=4 name='td_yhon_1' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispYhon_1'></span>
+</td>
+<td name='td_s0018' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_2' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHykg_2'></span>
+<input type='text' id='fieldHykg_2' name='g1_hykg_2' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykur_1' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYkur_1'></span>
+</td>
+<td colspan=3 name='td_yjun_2' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYjun_2'></span>
+</td>
+<td colspan=4 name='td_yhon_2' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispYhon_2'></span>
+</td>
+<td name='td_s0019' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_3' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHykg_3'></span>
+<input type='text' id='fieldHykg_3' name='g1_hykg_3' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykig_2' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYkig_2'></span>
+</td>
+<td colspan=3 name='td_yjun_3' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYjun_3'></span>
+</td>
+<td colspan=4 name='td_yhon_3' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispYhon_3'></span>
+</td>
+<td name='td_s0020' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_4' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHykg_4'></span>
+<input type='text' id='fieldHykg_4' name='g1_hykg_4' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykur_2' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYkur_2'></span>
+</td>
+<td colspan=3 name='td_yjun_4' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYjun_4'></span>
+</td>
+<td colspan=4 name='td_yhon_4' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispYhon_4'></span>
+</td>
+<td name='td_s0021' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_5' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHykg_5'></span>
+<input type='text' id='fieldHykg_5' name='g1_hykg_5' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykig_3' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYkig_3'></span>
+</td>
+<td colspan=3 name='td_yjun_5' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYjun_5'></span>
+</td>
+<td colspan=4 name='td_yhon_5' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispYhon_5'></span>
+</td>
+<td name='td_s0022' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_6' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHykg_6'></span>
+<input type='text' id='fieldHykg_6' name='g1_hykg_6' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykur_3' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYkur_3'></span>
+</td>
+<td colspan=3 name='td_yjun_6' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYjun_6'></span>
+</td>
+<td colspan=4 name='td_yhon_6' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispYhon_6'></span>
+</td>
+<td name='td_s0023' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_7' style='width:156pt' class='nowrap td-I'>
+<span class=' xBODY xALLF' id='dispHykg_7'></span>
+<input type='text' id='fieldHykg_7' name='g1_hykg_7' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykig_4' style='width:276pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYkig_4'></span>
+</td>
+<td colspan=3 name='td_yjun_7' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY ALLF' id='dispYjun_7'></span>
+</td>
+<td colspan=4 name='td_yhon_7' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY ALLF' id='dispYhon_7'></span>
+</td>
+<td name='td_s0024' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=26 name='td_hykg_8' style='width:156pt' class='nowrap td-L'>
+<span class=' xBODY xALLF' id='dispHykg_8'></span>
+<input type='text' id='fieldHykg_8' name='g1_hykg_8' class='form-control ime-i BODY ALLF' style='width:159pt' maxlength='25' />
+</td>
+<td colspan=46 name='td_ykur_4' style='width:276pt' class='nowrap td-L'>
+<span class=' BODY ALLF' id='dispYkur_4'></span>
+</td>
+<td colspan=3 name='td_yjun_8' style='width:18pt' class='nowrap td-L'>
+<span class=' BODY ALLF' id='dispYjun_8'></span>
+</td>
+<td colspan=4 name='td_yhon_8' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' BODY ALLF' id='dispYhon_8'></span>
+</td>
+<td name='td_s0025' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f00002' style='width:54pt' class='nowrap td-L'>
+<span>耳糸配列</span>
+</td>
+<td colspan=29 name='td_mchu_1' style='width:174pt' class='nowrap td-L'>
+<span class=' xBODY xALLF' id='dispMchu_1'></span>
+<input type='text' id='fieldMchu_1' name='g1_mchu_1' class='form-control ime-a BODY ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=29 name='td_mchu_2' style='width:174pt' class='nowrap td-L'>
+<span class=' xBODY xALLF' id='dispMchu_2'></span>
+<input type='text' id='fieldMchu_2' name='g1_mchu_2' class='form-control ime-a BODY ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s0026' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=5 style='width:30pt'></td>
+<td colspan=69 name='td_emsg' style='width:414pt' class='nowrap'>
+<span class=' TAIL ALLF' id='dispEmsg'></span>
+</td>
+<td colspan=3 style='width:18pt'></td>
+<td colspan=2 name='td_kaku' style='width:12pt' class='nowrap'>
+<span class=' xTAIL xALLF' id='dispKaku'></span>
+<input type='text' id='fieldKaku' name='g1_kaku' class='form-control ime-i TAIL ALLF' style='width:15pt' maxlength='1' />
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="CdOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div><div id="ESC"></div>
+
+<div class="navbar navbar-default navbar-fixed-bottom" style="background-color:#e8e0d0;">
+ <div class="container" style="width:800px;">
+  <span class="navbar-text">
+	<input type="button" value="" id="F0" class="btn btn-default btn-xs" />
+	<input type="button" value="－－F1" id="F1" onclick="alert('F1');" class="btn btn-default btn-xs" title='ブラウザのHELP起動:F1キー' />
+	<input type="button" value="－－F2" id="X2" onclick="alert('F2');" class="btn btn-default btn-xs" title='新規入力用画面にします:F2キー' />
+	<input type="button" value="前へF3" id="F3" onclick="BACK();" class="btn btn-default btn-xs" title='前番号の伝票を表示します:F3キー' />
+	<input type="button" value="次へF4" id="F4" onclick="NEXT();" class="btn btn-info btn-xs" title='次番号の伝票を表示します:F4キー' />　
+	<input type="button" value="糸使F5" id="F5" onclick="f5key(); "class="btn btn-default btn-xs fALLF fBODY fTAIL" title='糸構成画面が出ます:F5キー' />
+	<input type="button" value="配列F6" id="F6" onclick="shuusei();" class="btn btn-warning btn-xs fALLF fBODY fTAIL" title='修正入力可能になります:F6キー' />
+	<input type="button" value="組織F7" id="F7" onclick="hyouji();" class="btn btn-default btn-xs fALLF fBODY fTAIL" title='表示モードになります:F7キー' />
+	<input type="button" value="一覧F8" id="X8" onclick="alert('F8');" class="btn btn-default btn-xs fALLF fHEAD fBODY" title='参照可能の時、参照画面を開きます:F8キー' />　
+	<input type="button" value="取消F9" id="F9" onclick="CANCEL();" class="btn btn-default btn-xs" title='ブラウザの機能が起動:F9キー' />
+	<input type="button" value="－－F10" id="F10" onclick="alert('F10');" class="btn btn-default btn-xs fALLF fHEAD" title='ブラウザの機能が起動:F10キー' />
+	<input type="button" value="－－F11" id="F11" onclick="alert('F11');" class="btn btn-default btn-xs" disabled="true" title='ブラウザの機能が起動:F11キー' />
+	<input type="submit" value="実行F12" id="F12" onclick="ENTER();" class="btn btn-success" title='新規登録や修正を更新します:F12キー' />
+  </span>
+ </div>
+</div>
+
+<script type="text/javascript">
+	var haiz220_ajaxGrpDo = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz220/ajaxGrpDo') ?>";
+	var user_name_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('users/name_ajaxGet') ?>";
+	var audio = new Audio("<?php echo $this->url->get('js/views/beep.mp3'); ?>");
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/mrp/haiz220.js'); ?>?var=000001"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/updnkey.js'); ?>?var=000001"></script>
+
+
+
+<script type='text/javascript'>
+  var formGRP={};
+  formGRP['ALLF']=['Sino','Sied','Page','Htkb','Htme','Htsi','Tchu_1','Tchu_2','Htho','Htkg_1','Tkig_1','Tjun_1','Thon_1','Htkg_2','Tkur_1','Tjun_2','Thon_2','Htkg_3','Tkig_2','Tjun_3','Thon_3','Htkg_4','Tkur_2','Tjun_4','Thon_4','Htkg_5','Tkig_3','Tjun_5','Thon_5','Htkg_6','Tkur_3','Tjun_6','Thon_6','Htkg_7','Tkig_4','Tjun_7','Thon_7','Htkg_8','Tkur_4','Tjun_8','Thon_8','Hykb','Hyme','Ychu_1','Ychu_2','Hyho','Hykg_1','Ykig_1','Yjun_1','Yhon_1','Hykg_2','Ykur_1','Yjun_2','Yhon_2','Hykg_3','Ykig_2','Yjun_3','Yhon_3','Hykg_4','Ykur_2','Yjun_4','Yhon_4','Hykg_5','Ykig_3','Yjun_5','Yhon_5','Hykg_6','Ykur_3','Yjun_6','Yhon_6','Hykg_7','Ykig_4','Yjun_7','Yhon_7','Hykg_8','Ykur_4','Yjun_8','Yhon_8','Mchu_1','Mchu_2','Emsg','Kaku',];
+  formGRP['BODY']=['Htkb','Htme','Htsi','Tchu_1','Tchu_2','Htho','Htkg_1','Tkig_1','Tjun_1','Thon_1','Htkg_2','Tkur_1','Tjun_2','Thon_2','Htkg_3','Tkig_2','Tjun_3','Thon_3','Htkg_4','Tkur_2','Tjun_4','Thon_4','Htkg_5','Tkig_3','Tjun_5','Thon_5','Htkg_6','Tkur_3','Tjun_6','Thon_6','Htkg_7','Tkig_4','Tjun_7','Thon_7','Htkg_8','Tkur_4','Tjun_8','Thon_8','Hykb','Hyme','Ychu_1','Ychu_2','Hyho','Hykg_1','Ykig_1','Yjun_1','Yhon_1','Hykg_2','Ykur_1','Yjun_2','Yhon_2','Hykg_3','Ykig_2','Yjun_3','Yhon_3','Hykg_4','Ykur_2','Yjun_4','Yhon_4','Hykg_5','Ykig_3','Yjun_5','Yhon_5','Hykg_6','Ykur_3','Yjun_6','Yhon_6','Hykg_7','Ykig_4','Yjun_7','Yhon_7','Hykg_8','Ykur_4','Yjun_8','Yhon_8','Mchu_1','Mchu_2',];
+  formGRP['TAIL']=['Emsg','Kaku',];
+  var koumokus={
+    sino:['Sino',0,0,6,0,0],
+    sied:['Sied',0,0,2,0,0],
+    page:['Page',0,1,1,0,0],
+    htkb:['Htkb',1,1,1,0,0],
+    htme:['Htme',0,0,4,0,0],
+    htsi:['Htsi',1,1,3,0,0],
+    tchu_1:['Tchu_1',1,0,28,0,0],
+    tchu_2:['Tchu_2',1,0,28,0,0],
+    htho:['Htho',0,1,3,0,0],
+    htkg_1:['Htkg_1',1,0,25,0,0],
+    tkig_1:['Tkig_1',0,0,45,0,0],
+    tjun_1:['Tjun_1',0,0,2,0,0],
+    thon_1:['Thon_1',0,1,3,0,0],
+    htkg_2:['Htkg_2',1,0,25,0,0],
+    tkur_1:['Tkur_1',0,0,45,0,0],
+    tjun_2:['Tjun_2',0,0,2,0,0],
+    thon_2:['Thon_2',0,1,3,0,0],
+    htkg_3:['Htkg_3',1,0,25,0,0],
+    tkig_2:['Tkig_2',0,0,45,0,0],
+    tjun_3:['Tjun_3',0,0,2,0,0],
+    thon_3:['Thon_3',0,1,3,0,0],
+    htkg_4:['Htkg_4',1,0,25,0,0],
+    tkur_2:['Tkur_2',0,0,45,0,0],
+    tjun_4:['Tjun_4',0,0,2,0,0],
+    thon_4:['Thon_4',0,1,3,0,0],
+    htkg_5:['Htkg_5',1,0,25,0,0],
+    tkig_3:['Tkig_3',0,0,45,0,0],
+    tjun_5:['Tjun_5',0,0,2,0,0],
+    thon_5:['Thon_5',0,1,3,0,0],
+    htkg_6:['Htkg_6',1,0,25,0,0],
+    tkur_3:['Tkur_3',0,0,45,0,0],
+    tjun_6:['Tjun_6',0,0,2,0,0],
+    thon_6:['Thon_6',0,1,3,0,0],
+    htkg_7:['Htkg_7',1,0,25,0,0],
+    tkig_4:['Tkig_4',0,0,45,0,0],
+    tjun_7:['Tjun_7',0,0,2,0,0],
+    thon_7:['Thon_7',0,1,3,0,0],
+    htkg_8:['Htkg_8',1,0,25,0,0],
+    tkur_4:['Tkur_4',0,0,45,0,0],
+    tjun_8:['Tjun_8',0,0,2,0,0],
+    thon_8:['Thon_8',0,1,3,0,0],
+    hykb:['Hykb',1,1,1,0,0],
+    hyme:['Hyme',0,0,4,0,0],
+    ychu_1:['Ychu_1',1,0,28,0,0],
+    ychu_2:['Ychu_2',1,0,28,0,0],
+    hyho:['Hyho',0,1,3,0,0],
+    hykg_1:['Hykg_1',1,0,25,0,0],
+    ykig_1:['Ykig_1',0,0,45,0,0],
+    yjun_1:['Yjun_1',0,0,2,0,0],
+    yhon_1:['Yhon_1',0,1,3,0,0],
+    hykg_2:['Hykg_2',1,0,25,0,0],
+    ykur_1:['Ykur_1',0,0,45,0,0],
+    yjun_2:['Yjun_2',0,0,2,0,0],
+    yhon_2:['Yhon_2',0,1,3,0,0],
+    hykg_3:['Hykg_3',1,0,25,0,0],
+    ykig_2:['Ykig_2',0,0,45,0,0],
+    yjun_3:['Yjun_3',0,0,2,0,0],
+    yhon_3:['Yhon_3',0,1,3,0,0],
+    hykg_4:['Hykg_4',1,0,25,0,0],
+    ykur_2:['Ykur_2',0,0,45,0,0],
+    yjun_4:['Yjun_4',0,0,2,0,0],
+    yhon_4:['Yhon_4',0,1,3,0,0],
+    hykg_5:['Hykg_5',1,0,25,0,0],
+    ykig_3:['Ykig_3',0,0,45,0,0],
+    yjun_5:['Yjun_5',0,0,2,0,0],
+    yhon_5:['Yhon_5',0,1,3,0,0],
+    hykg_6:['Hykg_6',1,0,25,0,0],
+    ykur_3:['Ykur_3',0,0,45,0,0],
+    yjun_6:['Yjun_6',0,0,2,0,0],
+    yhon_6:['Yhon_6',0,1,3,0,0],
+    hykg_7:['Hykg_7',1,0,25,0,0],
+    ykig_4:['Ykig_4',0,0,45,0,0],
+    yjun_7:['Yjun_7',0,0,2,0,0],
+    yhon_7:['Yhon_7',0,1,3,0,0],
+    hykg_8:['Hykg_8',1,0,25,0,0],
+    ykur_4:['Ykur_4',0,0,45,0,0],
+    yjun_8:['Yjun_8',0,0,2,0,0],
+    yhon_8:['Yhon_8',0,1,3,0,0],
+    mchu_1:['Mchu_1',1,0,28,0,0],
+    mchu_2:['Mchu_2',1,0,28,0,0],
+    emsg:['Emsg',0,0,68,0,0],
+    kaku:['Kaku',1,0,1,0,0],
+  };
+</script>

@@ -1,0 +1,162 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = 'ロード.修正'; ?>
+<div class="page-header">
+    <h3>ロードマスタ 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "load_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldTableMrCd" class="col-sm-2 control-label">テーブルコード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("table_mr_cd", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldTableMrCd")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldFileName" class="col-sm-2 control-label">ローカルファイル名</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("file_name", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldFileName")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldSkip" class="col-sm-2 control-label">開始前行数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("skip", "size" => 4, "maxlength" => 4, "style" => "width: 51px;", "class" => "form-control", "id" => "fieldSkip")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUwagaki" class="col-sm-2 control-label">上書き許可</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->selectStatic(array("uwagaki", array("0" => "0:上書きしない", "1" => "1:上書きする"), "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUwagaki")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+</div>
+
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default", "onclick" => 'return confirm("よろしいですか？")')); ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(array("load_koumoku_mrs/autogen/".$id, "項目自動登録*6", "id" => "F6")); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<hr />
+<?php
+    echo $this->tag->form(
+        array(
+            "load_mrs/upload/".$id,
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "enctype" => "multipart/form-data"
+        )
+    );
+?>
+  ファイル：<br />
+  <input type="file" name="upfile" size="30" />
+  <input type="submit" value="アップロード" />
+<?php echo $this->tag->endForm(); ?>
+<hr />
+<?php
+    echo $this->tag->form(
+        array(
+            "load_mrs/chousei/".$id,
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "enctype" => "multipart/form-data"
+        )
+    );
+?>
+  <input type="submit" value="アップロード項目調整" />
+<?php echo $this->tag->endForm(); ?>
+<hr />
+<?php
+    echo $this->tag->form(
+        array(
+            "load_mrs/import/".$id,
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "enctype" => "multipart/form-data"
+        )
+    );
+?>
+  <input type="submit" value="インポート実行" />
+<?php echo $this->tag->endForm(); ?>
+<hr />
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th>コード</th>
+            <th>名称</th>
+            <th>並び順</th>
+            <th>項目コード</th>
+            <th>上書きキー項目印</th>
+            <th>不使用区分</th>
+            <th>データ型</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($load_koumoku_mrs as $load_koumoku_mr): ?>
+            <tr>
+            <td><?php echo $load_koumoku_mr->cd ?></td>
+            <td><?php echo $load_koumoku_mr->name ?></td>
+            <td><?php echo $load_koumoku_mr->jun ?></td>
+            <td><?php echo $load_koumoku_mr->koumoku_mr_cd ?></td>
+            <td><?php echo $load_koumoku_mr->keys ?></td>
+            <td><?php echo $load_koumoku_mr->fusiyou_kbn ?></td>
+            <td><?php echo $load_koumoku_mr->KoumokuMrs->data_kata ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

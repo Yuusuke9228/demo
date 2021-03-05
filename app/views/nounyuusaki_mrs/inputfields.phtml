@@ -1,0 +1,102 @@
+<div class="panel panel-default">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">基本情報</div>
+ <div class="panel-body">
+    <label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+    <label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+    <label for="fieldKana" class="col-sm-2 control-label">フリガナ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("kana", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldKana")) ?>
+    </div>
+    <label for="fieldRyakushou" class="col-sm-2 control-label">略称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("ryakushou", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldRyakushou")) ?>
+    </div>
+ </div>
+</div>
+<div class="panel panel-success">
+ <div class="panel-heading" style="height: 20px;padding:0px 15px;">
+  <a data-toggle="collapse" href="#atesaki">宛先情報…</a>
+ </div>
+ <div class="panel-body collapse in" id="atesaki">
+    <label for="fieldYuubinBangou" class="col-sm-2 control-label">郵便番号</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("yuubin_bangou", "size" => 8, "maxlength" => 8, "style" => "width: 120px;", "class" => "form-control", "id" => "fieldYuubinBangou")) ?>
+    </div>
+    <label for="fieldJuusho1" class="col-sm-2 control-label">住所1</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("juusho1", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldJuusho1")) ?>
+    </div>
+    <label for="fieldJuusho2" class="col-sm-2 control-label">住所2</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("juusho2", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldJuusho2")) ?>
+    </div>
+    <label for="fieldBushomei" class="col-sm-2 control-label">部署名</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("bushomei", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldBushomei")) ?>
+    </div>
+    <label for="fieldYakushoku" class="col-sm-2 control-label">役職名</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("yakushoku", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldYakushoku")) ?>
+    </div>
+    <label for="fieldGotantousha" class="col-sm-2 control-label">ご担当者</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("gotantousha", "size" => 20, "maxlength" => 20, "style" => "width: 276px;", "class" => "form-control", "id" => "fieldGotantousha")) ?>
+    </div>
+    <label for="fieldKeishou" class="col-sm-2 control-label">敬称</label>
+    <div class="col-sm-4">
+        <?php echo $this->tag->textField(array("keishou", "size" => 4, "maxlength" => 4, "style" => "width: 84px;", "class" => "form-control", "id" => "fieldKeishou", "list" => "Keishous")) ?>
+        <datalist id="Keishous"><option value="様"><option value="殿"><option value="御中"></datalist>
+    </div>
+    <label for="fieldTel" class="col-sm-2 control-label">電話</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tel", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldTel")) ?>
+    </div>
+    <label for="fieldFax" class="col-sm-2 control-label">Fax</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("fax", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldFax")) ?>
+    </div>
+    <label for="fieldTokuisakiMrCd" class="col-sm-2 control-label">得意先</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tokuisaki_mr_cd", "size" => 14, "maxlength" => 14, "style" => "width: 204px;", "class" => "form-control", "id" => "fieldTokuisakiMrCd")) ?>
+    </div>
+ </div>
+</div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<script src="<?php echo $this->url->get('js/jquery/jquery.jpostal.js') ?>"></script>
+<script>
+    //Add By Nishiyama 2019-10-23
+    $(function () {
+        $('#fieldYuubinBangou').jpostal({
+            postcode : [
+                '#fieldYuubinBangou'
+            ],
+            address : {
+                '#fieldJuusho1' : '%3%4%5',
+            }
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+	var nounyuusaki_mrs_edit = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('nounyuusaki_mrs/edit/') ?>";
+	var nounyuusaki_mrs_modal = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('nounyuusaki_mrs/modal') ?>";
+	var nounyuusaki_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('nounyuusaki_mrs/ajaxGet') ?>";
+	var nounyuusakimrs_ajaxKana = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('nounyuusaki_mrs/ajaxGetHurigana') ?>";
+</script>

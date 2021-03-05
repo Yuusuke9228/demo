@@ -1,0 +1,94 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "在庫変換明細データ.一覧"; ?>
+<div class="page-header">
+    <h3>在庫変換明細データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"zaiko_henkan_meisai_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","行番"],
+                    ["bikou","備考"],
+                    ["zaiko_henkan_dt_id","在庫変換データID"],
+                    ["","在庫変換伝票番号"],
+                    ["henkansaki_flg","変換先フラグ"],
+                    ["","在庫担当者"],
+                    ["shouhin_mr_cd","商品コード"],
+                    ["irisuu","入数"],
+                    ["keisu","ケース"],
+                    ["tekiyou","商品名/摘要"],
+                    ["lot","ロット"],
+                    ["kobetucd","個別コード"],
+                    ["hinsitu_kbn_cd","品質コード"],
+                    ["","倉庫コード"],
+                    ["kikaku","規格型番"],
+                    ["iro","色"],
+                    ["size","サイズ"],
+                    ["suuryou1","数"],
+                    ["tanni_mr1_cd","単位"],
+                    ["suuryou2","量"],
+                    ["tanni_mr2_cd","単位"],
+                    ["tanka","単価"],
+                    ["kingaku","金額"],
+                    ["updated","更新日時"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $zaiko_henkan_meisai_dt): ?>
+            <tr>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->id ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->cd ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->bikou ?></td>
+                <td align="center"><?php echo $this->tag->linkTo(array("zaiko_henkan_dts/edit/" . $zaiko_henkan_meisai_dt->zaiko_henkan_dt_id, $zaiko_henkan_meisai_dt->zaiko_henkan_dt_id)); ?></td>
+                <td align="center"><?php echo $this->tag->linkTo(array("zaiko_henkan_dts/edit/" . $zaiko_henkan_meisai_dt->zaiko_henkan_dt_id, $zaiko_henkan_meisai_dt->ZaikoHenkanDts->cd)); ?></td>
+                <td align="center"><?php echo ['もと','先','共通'][$zaiko_henkan_meisai_dt->henkansaki_flg] ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->ZaikoHenkanDts->TantouMrs->name ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->shouhin_mr_cd ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->irisuu ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->keisu ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->tekiyou ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->lot ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->kobetucd ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->HinsituKbns->name ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->ZaikoHenkanDts->souko_mr_cd ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->kikaku ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->iro ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->size ?></td>
+                <td align="right"><?php echo $zaiko_henkan_meisai_dt->suuryou1 ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->TanniMr1s->name ?></td>
+                <td align="right"><?php echo $zaiko_henkan_meisai_dt->suuryou2 ?></td>
+                <td align="center"><?php echo $zaiko_henkan_meisai_dt->TanniMr2s->name ?></td>
+                <td align="right"><?php echo $zaiko_henkan_meisai_dt->tanka ?></td>
+                <td align="right"><?php echo $zaiko_henkan_meisai_dt->kingaku ?></td>
+                <td align="right"><?php echo $zaiko_henkan_meisai_dt->updated ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaiko_henkan_meisai_dts/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaiko_henkan_meisai_dts/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("zaiko_henkan_meisai_dts/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaiko_henkan_meisai_dts/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("zaiko_henkan_meisai_dts/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

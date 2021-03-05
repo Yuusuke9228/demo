@@ -1,0 +1,81 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "単価種類区分.修正"; ?>
+<div class="page-header">
+    <h3>単価種類区分 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "tanka_shurui_kbns/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "size" => 2, "maxlength" => 2, "style" => "width: 60px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldKoumokumei" class="col-sm-2 control-label">項目名</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("koumokumei", "size" => 30, "maxlength" => 30, "style" => "width: 396px;", "class" => "form-control", "id" => "fieldKoumokumei")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUriageFlg" class="col-sm-2 control-label">売上フラグ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("uriage_flg", "size" => 1, "maxlength" => 1, "style" => "width: 40px;", "class" => "form-control", "id" => "fieldUriageFlg")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldShiireFlg" class="col-sm-2 control-label">仕入フラグ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shiire_flg", "size" => 1, "maxlength" => 1, "style" => "width: 40px;", "class" => "form-control", "id" => "fieldShiireFlg")) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+</div>
+
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("tanka_shurui_kbns/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+    </div>
+    <div class="col-sm-8">
+        <?php echo $this->tag->submitButton(array("実行*12", "id" => "F12", "class" => "btn btn-default", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("tanka_shurui_kbns/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

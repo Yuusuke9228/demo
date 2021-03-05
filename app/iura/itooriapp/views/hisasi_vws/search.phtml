@@ -1,0 +1,127 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["hisasi_vws/index", "Go Back"]); ?></li>
+            <li class="next"><?php echo $this->tag->linkTo(["hisasi_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>プロパー糸名</th>
+                <th>整経番号</th>
+            <th>分解番号</th>
+            <th>指図順</th>
+            <th>指図番号</th>
+            <th>備考</th>
+            <th>ワインダ区分</th>
+            <th>ボビン色</th>
+            <th>完了区分</th>
+            <th>確定指図区分</th>
+            <th>糸機種</th>
+            <th>工場</th>
+            <th>糸種</th>
+            <th>コード</th>
+            <th>生産開始</th>
+            <th>生産完了</th>
+            <th>直撚り区分</th>
+            <th>色付け</th>
+            <th>真空セット</th>
+                <th>指図番号2</th>
+            <th>指図本数</th>
+            <th>合格本数</th>
+            <th>小玉本数</th>
+            <th>納品本数</th>
+            <th>ワインダ行</th>
+            <th>小玉量</th>
+            <th>指図量</th>
+            <th>生産量</th>
+            <th>納品量</th>
+            <th>先造り指図分</th>
+            <th>フリー払出量</th>
+            <th>在庫調整量</th>
+            <th>空白</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $hisasi_vw): ?>
+            <tr>
+                <td><?php echo $hisasi_vw->PropHikiateVws->itomei ?></td>
+            <td><?php echo $hisasi_vw->seikei_no ?></td>
+            <td><?php echo $hisasi_vw->bunkai_no ?></td>
+            <td><?php echo $hisasi_vw->sasizu_jun ?></td>
+            <td><?php echo $hisasi_vw->sasizu_no ?></td>
+            <td><?php echo $hisasi_vw->bikou ?></td>
+            <td><?php echo $hisasi_vw->winder_kbn ?></td>
+            <td><?php echo $hisasi_vw->bobin_iro ?></td>
+            <td><?php echo $hisasi_vw->kanryou_kbn ?></td>
+            <td><?php echo $hisasi_vw->kakutei_kbn ?></td>
+            <td><?php echo $hisasi_vw->kishu ?></td>
+            <td><?php echo $hisasi_vw->koujou ?></td>
+            <td><?php echo $hisasi_vw->itoshu ?></td>
+            <td><?php echo $hisasi_vw->ito_code ?></td>
+            <td><?php echo $hisasi_vw->seisan_kaishi ?></td>
+            <td><?php echo $hisasi_vw->seisan_kanryou ?></td>
+            <td><?php echo $hisasi_vw->tyokuyori_kbn ?></td>
+            <td><?php echo $hisasi_vw->irotuke ?></td>
+            <td><?php echo $hisasi_vw->shinkuu_set ?></td>
+            <td><?php echo $hisasi_vw->sasizu_no2 ?></td>
+            <td><?php echo $hisasi_vw->sasizu_honsuu ?></td>
+            <td><?php echo $hisasi_vw->goukaku_honsuu ?></td>
+            <td><?php echo $hisasi_vw->kodama_honsuu ?></td>
+            <td><?php echo $hisasi_vw->nouhin_honsuu ?></td>
+            <td><?php echo $hisasi_vw->winder_yuki ?></td>
+            <td><?php echo $hisasi_vw->kodama_ryou ?></td>
+            <td><?php echo $hisasi_vw->sasizu_ryou ?></td>
+            <td><?php echo $hisasi_vw->seisan_ryou ?></td>
+            <td><?php echo $hisasi_vw->nouhin_ryou ?></td>
+            <td><?php echo $hisasi_vw->sakizukuri ?></td>
+            <td><?php echo $hisasi_vw->free_haraidasi_ryou ?></td>
+            <td><?php echo $hisasi_vw->zaiko_tyousei_ryou ?></td>
+            <td><?php echo $hisasi_vw->kuuhaku ?></td>
+
+                <td><?php echo $this->tag->linkTo(["hisasi_vws/edit/" . $hisasi_vw->seikei_no, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["hisasi_vws/delete/" . $hisasi_vw->seikei_no, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("hisasi_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("hisasi_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("hisasi_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("hisasi_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

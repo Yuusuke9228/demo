@@ -1,0 +1,38 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "$nplural$.一覧"; ?>
+<div class="page-header">
+    <h3>$nplural$ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/indexkanni",["table_id"=>"$plural$","flds"=>[
+		["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+$headerColumns$
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $singularVar$): ?>
+            <tr>
+$rowColumns$
+                <td><?php echo $this->tag->linkTo(array("$plural$/delete/" . $singularVar$->$pk$, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"$plural$"]) ?>

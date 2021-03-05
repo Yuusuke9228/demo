@@ -1,0 +1,33 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '商品.要約'; ?>
+<div class="page-header">
+    <h3>商品台帳 要約表</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row center-block" style="width:150px;">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th style="text-align:center;">キー1</th>
+                <th style="text-align:center;">キー2最大値</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($shouhin_grps as $shouhin_grp): ?>
+            <tr>
+	            <td align="center"><?php echo $shouhin_grp->key1 ?></td>
+	            <td align="center"><?php echo $shouhin_grp->key2 ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

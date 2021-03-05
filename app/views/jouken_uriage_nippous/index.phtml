@@ -1,0 +1,84 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "条件売上日報.一覧"; ?>
+<div class="page-header">
+    <h3>条件売上日報 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"jouken_uriage_nippous","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","表示順"],
+                    ["name","名称"],
+                    ["torihiki_kbn_betu_flg","取引区分別"],
+                    ["junjo_kbn_cd","順序区分コード"],
+                    ["koujun_flg","降順フラグ"],
+                    ["hanni_from","範囲自"],
+                    ["hanni_to","範囲至"],
+                    ["kikan_sitei_kbn_cd","期間指定コード"],
+                    ["kikan_from","期間自"],
+                    ["kikan_to","期間至"],
+                    ["simekiri_kbn","締切区分"],
+                    ["meisaigyou_flg","明細行表示フラグ"],
+                    ["goukeigyou_flg","合計行表示フラグ"],
+                    ["jinyuuryoku_flg","自入力分フラグ"],
+                    ["torihikiari_flg","期間内取引有フラグ"],
+                    ["torihikinasi_flg","期間内取引無フラグ"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $jouken_uriage_nippou): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("jouken_uriage_nippous/edit/" . $jouken_uriage_nippou->id, $jouken_uriage_nippou->id)); ?></td>
+                <td><?php echo $jouken_uriage_nippou->cd ?></td>
+                <td><?php echo $jouken_uriage_nippou->name ?></td>
+                <td><?php echo $jouken_uriage_nippou->torihiki_kbn_betu_flg ?></td>
+                <td><?php echo $jouken_uriage_nippou->junjo_kbn_cd ?></td>
+                <td><?php echo $jouken_uriage_nippou->koujun_flg ?></td>
+                <td><?php echo $jouken_uriage_nippou->hanni_from ?></td>
+                <td><?php echo $jouken_uriage_nippou->hanni_to ?></td>
+                <td><?php echo $jouken_uriage_nippou->kikan_sitei_kbn_cd ?></td>
+                <td><?php echo $jouken_uriage_nippou->kikan_from ?></td>
+                <td><?php echo $jouken_uriage_nippou->kikan_to ?></td>
+                <td><?php echo $jouken_uriage_nippou->simekiri_kbn ?></td>
+                <td><?php echo $jouken_uriage_nippou->meisaigyou_flg ?></td>
+                <td><?php echo $jouken_uriage_nippou->goukeigyou_flg ?></td>
+                <td><?php echo $jouken_uriage_nippou->jinyuuryoku_flg ?></td>
+                <td><?php echo $jouken_uriage_nippou->torihikiari_flg ?></td>
+                <td><?php echo $jouken_uriage_nippou->torihikinasi_flg ?></td>
+                <td><?php echo $jouken_uriage_nippou->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("jouken_uriage_nippous/delete/" . $jouken_uriage_nippou->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_nippous/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_nippous/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("jouken_uriage_nippous/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_nippous/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("jouken_uriage_nippous/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

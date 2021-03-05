@@ -1,0 +1,76 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "項目マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>項目マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"koumoku_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","名称"],
+                    ["table_mr_cd","テーブルコード"],
+                    ["jun","並び順"],
+                    ["data_kata","データ型"],
+                    ["nagasa","長さ"],
+                    ["shougoujunjo","照合順序"],
+                    ["zokusei","属性"],
+                    ["nullka","ヌル可"],
+                    ["default_ti","デフォルト値"],
+                    ["sonota","その他"],
+                    ["indekkusu","インデックス"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $koumoku_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("koumoku_mrs/edit/" . $koumoku_mr->id, $koumoku_mr->id)); ?></td>
+                <td><?php echo $koumoku_mr->cd ?></td>
+                <td><?php echo $koumoku_mr->name ?></td>
+                <td><?php echo $koumoku_mr->table_mr_cd ?></td>
+                <td><?php echo $koumoku_mr->jun ?></td>
+                <td><?php echo $koumoku_mr->data_kata ?></td>
+                <td><?php echo $koumoku_mr->nagasa ?></td>
+                <td><?php echo $koumoku_mr->shougoujunjo ?></td>
+                <td><?php echo $koumoku_mr->zokusei ?></td>
+                <td><?php echo $koumoku_mr->nullka ?></td>
+                <td><?php echo $koumoku_mr->default_ti ?></td>
+                <td><?php echo $koumoku_mr->sonota ?></td>
+                <td><?php echo $koumoku_mr->indekkusu ?></td>
+                <td><?php echo $koumoku_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("koumoku_mrs/delete/" . $koumoku_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("koumoku_mrs/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("koumoku_mrs/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("koumoku_mrs/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("koumoku_mrs/index?page=" . $page->next, " 次頁*F4", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("koumoku_mrs/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

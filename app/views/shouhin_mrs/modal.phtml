@@ -1,0 +1,102 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+//検索にメモ追加
+?>
+
+<?php $title = "商品参照"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/indexkanni",["index_or"=>"modal","table_id"=>"shouhin_mrs","flds"=>[
+		["cd","fieldCd","ｺｰﾄﾞ",14,14],["name","fieldName","名称",40,40], ["memo", "fieldMemo", "ﾒﾓ", 30, 40],["zaiko","fieldZaiko","在庫",10,10]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead nowrap>
+        <tr style="background-color: lavender;">
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["shouhin_cd","コード"],
+					["","選択"],
+					["shouhin_name","名称"],
+					["sum_zaiko","在庫数量"],
+					["tanni_name","単位"],
+					["memo","メモ"],
+//					["updated","更新日"]
+				]]) ?>
+                <th style="text-align:center;">修正</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $i = 1000; ?>
+        <?php foreach ($page->items as $row): ?>
+            <tr>
+	            <td nowrap style="text-align: center;"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $row->shouhin_cd; ?></div></td>
+                <!--  $row->cdではなく$row->shouhin_mr_cd -->
+                <td nowrap style="text-align: center;"><?php echo "<input type='checkbox' class='returnto' id='fieldI".$i."' value='". $row->shouhin_cd ."'>" ?></td>
+                <td nowrap><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $row->shouhin_name ?></div></td>
+	            <td nowrap style="text-align: right;"><?php echo number_format($row->sum_zaiko, 2) ?></td>
+	            <td nowrap style="text-align: center;"><?php echo $row->tanni_name ?></td>
+	            <td nowrap style="text-align: center;"><?php echo $row->shouhin_memo ?></td>
+<!--	            <td nowrap style="text-align: center;">--><?php //echo $row->shouhin_updated ?><!--</td>-->
+                <td nowrap style="text-align: center;"><?php echo $this->tag->linkTo(array("shouhin_mrs/edit/" . $row->id, "別タブ", "target"=>"_blank")); ?></td>
+                <?php $i += 1; ?>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+	<div class="col-sm-2">
+	    <br><button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+	</div>
+	<div class="col-sm-8">
+		<?php $this->partial("common/indextail",["index_or"=>"modal","table_id"=>"shouhin_mrs"]) ?>
+    </div>
+</div><!-- end class="row" -->
+
+<div id="PgDn"></div><div id="PgUp"></div>
+
+<script async type="text/javascript">
+	$(function(){
+	  $('table.head_fix').floatThead({
+	  	top: 0
+	  });
+	});
+    $('.returnto').on('click change', function () {
+        window.parent.fromModal($("td",$(this).closest('tr')).eq(0).text());
+    });
+
+	$('#PgUp').click(function() { //上矢キー(↑)を押したら
+		if ($("#"+lastfocusin).attr('type').toLowerCase() === 'checkbox') {
+			ix = -1 + $("input:checkbox").index($("#"+lastfocusin));
+			if (ix >= 0) {
+				$("input:checkbox").eq(ix).focus();
+			} else {
+				$("input").first().focus();
+			}
+		} else {
+			$("input:checkbox").last().focus();
+		}
+	});
+
+	$('#PgDn').click(function() { //下矢キー(↓)を押したら
+		if ($("#"+lastfocusin).attr('type').toLowerCase() === 'checkbox') {
+			ix = 1 + $("input:checkbox").index($("#"+lastfocusin));
+			if (ix < $("input:checkbox").length) {
+				$("input:checkbox").eq(ix).focus();
+			} else {
+				$("input").first().focus();
+			}
+		} else {
+			$("input:checkbox").first().focus();
+		}
+	});
+
+	$("input:checkbox").focusin(function() {
+		$(this).parent().css('background-color', '#f88');
+	});
+
+	$("input:checkbox").focusout(function() {
+		$(this).parent().css('background-color', '');
+	});
+</script>

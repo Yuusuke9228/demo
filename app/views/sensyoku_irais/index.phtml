@@ -1,0 +1,396 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ * @var object $data
+ */
+?>
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '染色依頼'; ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->url->get('css/jquery/handsontable.full.min.css') ?>">
+<script src="<?php echo $this->url->get('js/jquery/handsontable.full.min.js') ?>"></script>
+<style>
+    .currentRow {
+        background-color: #fcf8e3 !important;
+    }
+    .linkText {
+        color: blue !important;
+        cursor: pointer;
+    }
+</style>
+<?php echo $this->getContent(); ?>
+<div class="container-fluid">
+    <div class="page-header">
+        <h3>染色依頼一覧</h3>
+    </div>
+    <div class="panel">
+        <div class="panel-heading panel-info">
+            <div class="col-sm-12" style="border-bottom: #9999cc 1px solid; padding-bottom: 2px; margin-bottom: 10px;">
+                <div class="col-sm-2">
+                    <span class="h3 panel-tilte">表示期間指定</span>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php
+                echo $this->tag->form([
+                    "sensyoku_irais/index",
+                    "autocomplete" => "off",
+                    "class" => "form-inline"
+                ]);
+                ?>
+                <div class="col-sm-12">
+                    <label class="col-sm-3 for="start_date" style="text-align: right;">表示期間</label>
+                    <div class="col-sm-4">
+                        <?php echo $this->tag->telField(["start_date", "class" => "form-control f-cent ime-d", "id" => "start_date", "required" => "required"]); ?>
+                    </div>
+                    <div class="col-sm-1">
+                        <label for="end_date">～</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <?php echo $this->tag->telField(["end_date", "class" => "form-control f-cent ime-d", "id" => "end_date",  "required" => "required"]); ?>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-12">
+
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-2 col-md-offset-8">
+                        <?php echo $this->tag->submitButton(["期間内発注表示", "id" => "F12", "class" => "btn btn-info btn-sm"]); ?>
+                    </div>
+                    <div class="col-sm-2">
+<!--                        <span class="btn btn-warning" onclick="modalstart(houkokuModal, '納期報告書作成')">納期報告書作成</span>-->
+                        <span class="btn btn-warning" onclick="exportObject()">納期報告書</span>
+                    </div>
+                </div>
+                <?php echo $this->tag->endForm(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='container-fluid' style="width: 100% !important; margin: 0 !important; padding: 0 !important;">
+    <div class="row">
+        <div id="hot" class="handsontable" style="width: 100% !important; margin: 0 !important; padding: 0 !important;  overflow-x: scroll !important;"></div>
+    </div>
+</div>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        <span id="iframe-title"></span>
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+<!--jsへテーブル表示データを渡す-->
+<?php $data_php = json_encode($data); ?>
+
+<script>
+    const SensyokuIraisEdit = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('sensyoku_irais/edit') ?>";
+    const exportHoukokuData = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('sensyoku_irais/exportHoukoku') ?>";
+    const delExcel = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('sensyoku_irais/delExcel') ?>";
+    //const houkokuModal = "<?php //echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('sensyoku_irais/modal') ?>//";
+    const this_url_base = "<?php echo $this->url->get() ?>";
+</script>
+<script src="<?php echo $this->url->get('js/views/sensyoku_irais.js'); ?>?var=20210210"></script>
+
+<script>
+    var dataObject = <?php echo $data_php; ?>;
+    var hotElement = document.querySelector('#hot');
+    var hotElementContainer = hotElement.parentNode;
+    var hotSettings = {
+        data: dataObject,
+        columns: [
+            {
+                data: 'h_id',
+                type: 'numeric',
+                readOnly: true
+            },
+            {
+                data: 'konritsu',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'genryou_cd',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'genryou_name',
+                type: 'text',
+                className: "htCenter",
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'h_cd',
+                type: 'numeric',
+                className: "linkText",
+                width: 80,
+                readOnly: true
+            },
+            {
+                data: 'h_meisai_id',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0,0',
+                    culture: 'ja-JP'
+                },
+                readOnly: true
+            },
+            {
+                data: 'row',
+                width: 30,
+                type: 'numeric',
+                readOnly: true
+            },
+            {
+                data: 'saki_hacchuu_cd',
+                type: 'text',
+                className: "htLeft",
+                width: 100,
+                readOnly: true
+            },
+            {
+                data: 'bika',
+                type: 'text',
+                width: 65,
+                readOnly: true
+            },
+            {
+                data: 'nyuuka_kbn',
+                type: 'text',
+                className: "htCenter",
+                width: 55,
+                readOnly: true
+            },
+            {
+                data: 'shiiresaki_mr_cd',
+                type: 'text',
+                className: "htCenter",
+                width: 100,
+                readOnly: true
+            },
+            {
+                data: 'shiiresaki_name',
+                type: 'text',
+                readOnly: true
+            },
+            {
+                data: 'hacchuubi',
+                type: 'text',
+                className: "htCenter",
+                width: 95,
+                readOnly: true
+            },
+            {
+                data: 'nounyuu_kijitu',
+                type: 'text',
+                className: "htCenter",
+                width: 95,
+                readOnly: true
+            },
+            {
+                data: 'nouki_hensin',
+                type: 'text',
+                className: "htCenter",
+                width: 95,
+                readOnly: true
+            },
+            {
+                data: 'sensyokubi',
+                type: 'text',
+                className: "htCenter",
+                width: 95,
+                readOnly: true
+            },
+            {
+                data: 'shouhin_mr_cd',
+                type: 'text',
+                className: "htCenter",
+                width: 100,
+                readOnly: true
+            },
+            {
+                data: 'tekiyou',
+                type: 'text',
+                readOnly: true
+            },
+            {
+                data: 'lot',
+                type: 'text',
+                width: 110,
+                readOnly: true
+            },
+            {
+                data: 'iro',
+                type: 'text',
+                width: 90,
+                readOnly: true
+            },
+            {
+                data: 'bika_henji',
+                type: 'text',
+                readOnly: true
+            },
+            {
+                data: 'iromei',
+                type: 'text',
+                className: "htLeft",
+                width: 90,
+                readOnly: true
+            },
+            {
+                data: 'suuryou1',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0,0',
+                    culture: 'ja-JP'
+                },
+                width: 50,
+                readOnly: true
+            },
+            {
+                data: 'tanni1',
+                type: 'text',
+                className: "htCenter",
+                width: 40,
+                readOnly: true
+            },
+            {
+                data: 'suuryou2',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0,0.00',
+                    culture: 'ja-JP'
+                },
+                width: 70,
+                readOnly: true
+            },
+            {
+                data: 'tanni2',
+                type: 'text',
+                className: "htCenter",
+                width: 40,
+                readOnly: true
+            },
+            {
+                data: 'kouchin',
+                type: 'numeric',
+                numericFormat: {
+                    pattern: '0,0',
+                    culture: 'ja-JP'
+                },
+                width: 55,
+                readOnly: true
+            },
+            {
+                data: 'tanka_tani',
+                type: 'text',
+                className: "htCenter",
+                width: 40,
+                readOnly: true
+            },
+            {
+                data: 'tokuisaki_mr_cd',
+                type: 'text',
+                className: "htCenter",
+                width: 70,
+                readOnly: true
+            },
+            {
+                data: 'tokuisaki_name',
+                type: 'text',
+                className: "htLeft",
+                readOnly: true
+            },
+            {
+                data: 'syukkasaki_name',
+                type: 'text',
+                className: "htLeft",
+                readOnly: true
+            },
+            {
+                data: 'syukkasaki_juusho',
+                type: 'text',
+                className: "htLeft",
+                readOnly: true
+            },
+            {
+                data: 'syukkasaki_tel',
+                type: 'text',
+                className: "htCenter",
+                readOnly: true
+            },
+            {
+                data: 'shouhin_bunrui3_kbn_cd',
+                type: 'text',
+                className: "htLeft",
+                readOnly: true
+            },
+
+        ],
+        stretchH: 'all',
+        autoColumnSize: true,
+        autoRowHeights: true,
+        maxRows: 100000000,
+        height: 460,
+        manualRowResize: true,
+        manualColumnResize: true,
+        currentRowClassName: 'currentRow',
+        rowHeaders: false,
+        colHeaders: [
+            'id', '混率', '原料コード', '原料名', '発注№', '明細ID', '行', 'ユーザー№', 'ビーカ', '完了',
+            '発注先', '名称', '発注日','納入期日' , '工場返信', '染色日', '商品コード', '摘要', 'ロット', '色番', '色名',
+            'ビーカー返事', '数量１', '単', '数量２', '単','工賃', '単', '得意先', '名称', '出荷先', '住所', '電話','商品分類3',
+        ],
+        fixedRows: true,
+        fixedRowsTop: 0,
+        fixedColumnsLeft: 8,
+        manualRowMove: true,
+        manualColumnMove: false,
+        hiddenColumns: {
+            columns: [0, 1, 2, 3, 5, 6, 10, 16, 21, 28, 31, 32],
+            indicators: true
+        },
+        contextMenu: false,
+        filters: true,
+        multiColumnSorting: true,
+        dropdownMenu: {
+            items: {'filter_by_value': { name: '値で絞り込み' }, 'filter_action_bar': {name: 'アクション'},},
+        },
+        language: 'en-US',
+        licenseKey: 'non-commercial-and-evaluation',
+        hotElementContainer,
+        hotElement,
+        afterOnCellMouseDown: function (event, coords, TD) {
+            if (coords.row === -1) return;
+            if (coords.col === 4) {
+                data = hot.getDataAtRow(coords.row);
+                const params = {
+                    h_id: data[0],
+                    h_cd: data[4],
+                    h_meisai_id: data[5],
+                    meisai_row: data[6],
+                    genryou_cd: data[2],
+                    genryou_name: data[3],
+                    konritsu: data[1],
+                    koutin: data[26],
+                    tanka_tani: data[27],
+                };
+                hot.deselectCell();
+                getParamStr = $.param(params);
+                window.open(SensyokuIraisEdit + '?' + getParamStr);
+
+                // hot.selectCell()
+            }
+        },
+    }
+    var hot = new Handsontable(hotElement, hotSettings);
+</script>

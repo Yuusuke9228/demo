@@ -1,0 +1,1891 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "試織.糸使"; ?>
+<div class="page-header" style="margin-top:5px;padding-bottom:5px;">
+    <!-- h3>織設計マスタ 修正</h3 -->
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<style>
+table{
+    border-collapse:collapse;
+    width:640px;
+    table-layout:fixed;
+}
+td,th{
+    height:21px;
+    font-family:monospace;
+}
+.nowrap{
+    white-space:nowrap;
+    overflow:hidden;
+}
+.td-I{
+    border-left:1px solid #666666;
+}
+.td-L{
+    border-left:1px solid #666666;
+    border-bottom:1px solid #666666;
+}
+.td-U{
+    border-bottom:1px solid #666666;
+}
+input, textarea{
+    font-family:monospace;
+}
+span{
+    margin-left: 4px;
+}
+input.ALLF {
+    display:none;
+}
+input.TAIL {
+    display:inline;
+}
+</style>
+<div id='HAIZ210G' align=center>
+<table>
+<tbody>
+<tr>
+<td colspan=19 name='td_s00001' style='width:114pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=8 style='width:48pt'></td>
+<td colspan=19 name='td_f008' style='width:114pt' class='nowrap'>
+<b>
+<span>試織糸構成登録画面</span>
+</b>
+</td>
+<td colspan=18 style='width:108pt'></td>
+<td colspan=15 name='td_f005' style='width:90pt' class='nowrap'>
+<span id='dispYMDHM'>YY/MM/DD HH:MM</span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f009' style='width:54pt' class='nowrap td-L'>
+<span>試織番号</span>
+</td>
+<td colspan=7 name='td_sino' style='width:42pt' class='nowrap td-L'>
+<span class=' xHEAD xALLF' id='dispSino'></span>
+<input type='text' id='fieldSino' name='g1_sino' class='form-control ime-i HEAD ALLF' style='width:45pt' maxlength='6' />
+</td>
+<td colspan=3 name='td_sied' style='width:18pt' class='nowrap td-L'>
+<span class=' xHEAD xALLF' id='dispSied'></span>
+<input type='text' id='fieldSied' name='g1_sied' class='form-control ime-i HEAD ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=18 name='td_s00002' style='width:108pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=8 name='td_f00009' style='width:48pt' class='nowrap td-U'>
+<span>┏┳A-G</span>
+</td>
+<td colspan=5 name='td_s00003' style='width:30pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=16 name='td_f039' style='width:96pt' class='nowrap td-U'>
+<span>┏2=仮撚,3=撚糸</span>
+</td>
+<td colspan=13 name='td_s00004' style='width:78pt' class='nowrap td-U'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_f018' style='width:18pt' class='nowrap td-I'>
+<span>糸</span>
+</td>
+<td name='td_s00005' style='width:6pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=7 name='td_f019' style='width:42pt' class='nowrap td-U'>
+<span>原糸名</span>
+</td>
+<td name='td_s00006' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_f041' style='width:18pt' class='nowrap td-L'>
+<span>光</span>
+</td>
+<td colspan=11 name='td_f003' style='width:66pt' class='nowrap td-L'>
+<span>規格単位本</span>
+</td>
+<td colspan=9 name='td_f00015' style='width:54pt' class='nowrap td-L'>
+<span>#ｺﾄﾞ備考</span>
+</td>
+<td colspan=3 name='td_f020' style='width:18pt' class='nowrap td-I'>
+<span>糸</span>
+</td>
+<td colspan=3 name='td_f006' style='width:18pt' class='nowrap td-I'>
+<span>順</span>
+</td>
+<td colspan=3 name='td_f024' style='width:18pt' class='nowrap td-I'>
+<span>糸</span>
+</td>
+<td colspan=2 name='td_f025' style='width:12pt' class='nowrap td-I'>
+<span>ﾎ</span>
+</td>
+<td colspan=3 name='td_f010' style='width:18pt' class='nowrap td-I'>
+<span>糸</span>
+</td>
+<td colspan=2 name='td_f011' style='width:12pt' class='nowrap td-I'>
+<span>ﾎ</span>
+</td>
+<td colspan=2 name='td_f00010' style='width:12pt' class='nowrap td-I'>
+<span>2</span>
+</td>
+<td colspan=2 name='td_f00016' style='width:12pt' class='nowrap td-I'>
+<span>Z</span>
+</td>
+<td colspan=3 name='td_f00017' style='width:18pt' class='nowrap td-U'>
+<span>向</span>
+</td>
+<td name='td_s00007' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td style='width:6pt'></td>
+<td colspan=5 name='td_f032' style='width:30pt' class='nowrap td-L'>
+<span>加工</span>
+</td>
+<td name='td_s00008' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=8 name='td_f00018' style='width:48pt' class='nowrap td-I'>
+<span>#ｺｰﾄﾞ備</span>
+</td>
+<td colspan=5 name='td_f035' style='width:30pt' class='nowrap td-I'>
+<span>工費</span>
+</td>
+<td name='td_s00009' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_f001' style='width:18pt' class='nowrap td-L'>
+<span>№</span>
+</td>
+<td colspan=4 name='td_f00020' style='width:24pt' class='nowrap td-L'>
+<span>千F</span>
+</td>
+<td colspan=7 name='td_f00002' style='width:42pt' class='nowrap td-L'>
+<span>混率１</span>
+</td>
+<td colspan=2 name='td_s00010' style='width:12pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=3 name='td_f00003' style='width:18pt' class='nowrap td-U'>
+<span>2</span>
+</td>
+<td colspan=2 name='td_s00011' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=2 name='td_s00012' style='width:12pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=3 name='td_f00004' style='width:18pt' class='nowrap td-U'>
+<span>3</span>
+</td>
+<td colspan=2 name='td_s00013' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=2 name='td_s00014' style='width:12pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=3 name='td_f00005' style='width:18pt' class='nowrap td-U'>
+<span>4</span>
+</td>
+<td colspan=2 name='td_s00015' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_f021' style='width:18pt' class='nowrap td-L'>
+<span>№</span>
+</td>
+<td colspan=3 name='td_f002' style='width:18pt' class='nowrap td-L'>
+<span>ﾀﾖ</span>
+</td>
+<td colspan=3 name='td_f023' style='width:18pt' class='nowrap td-L'>
+<span>1</span>
+</td>
+<td colspan=2 name='td_f026' style='width:12pt' class='nowrap td-L'>
+<span>ﾝ</span>
+</td>
+<td colspan=3 name='td_f013' style='width:18pt' class='nowrap td-L'>
+<span>2</span>
+</td>
+<td colspan=2 name='td_f014' style='width:12pt' class='nowrap td-L'>
+<span>ﾝ</span>
+</td>
+<td colspan=2 name='td_f00011' style='width:12pt' class='nowrap td-L'>
+<span>3</span>
+</td>
+<td colspan=2 name='td_f00013' style='width:12pt' class='nowrap td-L'>
+<span>S</span>
+</td>
+<td colspan=5 name='td_f00014' style='width:30pt' class='nowrap td-L'>
+<span>撚数</span>
+</td>
+<td colspan=3 name='td_f033' style='width:18pt' class='nowrap td-L'>
+<span>主</span>
+</td>
+<td colspan=3 name='td_f043' style='width:18pt' class='nowrap td-L'>
+<span>副</span>
+</td>
+<td colspan=8 name='td_f00019' style='width:48pt' class='nowrap td-L'>
+<span>%ｺｳﾋ 考</span>
+</td>
+<td colspan=5 name='td_f036' style='width:30pt' class='nowrap td-L'>
+<span>係数</span>
+</td>
+<td name='td_s00016' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_gno_1' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY1 ALLF' id='dispGno_1'></span>
+</td>
+<td colspan=9 name='td_gito_1' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY1 xALLF' id='dispGito_1'></span>
+<input type='text' id='fieldGito_1' name='g1_gito_1' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kota_1' style='width:18pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKota_1'></span>
+<input type='text' id='fieldKota_1' name='g1_kota_1' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_kik1_1' style='width:30pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKik1_1'></span>
+<input type='text' id='fieldKik1_1' name='g1_kik1_1' class='form-control f-numb BODY1 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=2 name='td_ktni_1' style='width:12pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKtni_1'></span>
+<input type='text' id='fieldKtni_1' name='g1_ktni_1' class='form-control ime-i BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=4 name='td_kk2_1' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2_1'></span>
+<input type='text' id='fieldKk2_1' name='g1_kk2_1' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=9 name='td_biko_1' style='width:54pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispBiko_1'></span>
+<input type='text' id='fieldBiko_1' name='g1_biko_1' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kno_1' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_1'></span>
+</td>
+<td colspan=3 name='td_ijun_1' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_1'></span>
+<input type='text' id='fieldIjun_1' name='g1_ijun_1' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_1' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_1'></span>
+<input type='text' id='fieldIto1_1' name='g1_ito1_1' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_1' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_1'></span>
+<input type='text' id='fieldHon1_1' name='g1_hon1_1' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_1' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_1'></span>
+<input type='text' id='fieldIto2_1' name='g1_ito2_1' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_1' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_1'></span>
+<input type='text' id='fieldHon2_1' name='g1_hon2_1' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_1' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_1'></span>
+<input type='text' id='fieldKote_1' name='g1_kote_1' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_1' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_1'></span>
+<input type='text' id='fieldHoko_1' name='g1_hoko_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_1' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_1'></span>
+<input type='text' id='fieldYori_1' name='g1_yori_1' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_1' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_1'></span>
+<input type='text' id='fieldKbn1_1' name='g1_kbn1_1' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_1' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_1'></span>
+<input type='text' id='fieldKbn2_1' name='g1_kbn2_1' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_1' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_1'></span>
+<input type='text' id='fieldKako_1' name='g1_kako_1' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_1' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_1'></span>
+</td>
+<td name='td_s00017' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_s00018' style='width:18pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=2 name='td_kk2t_1' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2t_1'></span>
+<input type='text' id='fieldKk2t_1' name='g1_kk2t_1' class='form-control f-numb BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_s00019' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_kon_1_1' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_1_1'></span>
+<input type='text' id='fieldKon_1_1' name='g1_kon_1_1' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_1_1' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_1_1'></span>
+<input type='text' id='fieldRit_1_1' name='g1_rit_1_1' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_1_2' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_1_2'></span>
+<input type='text' id='fieldKon_1_2' name='g1_kon_1_2' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_1_2' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_1_2'></span>
+<input type='text' id='fieldRit_1_2' name='g1_rit_1_2' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_1_3' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_1_3'></span>
+<input type='text' id='fieldKon_1_3' name='g1_kon_1_3' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_1_3' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_1_3'></span>
+<input type='text' id='fieldRit_1_3' name='g1_rit_1_3' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_1_4' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_1_4'></span>
+<input type='text' id='fieldKon_1_4' name='g1_kon_1_4' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_1_4' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_1_4'></span>
+<input type='text' id='fieldRit_1_4' name='g1_rit_1_4' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kno_2' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_2'></span>
+</td>
+<td colspan=3 name='td_ijun_2' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_2'></span>
+<input type='text' id='fieldIjun_2' name='g1_ijun_2' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_2' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_2'></span>
+<input type='text' id='fieldIto1_2' name='g1_ito1_2' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_2' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_2'></span>
+<input type='text' id='fieldHon1_2' name='g1_hon1_2' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_2' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_2'></span>
+<input type='text' id='fieldIto2_2' name='g1_ito2_2' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_2' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_2'></span>
+<input type='text' id='fieldHon2_2' name='g1_hon2_2' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_2' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_2'></span>
+<input type='text' id='fieldKote_2' name='g1_kote_2' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_2' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_2'></span>
+<input type='text' id='fieldHoko_2' name='g1_hoko_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_2' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_2'></span>
+<input type='text' id='fieldYori_2' name='g1_yori_2' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_2' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_2'></span>
+<input type='text' id='fieldKbn1_2' name='g1_kbn1_2' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_2' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_2'></span>
+<input type='text' id='fieldKbn2_2' name='g1_kbn2_2' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_2' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_2'></span>
+<input type='text' id='fieldKako_2' name='g1_kako_2' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_2' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_2'></span>
+</td>
+<td name='td_s00020' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_gno_2' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY1 ALLF' id='dispGno_2'></span>
+</td>
+<td colspan=9 name='td_gito_2' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY1 xALLF' id='dispGito_2'></span>
+<input type='text' id='fieldGito_2' name='g1_gito_2' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kota_2' style='width:18pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKota_2'></span>
+<input type='text' id='fieldKota_2' name='g1_kota_2' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_kik1_2' style='width:30pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKik1_2'></span>
+<input type='text' id='fieldKik1_2' name='g1_kik1_2' class='form-control f-numb BODY1 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=2 name='td_ktni_2' style='width:12pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKtni_2'></span>
+<input type='text' id='fieldKtni_2' name='g1_ktni_2' class='form-control ime-i BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=4 name='td_kk2_2' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2_2'></span>
+<input type='text' id='fieldKk2_2' name='g1_kk2_2' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=9 name='td_biko_2' style='width:54pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispBiko_2'></span>
+<input type='text' id='fieldBiko_2' name='g1_biko_2' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kno_3' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_3'></span>
+</td>
+<td colspan=3 name='td_ijun_3' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_3'></span>
+<input type='text' id='fieldIjun_3' name='g1_ijun_3' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_3' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_3'></span>
+<input type='text' id='fieldIto1_3' name='g1_ito1_3' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_3' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_3'></span>
+<input type='text' id='fieldHon1_3' name='g1_hon1_3' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_3' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_3'></span>
+<input type='text' id='fieldIto2_3' name='g1_ito2_3' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_3' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_3'></span>
+<input type='text' id='fieldHon2_3' name='g1_hon2_3' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_3' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_3'></span>
+<input type='text' id='fieldKote_3' name='g1_kote_3' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_3' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_3'></span>
+<input type='text' id='fieldHoko_3' name='g1_hoko_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_3' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_3'></span>
+<input type='text' id='fieldYori_3' name='g1_yori_3' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_3' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_3'></span>
+<input type='text' id='fieldKbn1_3' name='g1_kbn1_3' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_3' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_3'></span>
+<input type='text' id='fieldKbn2_3' name='g1_kbn2_3' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_3' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_3'></span>
+<input type='text' id='fieldKako_3' name='g1_kako_3' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_3' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_3'></span>
+</td>
+<td name='td_s00021' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_s00022' style='width:18pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=2 name='td_kk2t_2' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2t_2'></span>
+<input type='text' id='fieldKk2t_2' name='g1_kk2t_2' class='form-control f-numb BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_s00023' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_kon_2_1' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_2_1'></span>
+<input type='text' id='fieldKon_2_1' name='g1_kon_2_1' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_2_1' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_2_1'></span>
+<input type='text' id='fieldRit_2_1' name='g1_rit_2_1' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_2_2' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_2_2'></span>
+<input type='text' id='fieldKon_2_2' name='g1_kon_2_2' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_2_2' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_2_2'></span>
+<input type='text' id='fieldRit_2_2' name='g1_rit_2_2' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_2_3' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_2_3'></span>
+<input type='text' id='fieldKon_2_3' name='g1_kon_2_3' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_2_3' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_2_3'></span>
+<input type='text' id='fieldRit_2_3' name='g1_rit_2_3' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_2_4' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_2_4'></span>
+<input type='text' id='fieldKon_2_4' name='g1_kon_2_4' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_2_4' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_2_4'></span>
+<input type='text' id='fieldRit_2_4' name='g1_rit_2_4' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kno_4' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_4'></span>
+</td>
+<td colspan=3 name='td_ijun_4' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_4'></span>
+<input type='text' id='fieldIjun_4' name='g1_ijun_4' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_4' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_4'></span>
+<input type='text' id='fieldIto1_4' name='g1_ito1_4' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_4' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_4'></span>
+<input type='text' id='fieldHon1_4' name='g1_hon1_4' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_4' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_4'></span>
+<input type='text' id='fieldIto2_4' name='g1_ito2_4' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_4' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_4'></span>
+<input type='text' id='fieldHon2_4' name='g1_hon2_4' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_4' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_4'></span>
+<input type='text' id='fieldKote_4' name='g1_kote_4' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_4' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_4'></span>
+<input type='text' id='fieldHoko_4' name='g1_hoko_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_4' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_4'></span>
+<input type='text' id='fieldYori_4' name='g1_yori_4' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_4' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_4'></span>
+<input type='text' id='fieldKbn1_4' name='g1_kbn1_4' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_4' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_4'></span>
+<input type='text' id='fieldKbn2_4' name='g1_kbn2_4' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_4' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_4'></span>
+<input type='text' id='fieldKako_4' name='g1_kako_4' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_4' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_4'></span>
+</td>
+<td name='td_s00024' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_gno_3' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY1 ALLF' id='dispGno_3'></span>
+</td>
+<td colspan=9 name='td_gito_3' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY1 xALLF' id='dispGito_3'></span>
+<input type='text' id='fieldGito_3' name='g1_gito_3' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kota_3' style='width:18pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKota_3'></span>
+<input type='text' id='fieldKota_3' name='g1_kota_3' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_kik1_3' style='width:30pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKik1_3'></span>
+<input type='text' id='fieldKik1_3' name='g1_kik1_3' class='form-control f-numb BODY1 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=2 name='td_ktni_3' style='width:12pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKtni_3'></span>
+<input type='text' id='fieldKtni_3' name='g1_ktni_3' class='form-control ime-i BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=4 name='td_kk2_3' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2_3'></span>
+<input type='text' id='fieldKk2_3' name='g1_kk2_3' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=9 name='td_biko_3' style='width:54pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispBiko_3'></span>
+<input type='text' id='fieldBiko_3' name='g1_biko_3' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kno_5' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_5'></span>
+</td>
+<td colspan=3 name='td_ijun_5' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_5'></span>
+<input type='text' id='fieldIjun_5' name='g1_ijun_5' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_5' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_5'></span>
+<input type='text' id='fieldIto1_5' name='g1_ito1_5' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_5' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_5'></span>
+<input type='text' id='fieldHon1_5' name='g1_hon1_5' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_5' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_5'></span>
+<input type='text' id='fieldIto2_5' name='g1_ito2_5' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_5' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_5'></span>
+<input type='text' id='fieldHon2_5' name='g1_hon2_5' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_5' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_5'></span>
+<input type='text' id='fieldKote_5' name='g1_kote_5' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_5' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_5'></span>
+<input type='text' id='fieldHoko_5' name='g1_hoko_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_5' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_5'></span>
+<input type='text' id='fieldYori_5' name='g1_yori_5' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_5' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_5'></span>
+<input type='text' id='fieldKbn1_5' name='g1_kbn1_5' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_5' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_5'></span>
+<input type='text' id='fieldKbn2_5' name='g1_kbn2_5' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_5' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_5'></span>
+<input type='text' id='fieldKako_5' name='g1_kako_5' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_5' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_5'></span>
+</td>
+<td name='td_s00025' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_s00026' style='width:18pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=2 name='td_kk2t_3' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2t_3'></span>
+<input type='text' id='fieldKk2t_3' name='g1_kk2t_3' class='form-control f-numb BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_s00027' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_kon_3_1' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_3_1'></span>
+<input type='text' id='fieldKon_3_1' name='g1_kon_3_1' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_3_1' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_3_1'></span>
+<input type='text' id='fieldRit_3_1' name='g1_rit_3_1' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_3_2' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_3_2'></span>
+<input type='text' id='fieldKon_3_2' name='g1_kon_3_2' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_3_2' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_3_2'></span>
+<input type='text' id='fieldRit_3_2' name='g1_rit_3_2' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_3_3' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_3_3'></span>
+<input type='text' id='fieldKon_3_3' name='g1_kon_3_3' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_3_3' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_3_3'></span>
+<input type='text' id='fieldRit_3_3' name='g1_rit_3_3' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_3_4' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_3_4'></span>
+<input type='text' id='fieldKon_3_4' name='g1_kon_3_4' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_3_4' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_3_4'></span>
+<input type='text' id='fieldRit_3_4' name='g1_rit_3_4' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kno_6' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_6'></span>
+</td>
+<td colspan=3 name='td_ijun_6' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_6'></span>
+<input type='text' id='fieldIjun_6' name='g1_ijun_6' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_6' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_6'></span>
+<input type='text' id='fieldIto1_6' name='g1_ito1_6' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_6' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_6'></span>
+<input type='text' id='fieldHon1_6' name='g1_hon1_6' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_6' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_6'></span>
+<input type='text' id='fieldIto2_6' name='g1_ito2_6' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_6' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_6'></span>
+<input type='text' id='fieldHon2_6' name='g1_hon2_6' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_6' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_6'></span>
+<input type='text' id='fieldKote_6' name='g1_kote_6' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_6' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_6'></span>
+<input type='text' id='fieldHoko_6' name='g1_hoko_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_6' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_6'></span>
+<input type='text' id='fieldYori_6' name='g1_yori_6' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_6' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_6'></span>
+<input type='text' id='fieldKbn1_6' name='g1_kbn1_6' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_6' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_6'></span>
+<input type='text' id='fieldKbn2_6' name='g1_kbn2_6' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_6' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_6'></span>
+<input type='text' id='fieldKako_6' name='g1_kako_6' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_6' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_6'></span>
+</td>
+<td name='td_s00028' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_gno_4' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY1 ALLF' id='dispGno_4'></span>
+</td>
+<td colspan=9 name='td_gito_4' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY1 xALLF' id='dispGito_4'></span>
+<input type='text' id='fieldGito_4' name='g1_gito_4' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kota_4' style='width:18pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKota_4'></span>
+<input type='text' id='fieldKota_4' name='g1_kota_4' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_kik1_4' style='width:30pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKik1_4'></span>
+<input type='text' id='fieldKik1_4' name='g1_kik1_4' class='form-control f-numb BODY1 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=2 name='td_ktni_4' style='width:12pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKtni_4'></span>
+<input type='text' id='fieldKtni_4' name='g1_ktni_4' class='form-control ime-i BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=4 name='td_kk2_4' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2_4'></span>
+<input type='text' id='fieldKk2_4' name='g1_kk2_4' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=9 name='td_biko_4' style='width:54pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispBiko_4'></span>
+<input type='text' id='fieldBiko_4' name='g1_biko_4' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kno_7' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_7'></span>
+</td>
+<td colspan=3 name='td_ijun_7' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_7'></span>
+<input type='text' id='fieldIjun_7' name='g1_ijun_7' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_7' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_7'></span>
+<input type='text' id='fieldIto1_7' name='g1_ito1_7' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_7' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_7'></span>
+<input type='text' id='fieldHon1_7' name='g1_hon1_7' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_7' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_7'></span>
+<input type='text' id='fieldIto2_7' name='g1_ito2_7' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_7' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_7'></span>
+<input type='text' id='fieldHon2_7' name='g1_hon2_7' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_7' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_7'></span>
+<input type='text' id='fieldKote_7' name='g1_kote_7' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_7' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_7'></span>
+<input type='text' id='fieldHoko_7' name='g1_hoko_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_7' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_7'></span>
+<input type='text' id='fieldYori_7' name='g1_yori_7' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_7' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_7'></span>
+<input type='text' id='fieldKbn1_7' name='g1_kbn1_7' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_7' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_7'></span>
+<input type='text' id='fieldKbn2_7' name='g1_kbn2_7' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_7' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_7'></span>
+<input type='text' id='fieldKako_7' name='g1_kako_7' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_7' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_7'></span>
+</td>
+<td name='td_s00029' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_s00030' style='width:18pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=2 name='td_kk2t_4' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2t_4'></span>
+<input type='text' id='fieldKk2t_4' name='g1_kk2t_4' class='form-control f-numb BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_s00031' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_kon_4_1' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_4_1'></span>
+<input type='text' id='fieldKon_4_1' name='g1_kon_4_1' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_4_1' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_4_1'></span>
+<input type='text' id='fieldRit_4_1' name='g1_rit_4_1' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_4_2' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_4_2'></span>
+<input type='text' id='fieldKon_4_2' name='g1_kon_4_2' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_4_2' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_4_2'></span>
+<input type='text' id='fieldRit_4_2' name='g1_rit_4_2' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_4_3' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_4_3'></span>
+<input type='text' id='fieldKon_4_3' name='g1_kon_4_3' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_4_3' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_4_3'></span>
+<input type='text' id='fieldRit_4_3' name='g1_rit_4_3' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_4_4' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_4_4'></span>
+<input type='text' id='fieldKon_4_4' name='g1_kon_4_4' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_4_4' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_4_4'></span>
+<input type='text' id='fieldRit_4_4' name='g1_rit_4_4' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kno_8' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_8'></span>
+</td>
+<td colspan=3 name='td_ijun_8' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_8'></span>
+<input type='text' id='fieldIjun_8' name='g1_ijun_8' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_8' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_8'></span>
+<input type='text' id='fieldIto1_8' name='g1_ito1_8' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_8' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_8'></span>
+<input type='text' id='fieldHon1_8' name='g1_hon1_8' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_8' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_8'></span>
+<input type='text' id='fieldIto2_8' name='g1_ito2_8' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_8' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_8'></span>
+<input type='text' id='fieldHon2_8' name='g1_hon2_8' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_8' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_8'></span>
+<input type='text' id='fieldKote_8' name='g1_kote_8' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_8' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_8'></span>
+<input type='text' id='fieldHoko_8' name='g1_hoko_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_8' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_8'></span>
+<input type='text' id='fieldYori_8' name='g1_yori_8' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_8' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_8'></span>
+<input type='text' id='fieldKbn1_8' name='g1_kbn1_8' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_8' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_8'></span>
+<input type='text' id='fieldKbn2_8' name='g1_kbn2_8' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_8' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_8'></span>
+<input type='text' id='fieldKako_8' name='g1_kako_8' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_8' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_8'></span>
+</td>
+<td name='td_s00032' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_gno_5' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY1 ALLF' id='dispGno_5'></span>
+</td>
+<td colspan=9 name='td_gito_5' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY1 xALLF' id='dispGito_5'></span>
+<input type='text' id='fieldGito_5' name='g1_gito_5' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kota_5' style='width:18pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKota_5'></span>
+<input type='text' id='fieldKota_5' name='g1_kota_5' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_kik1_5' style='width:30pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKik1_5'></span>
+<input type='text' id='fieldKik1_5' name='g1_kik1_5' class='form-control f-numb BODY1 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=2 name='td_ktni_5' style='width:12pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKtni_5'></span>
+<input type='text' id='fieldKtni_5' name='g1_ktni_5' class='form-control ime-i BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=4 name='td_kk2_5' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2_5'></span>
+<input type='text' id='fieldKk2_5' name='g1_kk2_5' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=9 name='td_biko_5' style='width:54pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispBiko_5'></span>
+<input type='text' id='fieldBiko_5' name='g1_biko_5' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kno_9' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_9'></span>
+</td>
+<td colspan=3 name='td_ijun_9' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_9'></span>
+<input type='text' id='fieldIjun_9' name='g1_ijun_9' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_9' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_9'></span>
+<input type='text' id='fieldIto1_9' name='g1_ito1_9' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_9' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_9'></span>
+<input type='text' id='fieldHon1_9' name='g1_hon1_9' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_9' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_9'></span>
+<input type='text' id='fieldIto2_9' name='g1_ito2_9' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_9' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_9'></span>
+<input type='text' id='fieldHon2_9' name='g1_hon2_9' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_9' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_9'></span>
+<input type='text' id='fieldKote_9' name='g1_kote_9' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_9' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_9'></span>
+<input type='text' id='fieldHoko_9' name='g1_hoko_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_9' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_9'></span>
+<input type='text' id='fieldYori_9' name='g1_yori_9' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_9' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_9'></span>
+<input type='text' id='fieldKbn1_9' name='g1_kbn1_9' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_9' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_9'></span>
+<input type='text' id='fieldKbn2_9' name='g1_kbn2_9' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_9' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_9'></span>
+<input type='text' id='fieldKako_9' name='g1_kako_9' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_9' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_9'></span>
+</td>
+<td name='td_s00033' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_s00034' style='width:18pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=2 name='td_kk2t_5' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2t_5'></span>
+<input type='text' id='fieldKk2t_5' name='g1_kk2t_5' class='form-control f-numb BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_s00035' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_kon_5_1' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_5_1'></span>
+<input type='text' id='fieldKon_5_1' name='g1_kon_5_1' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_5_1' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_5_1'></span>
+<input type='text' id='fieldRit_5_1' name='g1_rit_5_1' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_5_2' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_5_2'></span>
+<input type='text' id='fieldKon_5_2' name='g1_kon_5_2' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_5_2' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_5_2'></span>
+<input type='text' id='fieldRit_5_2' name='g1_rit_5_2' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_5_3' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_5_3'></span>
+<input type='text' id='fieldKon_5_3' name='g1_kon_5_3' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_5_3' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_5_3'></span>
+<input type='text' id='fieldRit_5_3' name='g1_rit_5_3' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_5_4' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_5_4'></span>
+<input type='text' id='fieldKon_5_4' name='g1_kon_5_4' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_5_4' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_5_4'></span>
+<input type='text' id='fieldRit_5_4' name='g1_rit_5_4' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kno_10' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_10'></span>
+</td>
+<td colspan=3 name='td_ijun_10' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_10'></span>
+<input type='text' id='fieldIjun_10' name='g1_ijun_10' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_10' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_10'></span>
+<input type='text' id='fieldIto1_10' name='g1_ito1_10' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_10' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_10'></span>
+<input type='text' id='fieldHon1_10' name='g1_hon1_10' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_10' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_10'></span>
+<input type='text' id='fieldIto2_10' name='g1_ito2_10' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_10' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_10'></span>
+<input type='text' id='fieldHon2_10' name='g1_hon2_10' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_10' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_10'></span>
+<input type='text' id='fieldKote_10' name='g1_kote_10' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_10' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_10'></span>
+<input type='text' id='fieldHoko_10' name='g1_hoko_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_10' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_10'></span>
+<input type='text' id='fieldYori_10' name='g1_yori_10' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_10' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_10'></span>
+<input type='text' id='fieldKbn1_10' name='g1_kbn1_10' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_10' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_10'></span>
+<input type='text' id='fieldKbn2_10' name='g1_kbn2_10' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_10' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_10'></span>
+<input type='text' id='fieldKako_10' name='g1_kako_10' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_10' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_10'></span>
+</td>
+<td name='td_s00036' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_gno_6' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY1 ALLF' id='dispGno_6'></span>
+</td>
+<td colspan=9 name='td_gito_6' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY1 xALLF' id='dispGito_6'></span>
+<input type='text' id='fieldGito_6' name='g1_gito_6' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kota_6' style='width:18pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKota_6'></span>
+<input type='text' id='fieldKota_6' name='g1_kota_6' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_kik1_6' style='width:30pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKik1_6'></span>
+<input type='text' id='fieldKik1_6' name='g1_kik1_6' class='form-control f-numb BODY1 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=2 name='td_ktni_6' style='width:12pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispKtni_6'></span>
+<input type='text' id='fieldKtni_6' name='g1_ktni_6' class='form-control ime-i BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=4 name='td_kk2_6' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2_6'></span>
+<input type='text' id='fieldKk2_6' name='g1_kk2_6' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=9 name='td_biko_6' style='width:54pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispBiko_6'></span>
+<input type='text' id='fieldBiko_6' name='g1_biko_6' class='form-control ime-i BODY1 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_kno_11' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_11'></span>
+</td>
+<td colspan=3 name='td_ijun_11' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispIjun_11'></span>
+<input type='text' id='fieldIjun_11' name='g1_ijun_11' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_11' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_11'></span>
+<input type='text' id='fieldIto1_11' name='g1_ito1_11' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_11' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_11'></span>
+<input type='text' id='fieldHon1_11' name='g1_hon1_11' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_11' style='width:18pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_11'></span>
+<input type='text' id='fieldIto2_11' name='g1_ito2_11' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_11' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_11'></span>
+<input type='text' id='fieldHon2_11' name='g1_hon2_11' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_11' style='width:12pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_11'></span>
+<input type='text' id='fieldKote_11' name='g1_kote_11' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_11' style='width:12pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispHoko_11'></span>
+<input type='text' id='fieldHoko_11' name='g1_hoko_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_11' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_11'></span>
+<input type='text' id='fieldYori_11' name='g1_yori_11' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_11' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn1_11'></span>
+<input type='text' id='fieldKbn1_11' name='g1_kbn1_11' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_11' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKbn2_11'></span>
+<input type='text' id='fieldKbn2_11' name='g1_kbn2_11' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_11' style='width:54pt' class='nowrap td-I'>
+<span class=' xBODY2 xALLF' id='dispKako_11'></span>
+<input type='text' id='fieldKako_11' name='g1_kako_11' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_11' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_11'></span>
+</td>
+<td name='td_s00037' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_s00038' style='width:18pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=2 name='td_kk2t_6' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY1 xALLF' id='dispKk2t_6'></span>
+<input type='text' id='fieldKk2t_6' name='g1_kk2t_6' class='form-control f-numb BODY1 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_s00039' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=3 name='td_kon_6_1' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_6_1'></span>
+<input type='text' id='fieldKon_6_1' name='g1_kon_6_1' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_6_1' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_6_1'></span>
+<input type='text' id='fieldRit_6_1' name='g1_rit_6_1' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_6_2' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_6_2'></span>
+<input type='text' id='fieldKon_6_2' name='g1_kon_6_2' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_6_2' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_6_2'></span>
+<input type='text' id='fieldRit_6_2' name='g1_rit_6_2' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_6_3' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_6_3'></span>
+<input type='text' id='fieldKon_6_3' name='g1_kon_6_3' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_6_3' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_6_3'></span>
+<input type='text' id='fieldRit_6_3' name='g1_rit_6_3' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kon_6_4' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispKon_6_4'></span>
+<input type='text' id='fieldKon_6_4' name='g1_kon_6_4' class='form-control ime-i BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_rit_6_4' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispRit_6_4'></span>
+<input type='text' id='fieldRit_6_4' name='g1_rit_6_4' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kno_12' style='width:18pt' class='nowrap td-L f-numb'>
+<span class=' BODY2 ALLF' id='dispKno_12'></span>
+</td>
+<td colspan=3 name='td_ijun_12' style='width:18pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispIjun_12'></span>
+<input type='text' id='fieldIjun_12' name='g1_ijun_12' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_ito1_12' style='width:18pt' class='nowrap td-L f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto1_12'></span>
+<input type='text' id='fieldIto1_12' name='g1_ito1_12' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon1_12' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon1_12'></span>
+<input type='text' id='fieldHon1_12' name='g1_hon1_12' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=3 name='td_ito2_12' style='width:18pt' class='nowrap td-L f-numb'>
+<span class=' xBODY2 xALLF' id='dispIto2_12'></span>
+<input type='text' id='fieldIto2_12' name='g1_ito2_12' class='form-control f-numb BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=2 name='td_hon2_12' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY2 xALLF' id='dispHon2_12'></span>
+<input type='text' id='fieldHon2_12' name='g1_hon2_12' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_kote_12' style='width:12pt' class='nowrap td-L f-numb'>
+<span class=' xBODY2 xALLF' id='dispKote_12'></span>
+<input type='text' id='fieldKote_12' name='g1_kote_12' class='form-control f-numb BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_hoko_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispHoko_12'></span>
+<input type='text' id='fieldHoko_12' name='g1_hoko_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=5 name='td_yori_12' style='width:30pt' class='nowrap td-L f-numb'>
+<span class=' xBODY2 xALLF' id='dispYori_12'></span>
+<input type='text' id='fieldYori_12' name='g1_yori_12' class='form-control f-numb BODY2 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=3 name='td_kbn1_12' style='width:18pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispKbn1_12'></span>
+<input type='text' id='fieldKbn1_12' name='g1_kbn1_12' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_kbn2_12' style='width:18pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispKbn2_12'></span>
+<input type='text' id='fieldKbn2_12' name='g1_kbn2_12' class='form-control ime-i BODY2 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=9 name='td_kako_12' style='width:54pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispKako_12'></span>
+<input type='text' id='fieldKako_12' name='g1_kako_12' class='form-control ime-i BODY2 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=4 name='td_kohi_12' style='width:24pt' class='nowrap td-L f-numb'>
+<span class=' BODY2 ALLF' id='dispKohi_12'></span>
+</td>
+<td name='td_s00040' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_f028' style='width:18pt' class='nowrap td-L'>
+<span>ﾀﾖ</span>
+</td>
+<td colspan=4 name='td_f030' style='width:24pt' class='nowrap td-L'>
+<span>実D</span>
+</td>
+<td name='td_s00041' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=8 name='td_f031' style='width:48pt' class='nowrap td-L'>
+<span>ﾟCｾｯﾄ分</span>
+</td>
+<td colspan=3 name='td_f044' style='width:18pt' class='nowrap td-L'>
+<span>糊</span>
+</td>
+<td colspan=5 name='td_f045' style='width:30pt' class='nowrap td-L'>
+<span>糸名</span>
+</td>
+<td name='td_s00042' style='width:6pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=22 name='td_s00043' style='width:132pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=32 name='td_f047' style='width:192pt' class='nowrap td-U'>
+<span>糊：経=1_,緯=_1,経緯=11,無し=__</span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_mjun_1' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispMjun_1'></span>
+</td>
+<td colspan=5 name='td_denl_1' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispDenl_1'></span>
+<input type='text' id='fieldDenl_1' name='g1_denl_1' class='form-control f-numb BODY3 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=4 name='td_ondo_1' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispOndo_1'></span>
+<input type='text' id='fieldOndo_1' name='g1_ondo_1' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_hun_1' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispHun_1'></span>
+<input type='text' id='fieldHun_1' name='g1_hun_1' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_nori_1' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY3 xALLF' id='dispNori_1'></span>
+<input type='text' id='fieldNori_1' name='g1_nori_1' class='form-control ime-i BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=60 name='td_imei_1' style='width:360pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispImei_1'></span>
+</td>
+<td name='td_s00044' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_mjun_2' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispMjun_2'></span>
+</td>
+<td colspan=5 name='td_denl_2' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispDenl_2'></span>
+<input type='text' id='fieldDenl_2' name='g1_denl_2' class='form-control f-numb BODY3 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=4 name='td_ondo_2' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispOndo_2'></span>
+<input type='text' id='fieldOndo_2' name='g1_ondo_2' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_hun_2' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispHun_2'></span>
+<input type='text' id='fieldHun_2' name='g1_hun_2' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_nori_2' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY3 xALLF' id='dispNori_2'></span>
+<input type='text' id='fieldNori_2' name='g1_nori_2' class='form-control ime-i BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=60 name='td_imei_2' style='width:360pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispImei_2'></span>
+</td>
+<td name='td_s00045' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_mjun_3' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispMjun_3'></span>
+</td>
+<td colspan=5 name='td_denl_3' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispDenl_3'></span>
+<input type='text' id='fieldDenl_3' name='g1_denl_3' class='form-control f-numb BODY3 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=4 name='td_ondo_3' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispOndo_3'></span>
+<input type='text' id='fieldOndo_3' name='g1_ondo_3' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_hun_3' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispHun_3'></span>
+<input type='text' id='fieldHun_3' name='g1_hun_3' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_nori_3' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY3 xALLF' id='dispNori_3'></span>
+<input type='text' id='fieldNori_3' name='g1_nori_3' class='form-control ime-i BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=60 name='td_imei_3' style='width:360pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispImei_3'></span>
+</td>
+<td name='td_s00046' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_mjun_4' style='width:18pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispMjun_4'></span>
+</td>
+<td colspan=5 name='td_denl_4' style='width:30pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispDenl_4'></span>
+<input type='text' id='fieldDenl_4' name='g1_denl_4' class='form-control f-numb BODY3 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=4 name='td_ondo_4' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispOndo_4'></span>
+<input type='text' id='fieldOndo_4' name='g1_ondo_4' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_hun_4' style='width:24pt' class='nowrap td-I f-numb'>
+<span class=' xBODY3 xALLF' id='dispHun_4'></span>
+<input type='text' id='fieldHun_4' name='g1_hun_4' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_nori_4' style='width:18pt' class='nowrap td-I'>
+<span class=' xBODY3 xALLF' id='dispNori_4'></span>
+<input type='text' id='fieldNori_4' name='g1_nori_4' class='form-control ime-i BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=60 name='td_imei_4' style='width:360pt' class='nowrap td-I'>
+<span class=' BODY3 ALLF' id='dispImei_4'></span>
+</td>
+<td name='td_s00047' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=3 name='td_mjun_5' style='width:18pt' class='nowrap td-L'>
+<span class=' BODY3 ALLF' id='dispMjun_5'></span>
+</td>
+<td colspan=5 name='td_denl_5' style='width:30pt' class='nowrap td-L f-numb'>
+<span class=' xBODY3 xALLF' id='dispDenl_5'></span>
+<input type='text' id='fieldDenl_5' name='g1_denl_5' class='form-control f-numb BODY3 ALLF' style='width:33pt' maxlength='4' />
+</td>
+<td colspan=4 name='td_ondo_5' style='width:24pt' class='nowrap td-L f-numb'>
+<span class=' xBODY3 xALLF' id='dispOndo_5'></span>
+<input type='text' id='fieldOndo_5' name='g1_ondo_5' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=4 name='td_hun_5' style='width:24pt' class='nowrap td-L f-numb'>
+<span class=' xBODY3 xALLF' id='dispHun_5'></span>
+<input type='text' id='fieldHun_5' name='g1_hun_5' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_nori_5' style='width:18pt' class='nowrap td-L'>
+<span class=' xBODY3 xALLF' id='dispNori_5'></span>
+<input type='text' id='fieldNori_5' name='g1_nori_5' class='form-control ime-i BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=60 name='td_imei_5' style='width:360pt' class='nowrap td-L'>
+<span class=' BODY3 ALLF' id='dispImei_5'></span>
+</td>
+<td name='td_s00048' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f046' style='width:54pt' class='nowrap td-L'>
+<span>注意事項</span>
+</td>
+<td colspan=29 name='td_chuj_1' style='width:174pt' class='nowrap td-L'>
+<span class=' xBODY3 xALLF' id='dispChuj_1'></span>
+<input type='text' id='fieldChuj_1' name='g1_chuj_1' class='form-control ime-a BODY3 ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=29 name='td_chuj_2' style='width:174pt' class='nowrap td-L'>
+<span class=' xBODY3 xALLF' id='dispChuj_2'></span>
+<input type='text' id='fieldChuj_2' name='g1_chuj_2' class='form-control ime-a BODY3 ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s00049' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=6 style='width:36pt'></td>
+<td colspan=69 name='td_emsg' style='width:414pt' class='nowrap'>
+<span class=' TAIL ALLF' id='dispEmsg'></span>
+</td>
+<td colspan=2 style='width:12pt'></td>
+<td colspan=2 name='td_kaku' style='width:12pt' class='nowrap'>
+<span class=' xTAIL xALLF' id='dispKaku'></span>
+<input type='text' id='fieldKaku' name='g1_kaku' class='form-control ime-i TAIL ALLF' style='width:15pt' maxlength='1' />
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="CdOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div><div id="ESC"></div>
+
+<div class="navbar navbar-default navbar-fixed-bottom" style="background-color:#e8e0d0;">
+ <div class="container" style="width:800px;">
+  <span class="navbar-text">
+	<input type="button" value="" id="F0" class="btn btn-default btn-xs" />
+	<input type="button" value="－－F1" id="F1" onclick="alert('F1');" class="btn btn-default btn-xs" title='ブラウザのHELP起動:F1キー' />
+	<input type="button" value="－－F2" id="X2" onclick="alert('F2');" class="btn btn-default btn-xs" title='新規入力用画面にします:F2キー' />
+	<input type="button" value="前へF3" id="F3" onclick="BACK();" class="btn btn-default btn-xs" title='前番号の伝票を表示します:F3キー' />
+	<input type="button" value="次へF4" id="F4" onclick="NEXT();" class="btn btn-info btn-xs" title='次番号の伝票を表示します:F4キー' />　
+	<input type="button" value="糸使F5" id="F5" onclick="f5key();" class="btn btn-default btn-xs fALLF fBODY fTAIL" title='糸構成画面が出ます:F5キー' />
+	<input type="button" value="配列F6" id="F6" onclick="shuusei();" class="btn btn-warning btn-xs fALLF fBODY fTAIL" title='修正入力可能になります:F6キー' />
+	<input type="button" value="組織F7" id="F7" onclick="hyouji();" class="btn btn-default btn-xs fALLF fBODY fTAIL" title='表示モードになります:F7キー' />
+	<input type="button" value="一覧F8" id="X8" onclick="alert('F8');" class="btn btn-default btn-xs fALLF fHEAD fBODY" title='参照可能の時、参照画面を開きます:F8キー' />　
+	<input type="button" value="取消F9" id="F9" onclick="CANCEL();" class="btn btn-default btn-xs" title='ブラウザの機能が起動:F9キー' />
+	<input type="button" value="－－F10" id="F10" onclick="alert('F10');" class="btn btn-default btn-xs fALLF fHEAD" title='ブラウザの機能が起動:F10キー' />
+	<input type="button" value="－－F11" id="F11" onclick="alert('F11');" class="btn btn-default btn-xs" disabled="true" title='ブラウザの機能が起動:F11キー' />
+	<input type="submit" value="実行F12" id="F12" onclick="ENTER();" class="btn btn-success" title='新規登録や修正を更新します:F12キー' />
+  </span>
+ </div>
+</div>
+
+<script type="text/javascript">
+	var haiz210_ajaxGrpDo = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz210/ajaxGrpDo') ?>";
+	var user_name_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('users/name_ajaxGet') ?>";
+	var audio = new Audio("<?php echo $this->url->get('js/views/beep.mp3'); ?>");
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/mrp/haiz210.js'); ?>?var=000001"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/updnkey.js'); ?>?var=000001"></script>
+
+
+
+<script type='text/javascript'>
+  var formGRP={};
+  formGRP['ALLF']=['Sino','Sied',
+					'Gno_1','Gito_1','Kota_1','Kik1_1','Ktni_1','Kk2_1','Biko_1',
+					'Kno_1','Ijun_1','Ito1_1','Hon1_1','Ito2_1','Hon2_1','Kote_1','Hoko_1','Yori_1','Kbn1_1','Kbn2_1','Kako_1','Kohi_1','Kk2t_1',
+					'Kon_1_1','Rit_1_1','Kon_1_2','Rit_1_2','Kon_1_3','Rit_1_3','Kon_1_4','Rit_1_4',
+					'Kno_2','Ijun_2','Ito1_2','Hon1_2','Ito2_2','Hon2_2','Kote_2','Hoko_2','Yori_2','Kbn1_2','Kbn2_2','Kako_2','Kohi_2',
+					'Gno_2','Gito_2','Kota_2','Kik1_2','Ktni_2','Kk2_2','Biko_2',
+					'Kno_3','Ijun_3','Ito1_3','Hon1_3','Ito2_3','Hon2_3','Kote_3','Hoko_3','Yori_3','Kbn1_3','Kbn2_3','Kako_3','Kohi_3','Kk2t_2',
+					'Kon_2_1','Rit_2_1','Kon_2_2','Rit_2_2','Kon_2_3','Rit_2_3','Kon_2_4','Rit_2_4',
+					'Kno_4','Ijun_4','Ito1_4','Hon1_4','Ito2_4','Hon2_4','Kote_4','Hoko_4','Yori_4','Kbn1_4','Kbn2_4','Kako_4','Kohi_4',
+					'Gno_3','Gito_3','Kota_3','Kik1_3','Ktni_3','Kk2_3','Biko_3',
+					'Kno_5','Ijun_5','Ito1_5','Hon1_5','Ito2_5','Hon2_5','Kote_5','Hoko_5','Yori_5','Kbn1_5','Kbn2_5','Kako_5','Kohi_5','Kk2t_3',
+					'Kon_3_1','Rit_3_1','Kon_3_2','Rit_3_2','Kon_3_3','Rit_3_3','Kon_3_4','Rit_3_4',
+					'Kno_6','Ijun_6','Ito1_6','Hon1_6','Ito2_6','Hon2_6','Kote_6','Hoko_6','Yori_6','Kbn1_6','Kbn2_6','Kako_6','Kohi_6',
+					'Gno_4','Gito_4','Kota_4','Kik1_4','Ktni_4','Kk2_4','Biko_4',
+					'Kno_7','Ijun_7','Ito1_7','Hon1_7','Ito2_7','Hon2_7','Kote_7','Hoko_7','Yori_7','Kbn1_7','Kbn2_7','Kako_7','Kohi_7','Kk2t_4',
+					'Kon_4_1','Rit_4_1','Kon_4_2','Rit_4_2','Kon_4_3','Rit_4_3','Kon_4_4','Rit_4_4',
+					'Kno_8','Ijun_8','Ito1_8','Hon1_8','Ito2_8','Hon2_8','Kote_8','Hoko_8','Yori_8','Kbn1_8','Kbn2_8','Kako_8','Kohi_8',
+					'Gno_5','Gito_5','Kota_5','Kik1_5','Ktni_5','Kk2_5','Biko_5',
+					'Kno_9','Ijun_9','Ito1_9','Hon1_9','Ito2_9','Hon2_9','Kote_9','Hoko_9','Yori_9','Kbn1_9','Kbn2_9','Kako_9','Kohi_9','Kk2t_5',
+					'Kon_5_1','Rit_5_1','Kon_5_2','Rit_5_2','Kon_5_3','Rit_5_3','Kon_5_4','Rit_5_4',
+					'Kno_10','Ijun_10','Ito1_10','Hon1_10','Ito2_10','Hon2_10','Kote_10','Hoko_10','Yori_10','Kbn1_10','Kbn2_10','Kako_10','Kohi_10',
+					'Gno_6','Gito_6','Kota_6','Kik1_6','Ktni_6','Kk2_6','Biko_6',
+					'Kno_11','Ijun_11','Ito1_11','Hon1_11','Ito2_11','Hon2_11','Kote_11','Hoko_11','Yori_11','Kbn1_11','Kbn2_11','Kako_11','Kohi_11','Kk2t_6',
+					'Kon_6_1','Rit_6_1','Kon_6_2','Rit_6_2','Kon_6_3','Rit_6_3','Kon_6_4','Rit_6_4',
+					'Kno_12','Ijun_12','Ito1_12','Hon1_12','Ito2_12','Hon2_12','Kote_12','Hoko_12','Yori_12','Kbn1_12','Kbn2_12','Kako_12','Kohi_12',
+					'Mjun_1','Denl_1','Ondo_1','Hun_1','Nori_1','Imei_1',
+					'Mjun_2','Denl_2','Ondo_2','Hun_2','Nori_2','Imei_2',
+					'Mjun_3','Denl_3','Ondo_3','Hun_3','Nori_3','Imei_3',
+					'Mjun_4','Denl_4','Ondo_4','Hun_4','Nori_4','Imei_4',
+					'Mjun_5','Denl_5','Ondo_5','Hun_5','Nori_5','Imei_5',
+					'Chuj_1','Chuj_2','Emsg','Kaku',];
+  formGRP['HEAD']=['Sino','Sied',];
+  formGRP['BODY3']=['Mjun_1','Denl_1','Ondo_1','Hun_1','Nori_1','Imei_1','Mjun_2','Denl_2','Ondo_2','Hun_2','Nori_2','Imei_2','Mjun_3','Denl_3','Ondo_3','Hun_3','Nori_3','Imei_3','Mjun_4','Denl_4','Ondo_4','Hun_4','Nori_4','Imei_4','Mjun_5','Denl_5','Ondo_5','Hun_5','Nori_5','Imei_5','Chuj_1','Chuj_2',];
+  formGRP['TAIL']=['Emsg','Kaku',];
+  formGRP['BODY2']=['Kno_1','Ijun_1','Ito1_1','Hon1_1','Ito2_1','Hon2_1','Kote_1','Hoko_1','Yori_1','Kbn1_1','Kbn2_1','Kako_1','Kohi_1','Kno_2','Ijun_2','Ito1_2','Hon1_2','Ito2_2','Hon2_2','Kote_2','Hoko_2','Yori_2','Kbn1_2','Kbn2_2','Kako_2','Kohi_2','Kno_3','Ijun_3','Ito1_3','Hon1_3','Ito2_3','Hon2_3','Kote_3','Hoko_3','Yori_3','Kbn1_3','Kbn2_3','Kako_3','Kohi_3','Kno_4','Ijun_4','Ito1_4','Hon1_4','Ito2_4','Hon2_4','Kote_4','Hoko_4','Yori_4','Kbn1_4','Kbn2_4','Kako_4','Kohi_4','Kno_5','Ijun_5','Ito1_5','Hon1_5','Ito2_5','Hon2_5','Kote_5','Hoko_5','Yori_5','Kbn1_5','Kbn2_5','Kako_5','Kohi_5','Kno_6','Ijun_6','Ito1_6','Hon1_6','Ito2_6','Hon2_6','Kote_6','Hoko_6','Yori_6','Kbn1_6','Kbn2_6','Kako_6','Kohi_6','Kno_7','Ijun_7','Ito1_7','Hon1_7','Ito2_7','Hon2_7','Kote_7','Hoko_7','Yori_7','Kbn1_7','Kbn2_7','Kako_7','Kohi_7','Kno_8','Ijun_8','Ito1_8','Hon1_8','Ito2_8','Hon2_8','Kote_8','Hoko_8','Yori_8','Kbn1_8','Kbn2_8','Kako_8','Kohi_8','Kno_9','Ijun_9','Ito1_9','Hon1_9','Ito2_9','Hon2_9','Kote_9','Hoko_9','Yori_9','Kbn1_9','Kbn2_9','Kako_9','Kohi_9','Kno_10','Ijun_10','Ito1_10','Hon1_10','Ito2_10','Hon2_10','Kote_10','Hoko_10','Yori_10','Kbn1_10','Kbn2_10','Kako_10','Kohi_10','Kno_11','Ijun_11','Ito1_11','Hon1_11','Ito2_11','Hon2_11','Kote_11','Hoko_11','Yori_11','Kbn1_11','Kbn2_11','Kako_11','Kohi_11','Kno_12','Ijun_12','Ito1_12','Hon1_12','Ito2_12','Hon2_12','Kote_12','Hoko_12','Yori_12','Kbn1_12','Kbn2_12','Kako_12','Kohi_12',];
+  formGRP['BODY1']=['Gno_1','Gito_1','Kota_1','Kik1_1','Ktni_1','Kk2_1','Biko_1','Kk2t_1',
+  					'Kon_1_1','Rit_1_1','Kon_1_2','Rit_1_2','Kon_1_3','Rit_1_3','Kon_1_4','Rit_1_4',
+					'Gno_2','Gito_2','Kota_2','Kik1_2','Ktni_2','Kk2_2','Biko_2','Kk2t_2',
+					'Kon_2_1','Rit_2_1','Kon_2_2','Rit_2_2','Kon_2_3','Rit_2_3','Kon_2_4','Rit_2_4',
+					'Gno_3','Gito_3','Kota_3','Kik1_3','Ktni_3','Kk2_3','Biko_3','Kk2t_3',
+					'Kon_3_1','Rit_3_1','Kon_3_2','Rit_3_2','Kon_3_3','Rit_3_3','Kon_3_4','Rit_3_4',
+					'Gno_4','Gito_4','Kota_4','Kik1_4','Ktni_4','Kk2_4','Biko_4','Kk2t_4',
+					'Kon_4_1','Rit_4_1','Kon_4_2','Rit_4_2','Kon_4_3','Rit_4_3','Kon_4_4','Rit_4_4',
+					'Gno_5','Gito_5','Kota_5','Kik1_5','Ktni_5','Kk2_5','Biko_5','Kk2t_5',
+					'Kon_5_1','Rit_5_1','Kon_5_2','Rit_5_2','Kon_5_3','Rit_5_3','Kon_5_4','Rit_5_4',
+					'Gno_6','Gito_6','Kota_6','Kik1_6','Ktni_6','Kk2_6','Biko_6','Kk2t_6',
+					'Kon_6_1','Rit_6_1','Kon_6_2','Rit_6_2','Kon_6_3','Rit_6_3','Kon_6_4','Rit_6_4',
+					];
+  var koumokus={
+    sino:['Sino',1,0,6,0,0],
+    sied:['Sied',1,0,2,0,0],
+    gno_1:['Gno_1',0,1,2,0,0],
+    gito_1:['Gito_1',1,0,8,0,0],
+    kota_1:['Kota_1',1,0,2,0,0],
+    kik1_1:['Kik1_1',1,1,4,0,0],
+    ktni_1:['Ktni_1',1,0,1,0,0],
+    kk2_1:['Kk2_1',1,1,3,0,0],
+    biko_1:['Biko_1',1,0,8,0,0],
+    kno_1:['Kno_1',0,1,2,0,0],
+    ijun_1:['Ijun_1',1,0,2,0,0],
+    ito1_1:['Ito1_1',1,1,2,0,0],
+    hon1_1:['Hon1_1',1,1,1,0,0],
+    ito2_1:['Ito2_1',1,1,2,0,0],
+    hon2_1:['Hon2_1',1,1,1,0,0],
+    kote_1:['Kote_1',1,1,1,0,0],
+    hoko_1:['Hoko_1',1,0,1,0,0],
+    yori_1:['Yori_1',1,1,4,0,0],
+    kbn1_1:['Kbn1_1',1,0,2,0,0],
+    kbn2_1:['Kbn2_1',1,0,2,0,0],
+    kako_1:['Kako_1',1,0,8,0,0],
+    kohi_1:['Kohi_1',0,1,3,0,0],
+    kk2t_1:['Kk2t_1',1,1,1,0,0],
+    kon_1_1:['Kon_1_1',1,0,2,0,0],
+    rit_1_1:['Rit_1_1',1,1,3,0,0],
+    kon_1_2:['Kon_1_2',1,0,2,0,0],
+    rit_1_2:['Rit_1_2',1,1,3,0,0],
+    kon_1_3:['Kon_1_3',1,0,2,0,0],
+    rit_1_3:['Rit_1_3',1,1,3,0,0],
+    kon_1_4:['Kon_1_4',1,0,2,0,0],
+    rit_1_4:['Rit_1_4',1,1,3,0,0],
+    kno_2:['Kno_2',0,1,2,0,0],
+    ijun_2:['Ijun_2',1,0,2,0,0],
+    ito1_2:['Ito1_2',1,1,2,0,0],
+    hon1_2:['Hon1_2',1,1,1,0,0],
+    ito2_2:['Ito2_2',1,1,2,0,0],
+    hon2_2:['Hon2_2',1,1,1,0,0],
+    kote_2:['Kote_2',1,1,1,0,0],
+    hoko_2:['Hoko_2',1,0,1,0,0],
+    yori_2:['Yori_2',1,1,4,0,0],
+    kbn1_2:['Kbn1_2',1,0,2,0,0],
+    kbn2_2:['Kbn2_2',1,0,2,0,0],
+    kako_2:['Kako_2',1,0,8,0,0],
+    kohi_2:['Kohi_2',0,1,3,0,0],
+    gno_2:['Gno_2',0,1,2,0,0],
+    gito_2:['Gito_2',1,0,8,0,0],
+    kota_2:['Kota_2',1,0,2,0,0],
+    kik1_2:['Kik1_2',1,1,4,0,0],
+    ktni_2:['Ktni_2',1,0,1,0,0],
+    kk2_2:['Kk2_2',1,1,3,0,0],
+    biko_2:['Biko_2',1,0,8,0,0],
+    kno_3:['Kno_3',0,1,2,0,0],
+    ijun_3:['Ijun_3',1,0,2,0,0],
+    ito1_3:['Ito1_3',1,1,2,0,0],
+    hon1_3:['Hon1_3',1,1,1,0,0],
+    ito2_3:['Ito2_3',1,1,2,0,0],
+    hon2_3:['Hon2_3',1,1,1,0,0],
+    kote_3:['Kote_3',1,1,1,0,0],
+    hoko_3:['Hoko_3',1,0,1,0,0],
+    yori_3:['Yori_3',1,1,4,0,0],
+    kbn1_3:['Kbn1_3',1,0,2,0,0],
+    kbn2_3:['Kbn2_3',1,0,2,0,0],
+    kako_3:['Kako_3',1,0,8,0,0],
+    kohi_3:['Kohi_3',0,1,3,0,0],
+    kk2t_2:['Kk2t_2',1,1,1,0,0],
+    kon_2_1:['Kon_2_1',1,0,2,0,0],
+    rit_2_1:['Rit_2_1',1,1,3,0,0],
+    kon_2_2:['Kon_2_2',1,0,2,0,0],
+    rit_2_2:['Rit_2_2',1,1,3,0,0],
+    kon_2_3:['Kon_2_3',1,0,2,0,0],
+    rit_2_3:['Rit_2_3',1,1,3,0,0],
+    kon_2_4:['Kon_2_4',1,0,2,0,0],
+    rit_2_4:['Rit_2_4',1,1,3,0,0],
+    kno_4:['Kno_4',0,1,2,0,0],
+    ijun_4:['Ijun_4',1,0,2,0,0],
+    ito1_4:['Ito1_4',1,1,2,0,0],
+    hon1_4:['Hon1_4',1,1,1,0,0],
+    ito2_4:['Ito2_4',1,1,2,0,0],
+    hon2_4:['Hon2_4',1,1,1,0,0],
+    kote_4:['Kote_4',1,1,1,0,0],
+    hoko_4:['Hoko_4',1,0,1,0,0],
+    yori_4:['Yori_4',1,1,4,0,0],
+    kbn1_4:['Kbn1_4',1,0,2,0,0],
+    kbn2_4:['Kbn2_4',1,0,2,0,0],
+    kako_4:['Kako_4',1,0,8,0,0],
+    kohi_4:['Kohi_4',0,1,3,0,0],
+    gno_3:['Gno_3',0,1,2,0,0],
+    gito_3:['Gito_3',1,0,8,0,0],
+    kota_3:['Kota_3',1,0,2,0,0],
+    kik1_3:['Kik1_3',1,1,4,0,0],
+    ktni_3:['Ktni_3',1,0,1,0,0],
+    kk2_3:['Kk2_3',1,1,3,0,0],
+    biko_3:['Biko_3',1,0,8,0,0],
+    kno_5:['Kno_5',0,1,2,0,0],
+    ijun_5:['Ijun_5',1,0,2,0,0],
+    ito1_5:['Ito1_5',1,1,2,0,0],
+    hon1_5:['Hon1_5',1,1,1,0,0],
+    ito2_5:['Ito2_5',1,1,2,0,0],
+    hon2_5:['Hon2_5',1,1,1,0,0],
+    kote_5:['Kote_5',1,1,1,0,0],
+    hoko_5:['Hoko_5',1,0,1,0,0],
+    yori_5:['Yori_5',1,1,4,0,0],
+    kbn1_5:['Kbn1_5',1,0,2,0,0],
+    kbn2_5:['Kbn2_5',1,0,2,0,0],
+    kako_5:['Kako_5',1,0,8,0,0],
+    kohi_5:['Kohi_5',0,1,3,0,0],
+    kk2t_3:['Kk2t_3',1,1,1,0,0],
+    kon_3_1:['Kon_3_1',1,0,2,0,0],
+    rit_3_1:['Rit_3_1',1,1,3,0,0],
+    kon_3_2:['Kon_3_2',1,0,2,0,0],
+    rit_3_2:['Rit_3_2',1,1,3,0,0],
+    kon_3_3:['Kon_3_3',1,0,2,0,0],
+    rit_3_3:['Rit_3_3',1,1,3,0,0],
+    kon_3_4:['Kon_3_4',1,0,2,0,0],
+    rit_3_4:['Rit_3_4',1,1,3,0,0],
+    kno_6:['Kno_6',0,1,2,0,0],
+    ijun_6:['Ijun_6',1,0,2,0,0],
+    ito1_6:['Ito1_6',1,1,2,0,0],
+    hon1_6:['Hon1_6',1,1,1,0,0],
+    ito2_6:['Ito2_6',1,1,2,0,0],
+    hon2_6:['Hon2_6',1,1,1,0,0],
+    kote_6:['Kote_6',1,1,1,0,0],
+    hoko_6:['Hoko_6',1,0,1,0,0],
+    yori_6:['Yori_6',1,1,4,0,0],
+    kbn1_6:['Kbn1_6',1,0,2,0,0],
+    kbn2_6:['Kbn2_6',1,0,2,0,0],
+    kako_6:['Kako_6',1,0,8,0,0],
+    kohi_6:['Kohi_6',0,1,3,0,0],
+    gno_4:['Gno_4',0,1,2,0,0],
+    gito_4:['Gito_4',1,0,8,0,0],
+    kota_4:['Kota_4',1,0,2,0,0],
+    kik1_4:['Kik1_4',1,1,4,0,0],
+    ktni_4:['Ktni_4',1,0,1,0,0],
+    kk2_4:['Kk2_4',1,1,3,0,0],
+    biko_4:['Biko_4',1,0,8,0,0],
+    kno_7:['Kno_7',0,1,2,0,0],
+    ijun_7:['Ijun_7',1,0,2,0,0],
+    ito1_7:['Ito1_7',1,1,2,0,0],
+    hon1_7:['Hon1_7',1,1,1,0,0],
+    ito2_7:['Ito2_7',1,1,2,0,0],
+    hon2_7:['Hon2_7',1,1,1,0,0],
+    kote_7:['Kote_7',1,1,1,0,0],
+    hoko_7:['Hoko_7',1,0,1,0,0],
+    yori_7:['Yori_7',1,1,4,0,0],
+    kbn1_7:['Kbn1_7',1,0,2,0,0],
+    kbn2_7:['Kbn2_7',1,0,2,0,0],
+    kako_7:['Kako_7',1,0,8,0,0],
+    kohi_7:['Kohi_7',0,1,3,0,0],
+    kk2t_4:['Kk2t_4',1,1,1,0,0],
+    kon_4_1:['Kon_4_1',1,0,2,0,0],
+    rit_4_1:['Rit_4_1',1,1,3,0,0],
+    kon_4_2:['Kon_4_2',1,0,2,0,0],
+    rit_4_2:['Rit_4_2',1,1,3,0,0],
+    kon_4_3:['Kon_4_3',1,0,2,0,0],
+    rit_4_3:['Rit_4_3',1,1,3,0,0],
+    kon_4_4:['Kon_4_4',1,0,2,0,0],
+    rit_4_4:['Rit_4_4',1,1,3,0,0],
+    kno_8:['Kno_8',0,1,2,0,0],
+    ijun_8:['Ijun_8',1,0,2,0,0],
+    ito1_8:['Ito1_8',1,1,2,0,0],
+    hon1_8:['Hon1_8',1,1,1,0,0],
+    ito2_8:['Ito2_8',1,1,2,0,0],
+    hon2_8:['Hon2_8',1,1,1,0,0],
+    kote_8:['Kote_8',1,1,1,0,0],
+    hoko_8:['Hoko_8',1,0,1,0,0],
+    yori_8:['Yori_8',1,1,4,0,0],
+    kbn1_8:['Kbn1_8',1,0,2,0,0],
+    kbn2_8:['Kbn2_8',1,0,2,0,0],
+    kako_8:['Kako_8',1,0,8,0,0],
+    kohi_8:['Kohi_8',0,1,3,0,0],
+    gno_5:['Gno_5',0,1,2,0,0],
+    gito_5:['Gito_5',1,0,8,0,0],
+    kota_5:['Kota_5',1,0,2,0,0],
+    kik1_5:['Kik1_5',1,1,4,0,0],
+    ktni_5:['Ktni_5',1,0,1,0,0],
+    kk2_5:['Kk2_5',1,1,3,0,0],
+    biko_5:['Biko_5',1,0,8,0,0],
+    kno_9:['Kno_9',0,1,2,0,0],
+    ijun_9:['Ijun_9',1,0,2,0,0],
+    ito1_9:['Ito1_9',1,1,2,0,0],
+    hon1_9:['Hon1_9',1,1,1,0,0],
+    ito2_9:['Ito2_9',1,1,2,0,0],
+    hon2_9:['Hon2_9',1,1,1,0,0],
+    kote_9:['Kote_9',1,1,1,0,0],
+    hoko_9:['Hoko_9',1,0,1,0,0],
+    yori_9:['Yori_9',1,1,4,0,0],
+    kbn1_9:['Kbn1_9',1,0,2,0,0],
+    kbn2_9:['Kbn2_9',1,0,2,0,0],
+    kako_9:['Kako_9',1,0,8,0,0],
+    kohi_9:['Kohi_9',0,1,3,0,0],
+    kk2t_5:['Kk2t_5',1,1,1,0,0],
+    kon_5_1:['Kon_5_1',1,0,2,0,0],
+    rit_5_1:['Rit_5_1',1,1,3,0,0],
+    kon_5_2:['Kon_5_2',1,0,2,0,0],
+    rit_5_2:['Rit_5_2',1,1,3,0,0],
+    kon_5_3:['Kon_5_3',1,0,2,0,0],
+    rit_5_3:['Rit_5_3',1,1,3,0,0],
+    kon_5_4:['Kon_5_4',1,0,2,0,0],
+    rit_5_4:['Rit_5_4',1,1,3,0,0],
+    kno_10:['Kno_10',0,1,2,0,0],
+    ijun_10:['Ijun_10',1,0,2,0,0],
+    ito1_10:['Ito1_10',1,1,2,0,0],
+    hon1_10:['Hon1_10',1,1,1,0,0],
+    ito2_10:['Ito2_10',1,1,2,0,0],
+    hon2_10:['Hon2_10',1,1,1,0,0],
+    kote_10:['Kote_10',1,1,1,0,0],
+    hoko_10:['Hoko_10',1,0,1,0,0],
+    yori_10:['Yori_10',1,1,4,0,0],
+    kbn1_10:['Kbn1_10',1,0,2,0,0],
+    kbn2_10:['Kbn2_10',1,0,2,0,0],
+    kako_10:['Kako_10',1,0,8,0,0],
+    kohi_10:['Kohi_10',0,1,3,0,0],
+    gno_6:['Gno_6',0,1,2,0,0],
+    gito_6:['Gito_6',1,0,8,0,0],
+    kota_6:['Kota_6',1,0,2,0,0],
+    kik1_6:['Kik1_6',1,1,4,0,0],
+    ktni_6:['Ktni_6',1,0,1,0,0],
+    kk2_6:['Kk2_6',1,1,3,0,0],
+    biko_6:['Biko_6',1,0,8,0,0],
+    kno_11:['Kno_11',0,1,2,0,0],
+    ijun_11:['Ijun_11',1,0,2,0,0],
+    ito1_11:['Ito1_11',1,1,2,0,0],
+    hon1_11:['Hon1_11',1,1,1,0,0],
+    ito2_11:['Ito2_11',1,1,2,0,0],
+    hon2_11:['Hon2_11',1,1,1,0,0],
+    kote_11:['Kote_11',1,1,1,0,0],
+    hoko_11:['Hoko_11',1,0,1,0,0],
+    yori_11:['Yori_11',1,1,4,0,0],
+    kbn1_11:['Kbn1_11',1,0,2,0,0],
+    kbn2_11:['Kbn2_11',1,0,2,0,0],
+    kako_11:['Kako_11',1,0,8,0,0],
+    kohi_11:['Kohi_11',0,1,3,0,0],
+    kk2t_6:['Kk2t_6',1,1,1,0,0],
+    kon_6_1:['Kon_6_1',1,0,2,0,0],
+    rit_6_1:['Rit_6_1',1,1,3,0,0],
+    kon_6_2:['Kon_6_2',1,0,2,0,0],
+    rit_6_2:['Rit_6_2',1,1,3,0,0],
+    kon_6_3:['Kon_6_3',1,0,2,0,0],
+    rit_6_3:['Rit_6_3',1,1,3,0,0],
+    kon_6_4:['Kon_6_4',1,0,2,0,0],
+    rit_6_4:['Rit_6_4',1,1,3,0,0],
+    kno_12:['Kno_12',0,1,2,0,0],
+    ijun_12:['Ijun_12',1,0,2,0,0],
+    ito1_12:['Ito1_12',1,1,2,0,0],
+    hon1_12:['Hon1_12',1,1,1,0,0],
+    ito2_12:['Ito2_12',1,1,2,0,0],
+    hon2_12:['Hon2_12',1,1,1,0,0],
+    kote_12:['Kote_12',1,1,1,0,0],
+    hoko_12:['Hoko_12',1,0,1,0,0],
+    yori_12:['Yori_12',1,1,4,0,0],
+    kbn1_12:['Kbn1_12',1,0,2,0,0],
+    kbn2_12:['Kbn2_12',1,0,2,0,0],
+    kako_12:['Kako_12',1,0,8,0,0],
+    kohi_12:['Kohi_12',0,1,3,0,0],
+    mjun_1:['Mjun_1',0,0,2,0,0],
+    denl_1:['Denl_1',1,1,4,0,0],
+    ondo_1:['Ondo_1',1,1,3,0,0],
+    hun_1:['Hun_1',1,1,3,0,0],
+    nori_1:['Nori_1',1,0,2,0,0],
+    imei_1:['Imei_1',0,0,59,0,0],
+    mjun_2:['Mjun_2',0,0,2,0,0],
+    denl_2:['Denl_2',1,1,4,0,0],
+    ondo_2:['Ondo_2',1,1,3,0,0],
+    hun_2:['Hun_2',1,1,3,0,0],
+    nori_2:['Nori_2',1,0,2,0,0],
+    imei_2:['Imei_2',0,0,59,0,0],
+    mjun_3:['Mjun_3',0,0,2,0,0],
+    denl_3:['Denl_3',1,1,4,0,0],
+    ondo_3:['Ondo_3',1,1,3,0,0],
+    hun_3:['Hun_3',1,1,3,0,0],
+    nori_3:['Nori_3',1,0,2,0,0],
+    imei_3:['Imei_3',0,0,59,0,0],
+    mjun_4:['Mjun_4',0,0,2,0,0],
+    denl_4:['Denl_4',1,1,4,0,0],
+    ondo_4:['Ondo_4',1,1,3,0,0],
+    hun_4:['Hun_4',1,1,3,0,0],
+    nori_4:['Nori_4',1,0,2,0,0],
+    imei_4:['Imei_4',0,0,59,0,0],
+    mjun_5:['Mjun_5',0,0,2,0,0],
+    denl_5:['Denl_5',1,1,4,0,0],
+    ondo_5:['Ondo_5',1,1,3,0,0],
+    hun_5:['Hun_5',1,1,3,0,0],
+    nori_5:['Nori_5',1,0,2,0,0],
+    imei_5:['Imei_5',0,0,59,0,0],
+    chuj_1:['Chuj_1',1,0,28,0,0],
+    chuj_2:['Chuj_2',1,0,28,0,0],
+    emsg:['Emsg',0,0,68,0,0],
+    kaku:['Kaku',1,0,1,0,0],
+  };
+</script>

@@ -1,0 +1,48 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php use Phalcon\Tag; ?>
+<?php echo $this->getContent(); ?>
+<?php $title = "台帳Excel出力"; ?>
+<div class="page-header">
+    <h2>台帳Excel出力</h2>
+</div>
+
+<div class="panel panel-success bg-yel">
+    <br /><br />
+    <?php
+    echo $this->tag->form(
+        array(
+            "index/export_excel",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "name" => "form_jouken"
+        )
+    );
+    ?>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <label for="fieldCd" class="col-sm-2 control-label">対象台帳選択 >></label>
+            <div class="col-sm-4">
+                <?php
+                echo $this->tag->selectStatic(
+                        array("table",
+                            ["ShouhinMrs" => "商品台帳",
+                                "TokuisakiMrs" => "得意先台帳",
+                                "NounyuusakiMrs" => "納入先台帳",
+                                "ShiiresakiMrs" => "仕入先台帳",
+                                "SoukoMrs" => "倉庫台帳",
+                                "TantouMrs" => "担当台帳",
+                                "Users" => "ユーザ台帳",
+                                "KouseiBuhinMrs" => "構成部品台帳",
+                            ],
+                    "class" => "form-control f-cent", "id" => "fieldTable"));
+                ?>
+            </div>
+            <?php echo $this->tag->submitButton(array("Export F12", "id" => "F12", "class" => "btn  btn-success")) ?>
+        </div>
+    </div>
+    <?php echo $this->tag->endForm(); ?>
+</div>

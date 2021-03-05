@@ -1,0 +1,156 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "織設計マスタ.一覧"; ?>
+<div class="page-header">
+    <h3>織設計マスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"h_siori_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["moku","試織目的"],
+                    ["symd","設計日付"],
+                    ["kymd","改訂日付"],
+                    ["type","織物タイプ"],
+                    ["irai","依頼先"],
+                    ["etnt","営業担当"],
+                    ["ktnt","企画担当"],
+                    ["kibo","希望納期"],
+                    ["inou","依頼納期"],
+                    ["snou","設計納期"],
+                    ["tnou","整経納期"],
+                    ["ynou","織上納期"],
+                    ["anou","仕上納期"],
+                    ["tken","経糸名数"],
+                    ["yken","緯糸名数"],
+                    ["socd","組織図コード"],
+                    ["htkb","経配列区分"],
+                    ["htho","経配列本"],
+                    ["htsi","経配列中心"],
+                    ["hykb","緯配列区分"],
+                    ["hyho","緯配列本数"],
+                    ["ayma","綾通し枚数"],
+                    ["aycd","綾通し順コード"],
+                    ["ayho","綾通し本数"],
+                    ["shab","整経巾鯨寸"],
+                    ["snag","整経長回数"],
+                    ["osa","筬密度"],
+                    ["uti","打込"],
+                    ["miha","耳羽数"],
+                    ["mihk","耳引込本数"],
+                    ["miho","耳本数"],
+                    ["jiha","地羽数"],
+                    ["jihk","地引込本数"],
+                    ["dohk","同口引込本数"],
+                    ["jiho","地本数"],
+                    ["khab","生機巾"],
+                    ["knag","生機長"],
+                    ["tiji","織縮"],
+                    ["ahab","仕上巾"],
+                    ["anag","仕上長"],
+                    ["auti","仕上打込"],
+                    ["jury","重量"],
+                    ["kkoh","仮撚工費"],
+                    ["nkoh","撚糸工費"],
+                    ["tkoh","整経工費"],
+                    ["ykoh","製織工費"],
+                    ["dkoh","染色工費"],
+                    ["skoh","整理工費"],
+                    ["nnfk","撚糸負荷"],
+                    ["gjur","原単位重量"],
+                    ["ecod1","取扱絵記号1"],
+                    ["ecod2","取扱絵記号2"],
+                    ["ecod3","取扱絵記号3"],
+                    ["ecod4","取扱絵記号4"],
+                    ["ecod5","取扱絵記号5"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $h_siori_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("h_siori_mrs/edit/" . $h_siori_mr->id, $h_siori_mr->id)); ?></td>
+                <td><?php echo $h_siori_mr->cd ?></td>
+                <td><?php echo $h_siori_mr->moku ?></td>
+                <td><?php echo $h_siori_mr->symd ?></td>
+                <td><?php echo $h_siori_mr->kymd ?></td>
+                <td><?php echo $h_siori_mr->type ?></td>
+                <td><?php echo $h_siori_mr->irai ?></td>
+                <td><?php echo $h_siori_mr->etnt ?></td>
+                <td><?php echo $h_siori_mr->ktnt ?></td>
+                <td><?php echo $h_siori_mr->kibo ?></td>
+                <td><?php echo $h_siori_mr->inou ?></td>
+                <td><?php echo $h_siori_mr->snou ?></td>
+                <td><?php echo $h_siori_mr->tnou ?></td>
+                <td><?php echo $h_siori_mr->ynou ?></td>
+                <td><?php echo $h_siori_mr->anou ?></td>
+                <td><?php echo $h_siori_mr->tken ?></td>
+                <td><?php echo $h_siori_mr->yken ?></td>
+                <td><?php echo $h_siori_mr->socd ?></td>
+                <td><?php echo $h_siori_mr->htkb ?></td>
+                <td><?php echo $h_siori_mr->htho ?></td>
+                <td><?php echo $h_siori_mr->htsi ?></td>
+                <td><?php echo $h_siori_mr->hykb ?></td>
+                <td><?php echo $h_siori_mr->hyho ?></td>
+                <td><?php echo $h_siori_mr->ayma ?></td>
+                <td><?php echo $h_siori_mr->aycd ?></td>
+                <td><?php echo $h_siori_mr->ayho ?></td>
+                <td><?php echo $h_siori_mr->shab ?></td>
+                <td><?php echo $h_siori_mr->snag ?></td>
+                <td><?php echo $h_siori_mr->osa ?></td>
+                <td><?php echo $h_siori_mr->uti ?></td>
+                <td><?php echo $h_siori_mr->miha ?></td>
+                <td><?php echo $h_siori_mr->mihk ?></td>
+                <td><?php echo $h_siori_mr->miho ?></td>
+                <td><?php echo $h_siori_mr->jiha ?></td>
+                <td><?php echo $h_siori_mr->jihk ?></td>
+                <td><?php echo $h_siori_mr->dohk ?></td>
+                <td><?php echo $h_siori_mr->jiho ?></td>
+                <td><?php echo $h_siori_mr->khab ?></td>
+                <td><?php echo $h_siori_mr->knag ?></td>
+                <td><?php echo $h_siori_mr->tiji ?></td>
+                <td><?php echo $h_siori_mr->ahab ?></td>
+                <td><?php echo $h_siori_mr->anag ?></td>
+                <td><?php echo $h_siori_mr->auti ?></td>
+                <td><?php echo $h_siori_mr->jury ?></td>
+                <td><?php echo $h_siori_mr->kkoh ?></td>
+                <td><?php echo $h_siori_mr->nkoh ?></td>
+                <td><?php echo $h_siori_mr->tkoh ?></td>
+                <td><?php echo $h_siori_mr->ykoh ?></td>
+                <td><?php echo $h_siori_mr->dkoh ?></td>
+                <td><?php echo $h_siori_mr->skoh ?></td>
+                <td><?php echo $h_siori_mr->nnfk ?></td>
+                <td><?php echo $h_siori_mr->gjur ?></td>
+                <td><?php echo $h_siori_mr->ecod1 ?></td>
+                <td><?php echo $h_siori_mr->ecod2 ?></td>
+                <td><?php echo $h_siori_mr->ecod3 ?></td>
+                <td><?php echo $h_siori_mr->ecod4 ?></td>
+                <td><?php echo $h_siori_mr->ecod5 ?></td>
+                <td><?php echo $h_siori_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("h_siori_mrs/delete/" . $h_siori_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"h_siori_mrs"]) ?>

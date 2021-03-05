@@ -1,0 +1,95 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "条件表見出し.修正"; ?>
+<div class="page-header">
+    <h3>条件表見出し 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "joukenhyou_midasi_kbns/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<label for="fieldCd" class="col-sm-2 control-label">コード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("cd", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldCd")) ?>
+    </div>
+
+<label for="fieldName" class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("name", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldName")) ?>
+    </div>
+
+<label for="fieldShouhinBunrui1KbnCd" class="col-sm-2 control-label">商品分類１</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("shouhin_bunrui1_kbn_cd", ShouhinBunrui1Kbns::find(["columns" => "cd , CONCAT(cd,'=',name) as cd_name"]), "using" => array("cd", "cd_name"),'useEmpty' => true, "style" => "width: 150px;", "class" => "form-control", "id" => "fieldShouhinBunrui1KbnCd")) ?>
+    </div>
+
+<label for="fieldTaypeKbnCd" class="col-sm-2 control-label">タイプコード</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("type_kbn_cd", "size" => 10, "maxlength" => 10, "style" => "width: 156px;", "class" => "form-control", "id" => "fieldTaypeKbnCd")) ?>
+    </div>
+
+<label for="fieldKetasuu" class="col-sm-2 control-label">各行桁数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("ketasuu", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldKetasuu")) ?>
+    </div>
+
+<label for="fieldGyousuu" class="col-sm-2 control-label">画面行数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("gyousuu", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldGyousuu")) ?>
+    </div>
+
+<label for="fieldShousuu" class="col-sm-2 control-label">数値小数桁数</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("shousuu", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldShousuu")) ?>
+    </div>
+
+<label for="fieldTuikaMax" class="col-sm-2 control-label">追加上限</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("tuika_max", "type" => "number", "style" => "width: 156px;", "class" => "form-control", "id" => "fieldTuikaMax")) ?>
+    </div>
+
+<label for="fieldMemo" class="col-sm-2 control-label">メモ</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("memo", "size" => 40, "maxlength" => 40, "style" => "width: 516px;", "class" => "form-control", "id" => "fieldMemo")) ?>
+    </div>
+
+<label for="fieldUpdated" class="col-sm-2 control-label">更新日時</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+    </div>
+
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("joukenhyou_midasi_kbns/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("joukenhyou_midasi_kbns/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("実行f12", "id" => "F12", "class" => "btn  btn-success", "onclick" => 'return confirm("よろしいですか？");')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("joukenhyou_midasi_kbns/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("joukenhyou_midasi_kbns/delete/".$id, "削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

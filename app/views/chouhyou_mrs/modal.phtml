@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "伝票.印刷"; ?>
+<div class="page-header">
+    <h3 id="title">帳票レイアウト名</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "chouhyou_mrs/renzoku",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "id" => "formToRenzoku",
+            "target" => "_blank"
+        )
+    );
+?>
+
+<?php echo $this->tag->hiddenField("denpyou_mr_cd") ?>
+<div class="form-group">
+<label for="fieldChouhyouKbnCd" class="col-sm-2 control-label">出力帳票</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("chouhyou_kbn_cd", ChouhyouKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name", "conditions" => "denpyou_mr_cd = ?1", "bind"=>[1=>$this->tag->getValue("denpyou_mr_cd")], "order"=>"jun"]), "using" => array("cd", "cd_name"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldChouhyouKbnCd")) ?>
+    </div>
+</div>
+<div class="form-group">
+<label for="fieldId" class="col-sm-2 control-label">書式</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->select(array("id", ChouhyouMrs::find(["columns" => "id , CONCAT(id , '=' , name) as id_name", "conditions" => "chouhyou_kbn_cd = ?1", "bind"=>[1=>$this->tag->getValue("chouhyou_kbn_cd")], "order"=>"cd"]), "using" => array("id", "id_name"), "style" => "width: 324px;", "class" => "form-control", "id" => "fieldId", "useEmpty" => false)) ?>
+    </div>
+</div>
+<div class="form-group">
+
+	<div class="col-sm-2">
+	    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal1();">中止</button>
+	</div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("印刷実行F12", "id" => "F12", "class" => "btn btn-lg btn-success", "onclick" => 'return setChouhyou();')) ?>
+    </div>
+    <div class="col-sm-6">
+        <button class="btn btn-warning" type="button" id='F5' onclick="f5key()">
+            連続印刷F5
+        </button>
+    </div>
+</div>
+
+<script type="text/javascript">
+	var chouhyou_mrs_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('chouhyou_mrs/ajaxGet') ?>";
+</script>
+
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/chouhyou_mrs_modal.js'); ?>?var=20170214"></script>

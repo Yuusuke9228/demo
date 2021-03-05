@@ -1,0 +1,72 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "商品参照"; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/modalkanni",["table_id"=>"shouhin_mrs","flds"=>[
+		["cd","fieldCd","商品コード",14,14],["name","fieldName","商品名",40,40]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["cd","コード(選択)"],
+					["name","名称"],
+					/*["updated","更新日"],*/
+					["tanni_mr2_cd","単位"],
+					["gen_zaiko",""],
+					["memo","メモ"]
+				]]) ?>
+                <th style="text-align:center;">修正</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $i = 1; ?>
+        <?php foreach ($page->items as $shouhin_mr): ?>
+            <tr>
+	            <td nowrap id="<?php echo 'cd' . $i; ?>" align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $shouhin_mr->cd; ?></div></td>
+                <td nowrap ><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $shouhin_mr->name ?></div></td>
+<!--	            <td nowrap align="center">--><?php //echo $shouhin_mr->updated ?><!--</td>-->
+	            <td nowrap align="center"><?php echo $shouhin_mr->TanniMr2s->name ?></td>
+	            <td nowrap align="right">
+	            	<?php /*
+                        $zaikos = ZaikoKakuninAzukariVws::findZaikos(["conditions" => "p1a.cd = '".$shouhin_mr->cd."'", "groupby" => ["shouhin_mr_cd"]]);
+	            		echo $zaikos?round($zaikos[0]["zaiko_ryou2"],3):0;
+	            		*/
+	            	?>
+            	</td>
+	            <td nowrap align="center""><?php echo $shouhin_mr->memo ?></td>
+
+                <td nowrap align="center"><?php echo $this->tag->linkTo(array("shouhin_mrs/edit/" . $shouhin_mr->id, "別タブ", "target"=>"_blank")); ?></td>
+                <?php $i += 1; ?>
+            </tr>
+
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+	<?php $this->partial("common/indextail",["index_or"=>"modal","table_id"=>"shouhin_mrs"]) ?>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+    </div>
+</div><!-- end class="row" -->
+<script type="text/javascript">
+    $('.returnto').click(function () {//alert($(this).text());
+        //Add By Nishiyama 2018/11/17
+        //品名を選択してもコードを取れるようにする
+        var index = $('.returnto').index(this);
+        if (index % 2 === 0) {
+            window.parent.fromModal($(this).text());
+        } else {
+            var row = $(this).closest('tr').index();
+            row += 1;
+            let cd = document.getElementById('cd' + row).textContent;
+            window.parent.fromModal(cd);
+        }
+    });
+</script>

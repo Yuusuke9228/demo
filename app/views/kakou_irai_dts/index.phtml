@@ -1,0 +1,146 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "加工依頼書用データ.一覧"; ?>
+<div class="page-header">
+    <h3>加工依頼書用データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"kakou_irai_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","名称"],
+                    ["hacchuu_dt_id","発注書キー"],
+                    ["gotantou","ご担当者"],
+                    ["keishou","敬称"],
+                    ["seisan_kanri_user_cd","生産管理担当コード"],
+                    ["assistant_user_cd","営業アシスタントコード"],
+                    ["loss_ritu","ロス率"],
+                    ["kibou_nouki","希望納期"],
+                    ["kouki","工期"],
+                    ["kakou_shu","加工種"],
+                    ["kishu","機種"],
+                    ["yori_houkou","撚り方向"],
+                    ["yorisuu","撚り数"],
+                    ["yori_tanni","撚り単位"],
+                    ["makiryou","巻量"],
+                    ["makiryou_tanni","巻量単位"],
+                    ["seimaki_mae","正巻基準前"],
+                    ["seimaki_suu","正巻基準数"],
+                    ["seimaki_tanni","正巻基準単位"],
+                    ["sikan_sitei","紙管指定"],
+                    ["set_umu","セット有無フラグ"],
+                    ["set_ondo","セット温度"],
+                    ["set_hun","セット分"],
+                    ["tail_kbn","テール"],
+                    ["komaki_kbn","小巻区分"],
+                    ["tunagi_kbn","繋区分"],
+                    ["youto","用途"],
+                    ["case_kbn","ケース区分"],
+                    ["irihonsuu","入り本数"],
+                    ["zansi_kbn","残糸区分"],
+                    ["shukka_kbn","出荷区分"],
+                    ["sonota1","その他1"],
+                    ["sonota2","その他2"],
+                    ["sonota3","その他3"],
+                    ["bikou_ka","備考"],
+                    ["bikou_yor","備考"],
+                    ["bikou_ma","備考"],
+                    ["bikou_si","備考"],
+                    ["bikou_se","備考"],
+                    ["bikou_ta","備考"],
+                    ["bikou_ko","備考"],
+                    ["bikou_tu","備考"],
+                    ["bikou_you","備考"],
+                    ["bikou_ca","備考"],
+                    ["bikou_za","備考"],
+                    ["bikou_sh","備考"],
+                    ["bikou_so1","備考"],
+                    ["bikou_so2","備考"],
+                    ["bikou_so3","備考"],
+                    ["tokki","特記事項"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $kakou_irai_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("kakou_irai_dts/edit/" . $kakou_irai_dt->id, $kakou_irai_dt->id)); ?></td>
+                <td><?php echo $kakou_irai_dt->cd ?></td>
+                <td><?php echo $kakou_irai_dt->name ?></td>
+                <td><?php echo $kakou_irai_dt->hacchuu_dt_id ?></td>
+                <td><?php echo $kakou_irai_dt->gotantou ?></td>
+                <td><?php echo $kakou_irai_dt->keishou ?></td>
+                <td><?php echo $kakou_irai_dt->seisan_kanri_user_cd ?></td>
+                <td><?php echo $kakou_irai_dt->assistant_user_cd ?></td>
+                <td><?php echo $kakou_irai_dt->loss_ritu ?></td>
+                <td><?php echo $kakou_irai_dt->kibou_nouki ?></td>
+                <td><?php echo $kakou_irai_dt->kouki ?></td>
+                <td><?php echo $kakou_irai_dt->kakou_shu ?></td>
+                <td><?php echo $kakou_irai_dt->kishu ?></td>
+                <td><?php echo $kakou_irai_dt->yori_houkou ?></td>
+                <td><?php echo $kakou_irai_dt->yorisuu ?></td>
+                <td><?php echo $kakou_irai_dt->yori_tanni ?></td>
+                <td><?php echo $kakou_irai_dt->makiryou ?></td>
+                <td><?php echo $kakou_irai_dt->makiryou_tanni ?></td>
+                <td><?php echo $kakou_irai_dt->seimaki_mae ?></td>
+                <td><?php echo $kakou_irai_dt->seimaki_suu ?></td>
+                <td><?php echo $kakou_irai_dt->seimaki_tanni ?></td>
+                <td><?php echo $kakou_irai_dt->sikan_sitei ?></td>
+                <td><?php echo $kakou_irai_dt->set_umu ?></td>
+                <td><?php echo $kakou_irai_dt->set_ondo ?></td>
+                <td><?php echo $kakou_irai_dt->set_hun ?></td>
+                <td><?php echo $kakou_irai_dt->tail_kbn ?></td>
+                <td><?php echo $kakou_irai_dt->komaki_kbn ?></td>
+                <td><?php echo $kakou_irai_dt->tunagi_kbn ?></td>
+                <td><?php echo $kakou_irai_dt->youto ?></td>
+                <td><?php echo $kakou_irai_dt->case_kbn ?></td>
+                <td><?php echo $kakou_irai_dt->irihonsuu ?></td>
+                <td><?php echo $kakou_irai_dt->zansi_kbn ?></td>
+                <td><?php echo $kakou_irai_dt->shukka_kbn ?></td>
+                <td><?php echo $kakou_irai_dt->sonota1 ?></td>
+                <td><?php echo $kakou_irai_dt->sonota2 ?></td>
+                <td><?php echo $kakou_irai_dt->sonota3 ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_ka ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_yor ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_ma ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_si ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_se ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_ta ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_ko ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_tu ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_you ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_ca ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_za ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_sh ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_so1 ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_so2 ?></td>
+                <td><?php echo $kakou_irai_dt->bikou_so3 ?></td>
+                <td><?php echo $kakou_irai_dt->tokki ?></td>
+                <td><?php echo $kakou_irai_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("kakou_irai_dts/delete/" . $kakou_irai_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"kakou_irai_dts"]) ?>

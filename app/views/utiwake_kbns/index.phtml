@@ -1,0 +1,72 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "取引内訳区分.一覧"; ?>
+<div class="page-header">
+    <h3>取引内訳区分 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"utiwake_kbns","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","名称"],
+                    ["bikou","備考"],
+                    ["juchuu_flg","受注フラグ"],
+                    ["hacchuu_flg","発注フラグ"],
+                    ["uriage_flg","売上フラグ"],
+                    ["shiire_flg","仕入フラグ"],
+                    ["uriage_zaiko_flg","売上在庫フラグ"],
+                    ["shiire_zaiko_flg","仕入在庫フラグ"],
+                    ["uriage_azukari_flg","売上預りフラグ"],
+                    ["shiire_azukari_flg","仕入預りフラグ"],
+                    ["juchuu_zan_flg","受注残フラグ"],
+                    ["hacchuu_zan_flg","発注残フラグ"],
+                    ["yayoi_kbn","弥生区分"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $utiwake_kbn): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("utiwake_kbns/edit/" . $utiwake_kbn->id, $utiwake_kbn->id)); ?></td>
+                <td><?php echo $utiwake_kbn->cd ?></td>
+                <td><?php echo $utiwake_kbn->name ?></td>
+                <td><?php echo $utiwake_kbn->bikou ?></td>
+                <td><?php echo $utiwake_kbn->juchuu_flg ?></td>
+                <td><?php echo $utiwake_kbn->hacchuu_flg ?></td>
+                <td><?php echo $utiwake_kbn->uriage_flg ?></td>
+                <td><?php echo $utiwake_kbn->shiire_flg ?></td>
+                <td><?php echo $utiwake_kbn->uriage_zaiko_flg ?></td>
+                <td><?php echo $utiwake_kbn->shiire_zaiko_flg ?></td>
+                <td><?php echo $utiwake_kbn->uriage_azukari_flg ?></td>
+                <td><?php echo $utiwake_kbn->shiire_azukari_flg ?></td>
+                <td><?php echo $utiwake_kbn->juchuu_zan_flg ?></td>
+                <td><?php echo $utiwake_kbn->hacchuu_zan_flg ?></td>
+                <td><?php echo $utiwake_kbn->yayoi_kbn ?></td>
+                <td><?php echo $utiwake_kbn->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("utiwake_kbns/delete/" . $utiwake_kbn->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"utiwake_kbns"]) ?>

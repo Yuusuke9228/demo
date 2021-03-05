@@ -1,0 +1,155 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "伝票.一覧"; ?>
+<div class="page-header">
+    <h3>入力伝票 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+<?php echo $this->tag->form(array("report_zaiko_vws/den_modal", "autocomplete" => "off", "class" => "form-horizontal")); ?>
+    <div class="col-sm-2">
+				<label for="fieldNyuushukkobi" class="control-label">伝票日付</label>
+				<?php echo $this->tag->telField(array("nyuushukkobi", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldNyuushukkobi")) ?>
+    </div>
+    <div class="col-sm-1">
+				<label for="fieldOyaCd" class="control-label">伝票No</label>
+				<?php echo $this->tag->textField(array("oya_cd", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldOyaCd")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldShouhinMrCd" class="control-label">商品</label>
+				<?php echo $this->tag->textField(array("shouhin_mr_cd", "size" => 14, "maxlength" => 14, "class" => "form-control", "id" => "fieldShouhinMrCd")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldSoukoMrCd" class="control-label">倉庫</label>
+				<?php echo $this->tag->select(array("souko_mr_cd", SoukoMrs::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name", "order"=>"cd"]), "using" => ["cd", "cd_name"], 'useEmpty' => true, 'emptyText' => 'All', "class" => "form-control", "id" => "fieldSoukoMrCd")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldKousinUserId" class="control-label">更新者</label>
+				<?php echo $this->tag->select(array("kousin_user_id", Users::find(["columns" => "id , CONCAT(cd , '=' , name) as cd_name", "order"=>"cd"]), "using" => ["id", "cd_name"], 'useEmpty' => true, 'emptyText' => 'All', "class" => "form-control", "id" => "fieldKousinUserId")) ?>
+    </div>
+    <div  class="col-sm-2">
+				<label for="fieldDenpyouMrCd" class="control-label">伝票種</label>
+				<?php echo $this->tag->select(array("denpyou_mr_cd", DenpyouMrs::find(["columns" => "cd , name", "order"=>"cd"]), "using" => ["cd", "name"], 'useEmpty' => true, 'emptyText' => 'All', "class" => "form-control", "id" => "fieldDenpyouMrCd")) ?>
+    </div>
+    <div  class="col-sm-1">
+				<label for="fieldPagelimit" class="control-label">行数</label>
+				<?php echo $this->tag->textField(array("pagelimit", "size" => 4, "maxlength" => 4, "class" => "form-control f-numb", "id" => "fieldPagelimit")) ?>
+    </div>
+
+
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <thead>
+            <tr bgcolor="Lavender">
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["nyuushukkobi","伝票日付"],
+                    ["oya_cd","[選択]伝票No"],
+                    ["gyou_cd","行"],
+                    ["denpyou_mr_cd","伝票種"],
+                    ["utiwake_kbn_cd","内訳"],
+                    ["shouhin_mr_cd","商品コード"],
+                    ["iro","色"],
+                    ["iromei","色名"],
+                    ["lot","ロット"],
+                    ["kobetucd","個別"],
+                    ["shiire_ryou1s","仕入数"],
+                    ["shiire_ryou2s","仕入量"],
+                    ["hokanyuuko_ryou1s","入庫数"],
+                    ["hokanyuuko_ryou2s","入庫量"],
+                    ["uriage_ryou1s","売上数"],
+                    ["uriage_ryou2s","売上量"],
+                    ["hokashukko_ryou1s","出庫数"],
+                    ["hokashukko_ryou2s","出庫量"],
+                    ["tanni_mr1_cd","数単位"],
+                    ["tanni_mr2_cd","量単位"],
+                    ["hinsitu_kbn_cd","品質"],
+                    ["updated","更新日時"],
+                    ["kousin_user_id","更新者"],
+                    ["shiire_gakus","仕入額"],
+                    ["torihikisaki_cd","取引先"],
+                    ["tantou_mr_cd","担当"],
+                    ["souko_mr_cd","倉庫コード"],
+                    ["bikou","備考"],
+                    ["oya_id","伝票ID"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $report_zaiko_vw): ?>
+            <tr>
+                <td><?php echo $report_zaiko_vw->nyuushukkobi ?></td>
+                <td align='center'><?php echo "<input type='checkbox' class='returnto' id='field".$report_zaiko_vw->oya_cd."' value='".$report_zaiko_vw->oya_cd."'>
+                								<label for='field".$report_zaiko_vw->oya_cd."'>".$report_zaiko_vw->oya_cd."</label>" ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->gyou_cd ?></td>
+                <td align='center' style='font-size:80%;'><?php echo $report_zaiko_vw->DenpyouMrs->name ?></td>
+                <td align='center' style='font-size:80%;'><?php echo $report_zaiko_vw->UtiwakeKbns->name ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->shouhin_mr_cd ?></td>
+                <td><?php echo $report_zaiko_vw->iro ?></td>
+                <td><?php echo $report_zaiko_vw->iroban ?></td>
+                <td><?php echo $report_zaiko_vw->lot ?></td>
+                <td><?php echo $report_zaiko_vw->kobetucd ?></td>
+                <td align='right'><?php echo $report_zaiko_vw->shiire_ryou1s??'' ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->shiire_ryou2s??'' ?></td>
+                <td align='right'><?php echo $report_zaiko_vw->hokanyuuko_ryou1s??'' ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->hokanyuuko_ryou2s??'' ?></td>
+                <td align='right'><?php echo $report_zaiko_vw->uriage_ryou1s??'' ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->uriage_ryou2s??'' ?></td>
+                <td align='right'><?php echo $report_zaiko_vw->hokashukko_ryou1s??'' ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->hokashukko_ryou2s??'' ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->TanniMr1s->name ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->TanniMr2s->name ?></td>
+                <td align='center' style='font-size:80%;'><?php echo $report_zaiko_vw->HinsituKbns->name ?></td>
+                <td align='center' style='font-size:80%;'><?php echo $report_zaiko_vw->updated ?></td>
+                <td align='center' style='font-size:80%;'><?php echo $report_zaiko_vw->Users->name ?></td>
+                <td align='right'><?php echo number_format($report_zaiko_vw->shiire_gakus)??'' ?></td>
+                <td align='center'><?php echo $report_zaiko_vw->torihikisaki_cd ?></td>
+                <td align='center' style='font-size:80%;'><?php echo $report_zaiko_vw->TantouMrs->name ?></td>
+                <td align='center' style='font-size:80%;'><?php echo $report_zaiko_vw->SoukoMrs->name ?></td>
+                <td><?php echo $report_zaiko_vw->bikou ?></td>
+                <td align='right'><?php echo $report_zaiko_vw->oya_id ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table><br><br><br>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-bottom" style="background-color:#e8e0d0;">
+ <div class="container">
+  <span class="navbar-text">
+	<input type="button" value="戻るESC" id="ESC" class="btn btn-default btn-xs" onclick="window.parent.fromModal();" title='選択を中止して戻る:ESCキー' />
+	<input type="button" value="－－F1" id="F1" class="btn btn-default btn-xs" onclick="$('#fieldPagelimit').focus().select();" title='ブラウザのHELP起動:F1キー' />
+	<?php echo $this->tag->linkTo(array("report_zaiko_vws/den_modal?page=1" . $parasort, "最初F2", "id"=>"F2","class"=>"btn btn-default btn-xs ".($page->current==1?'disabled':''))) ?> 
+	<?php echo $this->tag->linkTo(array("report_zaiko_vws/den_modal?page=" . $page->before . $parasort, "前頁F3", "id"=>"F3","class"=>"btn btn-default btn-xs ".($page->current==1?'disabled':''))) ?> 
+	<?php echo $this->tag->linkTo(array("report_zaiko_vws/den_modal?page=" . $page->next . $parasort, "次頁F4", "id"=>"F4","class"=>"btn btn-default btn-xs ".($page->current==$page->total_pages?'disabled':''))) ?>　
+	<?php echo $this->tag->linkTo(array("report_zaiko_vws/den_modal?page=" . $page->last . $parasort, "最後F5", "id"=>"F5","class"=>"btn btn-default btn-xs ".($page->current==$page->total_pages?'disabled':''))) ?> 
+	<input type="button" value="－－F6" id="F6" class="btn btn-default btn-xs" onclick="shuusei();" title='修正入力可能になります:F6キー' />
+	<input type="button" value="－－F7" id="F7" class="btn btn-default btn-xs" onclick="hyouji();" title='表示モードになります:F7キー' />
+	<input type="button" value="－－F8" id="X8" class="btn btn-default btn-xs" onclick="alert('F8');" title='参照可能の時、参照画面を開きます:F8キー' />　
+	<input type="button" value="中止F9" id="F9" class="btn btn-default btn-xs" onclick="window.parent.fromModal();" title='選択を中止して戻る:F9キー' />
+	<input type="button" value="－－F10" id="F10" class="btn btn-default btn-xs" onclick="" title='ブラウザの機能が起動:F10キー' />
+	<input type="button" value="－－F11" id="F11" class="btn btn-default btn-xs" onclick="alert('F11');" title='ブラウザの機能が起動:F11キー' />
+	<input type="submit" value="検索F12" id="F12" class="btn btn-success" title='指定の条件で簡易検索します:F12キー' />
+	<?php echo ' PAGE: '.$page->current.'／'.$page->total_pages; ?>
+  </span>
+ </div>
+</div>
+<?php echo $this->tag->endForm(); ?>
+
+<script type="text/javascript">
+$(function(){ // テーブルのヘッドを消えなくする
+  $('table.head_fix').floatThead({
+  	top: 0
+  });
+});
+
+$('.returnto').change(function () { // alert($(this).val());
+	window.parent.fromModal($(this).val());
+});
+</script>

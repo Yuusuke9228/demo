@@ -1,0 +1,98 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <nav>
+        <ul class="pager">
+            <li class="previous"><?php echo $this->tag->linkTo(["uri_vws/index", "Go Back"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["uri_vws/copyurioya", "複写親"]); ?></li>
+            <li><?php echo $this->tag->linkTo(["uri_vws/copyuriko", "複写子"]); ?></li>
+            <li><a href="#" onclick="window.close()">閉じる</a></li>
+            <li class="next"><?php echo $this->tag->linkTo(["uri_vws/new", "Create "]); ?></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-header">
+    <h1>Search result</h1>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Hiduke</th>
+            <th>Uriagesaki</th>
+            <th>Uriage Of No</th>
+            <th>Gyou</th>
+            <th>Hinban</th>
+            <th>Tantou</th>
+            <th>Kibata Of No</th>
+            <th>Ito Of Code</th>
+            <th>Irai Of No</th>
+            <th>Sasizu Of No</th>
+            <th>Suuryou Of Meisai</th>
+            <th>Suuryou Of Goukei</th>
+            <th>Tanka</th>
+            <th>Tanni</th>
+            <th>Itomei</th>
+            <th>Lot</th>
+            <th>Kishu</th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $uri_vw): ?>
+            <tr>
+                <td><?php echo $uri_vw->hiduke ?></td>
+            <td><?php echo $uri_vw->uriagesaki ?></td>
+            <td><?php echo $uri_vw->uriage_no ?></td>
+            <td><?php echo $uri_vw->gyou ?></td>
+            <td><?php echo $uri_vw->hinban ?></td>
+            <td><?php echo $uri_vw->tantou ?></td>
+            <td><?php echo $uri_vw->kibata_no ?></td>
+            <td><?php echo $uri_vw->ito_code ?></td>
+            <td><?php echo $uri_vw->irai_no ?></td>
+            <td><?php echo $uri_vw->sasizu_no ?></td>
+            <td><?php echo $uri_vw->suuryou_meisai ?></td>
+            <td><?php echo $uri_vw->suuryou_goukei ?></td>
+            <td><?php echo $uri_vw->tanka ?></td>
+            <td><?php echo $uri_vw->tanni ?></td>
+            <td><?php echo $uri_vw->itomei ?></td>
+            <td><?php echo $uri_vw->lot ?></td>
+            <td><?php echo $uri_vw->kishu ?></td>
+
+                <td><?php echo $this->tag->linkTo(["uri_vws/edit/" . $uri_vw->hiduke, "Edit"]); ?></td>
+                <td><?php echo $this->tag->linkTo(["uri_vws/delete/" . $uri_vw->hiduke, "Delete"]); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        <p class="pagination" style="line-height: 1.42857;padding: 6px 12px;">
+            <?php echo $page->current, "/", $page->total_pages ?>
+        </p>
+    </div>
+    <div class="col-sm-11">
+        <nav>
+            <ul class="pagination">
+                <li><?php echo $this->tag->linkTo("uri_vws/search", "First") ?></li>
+                <li><?php echo $this->tag->linkTo("uri_vws/search?page=" . $page->before, "Previous") ?></li>
+                <li><?php echo $this->tag->linkTo("uri_vws/search?page=" . $page->next, "Next") ?></li>
+                <li><?php echo $this->tag->linkTo("uri_vws/search?page=" . $page->last, "Last") ?></li>
+            </ul>
+        </nav>
+    </div>
+</div>

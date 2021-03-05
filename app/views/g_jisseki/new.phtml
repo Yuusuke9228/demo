@@ -1,0 +1,34 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+<?php $title = "実績.新規"; ?>
+<div class="page-header">
+    <h3>実績 新規</h3>
+</div>
+<?php echo $this->getContent(); ?>
+<?php
+echo $this->tag->form(
+    [
+        "g_jisseki/create",
+        "autocomplete" => "off",
+        "class" => "form-horizontal",
+        "id" => "formJisseki",
+    ]
+);
+?>
+
+<div class="form-group">
+    <?php $this->partial('g_jisseki/inputfields'); ?>
+
+    <div class="col-sm-offset-3 col-sm-2">
+        <?php echo $this->tag->linkTo(["g_jisseki/prev", "　　最終　　", "id" => "F3", "class" => "btn  btn-info"]); ?>
+    </div>
+    <div class="col-sm-offset-2 col-sm-3">
+        <?php echo $this->tag->submitButton(["　　登録　　", "id" => "F12", "class" => "btn  btn-success", "onclick" => "confirm('宜しいですか？')"]); ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>
+<script src="<?php echo $this->url->get('js/views/g_jisseki.js'); ?>?var=2020721"></script>

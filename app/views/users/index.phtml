@@ -1,0 +1,62 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "ユーザーマスタ.一覧"; ?>
+<div class="page-header">
+    <h3>ユーザーマスタ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"users","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","ユーザーコード"],
+                    ["password","パスワード"],
+                    ["name","ユーザー名"],
+                    ["user_group_mr_cd","ユーザーグループ"],
+                    ["kaisi_bi","適用開始日"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $user): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("users/edit/" . $user->id, $user->id)); ?></td>
+                <td><?php echo $user->cd ?></td>
+                <td><?php echo $this->tag->linkTo(array("users/editpw/" . $user->id, "*****")); ?></td>
+                <td><?php echo $user->name ?></td>
+                <td><?php echo $user->UserGroupMrs->name ?></td>
+                <td><?php echo $user->kaisi_bi ?></td>
+                <td><?php echo $user->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("users/delete/" . $user->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-12" align="center">
+        <ul class="pagination">
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("users/index", "<<最初*11", "id"=>"F11")) ?></li>
+            <li <?php if($page->current==1){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("users/index?page=" . $page->before, "<前頁F3", "id"=>"F3")) ?></li>
+            <li class="active"><?php echo $this->tag->linkTo("users/index?page=" . $page->current, $page->current . "頁") ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("users/index?page=" . $page->next, " 次頁F4>", "id"=>"F4")) ?></li>
+            <li <?php if($page->current==$page->total_pages){echo "class='disabled'";} ?> ><?php echo $this->tag->linkTo(array("users/index?page=" . $page->last, "(".$page->total_pages."頁)最後*12>>", "id"=>"F12")) ?></li>
+        </ul>
+</div>

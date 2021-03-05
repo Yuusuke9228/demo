@@ -1,0 +1,320 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "帳票レイアウト名.修正"; ?>
+<div class="page-header">
+    <h3>帳票レイアウト名 修正</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "chouhyou_mrs/save",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<div class="form-group">
+<div class="col-sm-6">
+	<label for="fieldCd" class="col-sm-3 control-label">コード</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("cd", "size" => 16, "maxlength" => 16, "style" => "width: 262px;", "class" => "form-control", "id" => "fieldCd")) ?>
+	</div>
+
+	<label for="fieldName" class="col-sm-3 control-label">名称</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("name", "size" => 24, "maxlength" => 24, "style" => "width: 324px;", "class" => "form-control", "id" => "fieldName")) ?>
+	</div>
+
+	<label for="fieldChouhyouKbnCd" class="col-sm-3 control-label">帳票種別</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->select(array("chouhyou_kbn_cd", ChouhyouKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldChouhyouKbnCd")) ?>
+	</div>
+
+	<label for="fieldChouhyouToolKbnCd" class="col-sm-3 control-label">帳票ツール区分</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->select(array("chouhyou_tool_kbn_cd", ChouhyouToolKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldChouhyouToolKbnCd")) ?>
+	</div>
+
+	<label for="fieldHinagata" class="col-sm-3 control-label">雛型</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("hinagata", "size" => 80, "maxlength" => 80, "class" => "form-control", "id" => "fieldHinagata")) ?>
+	</div>
+	<label for="fieldYousiSize" class="col-sm-3 control-label">用紙サイズ</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->select(array("yousi_size", YousiSizeKbns::find(["columns" => "cd , CONCAT(cd , '=' , name) as cd_name"]), "using" => array("cd", "cd_name"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldYousiSize")) ?>
+	</div>
+
+	<label for="fieldYousiHoukou" class="col-sm-3 control-label">用紙方向</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->selectStatic(array("yousi_houkou", array("P" => "P=縦置き", "L" => "L=横置き"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldYousiHoukou")) ?>
+	</div>
+</div>
+
+<div class="col-sm-6">
+
+	<label for="fieldMeisaiPp" class="col-sm-3 control-label">頁明細数</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("meisai_pp", "size" => 2, "maxlength" => 2, "style" => "width: 32px;", "class" => "form-control", "id" => "fieldMeisaiPp")) ?>
+	</div>
+
+	<label for="fieldMeisaiYokokan" class="col-sm-3 control-label">明細横間隔</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("meisai_yokokan", "size" => 4, "maxlength" => 4, "style" => "width: 64px;", "class" => "form-control", "id" => "fieldMeisaiYokokan")) ?>
+	</div>
+
+	<label for="fieldMeisaiTatekan" class="col-sm-3 control-label">明細縦間隔</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("meisai_tatekan", "size" => 4, "maxlength" => 4, "style" => "width: 64px;", "class" => "form-control", "id" => "fieldMeisaiTatekan")) ?>
+	</div>
+
+	<label for="fieldMeisaiLvl" class="col-sm-3 control-label">明細必須レベル</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->selectStatic(array("meisai_lvl", array("0" => "0=全て", "1" => "1=重要分"), "style" => "width: 200px;", "class" => "form-control", "id" => "fieldMeisaiLvl")) ?>
+	</div>
+
+	<label for="fieldComment" class="col-sm-3 control-label">コメント</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("comment", "size" => 40, "maxlength" => 40, "class" => "form-control", "id" => "fieldComment")) ?>
+	</div>
+
+	<label for="fieldUpdated" class="col-sm-3 control-label">更新日時</label>
+	<div class="col-sm-9">
+	    <?php echo $this->tag->textField(array("updated", "size" => 17, "maxlength" => 17, "style" => "width: 240px;", "class" => "form-control", "id" => "fieldUpdated")) ?>
+	</div>
+</div>
+
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<div class="form-group">
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("chouhyou_mrs/prev/".$id, "前へF3", "id" => "F3", "class" => "btn btn-default")) ?>
+        <?php echo $this->tag->linkTo(array("chouhyou_mrs/next/".$id, "次へF4", "id" => "F4", "class" => "btn btn-info")) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->submitButton(array("登録F12", "id" => "F12", "class" => "btn btn-lg btn-success", "onclick" => 'return setMeisai();')) ?>
+    </div>
+    <div class="col-sm-4">
+        <?php echo $this->tag->linkTo(array("chouhyou_mrs/new/".$id, "複写で新規へ", "class" => "btn btn-warning")) ?>
+    </div>
+    <div class="col-sm-2">
+        <?php echo $this->tag->linkTo(array("chouhyou_mrs/delete/".$id, "削除", "class" => "btn btn-danger", "onclick" => 'return confirm("削除してよいですか？");')) ?>
+    </div>
+</div>
+
+<div>
+	<h4 style="color:#00AAAA;">
+		Firefoxのメニュー⇒オプション⇒一般⇒プログラム⇒PDF文書⇒firefoxでプレビュー表示。<br>
+		更に「自動ズーム」を「実際のサイズ」に指定しないと雛型用紙を正確に表示できない。
+	</h4>
+</div>
+
+<style>
+.floatbox {
+	/* positionは、fixed でも absolute でもどちらでも用途に応じて設定。
+	fixedであれば、画面をスクロールしても、その場に居座り続ける。
+	absoluteであれば、スクロールと一緒に動く。 */
+    position: absolute;
+
+	/* 最初から表示させる場合は、display: none; はコメントアウトで */
+/*    display: none;  */
+    background-color: #F4F9EE;
+    border: 1px solid gray;
+    padding: 0px;
+    width: 400px;
+    top: 0;
+    left: 0;	/* top と left を明示的に示す */
+    z-index: 900;
+}
+.floatbox .handle {
+    position: relative;
+//    background-color: #069;
+//    color: white;
+    padding: 0px 5px;
+    cursor: move;
+}
+.floatbox .rhandle {
+    position: absolute;
+//    top: 0px;
+    right: 5px;
+	bottom:0%;
+    cursor: nw-resize;
+}
+</style>
+
+<object 
+	<?php // firefoxの設定メニューのオプションのプログラムでPDF文書をfirefoxでプレビューにしないと表示できない
+		  // さらに自動ズームを「実際のサイズ」にして使う。
+		if ($this->tag->getValue('hinagata')){
+			echo 'data="'.$this->url->get('img/'.$this->tag->getValue('hinagata')).'" style="width:230mm;height:320mm;"';
+		} else { 
+			echo 'data="'.$this->url->get('img/grid_002.png').'" type="image/png" style="width:230mm;height:320mm;"';
+		}
+	?>
+	id='objHougan'>
+</object>
+
+<!--<div id="floatbox1" class="floatbox"><div class="handle">タイトル1</div><div class="rhandle">///</div></div>
+	<div id="floatbox2" class="floatbox"><div class="handle">タイトル2</div><div class="rhandle">///</div></div> -->
+
+<div class="row">
+	<div class="col-sm-2">
+		<label for="fieldTableMrCd" class="col-sm-12 control-label lbl-grn-up">テーブルコード</label>
+		<div class="col-sm-12">
+			<input type="text" id="fieldTableMrCd" name="table_mr_cd" class="form-control" size="30" maxlength="30" list="TableMrsOptions" />
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<label for="fieldSanshou" class="col-sm-12 control-label lbl-grn-up">参照モデル</label>
+		<div class="col-sm-12">
+			<input type="text" id="fieldSanshou" name="sanshou" class="form-control" size="30" maxlength="30" />
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<label for="fieldCdleft" class="col-sm-12 control-label lbl-grn-up">頭英1字</label>
+		<div class="col-sm-12">
+			<input type="text" id="fieldCdleft" name="cdleft" class="form-control" size="2" maxlength="2" />
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<label for="fieldTateKasan" class="col-sm-12 control-label lbl-grn-up">縦mm加算</label>
+		<div class="col-sm-12">
+			<input type="text" id="fieldTateKasan" name="tate_kasan" class="form-control" size="30" maxlength="30" />
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<label for="fieldYokoKasan" class="col-sm-12 control-label lbl-grn-up">横mm加算</label>
+		<div class="col-sm-12">
+			<input type="text" id="fieldYokoKasan" name="yoko_kasan" class="form-control" size="30" maxlength="30" />
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<input type='button' onclick='tuika()' value='新規' />
+		<input type='button' onclick='fukusha()' value='複写' />
+		<input type='button' onclick='idou()' value='移動' />
+	</div>
+	<div class="clearfix"></div>
+</div>
+<div class="row">
+    <table class="table table-bordered table-condens-0" id='KoumokuMeisai'>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>コード</th>
+                <th>名称</th>
+                <th>種類</th>
+                <th>項目テーブル</th>
+                <th>参照接続</th>
+                <th>項目CD</th>
+                <th>横座標</th>
+                <th>縦座標</th>
+                <th>枠幅</th>
+                <th>枠高</th>
+                <th>横位置</th>
+                <th>縦位置</th>
+                <th>文字間</th>
+                <th>上下間隔</th>
+                <th>フォント名</th>
+                <th>フォントスタイル</th>
+                <th>フォントサイズ</th>
+                <th>印字方向</th>
+                <th>色設定</th>
+                <th>塗り色</th>
+                <th>枠色</th>
+                <th>枠太</th>
+                <th>枠上下左右</th>
+                <th>項目修飾</th>
+                <th>数値マイナス</th>
+                <th>数値カンマ</th>
+                <th>数値0表示</th>
+                <th>数値小数点表示</th>
+                <th>数値パーセント</th>
+                <th>数値円記号</th>
+                <th>数値整数桁</th>
+                <th>数値小数桁</th>
+                <th>印</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php $i=1;foreach ($zokusei_mrs as $zokusei_mr): ?>
+            <tr>
+                <td><?php echo $i ?></td>
+                <td><?php echo $zokusei_mr->cd ?></td>
+                <td><?php echo $zokusei_mr->name ?></td>
+                <td><?php echo $zokusei_mr->shurui_kbn ?></td>
+                <td><?php echo $zokusei_mr->kmk_table ?></td>
+                <td><?php echo $zokusei_mr->sanshou ?></td>
+                <td><?php echo $zokusei_mr->kmk_cd ?></td>
+                <td><?php echo $zokusei_mr->yoko_zahyou ?></td>
+                <td><?php echo $zokusei_mr->tate_zahyou ?></td>
+                <td><?php echo $zokusei_mr->waku_haba ?></td>
+                <td><?php echo $zokusei_mr->waku_taka ?></td>
+                <td><?php echo $zokusei_mr->align ?></td>
+                <td><?php echo $zokusei_mr->valign ?></td>
+                <td><?php echo $zokusei_mr->stretch ?></td>
+                <td><?php echo $zokusei_mr->calign ?></td>
+                <td><?php echo $zokusei_mr->font_kbn_id ?></td>
+                <td><?php echo $zokusei_mr->font_style ?></td>
+                <td><?php echo $zokusei_mr->font_size ?></td>
+                <td><?php echo $zokusei_mr->inji_houkou ?></td>
+                <td><?php echo $zokusei_mr->moji_iro ?></td>
+                <td><?php echo $zokusei_mr->nuri_iro ?></td>
+                <td><?php echo $zokusei_mr->waku_iro ?></td>
+                <td><?php echo $zokusei_mr->waku_huto ?></td>
+                <td><?php echo $zokusei_mr->waku ?></td>
+                <td><?php echo $zokusei_mr->kmk_shuushoku ?></td>
+                <td><?php echo $zokusei_mr->suu_minus ?></td>
+                <td><?php echo $zokusei_mr->suu_comma ?></td>
+                <td><?php echo $zokusei_mr->suu_zero ?></td>
+                <td><?php echo $zokusei_mr->suu_shousuuten ?></td>
+                <td><?php echo $zokusei_mr->suu_percent ?></td>
+                <td><?php echo $zokusei_mr->suu_yen ?></td>
+                <td><?php echo $zokusei_mr->suu_seisuuketa ?></td>
+                <td><?php echo $zokusei_mr->suu_shousuuketa ?></td>
+                <td><?php echo
+                	'<input name="data[zokusei_mrs]['.$i.'][selchk]" type="checkbox" id="fieldZokuseiMrs'.$i.'Selchk" class="form-control selchk" />'.
+                	'<input name="data[zokusei_mrs]['.$i.'][id]" type="hidden" value="'.$zokusei_mr->id.'" />'.
+                	'<input name="data[zokusei_mrs]['.$i.'][updated]" type="hidden" value="'.$zokusei_mr->updated.'" />' ?></td>
+            </tr>
+        <?php $i++;endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="TableMrsOptions">
+	<option value="kihon_mrs">A=基本情報</option>
+	<option value="uriage_dts">B=売上伝票</option>
+	<option value="uriage_meisai_dts">C=売上伝票明細</option>
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div>
+
+<script type="text/javascript">
+	var koumoku_mrs_multisel = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('koumoku_mrs/multisel') ?>";
+	var text_zokusei_modal1 = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('chouhyou_text_zokusei_mrs/modal1') ?>";
+</script>
+
+<script type="text/javascript">var imax = <?php echo count($zokusei_mrs) ?>;</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/chouhyou_mrs.js'); ?>?var=20170215"></script>

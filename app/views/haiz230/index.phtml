@@ -1,0 +1,2288 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php $title = "試織.組織"; ?>
+<div class="page-header" style="margin-top:5px;padding-bottom:5px;">
+    <!-- h3>組織図綾通し順画面</h3 -->
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<?php
+    echo $this->tag->form(
+        array(
+            "",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        )
+    );
+?>
+
+<style>
+table{
+    border-collapse:collapse;
+    width:640px;
+    table-layout:fixed;
+}
+td,th{
+    height:21px;
+    font-family:monospace;
+}
+.nowrap{
+    white-space:nowrap;
+    overflow:hidden;
+}
+.td-I{
+    border-left:1px solid #666666;
+}
+.td-L{
+    border-left:1px solid #666666;
+    border-bottom:1px solid #666666;
+}
+.td-U{
+    border-bottom:1px solid #666666;
+}
+input, textarea{
+    font-family:monospace;
+}
+span{
+    margin-left: 4px;
+}
+input.ALLF {
+    display:none;
+}
+input.TAIL {
+    display:inline;
+}
+</style>
+<div id='HAIZ230G' align=center>
+<table>
+<tbody>
+<tr>
+<td colspan=12 name='td_s00001' style='width:72pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=2 name='td_f024' style='width:12pt' class='nowrap td-U'>
+<span>.</span>
+</td>
+<td colspan=5 name='td_s00002' style='width:30pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=10 style='width:60pt'></td>
+<td colspan=19 name='td_f001' style='width:114pt' class='nowrap'>
+<b>
+<span>組織図綾通し順画面</span>
+</b>
+</td>
+<td colspan=7 name='td_s00003' style='width:42pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=8 style='width:48pt'></td>
+<td colspan=15 name='td_f012' style='width:90pt' class='nowrap'>
+<span id='dispYMDHM'>YY/MM/DD HH:MM</span>
+</td>
+</tr><tr>
+<td colspan=9 name='td_f002' style='width:54pt' class='nowrap td-L'>
+<span>試織番号</span>
+</td>
+<td colspan=7 name='td_sino' style='width:42pt' class='nowrap td-U'>
+<span class=' HEAD ALLF' id='dispSino'></span>
+</td>
+<td colspan=3 name='td_sied' style='width:18pt' class='nowrap td-L'>
+<span class=' HEAD ALLF' id='dispSied'></span>
+</td>
+<td colspan=3 name='td_s00004' style='width:18pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=2 name='td_f021' style='width:12pt' class='nowrap td-U'>
+<span>.</span>
+</td>
+<td colspan=8 name='td_s00005' style='width:48pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=2 name='td_f022' style='width:12pt' class='nowrap td-U'>
+<span>.</span>
+</td>
+<td colspan=2 name='td_s00006' style='width:12pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td style='width:6pt'></td>
+<td colspan=9 name='td_f003' style='width:54pt' class='nowrap td-L'>
+<span>組織ｺｰﾄﾞ</span>
+</td>
+<td colspan=9 name='td_socd' style='width:54pt' class='nowrap td-U'>
+<span class=' xHEAD xALLF' id='dispSocd'></span>
+<input type='text' id='fieldSocd' name='g1_socd' class='form-control ime-i HEAD ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=2 name='td_s00007' style='width:12pt' class='nowrap td-L'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_1' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_1'></span>
+</td>
+<td colspan=2 name='td_patn_1_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_1'></span>
+<input type='text' id='fieldPatn_1_1' name='g1_patn_1_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_2'></span>
+<input type='text' id='fieldPatn_1_2' name='g1_patn_1_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_3'></span>
+<input type='text' id='fieldPatn_1_3' name='g1_patn_1_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_4'></span>
+<input type='text' id='fieldPatn_1_4' name='g1_patn_1_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_5'></span>
+<input type='text' id='fieldPatn_1_5' name='g1_patn_1_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_6'></span>
+<input type='text' id='fieldPatn_1_6' name='g1_patn_1_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_7'></span>
+<input type='text' id='fieldPatn_1_7' name='g1_patn_1_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_8'></span>
+<input type='text' id='fieldPatn_1_8' name='g1_patn_1_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_9'></span>
+<input type='text' id='fieldPatn_1_9' name='g1_patn_1_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_10'></span>
+<input type='text' id='fieldPatn_1_10' name='g1_patn_1_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_11'></span>
+<input type='text' id='fieldPatn_1_11' name='g1_patn_1_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_12'></span>
+<input type='text' id='fieldPatn_1_12' name='g1_patn_1_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_13'></span>
+<input type='text' id='fieldPatn_1_13' name='g1_patn_1_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_14'></span>
+<input type='text' id='fieldPatn_1_14' name='g1_patn_1_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_15'></span>
+<input type='text' id='fieldPatn_1_15' name='g1_patn_1_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_1_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_1_16'></span>
+<input type='text' id='fieldPatn_1_16' name='g1_patn_1_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00008' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=7 name='td_f009' style='width:42pt' class='nowrap td-L'>
+<span>大きさ</span>
+</td>
+<td colspan=3 name='td_f007' style='width:18pt' class='nowrap td-U'>
+<span>経</span>
+</td>
+<td colspan=3 name='td_soth' style='width:18pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispSoth'></span>
+<input type='text' id='fieldSoth' name='g1_soth' class='form-control f-numb BODY1 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=3 name='td_f006' style='width:18pt' class='nowrap td-U'>
+<span>緯</span>
+</td>
+<td colspan=4 name='td_soyh' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' xBODY1 xALLF' id='dispSoyh'></span>
+<input type='text' id='fieldSoyh' name='g1_soyh' class='form-control f-numb BODY1 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=2 name='td_s00009' style='width:12pt' class='nowrap td-L'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_2' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_2'></span>
+</td>
+<td colspan=2 name='td_patn_2_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_1'></span>
+<input type='text' id='fieldPatn_2_1' name='g1_patn_2_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_2'></span>
+<input type='text' id='fieldPatn_2_2' name='g1_patn_2_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_3'></span>
+<input type='text' id='fieldPatn_2_3' name='g1_patn_2_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_4'></span>
+<input type='text' id='fieldPatn_2_4' name='g1_patn_2_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_5'></span>
+<input type='text' id='fieldPatn_2_5' name='g1_patn_2_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_6'></span>
+<input type='text' id='fieldPatn_2_6' name='g1_patn_2_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_7'></span>
+<input type='text' id='fieldPatn_2_7' name='g1_patn_2_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_8'></span>
+<input type='text' id='fieldPatn_2_8' name='g1_patn_2_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_9'></span>
+<input type='text' id='fieldPatn_2_9' name='g1_patn_2_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_10'></span>
+<input type='text' id='fieldPatn_2_10' name='g1_patn_2_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_11'></span>
+<input type='text' id='fieldPatn_2_11' name='g1_patn_2_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_12'></span>
+<input type='text' id='fieldPatn_2_12' name='g1_patn_2_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_13'></span>
+<input type='text' id='fieldPatn_2_13' name='g1_patn_2_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_14'></span>
+<input type='text' id='fieldPatn_2_14' name='g1_patn_2_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_15'></span>
+<input type='text' id='fieldPatn_2_15' name='g1_patn_2_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_2_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_2_16'></span>
+<input type='text' id='fieldPatn_2_16' name='g1_patn_2_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00010' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=5 name='td_f004' style='width:30pt' class='nowrap td-L'>
+<span>名称</span>
+</td>
+<td colspan=17 name='td_some' style='width:102pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispSome'></span>
+<input type='text' id='fieldSome' name='g1_some' class='form-control ime-a BODY1 ALLF' style='width:105pt' maxlength='16' />
+</td>
+<td colspan=12 name='td_s00011' style='width:72pt' class='nowrap td-L'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_3' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_3'></span>
+</td>
+<td colspan=2 name='td_patn_3_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_1'></span>
+<input type='text' id='fieldPatn_3_1' name='g1_patn_3_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_2'></span>
+<input type='text' id='fieldPatn_3_2' name='g1_patn_3_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_3'></span>
+<input type='text' id='fieldPatn_3_3' name='g1_patn_3_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_4'></span>
+<input type='text' id='fieldPatn_3_4' name='g1_patn_3_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_5'></span>
+<input type='text' id='fieldPatn_3_5' name='g1_patn_3_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_6'></span>
+<input type='text' id='fieldPatn_3_6' name='g1_patn_3_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_7'></span>
+<input type='text' id='fieldPatn_3_7' name='g1_patn_3_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_8'></span>
+<input type='text' id='fieldPatn_3_8' name='g1_patn_3_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_9'></span>
+<input type='text' id='fieldPatn_3_9' name='g1_patn_3_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_10'></span>
+<input type='text' id='fieldPatn_3_10' name='g1_patn_3_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_11'></span>
+<input type='text' id='fieldPatn_3_11' name='g1_patn_3_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_12'></span>
+<input type='text' id='fieldPatn_3_12' name='g1_patn_3_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_13'></span>
+<input type='text' id='fieldPatn_3_13' name='g1_patn_3_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_14'></span>
+<input type='text' id='fieldPatn_3_14' name='g1_patn_3_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_15'></span>
+<input type='text' id='fieldPatn_3_15' name='g1_patn_3_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_3_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_3_16'></span>
+<input type='text' id='fieldPatn_3_16' name='g1_patn_3_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00012' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=5 name='td_f011' style='width:30pt' class='nowrap td-I'>
+<span>注意</span>
+</td>
+<td colspan=29 name='td_chui_1' style='width:174pt' class='nowrap'>
+<span class=' xBODY1 xALLF' id='dispChui_1'></span>
+<input type='text' id='fieldChui_1' name='g1_chui_1' class='form-control ime-a BODY1 ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s00013' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_4' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_4'></span>
+</td>
+<td colspan=2 name='td_patn_4_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_1'></span>
+<input type='text' id='fieldPatn_4_1' name='g1_patn_4_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_2'></span>
+<input type='text' id='fieldPatn_4_2' name='g1_patn_4_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_3'></span>
+<input type='text' id='fieldPatn_4_3' name='g1_patn_4_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_4'></span>
+<input type='text' id='fieldPatn_4_4' name='g1_patn_4_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_5'></span>
+<input type='text' id='fieldPatn_4_5' name='g1_patn_4_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_6'></span>
+<input type='text' id='fieldPatn_4_6' name='g1_patn_4_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_7'></span>
+<input type='text' id='fieldPatn_4_7' name='g1_patn_4_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_8'></span>
+<input type='text' id='fieldPatn_4_8' name='g1_patn_4_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_9'></span>
+<input type='text' id='fieldPatn_4_9' name='g1_patn_4_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_10'></span>
+<input type='text' id='fieldPatn_4_10' name='g1_patn_4_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_11'></span>
+<input type='text' id='fieldPatn_4_11' name='g1_patn_4_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_12'></span>
+<input type='text' id='fieldPatn_4_12' name='g1_patn_4_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_13'></span>
+<input type='text' id='fieldPatn_4_13' name='g1_patn_4_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_14'></span>
+<input type='text' id='fieldPatn_4_14' name='g1_patn_4_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_15'></span>
+<input type='text' id='fieldPatn_4_15' name='g1_patn_4_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_4_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_4_16'></span>
+<input type='text' id='fieldPatn_4_16' name='g1_patn_4_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00014' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=5 name='td_f012' style='width:30pt' class='nowrap td-L'>
+<span>事項</span>
+</td>
+<td colspan=29 name='td_chui_2' style='width:174pt' class='nowrap td-U'>
+<span class=' xBODY1 xALLF' id='dispChui_2'></span>
+<input type='text' id='fieldChui_2' name='g1_chui_2' class='form-control ime-a BODY1 ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td name='td_s00015' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_5' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_5'></span>
+</td>
+<td colspan=2 name='td_patn_5_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_1'></span>
+<input type='text' id='fieldPatn_5_1' name='g1_patn_5_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_2'></span>
+<input type='text' id='fieldPatn_5_2' name='g1_patn_5_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_3'></span>
+<input type='text' id='fieldPatn_5_3' name='g1_patn_5_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_4'></span>
+<input type='text' id='fieldPatn_5_4' name='g1_patn_5_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_5'></span>
+<input type='text' id='fieldPatn_5_5' name='g1_patn_5_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_6'></span>
+<input type='text' id='fieldPatn_5_6' name='g1_patn_5_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_7'></span>
+<input type='text' id='fieldPatn_5_7' name='g1_patn_5_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_8'></span>
+<input type='text' id='fieldPatn_5_8' name='g1_patn_5_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_9'></span>
+<input type='text' id='fieldPatn_5_9' name='g1_patn_5_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_10'></span>
+<input type='text' id='fieldPatn_5_10' name='g1_patn_5_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_11'></span>
+<input type='text' id='fieldPatn_5_11' name='g1_patn_5_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_12'></span>
+<input type='text' id='fieldPatn_5_12' name='g1_patn_5_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_13'></span>
+<input type='text' id='fieldPatn_5_13' name='g1_patn_5_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_14'></span>
+<input type='text' id='fieldPatn_5_14' name='g1_patn_5_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_15'></span>
+<input type='text' id='fieldPatn_5_15' name='g1_patn_5_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_5_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_5_16'></span>
+<input type='text' id='fieldPatn_5_16' name='g1_patn_5_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00016' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=9 name='td_s00017' style='width:54pt' class='nowrap td-U'>
+<span></span>
+</td>
+<td colspan=24 style='width:144pt'></td>
+<td colspan=9 name='td_f00001' style='width:54pt' class='nowrap'>
+<span>綾通区分</span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_6' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_6'></span>
+</td>
+<td colspan=2 name='td_patn_6_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_1'></span>
+<input type='text' id='fieldPatn_6_1' name='g1_patn_6_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_2'></span>
+<input type='text' id='fieldPatn_6_2' name='g1_patn_6_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_3'></span>
+<input type='text' id='fieldPatn_6_3' name='g1_patn_6_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_4'></span>
+<input type='text' id='fieldPatn_6_4' name='g1_patn_6_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_5'></span>
+<input type='text' id='fieldPatn_6_5' name='g1_patn_6_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_6'></span>
+<input type='text' id='fieldPatn_6_6' name='g1_patn_6_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_7'></span>
+<input type='text' id='fieldPatn_6_7' name='g1_patn_6_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_8'></span>
+<input type='text' id='fieldPatn_6_8' name='g1_patn_6_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_9'></span>
+<input type='text' id='fieldPatn_6_9' name='g1_patn_6_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_10'></span>
+<input type='text' id='fieldPatn_6_10' name='g1_patn_6_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_11'></span>
+<input type='text' id='fieldPatn_6_11' name='g1_patn_6_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_12'></span>
+<input type='text' id='fieldPatn_6_12' name='g1_patn_6_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_13'></span>
+<input type='text' id='fieldPatn_6_13' name='g1_patn_6_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_14'></span>
+<input type='text' id='fieldPatn_6_14' name='g1_patn_6_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_15'></span>
+<input type='text' id='fieldPatn_6_15' name='g1_patn_6_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_6_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_6_16'></span>
+<input type='text' id='fieldPatn_6_16' name='g1_patn_6_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00018' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=9 name='td_f013' style='width:54pt' class='nowrap td-L'>
+<span>綾通し順</span>
+</td>
+<td colspan=7 name='td_s00019' style='width:42pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=6 name='td_f008' style='width:36pt' class='nowrap td-U'>
+<span>ﾍﾟｰｼﾞ</span>
+</td>
+<td colspan=3 name='td_page' style='width:18pt' class='nowrap td-U f-numb'>
+<span class=' BODY4 ALLF' id='dispPage'></span>
+</td>
+<td colspan=9 style='width:54pt'></td>
+<td colspan=9 name='td_f00002' style='width:54pt' class='nowrap'>
+<span>1:順通し</span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_7' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_7'></span>
+</td>
+<td colspan=2 name='td_patn_7_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_1'></span>
+<input type='text' id='fieldPatn_7_1' name='g1_patn_7_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_2'></span>
+<input type='text' id='fieldPatn_7_2' name='g1_patn_7_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_3'></span>
+<input type='text' id='fieldPatn_7_3' name='g1_patn_7_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_4'></span>
+<input type='text' id='fieldPatn_7_4' name='g1_patn_7_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_5'></span>
+<input type='text' id='fieldPatn_7_5' name='g1_patn_7_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_6'></span>
+<input type='text' id='fieldPatn_7_6' name='g1_patn_7_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_7'></span>
+<input type='text' id='fieldPatn_7_7' name='g1_patn_7_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_8'></span>
+<input type='text' id='fieldPatn_7_8' name='g1_patn_7_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_9'></span>
+<input type='text' id='fieldPatn_7_9' name='g1_patn_7_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_10'></span>
+<input type='text' id='fieldPatn_7_10' name='g1_patn_7_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_11'></span>
+<input type='text' id='fieldPatn_7_11' name='g1_patn_7_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_12'></span>
+<input type='text' id='fieldPatn_7_12' name='g1_patn_7_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_13'></span>
+<input type='text' id='fieldPatn_7_13' name='g1_patn_7_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_14'></span>
+<input type='text' id='fieldPatn_7_14' name='g1_patn_7_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_15'></span>
+<input type='text' id='fieldPatn_7_15' name='g1_patn_7_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_7_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_7_16'></span>
+<input type='text' id='fieldPatn_7_16' name='g1_patn_7_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00020' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=5 name='td_f014' style='width:30pt' class='nowrap td-L'>
+<span>区分</span>
+</td>
+<td colspan=3 name='td_aycd' style='width:18pt' class='nowrap td-U'>
+<span class=' xBODY4 xALLF' id='dispAycd'></span>
+<input type='text' id='fieldAycd' name='g1_aycd' class='form-control ime-i BODY4 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_f015' style='width:30pt' class='nowrap td-U'>
+<span>枚数</span>
+</td>
+<td colspan=3 name='td_ayma' style='width:18pt' class='nowrap td-U f-numb'>
+<span class=' xBODY4 xALLF' id='dispAyma'></span>
+<input type='text' id='fieldAyma' name='g1_ayma' class='form-control f-numb BODY4 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=5 name='td_f019' style='width:30pt' class='nowrap td-U'>
+<span>本数</span>
+</td>
+<td colspan=4 name='td_ayho' style='width:24pt' class='nowrap td-U f-numb'>
+<span class=' BODY4 ALLF' id='dispAyho'></span>
+</td>
+<td name='td_s00021' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=8 style='width:48pt'></td>
+<td colspan=7 name='td_f00003' style='width:42pt' class='nowrap'>
+<span>2:梨地</span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_8' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_8'></span>
+</td>
+<td colspan=2 name='td_patn_8_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_1'></span>
+<input type='text' id='fieldPatn_8_1' name='g1_patn_8_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_2'></span>
+<input type='text' id='fieldPatn_8_2' name='g1_patn_8_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_3'></span>
+<input type='text' id='fieldPatn_8_3' name='g1_patn_8_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_4'></span>
+<input type='text' id='fieldPatn_8_4' name='g1_patn_8_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_5'></span>
+<input type='text' id='fieldPatn_8_5' name='g1_patn_8_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_6'></span>
+<input type='text' id='fieldPatn_8_6' name='g1_patn_8_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_7'></span>
+<input type='text' id='fieldPatn_8_7' name='g1_patn_8_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_8'></span>
+<input type='text' id='fieldPatn_8_8' name='g1_patn_8_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_9'></span>
+<input type='text' id='fieldPatn_8_9' name='g1_patn_8_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_10'></span>
+<input type='text' id='fieldPatn_8_10' name='g1_patn_8_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_11'></span>
+<input type='text' id='fieldPatn_8_11' name='g1_patn_8_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_12'></span>
+<input type='text' id='fieldPatn_8_12' name='g1_patn_8_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_13'></span>
+<input type='text' id='fieldPatn_8_13' name='g1_patn_8_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_14'></span>
+<input type='text' id='fieldPatn_8_14' name='g1_patn_8_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_15'></span>
+<input type='text' id='fieldPatn_8_15' name='g1_patn_8_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_8_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_8_16'></span>
+<input type='text' id='fieldPatn_8_16' name='g1_patn_8_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00022' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=5 name='td_f005' style='width:30pt' class='nowrap td-L'>
+<span>名称</span>
+</td>
+<td colspan=17 name='td_ayme' style='width:102pt' class='nowrap td-U'>
+<span class=' xBODY5 xALLF' id='dispAyme'></span>
+<input type='text' id='fieldAyme' name='g1_ayme' class='form-control ime-a BODY5 ALLF' style='width:105pt' maxlength='16' />
+</td>
+<td colspan=12 name='td_s00023' style='width:72pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=9 name='td_f00004' style='width:54pt' class='nowrap'>
+<span>9:組織図</span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_9' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_9'></span>
+</td>
+<td colspan=2 name='td_patn_9_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_1'></span>
+<input type='text' id='fieldPatn_9_1' name='g1_patn_9_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_2'></span>
+<input type='text' id='fieldPatn_9_2' name='g1_patn_9_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_3'></span>
+<input type='text' id='fieldPatn_9_3' name='g1_patn_9_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_4'></span>
+<input type='text' id='fieldPatn_9_4' name='g1_patn_9_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_5'></span>
+<input type='text' id='fieldPatn_9_5' name='g1_patn_9_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_6'></span>
+<input type='text' id='fieldPatn_9_6' name='g1_patn_9_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_7'></span>
+<input type='text' id='fieldPatn_9_7' name='g1_patn_9_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_8'></span>
+<input type='text' id='fieldPatn_9_8' name='g1_patn_9_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_9'></span>
+<input type='text' id='fieldPatn_9_9' name='g1_patn_9_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_10'></span>
+<input type='text' id='fieldPatn_9_10' name='g1_patn_9_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_11'></span>
+<input type='text' id='fieldPatn_9_11' name='g1_patn_9_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_12'></span>
+<input type='text' id='fieldPatn_9_12' name='g1_patn_9_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_13'></span>
+<input type='text' id='fieldPatn_9_13' name='g1_patn_9_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_14'></span>
+<input type='text' id='fieldPatn_9_14' name='g1_patn_9_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_15'></span>
+<input type='text' id='fieldPatn_9_15' name='g1_patn_9_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_9_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_9_16'></span>
+<input type='text' id='fieldPatn_9_16' name='g1_patn_9_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00024' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=5 name='td_f017' style='width:30pt' class='nowrap td-I'>
+<span>注意</span>
+</td>
+<td colspan=29 name='td_aych_1' style='width:174pt' class='nowrap'>
+<span class=' xBODY6 xBODY5 xALLF' id='dispAych_1'></span>
+<input type='text' id='fieldAych_1' name='g1_aych_1' class='form-control ime-a BODY6 BODY5 ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=7 name='td_f00005' style='width:42pt' class='nowrap td-I'>
+<span>&nbsp;:独特</span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_10' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_10'></span>
+</td>
+<td colspan=2 name='td_patn_10_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_1'></span>
+<input type='text' id='fieldPatn_10_1' name='g1_patn_10_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_2'></span>
+<input type='text' id='fieldPatn_10_2' name='g1_patn_10_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_3'></span>
+<input type='text' id='fieldPatn_10_3' name='g1_patn_10_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_4'></span>
+<input type='text' id='fieldPatn_10_4' name='g1_patn_10_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_5'></span>
+<input type='text' id='fieldPatn_10_5' name='g1_patn_10_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_6'></span>
+<input type='text' id='fieldPatn_10_6' name='g1_patn_10_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_7'></span>
+<input type='text' id='fieldPatn_10_7' name='g1_patn_10_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_8'></span>
+<input type='text' id='fieldPatn_10_8' name='g1_patn_10_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_9'></span>
+<input type='text' id='fieldPatn_10_9' name='g1_patn_10_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_10'></span>
+<input type='text' id='fieldPatn_10_10' name='g1_patn_10_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_11'></span>
+<input type='text' id='fieldPatn_10_11' name='g1_patn_10_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_12'></span>
+<input type='text' id='fieldPatn_10_12' name='g1_patn_10_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_13'></span>
+<input type='text' id='fieldPatn_10_13' name='g1_patn_10_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_14'></span>
+<input type='text' id='fieldPatn_10_14' name='g1_patn_10_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_15'></span>
+<input type='text' id='fieldPatn_10_15' name='g1_patn_10_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_10_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_10_16'></span>
+<input type='text' id='fieldPatn_10_16' name='g1_patn_10_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00025' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=5 name='td_f018' style='width:30pt' class='nowrap td-L'>
+<span>事項</span>
+</td>
+<td colspan=29 name='td_aych_2' style='width:174pt' class='nowrap td-U'>
+<span class=' xBODY6 xBODY5 xALLF' id='dispAych_2'></span>
+<input type='text' id='fieldAych_2' name='g1_aych_2' class='form-control ime-a BODY6 BODY5 ALLF' style='width:177pt' maxlength='28' />
+</td>
+<td colspan=7 name='td_s00026' style='width:42pt' class='nowrap td-L'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_11' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_11'></span>
+</td>
+<td colspan=2 name='td_patn_11_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_1'></span>
+<input type='text' id='fieldPatn_11_1' name='g1_patn_11_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_2'></span>
+<input type='text' id='fieldPatn_11_2' name='g1_patn_11_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_3'></span>
+<input type='text' id='fieldPatn_11_3' name='g1_patn_11_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_4'></span>
+<input type='text' id='fieldPatn_11_4' name='g1_patn_11_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_5'></span>
+<input type='text' id='fieldPatn_11_5' name='g1_patn_11_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_6'></span>
+<input type='text' id='fieldPatn_11_6' name='g1_patn_11_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_7'></span>
+<input type='text' id='fieldPatn_11_7' name='g1_patn_11_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_8'></span>
+<input type='text' id='fieldPatn_11_8' name='g1_patn_11_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_9'></span>
+<input type='text' id='fieldPatn_11_9' name='g1_patn_11_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_10'></span>
+<input type='text' id='fieldPatn_11_10' name='g1_patn_11_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_11'></span>
+<input type='text' id='fieldPatn_11_11' name='g1_patn_11_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_12'></span>
+<input type='text' id='fieldPatn_11_12' name='g1_patn_11_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_13'></span>
+<input type='text' id='fieldPatn_11_13' name='g1_patn_11_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_14'></span>
+<input type='text' id='fieldPatn_11_14' name='g1_patn_11_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_15'></span>
+<input type='text' id='fieldPatn_11_15' name='g1_patn_11_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_11_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_11_16'></span>
+<input type='text' id='fieldPatn_11_16' name='g1_patn_11_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00027' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_1' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_1'></span>
+<input type='text' id='fieldAykg_1' name='g1_aykg_1' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00028' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_12' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_12'></span>
+</td>
+<td colspan=2 name='td_patn_12_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_1'></span>
+<input type='text' id='fieldPatn_12_1' name='g1_patn_12_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_2'></span>
+<input type='text' id='fieldPatn_12_2' name='g1_patn_12_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_3'></span>
+<input type='text' id='fieldPatn_12_3' name='g1_patn_12_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_4'></span>
+<input type='text' id='fieldPatn_12_4' name='g1_patn_12_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_5'></span>
+<input type='text' id='fieldPatn_12_5' name='g1_patn_12_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_6'></span>
+<input type='text' id='fieldPatn_12_6' name='g1_patn_12_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_7'></span>
+<input type='text' id='fieldPatn_12_7' name='g1_patn_12_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_8'></span>
+<input type='text' id='fieldPatn_12_8' name='g1_patn_12_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_9'></span>
+<input type='text' id='fieldPatn_12_9' name='g1_patn_12_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_10'></span>
+<input type='text' id='fieldPatn_12_10' name='g1_patn_12_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_11'></span>
+<input type='text' id='fieldPatn_12_11' name='g1_patn_12_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_12'></span>
+<input type='text' id='fieldPatn_12_12' name='g1_patn_12_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_13'></span>
+<input type='text' id='fieldPatn_12_13' name='g1_patn_12_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_14'></span>
+<input type='text' id='fieldPatn_12_14' name='g1_patn_12_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_15'></span>
+<input type='text' id='fieldPatn_12_15' name='g1_patn_12_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_12_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_12_16'></span>
+<input type='text' id='fieldPatn_12_16' name='g1_patn_12_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00029' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_2' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_2'></span>
+<input type='text' id='fieldAykg_2' name='g1_aykg_2' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00030' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_13' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_13'></span>
+</td>
+<td colspan=2 name='td_patn_13_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_1'></span>
+<input type='text' id='fieldPatn_13_1' name='g1_patn_13_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_2'></span>
+<input type='text' id='fieldPatn_13_2' name='g1_patn_13_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_3'></span>
+<input type='text' id='fieldPatn_13_3' name='g1_patn_13_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_4'></span>
+<input type='text' id='fieldPatn_13_4' name='g1_patn_13_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_5'></span>
+<input type='text' id='fieldPatn_13_5' name='g1_patn_13_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_6'></span>
+<input type='text' id='fieldPatn_13_6' name='g1_patn_13_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_7'></span>
+<input type='text' id='fieldPatn_13_7' name='g1_patn_13_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_8'></span>
+<input type='text' id='fieldPatn_13_8' name='g1_patn_13_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_9'></span>
+<input type='text' id='fieldPatn_13_9' name='g1_patn_13_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_10'></span>
+<input type='text' id='fieldPatn_13_10' name='g1_patn_13_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_11'></span>
+<input type='text' id='fieldPatn_13_11' name='g1_patn_13_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_12'></span>
+<input type='text' id='fieldPatn_13_12' name='g1_patn_13_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_13'></span>
+<input type='text' id='fieldPatn_13_13' name='g1_patn_13_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_14'></span>
+<input type='text' id='fieldPatn_13_14' name='g1_patn_13_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_15'></span>
+<input type='text' id='fieldPatn_13_15' name='g1_patn_13_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_13_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_13_16'></span>
+<input type='text' id='fieldPatn_13_16' name='g1_patn_13_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00031' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_3' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_3'></span>
+<input type='text' id='fieldAykg_3' name='g1_aykg_3' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00032' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_14' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_14'></span>
+</td>
+<td colspan=2 name='td_patn_14_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_1'></span>
+<input type='text' id='fieldPatn_14_1' name='g1_patn_14_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_2'></span>
+<input type='text' id='fieldPatn_14_2' name='g1_patn_14_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_3'></span>
+<input type='text' id='fieldPatn_14_3' name='g1_patn_14_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_4'></span>
+<input type='text' id='fieldPatn_14_4' name='g1_patn_14_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_5'></span>
+<input type='text' id='fieldPatn_14_5' name='g1_patn_14_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_6'></span>
+<input type='text' id='fieldPatn_14_6' name='g1_patn_14_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_7'></span>
+<input type='text' id='fieldPatn_14_7' name='g1_patn_14_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_8'></span>
+<input type='text' id='fieldPatn_14_8' name='g1_patn_14_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_9'></span>
+<input type='text' id='fieldPatn_14_9' name='g1_patn_14_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_10'></span>
+<input type='text' id='fieldPatn_14_10' name='g1_patn_14_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_11'></span>
+<input type='text' id='fieldPatn_14_11' name='g1_patn_14_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_12'></span>
+<input type='text' id='fieldPatn_14_12' name='g1_patn_14_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_13'></span>
+<input type='text' id='fieldPatn_14_13' name='g1_patn_14_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_14'></span>
+<input type='text' id='fieldPatn_14_14' name='g1_patn_14_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_15'></span>
+<input type='text' id='fieldPatn_14_15' name='g1_patn_14_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_14_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_14_16'></span>
+<input type='text' id='fieldPatn_14_16' name='g1_patn_14_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00033' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_4' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_4'></span>
+<input type='text' id='fieldAykg_4' name='g1_aykg_4' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00034' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_15' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_15'></span>
+</td>
+<td colspan=2 name='td_patn_15_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_1'></span>
+<input type='text' id='fieldPatn_15_1' name='g1_patn_15_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_2'></span>
+<input type='text' id='fieldPatn_15_2' name='g1_patn_15_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_3'></span>
+<input type='text' id='fieldPatn_15_3' name='g1_patn_15_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_4'></span>
+<input type='text' id='fieldPatn_15_4' name='g1_patn_15_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_5'></span>
+<input type='text' id='fieldPatn_15_5' name='g1_patn_15_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_6'></span>
+<input type='text' id='fieldPatn_15_6' name='g1_patn_15_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_7'></span>
+<input type='text' id='fieldPatn_15_7' name='g1_patn_15_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_8'></span>
+<input type='text' id='fieldPatn_15_8' name='g1_patn_15_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_9'></span>
+<input type='text' id='fieldPatn_15_9' name='g1_patn_15_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_10'></span>
+<input type='text' id='fieldPatn_15_10' name='g1_patn_15_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_11'></span>
+<input type='text' id='fieldPatn_15_11' name='g1_patn_15_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_12'></span>
+<input type='text' id='fieldPatn_15_12' name='g1_patn_15_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_13'></span>
+<input type='text' id='fieldPatn_15_13' name='g1_patn_15_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_14'></span>
+<input type='text' id='fieldPatn_15_14' name='g1_patn_15_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_15'></span>
+<input type='text' id='fieldPatn_15_15' name='g1_patn_15_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_15_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_15_16'></span>
+<input type='text' id='fieldPatn_15_16' name='g1_patn_15_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00035' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_5' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_5'></span>
+<input type='text' id='fieldAykg_5' name='g1_aykg_5' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00036' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_16' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_16'></span>
+</td>
+<td colspan=2 name='td_patn_16_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_1'></span>
+<input type='text' id='fieldPatn_16_1' name='g1_patn_16_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_2'></span>
+<input type='text' id='fieldPatn_16_2' name='g1_patn_16_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_3'></span>
+<input type='text' id='fieldPatn_16_3' name='g1_patn_16_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_4'></span>
+<input type='text' id='fieldPatn_16_4' name='g1_patn_16_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_5'></span>
+<input type='text' id='fieldPatn_16_5' name='g1_patn_16_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_6'></span>
+<input type='text' id='fieldPatn_16_6' name='g1_patn_16_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_7'></span>
+<input type='text' id='fieldPatn_16_7' name='g1_patn_16_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_8'></span>
+<input type='text' id='fieldPatn_16_8' name='g1_patn_16_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_9'></span>
+<input type='text' id='fieldPatn_16_9' name='g1_patn_16_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_10'></span>
+<input type='text' id='fieldPatn_16_10' name='g1_patn_16_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_11'></span>
+<input type='text' id='fieldPatn_16_11' name='g1_patn_16_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_12'></span>
+<input type='text' id='fieldPatn_16_12' name='g1_patn_16_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_13'></span>
+<input type='text' id='fieldPatn_16_13' name='g1_patn_16_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_14'></span>
+<input type='text' id='fieldPatn_16_14' name='g1_patn_16_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_15'></span>
+<input type='text' id='fieldPatn_16_15' name='g1_patn_16_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_16_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_16_16'></span>
+<input type='text' id='fieldPatn_16_16' name='g1_patn_16_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00037' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_6' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_6'></span>
+<input type='text' id='fieldAykg_6' name='g1_aykg_6' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00038' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_17' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_17'></span>
+</td>
+<td colspan=2 name='td_patn_17_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_1'></span>
+<input type='text' id='fieldPatn_17_1' name='g1_patn_17_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_2'></span>
+<input type='text' id='fieldPatn_17_2' name='g1_patn_17_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_3'></span>
+<input type='text' id='fieldPatn_17_3' name='g1_patn_17_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_4'></span>
+<input type='text' id='fieldPatn_17_4' name='g1_patn_17_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_5'></span>
+<input type='text' id='fieldPatn_17_5' name='g1_patn_17_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_6'></span>
+<input type='text' id='fieldPatn_17_6' name='g1_patn_17_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_7'></span>
+<input type='text' id='fieldPatn_17_7' name='g1_patn_17_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_8'></span>
+<input type='text' id='fieldPatn_17_8' name='g1_patn_17_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_9'></span>
+<input type='text' id='fieldPatn_17_9' name='g1_patn_17_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_10'></span>
+<input type='text' id='fieldPatn_17_10' name='g1_patn_17_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_11'></span>
+<input type='text' id='fieldPatn_17_11' name='g1_patn_17_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_12'></span>
+<input type='text' id='fieldPatn_17_12' name='g1_patn_17_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_13'></span>
+<input type='text' id='fieldPatn_17_13' name='g1_patn_17_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_14'></span>
+<input type='text' id='fieldPatn_17_14' name='g1_patn_17_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_15'></span>
+<input type='text' id='fieldPatn_17_15' name='g1_patn_17_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_17_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_17_16'></span>
+<input type='text' id='fieldPatn_17_16' name='g1_patn_17_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00039' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_7' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_7'></span>
+<input type='text' id='fieldAykg_7' name='g1_aykg_7' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00040' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_18' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_18'></span>
+</td>
+<td colspan=2 name='td_patn_18_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_1'></span>
+<input type='text' id='fieldPatn_18_1' name='g1_patn_18_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_2'></span>
+<input type='text' id='fieldPatn_18_2' name='g1_patn_18_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_3'></span>
+<input type='text' id='fieldPatn_18_3' name='g1_patn_18_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_4'></span>
+<input type='text' id='fieldPatn_18_4' name='g1_patn_18_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_5'></span>
+<input type='text' id='fieldPatn_18_5' name='g1_patn_18_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_6'></span>
+<input type='text' id='fieldPatn_18_6' name='g1_patn_18_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_7'></span>
+<input type='text' id='fieldPatn_18_7' name='g1_patn_18_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_8'></span>
+<input type='text' id='fieldPatn_18_8' name='g1_patn_18_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_9'></span>
+<input type='text' id='fieldPatn_18_9' name='g1_patn_18_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_10'></span>
+<input type='text' id='fieldPatn_18_10' name='g1_patn_18_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_11'></span>
+<input type='text' id='fieldPatn_18_11' name='g1_patn_18_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_12'></span>
+<input type='text' id='fieldPatn_18_12' name='g1_patn_18_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_13'></span>
+<input type='text' id='fieldPatn_18_13' name='g1_patn_18_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_14'></span>
+<input type='text' id='fieldPatn_18_14' name='g1_patn_18_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_15'></span>
+<input type='text' id='fieldPatn_18_15' name='g1_patn_18_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_18_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_18_16'></span>
+<input type='text' id='fieldPatn_18_16' name='g1_patn_18_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00041' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_8' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_8'></span>
+<input type='text' id='fieldAykg_8' name='g1_aykg_8' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00042' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_19' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_19'></span>
+</td>
+<td colspan=2 name='td_patn_19_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_1'></span>
+<input type='text' id='fieldPatn_19_1' name='g1_patn_19_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_2'></span>
+<input type='text' id='fieldPatn_19_2' name='g1_patn_19_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_3'></span>
+<input type='text' id='fieldPatn_19_3' name='g1_patn_19_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_4'></span>
+<input type='text' id='fieldPatn_19_4' name='g1_patn_19_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_5'></span>
+<input type='text' id='fieldPatn_19_5' name='g1_patn_19_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_6'></span>
+<input type='text' id='fieldPatn_19_6' name='g1_patn_19_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_7'></span>
+<input type='text' id='fieldPatn_19_7' name='g1_patn_19_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_8'></span>
+<input type='text' id='fieldPatn_19_8' name='g1_patn_19_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_9'></span>
+<input type='text' id='fieldPatn_19_9' name='g1_patn_19_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_10'></span>
+<input type='text' id='fieldPatn_19_10' name='g1_patn_19_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_11'></span>
+<input type='text' id='fieldPatn_19_11' name='g1_patn_19_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_12'></span>
+<input type='text' id='fieldPatn_19_12' name='g1_patn_19_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_13'></span>
+<input type='text' id='fieldPatn_19_13' name='g1_patn_19_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_14'></span>
+<input type='text' id='fieldPatn_19_14' name='g1_patn_19_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_15'></span>
+<input type='text' id='fieldPatn_19_15' name='g1_patn_19_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_19_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_19_16'></span>
+<input type='text' id='fieldPatn_19_16' name='g1_patn_19_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00043' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_9' style='width:246pt' class='nowrap td-I'>
+<span class=' xBODY5 xALLF' id='dispAykg_9'></span>
+<input type='text' id='fieldAykg_9' name='g1_aykg_9' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00044' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=4 name='td_ypag_20' style='width:24pt' class='nowrap f-numb'>
+<span class=' BODY2 ALLF' id='dispYpag_20'></span>
+</td>
+<td colspan=2 name='td_patn_20_1' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_1'></span>
+<input type='text' id='fieldPatn_20_1' name='g1_patn_20_1' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_2' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_2'></span>
+<input type='text' id='fieldPatn_20_2' name='g1_patn_20_2' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_3' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_3'></span>
+<input type='text' id='fieldPatn_20_3' name='g1_patn_20_3' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_4' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_4'></span>
+<input type='text' id='fieldPatn_20_4' name='g1_patn_20_4' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_5' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_5'></span>
+<input type='text' id='fieldPatn_20_5' name='g1_patn_20_5' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_6' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_6'></span>
+<input type='text' id='fieldPatn_20_6' name='g1_patn_20_6' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_7' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_7'></span>
+<input type='text' id='fieldPatn_20_7' name='g1_patn_20_7' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_8' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_8'></span>
+<input type='text' id='fieldPatn_20_8' name='g1_patn_20_8' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_9' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_9'></span>
+<input type='text' id='fieldPatn_20_9' name='g1_patn_20_9' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_10' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_10'></span>
+<input type='text' id='fieldPatn_20_10' name='g1_patn_20_10' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_11' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_11'></span>
+<input type='text' id='fieldPatn_20_11' name='g1_patn_20_11' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_12' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_12'></span>
+<input type='text' id='fieldPatn_20_12' name='g1_patn_20_12' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_13' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_13'></span>
+<input type='text' id='fieldPatn_20_13' name='g1_patn_20_13' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_14' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_14'></span>
+<input type='text' id='fieldPatn_20_14' name='g1_patn_20_14' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_15' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_15'></span>
+<input type='text' id='fieldPatn_20_15' name='g1_patn_20_15' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=2 name='td_patn_20_16' style='width:12pt' class='nowrap td-L'>
+<span class=' xBODY2 xALLF' id='dispPatn_20_16'></span>
+<input type='text' id='fieldPatn_20_16' name='g1_patn_20_16' class='form-control ime-i BODY2 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td name='td_s00045' style='width:6pt' class='nowrap td-L'>
+<span></span>
+</td>
+<td colspan=41 name='td_aykg_10' style='width:246pt' class='nowrap td-L'>
+<span class=' xBODY5 xALLF' id='dispAykg_10'></span>
+<input type='text' id='fieldAykg_10' name='g1_aykg_10' class='form-control ime-i BODY5 ALLF' style='width:249pt' maxlength='40' />
+</td>
+<td name='td_s00046' style='width:6pt' class='nowrap td-I'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=6 name='td_f010' style='width:36pt' class='nowrap'>
+<span></span>
+</td>
+<td colspan=2 name='td_cmd' style='width:12pt' class='nowrap'>
+<span class=' xBODY3 xALLF' id='dispCmd'></span>
+<input type='text' id='fieldCmd' name='g1_cmd' class='form-control ime-i BODY3 ALLF' style='width:15pt' maxlength='1' />
+</td>
+<td colspan=9 name='td_tori' style='width:54pt' class='nowrap'>
+<span class=' xBODY3A xBODY3 xALLF' id='dispTori'></span>
+<input type='text' id='fieldTori' name='g1_tori' class='form-control ime-i BODY3A BODY3 ALLF' style='width:57pt' maxlength='8' />
+</td>
+<td colspan=3 name='td_tsta' style='width:18pt' class='nowrap f-numb'>
+<span class=' xBODY3 xALLF' id='dispTsta'></span>
+<input type='text' id='fieldTsta' name='g1_tsta' class='form-control f-numb BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_ysta' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY3 xALLF' id='dispYsta'></span>
+<input type='text' id='fieldYsta' name='g1_ysta' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_tend' style='width:18pt' class='nowrap f-numb'>
+<span class=' xBODY3 xALLF' id='dispTend'></span>
+<input type='text' id='fieldTend' name='g1_tend' class='form-control f-numb BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_yend' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY3 xALLF' id='dispYend'></span>
+<input type='text' id='fieldYend' name='g1_yend' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_f016' style='width:18pt' class='nowrap'>
+<span></span>
+</td>
+<td colspan=3 name='td_tto' style='width:18pt' class='nowrap f-numb'>
+<span class=' xBODY3 xALLF' id='dispTto'></span>
+<input type='text' id='fieldTto' name='g1_tto' class='form-control f-numb BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=4 name='td_yto' style='width:24pt' class='nowrap f-numb'>
+<span class=' xBODY3 xALLF' id='dispYto'></span>
+<input type='text' id='fieldYto' name='g1_yto' class='form-control f-numb BODY3 ALLF' style='width:27pt' maxlength='3' />
+</td>
+<td colspan=3 name='td_kais' style='width:18pt' class='nowrap f-numb'>
+<span class=' xBODY3 xALLF' id='dispKais'></span>
+<input type='text' id='fieldKais' name='g1_kais' class='form-control f-numb BODY3 ALLF' style='width:21pt' maxlength='2' />
+</td>
+<td colspan=35 name='td_f020' style='width:210pt' class='nowrap'>
+<span></span>
+</td>
+</tr><tr>
+<td colspan=6 style='width:36pt'></td>
+<td colspan=69 name='td_emsg' style='width:414pt' class='nowrap'>
+<span class=' TAIL ALLF' id='dispEmsg'></span>
+</td>
+<td colspan=2 style='width:12pt'></td>
+<td colspan=2 name='td_kaku' style='width:12pt' class='nowrap'>
+<span class=' xTAIL xALLF' id='dispKaku'></span>
+<input type='text' id='fieldKaku' name='g1_kaku' class='form-control ime-i TAIL ALLF' style='width:15pt' maxlength='1' />
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<?php echo $this->tag->hiddenField("id") ?>
+
+<?php echo $this->tag->endForm(); ?>
+
+<datalist id="CdOptions">
+</datalist>
+
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle">
+	<div class="modal-header" style="padding: 5px; background-color: #ddd;">
+		<span id="iframe-title"></span>
+		<button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+	</div>
+	<div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+	</div>
+</div>
+
+<div id="PgDn"></div><div id="PgUp"></div><div id="END"></div><div id="ESC"></div>
+
+<div class="navbar navbar-default navbar-fixed-bottom" style="background-color:#e8e0d0;">
+ <div class="container" style="width:800px;">
+  <span class="navbar-text">
+	<input type="button" value="" id="F0" class="btn btn-default btn-xs" />
+	<input type="button" value="－－F1" id="F1" onclick="alert('F1');" class="btn btn-default btn-xs" title='ブラウザのHELP起動:F1キー' />
+	<input type="button" value="－－F2" id="X2" onclick="alert('F2');" class="btn btn-default btn-xs" title='新規入力用画面にします:F2キー' />
+	<input type="button" value="前へF3" id="F3" onclick="BACK();" class="btn btn-default btn-xs" title='前番号の伝票を表示します:F3キー' />
+	<input type="button" value="次へF4" id="F4" onclick="NEXT();" class="btn btn-info btn-xs" title='次番号の伝票を表示します:F4キー' />　
+	<input type="button" value="糸使F5" id="F5" onclick="f5key(); "class="btn btn-default btn-xs fALLF fBODY fTAIL" title='糸構成画面が出ます:F5キー' />
+	<input type="button" value="配列F6" id="F6" onclick="shuusei();" class="btn btn-warning btn-xs fALLF fBODY fTAIL" title='修正入力可能になります:F6キー' />
+	<input type="button" value="組織F7" id="F7" onclick="hyouji();" class="btn btn-default btn-xs fALLF fBODY fTAIL" title='表示モードになります:F7キー' />
+	<input type="button" value="一覧F8" id="X8" onclick="alert('F8');" class="btn btn-default btn-xs fALLF fHEAD fBODY" title='参照可能の時、参照画面を開きます:F8キー' />　
+	<input type="button" value="取消F9" id="F9" onclick="CANCEL();" class="btn btn-default btn-xs" title='ブラウザの機能が起動:F9キー' />
+	<input type="button" value="－－F10" id="F10" onclick="alert('F10');" class="btn btn-default btn-xs fALLF fHEAD" title='ブラウザの機能が起動:F10キー' />
+	<input type="button" value="－－F11" id="F11" onclick="alert('F11');" class="btn btn-default btn-xs" disabled="true" title='ブラウザの機能が起動:F11キー' />
+	<input type="submit" value="実行F12" id="F12" onclick="ENTER();" class="btn btn-success" title='新規登録や修正を更新します:F12キー' />
+  </span>
+ </div>
+</div>
+
+<script type="text/javascript">
+	var haiz230_ajaxGrpDo = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('mrp/haiz230/ajaxGrpDo') ?>";
+	var user_name_ajaxGet = "<?php echo '//'.$_SERVER['SERVER_NAME'].$this->url->get('users/name_ajaxGet') ?>";
+	var audio = new Audio("<?php echo $this->url->get('js/views/beep.mp3'); ?>");
+</script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/mrp/haiz230.js'); ?>?var=000001"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/updnkey.js'); ?>?var=000001"></script>
+
+
+
+<script type='text/javascript'>
+  var formGRP={};
+  formGRP['ALLF']=['Sino','Sied','Socd','Ypag_1'
+  				,'Patn_1_1','Patn_1_2','Patn_1_3','Patn_1_4','Patn_1_5','Patn_1_6','Patn_1_7','Patn_1_8','Patn_1_9','Patn_1_10','Patn_1_11','Patn_1_12','Patn_1_13','Patn_1_14','Patn_1_15','Patn_1_16'
+  				,'Patn_2_1','Patn_2_2','Patn_2_3','Patn_2_4','Patn_2_5','Patn_2_6','Patn_2_7','Patn_2_8','Patn_2_9','Patn_2_10','Patn_2_11','Patn_2_12','Patn_2_13','Patn_2_14','Patn_2_15','Patn_2_16'
+  				,'Patn_3_1','Patn_3_2','Patn_3_3','Patn_3_4','Patn_3_5','Patn_3_6','Patn_3_7','Patn_3_8','Patn_3_9','Patn_3_10','Patn_3_11','Patn_3_12','Patn_3_13','Patn_3_14','Patn_3_15','Patn_3_16'
+  				,'Patn_4_1','Patn_4_2','Patn_4_3','Patn_4_4','Patn_4_5','Patn_4_6','Patn_4_7','Patn_4_8','Patn_4_9','Patn_4_10','Patn_4_11','Patn_4_12','Patn_4_13','Patn_4_14','Patn_4_15','Patn_4_16'
+  				,'Patn_5_1','Patn_5_2','Patn_5_3','Patn_5_4','Patn_5_5','Patn_5_6','Patn_5_7','Patn_5_8','Patn_5_9','Patn_5_10','Patn_5_11','Patn_5_12','Patn_5_13','Patn_5_14','Patn_5_15','Patn_5_16'
+  				,'Patn_6_1','Patn_6_2','Patn_6_3','Patn_6_4','Patn_6_5','Patn_6_6','Patn_6_7','Patn_6_8','Patn_6_9','Patn_6_10','Patn_6_11','Patn_6_12','Patn_6_13','Patn_6_14','Patn_6_15','Patn_6_16'
+  				,'Patn_7_1','Patn_7_2','Patn_7_3','Patn_7_4','Patn_7_5','Patn_7_6','Patn_7_7','Patn_7_8','Patn_7_9','Patn_7_10','Patn_7_11','Patn_7_12','Patn_7_13','Patn_7_14','Patn_7_15','Patn_7_16'
+  				,'Patn_8_1','Patn_8_2','Patn_8_3','Patn_8_4','Patn_8_5','Patn_8_6','Patn_8_7','Patn_8_8','Patn_8_9','Patn_8_10','Patn_8_11','Patn_8_12','Patn_8_13','Patn_8_14','Patn_8_15','Patn_8_16'
+  				,'Patn_9_1','Patn_9_2','Patn_9_3','Patn_9_4','Patn_9_5','Patn_9_6','Patn_9_7','Patn_9_8','Patn_9_9','Patn_9_10','Patn_9_11','Patn_9_12','Patn_9_13','Patn_9_14','Patn_9_15','Patn_9_16'
+  				,'Patn_10_1','Patn_10_2','Patn_10_3','Patn_10_4','Patn_10_5','Patn_10_6','Patn_10_7','Patn_10_8','Patn_10_9','Patn_10_10','Patn_10_11','Patn_10_12','Patn_10_13','Patn_10_14','Patn_10_15','Patn_10_16'
+  				,'Patn_11_1','Patn_11_2','Patn_11_3','Patn_11_4','Patn_11_5','Patn_11_6','Patn_11_7','Patn_11_8','Patn_11_9','Patn_11_10','Patn_11_11','Patn_11_12','Patn_11_13','Patn_11_14','Patn_11_15','Patn_11_16'
+  				,'Patn_12_1','Patn_12_2','Patn_12_3','Patn_12_4','Patn_12_5','Patn_12_6','Patn_12_7','Patn_12_8','Patn_12_9','Patn_12_10','Patn_12_11','Patn_12_12','Patn_12_13','Patn_12_14','Patn_12_15','Patn_12_16'
+  				,'Patn_13_1','Patn_13_2','Patn_13_3','Patn_13_4','Patn_13_5','Patn_13_6','Patn_13_7','Patn_13_8','Patn_13_9','Patn_13_10','Patn_13_11','Patn_13_12','Patn_13_13','Patn_13_14','Patn_13_15','Patn_13_16'
+  				,'Patn_14_1','Patn_14_2','Patn_14_3','Patn_14_4','Patn_14_5','Patn_14_6','Patn_14_7','Patn_14_8','Patn_14_9','Patn_14_10','Patn_14_11','Patn_14_12','Patn_14_13','Patn_14_14','Patn_14_15','Patn_14_16'
+  				,'Patn_15_1','Patn_15_2','Patn_15_3','Patn_15_4','Patn_15_5','Patn_15_6','Patn_15_7','Patn_15_8','Patn_15_9','Patn_15_10','Patn_15_11','Patn_15_12','Patn_15_13','Patn_15_14','Patn_15_15','Patn_15_16'
+  				,'Patn_16_1','Patn_16_2','Patn_16_3','Patn_16_4','Patn_16_5','Patn_16_6','Patn_16_7','Patn_16_8','Patn_16_9','Patn_16_10','Patn_16_11','Patn_16_12','Patn_16_13','Patn_16_14','Patn_16_15','Patn_16_16'
+  				,'Patn_17_1','Patn_17_2','Patn_17_3','Patn_17_4','Patn_17_5','Patn_17_6','Patn_17_7','Patn_17_8','Patn_17_9','Patn_17_10','Patn_17_11','Patn_17_12','Patn_17_13','Patn_17_14','Patn_17_15','Patn_17_16'
+  				,'Patn_18_1','Patn_18_2','Patn_18_3','Patn_18_4','Patn_18_5','Patn_18_6','Patn_18_7','Patn_18_8','Patn_18_9','Patn_18_10','Patn_18_11','Patn_18_12','Patn_18_13','Patn_18_14','Patn_18_15','Patn_18_16'
+  				,'Patn_19_1','Patn_19_2','Patn_19_3','Patn_19_4','Patn_19_5','Patn_19_6','Patn_19_7','Patn_19_8','Patn_19_9','Patn_19_10','Patn_19_11','Patn_19_12','Patn_19_13','Patn_19_14','Patn_19_15','Patn_19_16'
+  				,'Patn_20_1','Patn_20_2','Patn_20_3','Patn_20_4','Patn_20_5','Patn_20_6','Patn_20_7','Patn_20_8','Patn_20_9','Patn_20_10','Patn_20_11','Patn_20_12','Patn_20_13','Patn_20_14','Patn_20_15','Patn_20_16'
+  				,'Soth','Soyh','Ypag_2','Some','Ypag_3','Chui_1','Ypag_4','Chui_2','Ypag_5','Ypag_6','Page','Ypag_7','Aycd','Ayma','Ayho','Ypag_8','Ayme','Ypag_9','Aych_1','Ypag_10','Aych_2','Ypag_11','Aykg_1','Ypag_12','Aykg_2','Ypag_13','Aykg_3','Ypag_14','Aykg_4','Ypag_15','Aykg_5','Ypag_16','Aykg_6','Ypag_17','Aykg_7','Ypag_18','Aykg_8','Ypag_19','Aykg_9','Ypag_20','Aykg_10','Cmd','Tori','Tsta','Ysta','Tend','Yend','Tto','Yto','Kais','Emsg','Kaku',];
+  formGRP['BODY1']=['Soth','Soyh','Some','Chui_1','Chui_2',];
+  formGRP['BODY3']=['Cmd','Tori','Tsta','Ysta','Tend','Yend','Tto','Yto','Kais',];
+  formGRP['BODY4']=['Page','Aycd','Ayma','Ayho',];
+  formGRP['TAIL']=['Emsg','Kaku',];
+  formGRP['BODY2']=['Ypag_1'
+  				,'Patn_1_1','Patn_1_2','Patn_1_3','Patn_1_4','Patn_1_5','Patn_1_6','Patn_1_7','Patn_1_8','Patn_1_9','Patn_1_10','Patn_1_11','Patn_1_12','Patn_1_13','Patn_1_14','Patn_1_15','Patn_1_16'
+  				,'Patn_2_1','Patn_2_2','Patn_2_3','Patn_2_4','Patn_2_5','Patn_2_6','Patn_2_7','Patn_2_8','Patn_2_9','Patn_2_10','Patn_2_11','Patn_2_12','Patn_2_13','Patn_2_14','Patn_2_15','Patn_2_16'
+  				,'Patn_3_1','Patn_3_2','Patn_3_3','Patn_3_4','Patn_3_5','Patn_3_6','Patn_3_7','Patn_3_8','Patn_3_9','Patn_3_10','Patn_3_11','Patn_3_12','Patn_3_13','Patn_3_14','Patn_3_15','Patn_3_16'
+  				,'Patn_4_1','Patn_4_2','Patn_4_3','Patn_4_4','Patn_4_5','Patn_4_6','Patn_4_7','Patn_4_8','Patn_4_9','Patn_4_10','Patn_4_11','Patn_4_12','Patn_4_13','Patn_4_14','Patn_4_15','Patn_4_16'
+  				,'Patn_5_1','Patn_5_2','Patn_5_3','Patn_5_4','Patn_5_5','Patn_5_6','Patn_5_7','Patn_5_8','Patn_5_9','Patn_5_10','Patn_5_11','Patn_5_12','Patn_5_13','Patn_5_14','Patn_5_15','Patn_5_16'
+  				,'Patn_6_1','Patn_6_2','Patn_6_3','Patn_6_4','Patn_6_5','Patn_6_6','Patn_6_7','Patn_6_8','Patn_6_9','Patn_6_10','Patn_6_11','Patn_6_12','Patn_6_13','Patn_6_14','Patn_6_15','Patn_6_16'
+  				,'Patn_7_1','Patn_7_2','Patn_7_3','Patn_7_4','Patn_7_5','Patn_7_6','Patn_7_7','Patn_7_8','Patn_7_9','Patn_7_10','Patn_7_11','Patn_7_12','Patn_7_13','Patn_7_14','Patn_7_15','Patn_7_16'
+  				,'Patn_8_1','Patn_8_2','Patn_8_3','Patn_8_4','Patn_8_5','Patn_8_6','Patn_8_7','Patn_8_8','Patn_8_9','Patn_8_10','Patn_8_11','Patn_8_12','Patn_8_13','Patn_8_14','Patn_8_15','Patn_8_16'
+  				,'Patn_9_1','Patn_9_2','Patn_9_3','Patn_9_4','Patn_9_5','Patn_9_6','Patn_9_7','Patn_9_8','Patn_9_9','Patn_9_10','Patn_9_11','Patn_9_12','Patn_9_13','Patn_9_14','Patn_9_15','Patn_9_16'
+  				,'Patn_10_1','Patn_10_2','Patn_10_3','Patn_10_4','Patn_10_5','Patn_10_6','Patn_10_7','Patn_10_8','Patn_10_9','Patn_10_10','Patn_10_11','Patn_10_12','Patn_10_13','Patn_10_14','Patn_10_15','Patn_10_16'
+  				,'Patn_11_1','Patn_11_2','Patn_11_3','Patn_11_4','Patn_11_5','Patn_11_6','Patn_11_7','Patn_11_8','Patn_11_9','Patn_11_10','Patn_11_11','Patn_11_12','Patn_11_13','Patn_11_14','Patn_11_15','Patn_11_16'
+  				,'Patn_12_1','Patn_12_2','Patn_12_3','Patn_12_4','Patn_12_5','Patn_12_6','Patn_12_7','Patn_12_8','Patn_12_9','Patn_12_10','Patn_12_11','Patn_12_12','Patn_12_13','Patn_12_14','Patn_12_15','Patn_12_16'
+  				,'Patn_13_1','Patn_13_2','Patn_13_3','Patn_13_4','Patn_13_5','Patn_13_6','Patn_13_7','Patn_13_8','Patn_13_9','Patn_13_10','Patn_13_11','Patn_13_12','Patn_13_13','Patn_13_14','Patn_13_15','Patn_13_16'
+  				,'Patn_14_1','Patn_14_2','Patn_14_3','Patn_14_4','Patn_14_5','Patn_14_6','Patn_14_7','Patn_14_8','Patn_14_9','Patn_14_10','Patn_14_11','Patn_14_12','Patn_14_13','Patn_14_14','Patn_14_15','Patn_14_16'
+  				,'Patn_15_1','Patn_15_2','Patn_15_3','Patn_15_4','Patn_15_5','Patn_15_6','Patn_15_7','Patn_15_8','Patn_15_9','Patn_15_10','Patn_15_11','Patn_15_12','Patn_15_13','Patn_15_14','Patn_15_15','Patn_15_16'
+  				,'Patn_16_1','Patn_16_2','Patn_16_3','Patn_16_4','Patn_16_5','Patn_16_6','Patn_16_7','Patn_16_8','Patn_16_9','Patn_16_10','Patn_16_11','Patn_16_12','Patn_16_13','Patn_16_14','Patn_16_15','Patn_16_16'
+  				,'Patn_17_1','Patn_17_2','Patn_17_3','Patn_17_4','Patn_17_5','Patn_17_6','Patn_17_7','Patn_17_8','Patn_17_9','Patn_17_10','Patn_17_11','Patn_17_12','Patn_17_13','Patn_17_14','Patn_17_15','Patn_17_16'
+  				,'Patn_18_1','Patn_18_2','Patn_18_3','Patn_18_4','Patn_18_5','Patn_18_6','Patn_18_7','Patn_18_8','Patn_18_9','Patn_18_10','Patn_18_11','Patn_18_12','Patn_18_13','Patn_18_14','Patn_18_15','Patn_18_16'
+  				,'Patn_19_1','Patn_19_2','Patn_19_3','Patn_19_4','Patn_19_5','Patn_19_6','Patn_19_7','Patn_19_8','Patn_19_9','Patn_19_10','Patn_19_11','Patn_19_12','Patn_19_13','Patn_19_14','Patn_19_15','Patn_19_16'
+  				,'Patn_20_1','Patn_20_2','Patn_20_3','Patn_20_4','Patn_20_5','Patn_20_6','Patn_20_7','Patn_20_8','Patn_20_9','Patn_20_10','Patn_20_11','Patn_20_12','Patn_20_13','Patn_20_14','Patn_20_15','Patn_20_16'
+  				,'Ypag_2','Ypag_3','Ypag_4','Ypag_5','Ypag_6','Ypag_7','Ypag_8','Ypag_9','Ypag_10','Ypag_11','Ypag_12','Ypag_13','Ypag_14','Ypag_15','Ypag_16','Ypag_17','Ypag_18','Ypag_19','Ypag_20',];
+  formGRP['BODY5']=['Ayme','Aych_1','Aych_2','Aykg_1','Aykg_2','Aykg_3','Aykg_4','Aykg_5','Aykg_6','Aykg_7','Aykg_8','Aykg_9','Aykg_10',];
+  formGRP['HEAD']=['Sino','Sied','Socd',];
+  formGRP['BODY3A']=['Tori',];
+  formGRP['BODY6']=['Aych_1','Aych_2',];
+  var koumokus={
+    sino:['Sino',0,0,6,0,0],
+    sied:['Sied',0,0,2,0,0],
+    socd:['Socd',1,0,8,0,0],
+    ypag_1:['Ypag_1',0,1,3,0,0],
+    patn_1_1:['Patn_1_1',1,0,1,0,0],
+    patn_1_2:['Patn_1_2',1,0,1,0,0],
+    patn_1_3:['Patn_1_3',1,0,1,0,0],
+    patn_1_4:['Patn_1_4',1,0,1,0,0],
+    patn_1_5:['Patn_1_5',1,0,1,0,0],
+    patn_1_6:['Patn_1_6',1,0,1,0,0],
+    patn_1_7:['Patn_1_7',1,0,1,0,0],
+    patn_1_8:['Patn_1_8',1,0,1,0,0],
+    patn_1_9:['Patn_1_9',1,0,1,0,0],
+    patn_1_10:['Patn_1_10',1,0,1,0,0],
+    patn_1_11:['Patn_1_11',1,0,1,0,0],
+    patn_1_12:['Patn_1_12',1,0,1,0,0],
+    patn_1_13:['Patn_1_13',1,0,1,0,0],
+    patn_1_14:['Patn_1_14',1,0,1,0,0],
+    patn_1_15:['Patn_1_15',1,0,1,0,0],
+    patn_1_16:['Patn_1_16',1,0,1,0,0],
+    soth:['Soth',1,1,2,0,0],
+    soyh:['Soyh',1,1,3,0,0],
+    ypag_2:['Ypag_2',0,1,3,0,0],
+    patn_2_1:['Patn_2_1',1,0,1,0,0],
+    patn_2_2:['Patn_2_2',1,0,1,0,0],
+    patn_2_3:['Patn_2_3',1,0,1,0,0],
+    patn_2_4:['Patn_2_4',1,0,1,0,0],
+    patn_2_5:['Patn_2_5',1,0,1,0,0],
+    patn_2_6:['Patn_2_6',1,0,1,0,0],
+    patn_2_7:['Patn_2_7',1,0,1,0,0],
+    patn_2_8:['Patn_2_8',1,0,1,0,0],
+    patn_2_9:['Patn_2_9',1,0,1,0,0],
+    patn_2_10:['Patn_2_10',1,0,1,0,0],
+    patn_2_11:['Patn_2_11',1,0,1,0,0],
+    patn_2_12:['Patn_2_12',1,0,1,0,0],
+    patn_2_13:['Patn_2_13',1,0,1,0,0],
+    patn_2_14:['Patn_2_14',1,0,1,0,0],
+    patn_2_15:['Patn_2_15',1,0,1,0,0],
+    patn_2_16:['Patn_2_16',1,0,1,0,0],
+    some:['Some',1,0,16,0,0],
+    ypag_3:['Ypag_3',0,1,3,0,0],
+    patn_3_1:['Patn_3_1',1,0,1,0,0],
+    patn_3_2:['Patn_3_2',1,0,1,0,0],
+    patn_3_3:['Patn_3_3',1,0,1,0,0],
+    patn_3_4:['Patn_3_4',1,0,1,0,0],
+    patn_3_5:['Patn_3_5',1,0,1,0,0],
+    patn_3_6:['Patn_3_6',1,0,1,0,0],
+    patn_3_7:['Patn_3_7',1,0,1,0,0],
+    patn_3_8:['Patn_3_8',1,0,1,0,0],
+    patn_3_9:['Patn_3_9',1,0,1,0,0],
+    patn_3_10:['Patn_3_10',1,0,1,0,0],
+    patn_3_11:['Patn_3_11',1,0,1,0,0],
+    patn_3_12:['Patn_3_12',1,0,1,0,0],
+    patn_3_13:['Patn_3_13',1,0,1,0,0],
+    patn_3_14:['Patn_3_14',1,0,1,0,0],
+    patn_3_15:['Patn_3_15',1,0,1,0,0],
+    patn_3_16:['Patn_3_16',1,0,1,0,0],
+    chui_1:['Chui_1',1,0,28,0,0],
+    ypag_4:['Ypag_4',0,1,3,0,0],
+    patn_4_1:['Patn_4_1',1,0,1,0,0],
+    patn_4_2:['Patn_4_2',1,0,1,0,0],
+    patn_4_3:['Patn_4_3',1,0,1,0,0],
+    patn_4_4:['Patn_4_4',1,0,1,0,0],
+    patn_4_5:['Patn_4_5',1,0,1,0,0],
+    patn_4_6:['Patn_4_6',1,0,1,0,0],
+    patn_4_7:['Patn_4_7',1,0,1,0,0],
+    patn_4_8:['Patn_4_8',1,0,1,0,0],
+    patn_4_9:['Patn_4_9',1,0,1,0,0],
+    patn_4_10:['Patn_4_10',1,0,1,0,0],
+    patn_4_11:['Patn_4_11',1,0,1,0,0],
+    patn_4_12:['Patn_4_12',1,0,1,0,0],
+    patn_4_13:['Patn_4_13',1,0,1,0,0],
+    patn_4_14:['Patn_4_14',1,0,1,0,0],
+    patn_4_15:['Patn_4_15',1,0,1,0,0],
+    patn_4_16:['Patn_4_16',1,0,1,0,0],
+    chui_2:['Chui_2',1,0,28,0,0],
+    ypag_5:['Ypag_5',0,1,3,0,0],
+    patn_5_1:['Patn_5_1',1,0,1,0,0],
+    patn_5_2:['Patn_5_2',1,0,1,0,0],
+    patn_5_3:['Patn_5_3',1,0,1,0,0],
+    patn_5_4:['Patn_5_4',1,0,1,0,0],
+    patn_5_5:['Patn_5_5',1,0,1,0,0],
+    patn_5_6:['Patn_5_6',1,0,1,0,0],
+    patn_5_7:['Patn_5_7',1,0,1,0,0],
+    patn_5_8:['Patn_5_8',1,0,1,0,0],
+    patn_5_9:['Patn_5_9',1,0,1,0,0],
+    patn_5_10:['Patn_5_10',1,0,1,0,0],
+    patn_5_11:['Patn_5_11',1,0,1,0,0],
+    patn_5_12:['Patn_5_12',1,0,1,0,0],
+    patn_5_13:['Patn_5_13',1,0,1,0,0],
+    patn_5_14:['Patn_5_14',1,0,1,0,0],
+    patn_5_15:['Patn_5_15',1,0,1,0,0],
+    patn_5_16:['Patn_5_16',1,0,1,0,0],
+    ypag_6:['Ypag_6',0,1,3,0,0],
+    patn_6_1:['Patn_6_1',1,0,1,0,0],
+    patn_6_2:['Patn_6_2',1,0,1,0,0],
+    patn_6_3:['Patn_6_3',1,0,1,0,0],
+    patn_6_4:['Patn_6_4',1,0,1,0,0],
+    patn_6_5:['Patn_6_5',1,0,1,0,0],
+    patn_6_6:['Patn_6_6',1,0,1,0,0],
+    patn_6_7:['Patn_6_7',1,0,1,0,0],
+    patn_6_8:['Patn_6_8',1,0,1,0,0],
+    patn_6_9:['Patn_6_9',1,0,1,0,0],
+    patn_6_10:['Patn_6_10',1,0,1,0,0],
+    patn_6_11:['Patn_6_11',1,0,1,0,0],
+    patn_6_12:['Patn_6_12',1,0,1,0,0],
+    patn_6_13:['Patn_6_13',1,0,1,0,0],
+    patn_6_14:['Patn_6_14',1,0,1,0,0],
+    patn_6_15:['Patn_6_15',1,0,1,0,0],
+    patn_6_16:['Patn_6_16',1,0,1,0,0],
+    page:['Page',0,1,2,0,0],
+    ypag_7:['Ypag_7',0,1,3,0,0],
+    patn_7_1:['Patn_7_1',1,0,1,0,0],
+    patn_7_2:['Patn_7_2',1,0,1,0,0],
+    patn_7_3:['Patn_7_3',1,0,1,0,0],
+    patn_7_4:['Patn_7_4',1,0,1,0,0],
+    patn_7_5:['Patn_7_5',1,0,1,0,0],
+    patn_7_6:['Patn_7_6',1,0,1,0,0],
+    patn_7_7:['Patn_7_7',1,0,1,0,0],
+    patn_7_8:['Patn_7_8',1,0,1,0,0],
+    patn_7_9:['Patn_7_9',1,0,1,0,0],
+    patn_7_10:['Patn_7_10',1,0,1,0,0],
+    patn_7_11:['Patn_7_11',1,0,1,0,0],
+    patn_7_12:['Patn_7_12',1,0,1,0,0],
+    patn_7_13:['Patn_7_13',1,0,1,0,0],
+    patn_7_14:['Patn_7_14',1,0,1,0,0],
+    patn_7_15:['Patn_7_15',1,0,1,0,0],
+    patn_7_16:['Patn_7_16',1,0,1,0,0],
+    aycd:['Aycd',1,0,2,0,0],
+    ayma:['Ayma',1,1,2,0,0],
+    ayho:['Ayho',0,1,3,0,0],
+    ypag_8:['Ypag_8',0,1,3,0,0],
+    patn_8_1:['Patn_8_1',1,0,1,0,0],
+    patn_8_2:['Patn_8_2',1,0,1,0,0],
+    patn_8_3:['Patn_8_3',1,0,1,0,0],
+    patn_8_4:['Patn_8_4',1,0,1,0,0],
+    patn_8_5:['Patn_8_5',1,0,1,0,0],
+    patn_8_6:['Patn_8_6',1,0,1,0,0],
+    patn_8_7:['Patn_8_7',1,0,1,0,0],
+    patn_8_8:['Patn_8_8',1,0,1,0,0],
+    patn_8_9:['Patn_8_9',1,0,1,0,0],
+    patn_8_10:['Patn_8_10',1,0,1,0,0],
+    patn_8_11:['Patn_8_11',1,0,1,0,0],
+    patn_8_12:['Patn_8_12',1,0,1,0,0],
+    patn_8_13:['Patn_8_13',1,0,1,0,0],
+    patn_8_14:['Patn_8_14',1,0,1,0,0],
+    patn_8_15:['Patn_8_15',1,0,1,0,0],
+    patn_8_16:['Patn_8_16',1,0,1,0,0],
+    ayme:['Ayme',1,0,16,0,0],
+    ypag_9:['Ypag_9',0,1,3,0,0],
+    patn_9_1:['Patn_9_1',1,0,1,0,0],
+    patn_9_2:['Patn_9_2',1,0,1,0,0],
+    patn_9_3:['Patn_9_3',1,0,1,0,0],
+    patn_9_4:['Patn_9_4',1,0,1,0,0],
+    patn_9_5:['Patn_9_5',1,0,1,0,0],
+    patn_9_6:['Patn_9_6',1,0,1,0,0],
+    patn_9_7:['Patn_9_7',1,0,1,0,0],
+    patn_9_8:['Patn_9_8',1,0,1,0,0],
+    patn_9_9:['Patn_9_9',1,0,1,0,0],
+    patn_9_10:['Patn_9_10',1,0,1,0,0],
+    patn_9_11:['Patn_9_11',1,0,1,0,0],
+    patn_9_12:['Patn_9_12',1,0,1,0,0],
+    patn_9_13:['Patn_9_13',1,0,1,0,0],
+    patn_9_14:['Patn_9_14',1,0,1,0,0],
+    patn_9_15:['Patn_9_15',1,0,1,0,0],
+    patn_9_16:['Patn_9_16',1,0,1,0,0],
+    aych_1:['Aych_1',1,0,28,0,0],
+    ypag_10:['Ypag_10',0,1,3,0,0],
+    patn_10_1:['Patn_10_1',1,0,1,0,0],
+    patn_10_2:['Patn_10_2',1,0,1,0,0],
+    patn_10_3:['Patn_10_3',1,0,1,0,0],
+    patn_10_4:['Patn_10_4',1,0,1,0,0],
+    patn_10_5:['Patn_10_5',1,0,1,0,0],
+    patn_10_6:['Patn_10_6',1,0,1,0,0],
+    patn_10_7:['Patn_10_7',1,0,1,0,0],
+    patn_10_8:['Patn_10_8',1,0,1,0,0],
+    patn_10_9:['Patn_10_9',1,0,1,0,0],
+    patn_10_10:['Patn_10_10',1,0,1,0,0],
+    patn_10_11:['Patn_10_11',1,0,1,0,0],
+    patn_10_12:['Patn_10_12',1,0,1,0,0],
+    patn_10_13:['Patn_10_13',1,0,1,0,0],
+    patn_10_14:['Patn_10_14',1,0,1,0,0],
+    patn_10_15:['Patn_10_15',1,0,1,0,0],
+    patn_10_16:['Patn_10_16',1,0,1,0,0],
+    aych_2:['Aych_2',1,0,28,0,0],
+    ypag_11:['Ypag_11',0,1,3,0,0],
+    patn_11_1:['Patn_11_1',1,0,1,0,0],
+    patn_11_2:['Patn_11_2',1,0,1,0,0],
+    patn_11_3:['Patn_11_3',1,0,1,0,0],
+    patn_11_4:['Patn_11_4',1,0,1,0,0],
+    patn_11_5:['Patn_11_5',1,0,1,0,0],
+    patn_11_6:['Patn_11_6',1,0,1,0,0],
+    patn_11_7:['Patn_11_7',1,0,1,0,0],
+    patn_11_8:['Patn_11_8',1,0,1,0,0],
+    patn_11_9:['Patn_11_9',1,0,1,0,0],
+    patn_11_10:['Patn_11_10',1,0,1,0,0],
+    patn_11_11:['Patn_11_11',1,0,1,0,0],
+    patn_11_12:['Patn_11_12',1,0,1,0,0],
+    patn_11_13:['Patn_11_13',1,0,1,0,0],
+    patn_11_14:['Patn_11_14',1,0,1,0,0],
+    patn_11_15:['Patn_11_15',1,0,1,0,0],
+    patn_11_16:['Patn_11_16',1,0,1,0,0],
+    aykg_1:['Aykg_1',1,0,40,0,0],
+    ypag_12:['Ypag_12',0,1,3,0,0],
+    patn_12_1:['Patn_12_1',1,0,1,0,0],
+    patn_12_2:['Patn_12_2',1,0,1,0,0],
+    patn_12_3:['Patn_12_3',1,0,1,0,0],
+    patn_12_4:['Patn_12_4',1,0,1,0,0],
+    patn_12_5:['Patn_12_5',1,0,1,0,0],
+    patn_12_6:['Patn_12_6',1,0,1,0,0],
+    patn_12_7:['Patn_12_7',1,0,1,0,0],
+    patn_12_8:['Patn_12_8',1,0,1,0,0],
+    patn_12_9:['Patn_12_9',1,0,1,0,0],
+    patn_12_10:['Patn_12_10',1,0,1,0,0],
+    patn_12_11:['Patn_12_11',1,0,1,0,0],
+    patn_12_12:['Patn_12_12',1,0,1,0,0],
+    patn_12_13:['Patn_12_13',1,0,1,0,0],
+    patn_12_14:['Patn_12_14',1,0,1,0,0],
+    patn_12_15:['Patn_12_15',1,0,1,0,0],
+    patn_12_16:['Patn_12_16',1,0,1,0,0],
+    aykg_2:['Aykg_2',1,0,40,0,0],
+    ypag_13:['Ypag_13',0,1,3,0,0],
+    patn_13_1:['Patn_13_1',1,0,1,0,0],
+    patn_13_2:['Patn_13_2',1,0,1,0,0],
+    patn_13_3:['Patn_13_3',1,0,1,0,0],
+    patn_13_4:['Patn_13_4',1,0,1,0,0],
+    patn_13_5:['Patn_13_5',1,0,1,0,0],
+    patn_13_6:['Patn_13_6',1,0,1,0,0],
+    patn_13_7:['Patn_13_7',1,0,1,0,0],
+    patn_13_8:['Patn_13_8',1,0,1,0,0],
+    patn_13_9:['Patn_13_9',1,0,1,0,0],
+    patn_13_10:['Patn_13_10',1,0,1,0,0],
+    patn_13_11:['Patn_13_11',1,0,1,0,0],
+    patn_13_12:['Patn_13_12',1,0,1,0,0],
+    patn_13_13:['Patn_13_13',1,0,1,0,0],
+    patn_13_14:['Patn_13_14',1,0,1,0,0],
+    patn_13_15:['Patn_13_15',1,0,1,0,0],
+    patn_13_16:['Patn_13_16',1,0,1,0,0],
+    aykg_3:['Aykg_3',1,0,40,0,0],
+    ypag_14:['Ypag_14',0,1,3,0,0],
+    patn_14_1:['Patn_14_1',1,0,1,0,0],
+    patn_14_2:['Patn_14_2',1,0,1,0,0],
+    patn_14_3:['Patn_14_3',1,0,1,0,0],
+    patn_14_4:['Patn_14_4',1,0,1,0,0],
+    patn_14_5:['Patn_14_5',1,0,1,0,0],
+    patn_14_6:['Patn_14_6',1,0,1,0,0],
+    patn_14_7:['Patn_14_7',1,0,1,0,0],
+    patn_14_8:['Patn_14_8',1,0,1,0,0],
+    patn_14_9:['Patn_14_9',1,0,1,0,0],
+    patn_14_10:['Patn_14_10',1,0,1,0,0],
+    patn_14_11:['Patn_14_11',1,0,1,0,0],
+    patn_14_12:['Patn_14_12',1,0,1,0,0],
+    patn_14_13:['Patn_14_13',1,0,1,0,0],
+    patn_14_14:['Patn_14_14',1,0,1,0,0],
+    patn_14_15:['Patn_14_15',1,0,1,0,0],
+    patn_14_16:['Patn_14_16',1,0,1,0,0],
+    aykg_4:['Aykg_4',1,0,40,0,0],
+    ypag_15:['Ypag_15',0,1,3,0,0],
+    patn_15_1:['Patn_15_1',1,0,1,0,0],
+    patn_15_2:['Patn_15_2',1,0,1,0,0],
+    patn_15_3:['Patn_15_3',1,0,1,0,0],
+    patn_15_4:['Patn_15_4',1,0,1,0,0],
+    patn_15_5:['Patn_15_5',1,0,1,0,0],
+    patn_15_6:['Patn_15_6',1,0,1,0,0],
+    patn_15_7:['Patn_15_7',1,0,1,0,0],
+    patn_15_8:['Patn_15_8',1,0,1,0,0],
+    patn_15_9:['Patn_15_9',1,0,1,0,0],
+    patn_15_10:['Patn_15_10',1,0,1,0,0],
+    patn_15_11:['Patn_15_11',1,0,1,0,0],
+    patn_15_12:['Patn_15_12',1,0,1,0,0],
+    patn_15_13:['Patn_15_13',1,0,1,0,0],
+    patn_15_14:['Patn_15_14',1,0,1,0,0],
+    patn_15_15:['Patn_15_15',1,0,1,0,0],
+    patn_15_16:['Patn_15_16',1,0,1,0,0],
+    aykg_5:['Aykg_5',1,0,40,0,0],
+    ypag_16:['Ypag_16',0,1,3,0,0],
+    patn_16_1:['Patn_16_1',1,0,1,0,0],
+    patn_16_2:['Patn_16_2',1,0,1,0,0],
+    patn_16_3:['Patn_16_3',1,0,1,0,0],
+    patn_16_4:['Patn_16_4',1,0,1,0,0],
+    patn_16_5:['Patn_16_5',1,0,1,0,0],
+    patn_16_6:['Patn_16_6',1,0,1,0,0],
+    patn_16_7:['Patn_16_7',1,0,1,0,0],
+    patn_16_8:['Patn_16_8',1,0,1,0,0],
+    patn_16_9:['Patn_16_9',1,0,1,0,0],
+    patn_16_10:['Patn_16_10',1,0,1,0,0],
+    patn_16_11:['Patn_16_11',1,0,1,0,0],
+    patn_16_12:['Patn_16_12',1,0,1,0,0],
+    patn_16_13:['Patn_16_13',1,0,1,0,0],
+    patn_16_14:['Patn_16_14',1,0,1,0,0],
+    patn_16_15:['Patn_16_15',1,0,1,0,0],
+    patn_16_16:['Patn_16_16',1,0,1,0,0],
+    aykg_6:['Aykg_6',1,0,40,0,0],
+    ypag_17:['Ypag_17',0,1,3,0,0],
+    patn_17_1:['Patn_17_1',1,0,1,0,0],
+    patn_17_2:['Patn_17_2',1,0,1,0,0],
+    patn_17_3:['Patn_17_3',1,0,1,0,0],
+    patn_17_4:['Patn_17_4',1,0,1,0,0],
+    patn_17_5:['Patn_17_5',1,0,1,0,0],
+    patn_17_6:['Patn_17_6',1,0,1,0,0],
+    patn_17_7:['Patn_17_7',1,0,1,0,0],
+    patn_17_8:['Patn_17_8',1,0,1,0,0],
+    patn_17_9:['Patn_17_9',1,0,1,0,0],
+    patn_17_10:['Patn_17_10',1,0,1,0,0],
+    patn_17_11:['Patn_17_11',1,0,1,0,0],
+    patn_17_12:['Patn_17_12',1,0,1,0,0],
+    patn_17_13:['Patn_17_13',1,0,1,0,0],
+    patn_17_14:['Patn_17_14',1,0,1,0,0],
+    patn_17_15:['Patn_17_15',1,0,1,0,0],
+    patn_17_16:['Patn_17_16',1,0,1,0,0],
+    aykg_7:['Aykg_7',1,0,40,0,0],
+    ypag_18:['Ypag_18',0,1,3,0,0],
+    patn_18_1:['Patn_18_1',1,0,1,0,0],
+    patn_18_2:['Patn_18_2',1,0,1,0,0],
+    patn_18_3:['Patn_18_3',1,0,1,0,0],
+    patn_18_4:['Patn_18_4',1,0,1,0,0],
+    patn_18_5:['Patn_18_5',1,0,1,0,0],
+    patn_18_6:['Patn_18_6',1,0,1,0,0],
+    patn_18_7:['Patn_18_7',1,0,1,0,0],
+    patn_18_8:['Patn_18_8',1,0,1,0,0],
+    patn_18_9:['Patn_18_9',1,0,1,0,0],
+    patn_18_10:['Patn_18_10',1,0,1,0,0],
+    patn_18_11:['Patn_18_11',1,0,1,0,0],
+    patn_18_12:['Patn_18_12',1,0,1,0,0],
+    patn_18_13:['Patn_18_13',1,0,1,0,0],
+    patn_18_14:['Patn_18_14',1,0,1,0,0],
+    patn_18_15:['Patn_18_15',1,0,1,0,0],
+    patn_18_16:['Patn_18_16',1,0,1,0,0],
+    aykg_8:['Aykg_8',1,0,40,0,0],
+    ypag_19:['Ypag_19',0,1,3,0,0],
+    patn_19_1:['Patn_19_1',1,0,1,0,0],
+    patn_19_2:['Patn_19_2',1,0,1,0,0],
+    patn_19_3:['Patn_19_3',1,0,1,0,0],
+    patn_19_4:['Patn_19_4',1,0,1,0,0],
+    patn_19_5:['Patn_19_5',1,0,1,0,0],
+    patn_19_6:['Patn_19_6',1,0,1,0,0],
+    patn_19_7:['Patn_19_7',1,0,1,0,0],
+    patn_19_8:['Patn_19_8',1,0,1,0,0],
+    patn_19_9:['Patn_19_9',1,0,1,0,0],
+    patn_19_10:['Patn_19_10',1,0,1,0,0],
+    patn_19_11:['Patn_19_11',1,0,1,0,0],
+    patn_19_12:['Patn_19_12',1,0,1,0,0],
+    patn_19_13:['Patn_19_13',1,0,1,0,0],
+    patn_19_14:['Patn_19_14',1,0,1,0,0],
+    patn_19_15:['Patn_19_15',1,0,1,0,0],
+    patn_19_16:['Patn_19_16',1,0,1,0,0],
+    aykg_9:['Aykg_9',1,0,40,0,0],
+    ypag_20:['Ypag_20',0,1,3,0,0],
+    patn_20_1:['Patn_20_1',1,0,1,0,0],
+    patn_20_2:['Patn_20_2',1,0,1,0,0],
+    patn_20_3:['Patn_20_3',1,0,1,0,0],
+    patn_20_4:['Patn_20_4',1,0,1,0,0],
+    patn_20_5:['Patn_20_5',1,0,1,0,0],
+    patn_20_6:['Patn_20_6',1,0,1,0,0],
+    patn_20_7:['Patn_20_7',1,0,1,0,0],
+    patn_20_8:['Patn_20_8',1,0,1,0,0],
+    patn_20_9:['Patn_20_9',1,0,1,0,0],
+    patn_20_10:['Patn_20_10',1,0,1,0,0],
+    patn_20_11:['Patn_20_11',1,0,1,0,0],
+    patn_20_12:['Patn_20_12',1,0,1,0,0],
+    patn_20_13:['Patn_20_13',1,0,1,0,0],
+    patn_20_14:['Patn_20_14',1,0,1,0,0],
+    patn_20_15:['Patn_20_15',1,0,1,0,0],
+    patn_20_16:['Patn_20_16',1,0,1,0,0],
+    aykg_10:['Aykg_10',1,0,40,0,0],
+    cmd:['Cmd',1,0,1,0,0],
+    tori:['Tori',1,0,8,0,0],
+    tsta:['Tsta',1,1,2,0,0],
+    ysta:['Ysta',1,1,3,0,0],
+    tend:['Tend',1,1,2,0,0],
+    yend:['Yend',1,1,3,0,0],
+    tto:['Tto',1,1,2,0,0],
+    yto:['Yto',1,1,3,0,0],
+    kais:['Kais',1,1,2,0,0],
+    emsg:['Emsg',0,0,68,0,0],
+    kaku:['Kaku',1,0,1,0,0],
+  };
+</script>

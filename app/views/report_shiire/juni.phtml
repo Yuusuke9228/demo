@@ -1,0 +1,273 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+/** @var array $joukens */
+/** @var array $rows */
+/** @var array $setdts */
+/** @var integer $zennen_nasi */
+/** @var  integer $zennen_kingaku; */
+/** @var  integer $zennen_suuryou1; */
+/** @var  integer $zennen_suuryou2; */
+use Phalcon\Tag;
+$title = '仕入順位表';
+?>
+
+<div class="page-header">
+    <h2>仕入順位表</h2>
+    <?php if (isset($zennen_nasi) && $zennen_nasi === 0) echo '<h5>', '※指定月の前年データがありません。', '</h5>'; ?>
+</div>
+<?php echo $this->getContent(); ?>
+<div class="panel panel-success bg-yel">
+    <br />
+    <?php
+    echo $this->tag->form(
+        array(
+            "report_shiire/juni",
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "name" => "form_jouken"
+        )
+    );
+    ?>
+    <div class="form-group">
+        <div class="col-sm-10">
+            <label for="fieldCd" class="col-sm-2 control-label">条件名</label>
+            <div class="col-sm-10">
+                <?php echo $this->tag->selectStatic(array("cd", $joukens, "style" => "width: 260px;", "class" => "form-control", "id" => "fieldCd")) ?>
+            </div>
+            <label for="fieldHyoujiKbn" class="col-sm-2 control-label">集計</label>
+            <div class="col-sm-10">
+                <?php echo $this->tag->selectStatic(array("hyouji_kbn", array("0" => "純仕入額"), "style" => "width: 130px;", "class" => "form-control", "id" => "fieldHyoujiKbn")) ?>
+            </div>
+            <label for="fieldKikanSiteiKbnCd" class="col-sm-2 control-label">期間</label>
+            <div class="col-sm-2">
+                <!--期間指定区分は売月報と同じものを使用する-->
+                <?php echo $this->tag->select(array("kikan_sitei_kbn_cd", KikanSiteiKbns::find(["columns" => "cd , name", "order" => "cd", "conditions" => "yobidasi_tbl='jouken_uriage_geppous'"]), "using" => array("cd", "name"), 'useEmpty' => true, 'emptyText' => '', "style" => "width: 130px;", "class" => "form-control", "id" => "fieldKikanSiteiKbnCd")) ?>
+            </div>
+            <div class="col-sm-2">
+                <?php echo $this->tag->telField(array("kikan_from", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanFrom", "readonly" => "readonly", "value" => $setdts['kikan_from'],)) ?>
+            </div>
+            <label for="fieldKikanTo" class="col-sm-1 control-label">～</label>
+            <div class="col-sm-2">
+                <?php echo $this->tag->telField(array("kikan_to", "size" => 10, "maxlength" => 10, "class" => "form-control f-cent ime-d", "id" => "fieldKikanTo", "readonly" => "readonly", "value" => $setdts['kikan_to'],)) ?>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <?php /* 取引区分別     */echo $this->tag->hiddenField("torihiki_kbn_betu_flg") ?>
+            <?php /* 順序区分コード */echo $this->tag->hiddenField("junjo_kbn_cd") ?>
+            <?php /* 順序区分テーブル */echo $this->tag->hiddenField("junjo_kbn_table") ?>
+            <?php /* 降順フラグ     */echo $this->tag->hiddenField("koujun_flg") ?>
+            <?php /* 前年フラグ     */echo $this->tag->hiddenField("zennen_flg") ?>
+            <?php /* 範囲自         */echo $this->tag->hiddenField("hanni_from") ?>
+            <?php /* 範囲自名       */echo $this->tag->hiddenField("hanni_from_name") ?>
+            <?php /* 範囲至         */echo $this->tag->hiddenField("hanni_to") ?>
+            <?php /* 範囲至名       */echo $this->tag->hiddenField("hanni_to_name") ?>
+            <?php /* 税込みフラグ   */echo $this->tag->hiddenField("zeikomi_flg") ?>
+            <?php /* 明細行表示フラ */echo $this->tag->hiddenField("meisaigyou_flg") ?>
+            <?php /* 合計行表示フラ */echo $this->tag->hiddenField("goukeigyou_flg") ?>
+            <?php /* 自入力分フラグ */echo $this->tag->hiddenField("jinyuuryoku_flg") ?>
+            <?php /* 期間内取引有フ */echo $this->tag->hiddenField("torihikiari_flg") ?>
+            <?php /* 期間内取引無フ */echo $this->tag->hiddenField("torihikinasi_flg") ?>
+            <?php /* その他計フラグ */echo $this->tag->hiddenField("hokakei_flg") ?>
+            <div class="col-sm-12">
+                <button class="btn btn-warning" onclick="modalstart(jouken_shiire_modal);return false;">条件設定>8
+                </button>
+            </div>
+            <br/><br/>
+            <div class="col-sm-12">
+                <button id="dl-xlsx" class="btn btn-warning">EXCEL出力</button>
+            </div>
+            <br/><br/>
+            <div class="col-sm-12">
+                <?php echo $this->tag->submitButton(array("集計f12", "id" => "F12", "class" => "btn btn-lg btn-success")) ?>
+            </div>
+        </div>
+    </div>
+    <?php echo $this->tag->endForm(); ?>
+</div>
+<?php if (!isset($setdts['hyouji_kbn'])) $setdts['hyouji_kbn'] = 0; ?>
+<div class="row">
+    <table class="table table-bordered table-hover table-condens-0 table-striped head_fix">
+        <?php $total = 0; ?>
+        <thead>
+        <?php if ($setdts['zennen_flg'] === '0'): ?>
+            <tr style="background-color: white;">
+                <th colspan="3" style="text-align:center;background-color: #fef6fe;font-weight: bold;">列計　>></th>
+                <th style="text-align:right;"><?php echo number_format($rows[0]['kingaku']); ?></th>
+                <th></th><th></th><th></th>
+                <th style="text-align:right;"><?php echo number_format($rows[0]['suuryou1']); ?></th>
+                <th style="text-align:right;"><?php echo number_format($rows[0]['suuryou2'],2); ?></th>
+            </tr>
+        <?php else: ?>
+            <?php if ($zennen_nasi !== 0): ?>
+                <tr style="background-color: white;">
+                    <th colspan="3" style="text-align:center;background-color: #fef6fe;font-weight: bold;">当年 列計　>></th>
+                    <th style="text-align:right;"><?php echo number_format($rows[0]['kingaku']); ?></th>
+                    <th></th><th></th><th></th>
+                    <th style="text-align:right;"><?php echo number_format($rows[0]['suuryou1']); ?></th>
+                    <th style="text-align:right;"><?php echo number_format($rows[0]['suuryou2'],2); ?></th>
+                </tr>
+                <tr style="background-color: white;">
+                    <th colspan="3" style="text-align:center;background-color: #fef6fe;font-weight: bold;color: green;">前年 列計　>></th>
+                    <th style="text-align:right;"><?php echo number_format($zennen_kingaku); ?></th>
+                    <th></th><th></th><th></th>
+                    <th style="text-align:right;"><?php echo number_format($zennen_suuryou1); ?></th>
+                    <th style="text-align:right;"><?php echo number_format($zennen_suuryou2,2); ?></th>
+                </tr>
+            <?php endif; ?>
+        <?php endif; ?>
+        <tr style="background-color: lavender;">
+            <th style="text-align: center;">順位</th>
+            <th style="text-align:center;">集計キー</th>
+            <th style="text-align:center;">キー名称</th>
+            <th style="text-align:center;">順仕入額</th>
+            <th style="text-align:center;">構成比</th>
+            <th style="text-align:center;">累計額</th>
+            <th style="text-align:center;">累計比</th>
+            <th style="text-align:center;">順仕入数</th>
+            <th style="text-align:center;">順仕入量</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <?php
+        $gyou = 1;
+        $i = 0;
+        $ruikei = 0;
+        $ruikeihi = 0;
+        ?>
+        <?php if ($setdts['zennen_flg'] === '0'): ?>
+            <?php foreach ($rows as $row): ?>
+                <?php
+                if ($i === 0) {
+                    $i++;
+                    continue;
+                }
+                ?>
+                <tr>
+                    <td style="text-align: center;"><?php echo $gyou; ?></td>
+                    <td style="text-align:center;"><?php if (!isset($row[$i]['key'])) echo $row['key']; ?></td>
+                    <td style="text-align:left;"><?php if (!isset($row[$i]['key_name'])) echo $row['key_name']; ?></td>
+                    <td style="text-align:right;"><?php if (!isset($row[$i]['kingaku'])) echo number_format($row['kingaku']); ?></td>
+                    <?php $ruikei += (float)$row['kingaku']; ?>
+                    <td style="text-align:right;"><?php
+                        if (!isset($row[$i]['kingaku'])) {
+                            echo number_format((float)$row['kingaku'] / (float)$rows[0]['kingaku'] * 100, 2);
+                        }
+                        $ruikeihi += (float)$row['kingaku'] / (float)$rows[0]['kingaku'] * 100
+                        ?></td>
+                    <td style="text-align:right;"><?php echo number_format($ruikei); ?></td>
+                    <td style="text-align:right;"><?php echo number_format($ruikeihi, 2); ?></td>
+                    <td style="text-align:right;"><?php if (!isset($row[$i]['suuryou1'])) echo number_format($row['suuryou1']); ?></td>
+                    <td style="text-align:right;"><?php if (!isset($row[$i]['suuryou2'])) echo number_format($row['suuryou2'], 2); ?></td>
+                </tr>
+                <?php
+                $i++;
+                $gyou++;
+                ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <?php if ($zennen_nasi !== 0) : ?>
+                <?php
+                $counter = 0;
+                $row_color = 'green';
+                ?>
+                <?php foreach ($rows as $row): ?>
+                    <?php
+                    if ($i === 0) {
+                        $i++;
+                        continue;
+                    }
+                    ?>
+                    <?php
+                    if ($counter % 2 === 1) {
+                        $row_color = 'green';
+                    } else {
+                        $row_color = 'black';
+                    }
+                    ?>
+                    <tr>
+                        <td style="text-align: center;color: <?php echo $row_color ?>;"><?php echo $gyou; ?></td>
+                        <td style="text-align:center;color: <?php echo $row_color ?>;"><?php if (!isset($row[$i]['key'])) echo $row['key']; ?></td>
+                        <td style="text-align:left;color: <?php echo $row_color ?>;"><?php if (!isset($row[$i]['key_name'])) echo $row['key_name']; ?></td>
+                        <td style="text-align:right;color: <?php echo $row_color ?>;"><?php if (!isset($row[$i]['kingaku'])) echo number_format($row['kingaku']); ?></td>
+                        <?php $ruikei += (float)$row['kingaku']; ?>
+                        <td style="text-align:right;color: <?php echo $row_color ?>;"><?php
+                            if (!isset($row[$i]['kingaku'])) {
+                                if ($counter % 2 === 1) {
+                                    echo number_format((float)$row['kingaku'] / (float)$zennen_kingaku * 100, 2);
+                                } else {
+                                    echo number_format((float)$row['kingaku'] / (float)$rows[0]['kingaku'] * 100, 2);
+                                }
+                            }
+                            ?>
+                        </td>
+                        <td></td><td></td>
+                        <td style="text-align:right;color: <?php echo $row_color ?>;"><?php if (!isset($row[$i]['arari'])) echo number_format($row['arari']); ?></td>
+                        <td style="text-align:right;color: <?php echo $row_color ?>;"><?php if (!isset($row[$i]['henpin'])) echo number_format($row['henpin']); ?></td>
+                        <td style="text-align:right;color: <?php echo $row_color ?>;"><?php if (!isset($row[$i]['nebiki'])) echo number_format($row['nebiki']); ?></td>
+                    </tr>
+                    <?php
+                    if ($counter % 2 === 1) {
+                        if ($i !== 1) {
+                            $gyou++;
+                        }
+                    }
+                    $i++;
+                    $counter++;
+                    ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+        </tbody>
+    </table>
+    <div class="col-sm-2">
+        <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal"
+                onclick="window.parent.fromModal();">中止
+        </button>
+    </div>
+</div>
+<div id="iframe-bg" class="bgStyle"></div>
+<div id="iframe-wrap" class="wrapStyle" style="width:900px; height:500px;">
+    <div class="modal-header" style="padding: 5px; background-color: #ddd;">
+        仕入順位表条件設定
+        <button type="button" class="close" data-dismiss="modal"><span>　×　</span></button>
+    </div>
+    <div id="iframe-body" class="modal-body" style="width: 100%; height: 97%; padding: 0;">
+    </div>
+</div>
+
+<script type="text/javascript">
+    var jouken_shiire_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('jouken_shiire_junis/ajaxGet') ?>";
+    var kikan_sitei_kbns_ajaxGet = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('kikan_sitei_kbns/ajaxGet') ?>";
+    var junjo_kbns_ajaxHanni = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('junjo_kbns/ajaxHanni') ?>";
+    var jouken_shiire_modal = "<?php echo '//' . $_SERVER['SERVER_NAME'] . $this->url->get('jouken_shiire_junis/modal') ?>";
+    var jouken_flds = [
+        'torihiki_kbn_betu_flg'
+        , 'junjo_kbn_cd'
+        , 'torihiki_kbn_cd'
+        , 'koujun_flg'
+        , 'hanni_from'
+        , 'hanni_from_name'
+        , 'hanni_to'
+        , 'hanni_to_name'
+        , 'zeikomi_flg'
+        , 'meisaigyou_flg'
+        , 'goukeigyou_flg'
+        , 'torihikiari_flg'
+        , 'torihikinasi_flg'
+        , 'hokakei_flg'
+        , 'zennen_flg'
+    ];
+</script>
+<script>
+    $(function () {
+        $('table.head_fix').floatThead({
+            top: 50
+        });
+    });
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.10/xlsx.full.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->url->get('js/views/report_shiire_junis.js'); ?>?var=20191115"></script>

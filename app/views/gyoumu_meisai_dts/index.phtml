@@ -1,0 +1,202 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "業務明細データ.一覧"; ?>
+<div class="page-header">
+    <h3>業務明細データ 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"gyoumu_meisai_dts","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","行番"],
+                    ["utiwake_kbn_cd","内訳区分"],
+                    ["gyoumu_dt_id","親データID"],
+                    ["kousei","構成"],
+                    ["kaisou","分解階層"],
+                    ["oya_meisai_cd","元明細行"],
+                    ["chuumon_kanryoubi","注文完了日"],
+                    ["zaiko_kanryoubi","在庫完了日"],
+                    ["shouhin_mr_cd","商品コード"],
+                    ["tekiyou","商品名/摘要"],
+                    ["lot","ロット"],
+                    ["iro","色番"],
+                    ["iromei","色名"],
+                    ["kobetucd","個別コード"],
+                    ["hinsitu_kbn_cd","品質コード"],
+                    ["souko_mr_cd","倉庫コード"],
+                    ["tanaban","棚番"],
+                    ["barcode","梱包バーコード"],
+                    ["tantou_mr_cd","担当コード"],
+                    ["suuryou","元数量"],
+                    ["keisu","係数"],
+                    ["irisuu","入数"],
+                    ["tanni_mr1_cd","単位1"],
+                    ["tanni_mr2_cd","単位2"],
+                    ["juch_zan_ryou1","受注残数"],
+                    ["juch_zan_ryou2","受注残量"],
+                    ["hach_zan_ryou1","発注残数"],
+                    ["hach_zan_ryou2","発注残量"],
+                    ["zaiko_henka_ryou1","在庫変化数"],
+                    ["zaiko_henka_ryou2","在庫変化量"],
+                    ["azu_henka_ryou1","預り変化数"],
+                    ["azu_henka_ryou2","預り変化量"],
+                    ["mitu_ryou1","見積り数"],
+                    ["mitu_ryou2","見積り量"],
+                    ["juch_ryou1","受注数"],
+                    ["juch_ryou2","受注量"],
+                    ["hach_ryou1","発注数"],
+                    ["hach_ryou2","発注量"],
+                    ["shiire_ryou1","仕入数"],
+                    ["shiire_ryou2","仕入量"],
+                    ["uriage_ryou1","売上数"],
+                    ["uriage_ryou2","売上量"],
+                    ["shukkairai_ryou1","出荷依頼数"],
+                    ["shukkairai_ryou2","出荷依頼量"],
+                    ["idou_ryou1","移動数"],
+                    ["idou_ryou2","移動量"],
+                    ["zaiko_kbn","単位区分"],
+                    ["tanka_kbn","単価区分"],
+                    ["gentanka","原単価"],
+                    ["tanka","単価"],
+                    ["kingaku","金額"],
+                    ["genkagaku","原価額"],
+                    ["zeinukigaku","税抜額"],
+                    ["zeigaku","税額"],
+                    ["project_mr_cd","プロジェクトコード"],
+                    ["zeiritu_mr_cd","税率コード"],
+                    ["bikou","備考"],
+                    ["nouki","納期メモ"],
+                    ["oya_meisai_id","親明細id"],
+                    ["shouhin_kakou_cd","加工コード"],
+                    ["h_kishu_mr_cd","機種コード"],
+                    ["gouki","号機"],
+                    ["juchuu_nasi_flg","受注無しフラグ"],
+                    ["moto_juch_ryou1","元受注数"],
+                    ["moto_juch_ryou2","元受注量"],
+                    ["zaikoseisan_ryou1","在庫生産数"],
+                    ["zaikoseisan_ryou2","在庫生産量"],
+                    ["loss_ryou1","予定ロス数"],
+                    ["loss_ryou2","予定ロス量"],
+                    ["keikaku_ryou1","生産計画数"],
+                    ["keikaku_ryou2","生産計画量"],
+                    ["kagi","鍵"],
+                    ["kouritu","効率"],
+                    ["kouritu_tanni","効率単位"],
+                    ["heiretu_suu","並列数錘数"],
+                    ["kadou_nissuu","稼働日数"],
+                    ["kaisi_hiduke","生産開始日"],
+                    ["shuuryou_hiduke","生産終了日"],
+                    ["json_params","他パラメタ類"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $gyoumu_meisai_dt): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("gyoumu_meisai_dts/edit/" . $gyoumu_meisai_dt->id, $gyoumu_meisai_dt->id)); ?></td>
+                <td><?php echo $gyoumu_meisai_dt->cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->utiwake_kbn_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->gyoumu_dt_id ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kousei ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kaisou ?></td>
+                <td><?php echo $gyoumu_meisai_dt->oya_meisai_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->chuumon_kanryoubi ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zaiko_kanryoubi ?></td>
+                <td><?php echo $gyoumu_meisai_dt->shouhin_mr_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->tekiyou ?></td>
+                <td><?php echo $gyoumu_meisai_dt->lot ?></td>
+                <td><?php echo $gyoumu_meisai_dt->iro ?></td>
+                <td><?php echo $gyoumu_meisai_dt->iromei ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kobetucd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->hinsitu_kbn_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->souko_mr_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->tanaban ?></td>
+                <td><?php echo $gyoumu_meisai_dt->barcode ?></td>
+                <td><?php echo $gyoumu_meisai_dt->tantou_mr_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->suuryou ?></td>
+                <td><?php echo $gyoumu_meisai_dt->keisu ?></td>
+                <td><?php echo $gyoumu_meisai_dt->irisuu ?></td>
+                <td><?php echo $gyoumu_meisai_dt->tanni_mr1_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->tanni_mr2_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->juch_zan_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->juch_zan_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->hach_zan_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->hach_zan_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zaiko_henka_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zaiko_henka_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->azu_henka_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->azu_henka_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->mitu_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->mitu_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->juch_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->juch_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->hach_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->hach_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->shiire_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->shiire_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->uriage_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->uriage_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->shukkairai_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->shukkairai_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->idou_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->idou_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zaiko_kbn ?></td>
+                <td><?php echo $gyoumu_meisai_dt->tanka_kbn ?></td>
+                <td><?php echo $gyoumu_meisai_dt->gentanka ?></td>
+                <td><?php echo $gyoumu_meisai_dt->tanka ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kingaku ?></td>
+                <td><?php echo $gyoumu_meisai_dt->genkagaku ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zeinukigaku ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zeigaku ?></td>
+                <td><?php echo $gyoumu_meisai_dt->project_mr_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zeiritu_mr_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->bikou ?></td>
+                <td><?php echo $gyoumu_meisai_dt->nouki ?></td>
+                <td><?php echo $gyoumu_meisai_dt->oya_meisai_id ?></td>
+                <td><?php echo $gyoumu_meisai_dt->shouhin_kakou_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->h_kishu_mr_cd ?></td>
+                <td><?php echo $gyoumu_meisai_dt->gouki ?></td>
+                <td><?php echo $gyoumu_meisai_dt->juchuu_nasi_flg ?></td>
+                <td><?php echo $gyoumu_meisai_dt->moto_juch_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->moto_juch_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zaikoseisan_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->zaikoseisan_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->loss_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->loss_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->keikaku_ryou1 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->keikaku_ryou2 ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kagi ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kouritu ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kouritu_tanni ?></td>
+                <td><?php echo $gyoumu_meisai_dt->heiretu_suu ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kadou_nissuu ?></td>
+                <td><?php echo $gyoumu_meisai_dt->kaisi_hiduke ?></td>
+                <td><?php echo $gyoumu_meisai_dt->shuuryou_hiduke ?></td>
+                <td><?php echo $gyoumu_meisai_dt->json_params ?></td>
+                <td><?php echo $gyoumu_meisai_dt->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("gyoumu_meisai_dts/delete/" . $gyoumu_meisai_dt->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"gyoumu_meisai_dts"]) ?>

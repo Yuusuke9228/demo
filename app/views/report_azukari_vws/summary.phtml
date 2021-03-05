@@ -1,0 +1,57 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "預り.一覧"; ?>
+<div class="page-header">
+    <h3>預り 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php
+    	$index_or="summary";
+    	$this->partial("common/indexkanni",["index_or"=>"summary","table_id"=>"report_azukari_vws","flds"=>[
+        	["shouhin_mr_cd","ShouhinMrCd","商品コード",14,14],["torihikisaki_mr_cd","TorihikisakiMrCd","取引先",24,24]
+    	]])
+    ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["shouhin_mr_cd","商品コード"],
+                    ["shouhin_name","商品名"],
+                    ["torihikisaki_cd","取引先"],
+                    ["zaiko_ryou","預り量"],
+                    ["nyuuko_ryou","預入量"],
+                    ["shukko_ryou","払出量"],
+                    ["nyuukobi","最終預入日"],
+                    ["shukkobi","最終払出日"],
+                    ["nyuushukkobi","最終出入日"],
+                ]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $report_azukari_vw): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("report_azukari_vws/edit/" . $report_azukari_vw->shouhin_mr_cd, $report_azukari_vw->shouhin_mr_cd)); ?></td>
+                <td><?php echo $report_azukari_vw->shouhin_name ?></td>
+                <td align='center'><?php echo $report_azukari_vw->torihikisaki_cd ?></td>
+                <td align='right'><?php echo number_format($report_azukari_vw->zaiko_ryou,2) ?></td>
+                <td align='right'><?php echo number_format($report_azukari_vw->nyuuko_ryou,2) ?></td>
+                <td align='right'><?php echo number_format($report_azukari_vw->shukko_ryou,2) ?></td>
+                <td align='center'><?php echo $report_azukari_vw->nyuukobi ?></td>
+                <td align='center'><?php echo $report_azukari_vw->shukkobi ?></td>
+                <td align='center'><?php echo $report_azukari_vw->nyuushukkobi ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"report_azukari_vws"]) ?>

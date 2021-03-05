@@ -1,0 +1,112 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<div class="page-header">
+    <h1>
+        Search shukka_vws
+    </h1>
+    <p>
+        <?php echo $this->tag->linkTo(["shukka_vws/new", "Create shukka_vws"]) ?>
+    </p>
+</div>
+
+<?php echo $this->getContent() ?>
+
+<?php
+    echo $this->tag->form(
+        [
+            "shukka_vws/search",
+            "autocomplete" => "off",
+            "class" => "form-horizontal"
+        ]
+    );
+?>
+
+<div class="form-group">
+    <label for="fieldItoCode" class="col-sm-2 control-label">Ito Of Code</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["ito_code", "size" => 30, "class" => "form-control", "id" => "fieldItoCode"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldHiduke" class="col-sm-2 control-label">Hiduke</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["hiduke", "size" => 30, "class" => "form-control", "id" => "fieldHiduke"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldDenpyouNo" class="col-sm-2 control-label">Denpyou Of No</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["denpyou_no", "size" => 30, "class" => "form-control", "id" => "fieldDenpyouNo"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldKakouNo" class="col-sm-2 control-label">Kakou Of No</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["kakou_no", "size" => 30, "class" => "form-control", "id" => "fieldKakouNo"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldLot" class="col-sm-2 control-label">Lot</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["lot", "size" => 30, "class" => "form-control", "id" => "fieldLot"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldSuuryou" class="col-sm-2 control-label">Suuryou</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["suuryou", "size" => 30, "class" => "form-control", "id" => "fieldSuuryou"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldHonsuu" class="col-sm-2 control-label">Honsuu</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["honsuu", "size" => 30, "class" => "form-control", "id" => "fieldHonsuu"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldHinsitu" class="col-sm-2 control-label">Hinsitu</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["hinsitu", "size" => 30, "class" => "form-control", "id" => "fieldHinsitu"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldBikou1" class="col-sm-2 control-label">Bikou1</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["bikou1", "size" => 30, "class" => "form-control", "id" => "fieldBikou1"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldBikou2" class="col-sm-2 control-label">Bikou2</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["bikou2", "size" => 30, "class" => "form-control", "id" => "fieldBikou2"]) ?>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="fieldShukkasaki" class="col-sm-2 control-label">Shukkasaki</label>
+    <div class="col-sm-10">
+        <?php echo $this->tag->textField(["shukkasaki", "size" => 30, "class" => "form-control", "id" => "fieldShukkasaki"]) ?>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <?php echo $this->tag->submitButton(["Search", "class" => "btn btn-default"]) ?>
+    </div>
+</div>
+
+<?php echo $this->tag->endForm(); ?>

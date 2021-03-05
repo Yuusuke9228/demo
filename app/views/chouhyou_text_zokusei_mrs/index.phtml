@@ -1,0 +1,110 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = "帳票テキスト属性.一覧"; ?>
+<div class="page-header">
+    <h3>帳票テキスト属性 一覧表（検索結果）</h3>
+</div>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+    <?php $this->partial("common/indexkanni",["table_id"=>"chouhyou_text_zokusei_mrs","flds"=>[
+        ["cd","fieldCd","コード",14,14],["name","fieldName","名称",24,24]
+    ]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+<?php $this->partial("common/indexsort",["flds"=>[
+                    ["id","Id"],
+                    ["cd","コード"],
+                    ["name","名称"],
+                    ["chouhyou_mr_id","帳票ID"],
+                    ["shurui_kbn","種類"],
+                    ["kmk_table","項目テーブル"],
+                    ["sanshou","参照接続"],
+                    ["kmk_cd","項目CD"],
+                    ["yoko_zahyou","横座標"],
+                    ["tate_zahyou","縦座標"],
+                    ["waku_haba","枠幅"],
+                    ["waku_taka","枠高"],
+                    ["align","横位置"],
+                    ["valign","縦位置"],
+                    ["stretch","文字間"],
+                    ["calign","上下間隔"],
+                    ["font_kbn_id","フォント名"],
+                    ["font_style","フォントスタイル"],
+                    ["font_size","フォントサイズ"],
+                    ["inji_houkou","印字方向"],
+                    ["moji_iro","色設定"],
+                    ["nuri_iro","塗り色"],
+                    ["waku_iro","枠色"],
+                    ["waku_huto","枠太"],
+                    ["waku","枠上下左右"],
+                    ["kmk_shuushoku","項目修飾"],
+                    ["suu_minus","数値マイナス"],
+                    ["suu_comma","数値カンマ"],
+                    ["suu_zero","数値0表示"],
+                    ["suu_shousuuten","数値小数点表示"],
+                    ["suu_percent","数値パーセント"],
+                    ["suu_yen","数値円記号"],
+                    ["suu_seisuuketa","数値整数桁"],
+                    ["suu_shousuuketa","数値小数桁"],
+                    ["updated","更新日時"],
+                ]]) ?>
+
+                <th>削除</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $chouhyou_text_zokusei_mr): ?>
+            <tr>
+                <td><?php echo $this->tag->linkTo(array("chouhyou_text_zokusei_mrs/edit/" . $chouhyou_text_zokusei_mr->id, $chouhyou_text_zokusei_mr->id)); ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->cd ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->name ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->chouhyou_mr_id ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->shurui_kbn ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->kmk_table ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->sanshou ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->kmk_cd ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->yoko_zahyou ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->tate_zahyou ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->waku_haba ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->waku_taka ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->align ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->valign ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->stretch ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->calign ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->font_kbn_id ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->font_style ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->font_size ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->inji_houkou ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->moji_iro ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->nuri_iro ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->waku_iro ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->waku_huto ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->waku ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->kmk_shuushoku ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_minus ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_comma ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_zero ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_shousuuten ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_percent ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_yen ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_seisuuketa ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->suu_shousuuketa ?></td>
+                <td><?php echo $chouhyou_text_zokusei_mr->updated ?></td>
+
+                <td><?php echo $this->tag->linkTo(array("chouhyou_text_zokusei_mrs/delete/" . $chouhyou_text_zokusei_mr->id, "削除", "onclick" => 'return confirm("よろしいですか？");')); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["table_id"=>"chouhyou_text_zokusei_mrs"]) ?>

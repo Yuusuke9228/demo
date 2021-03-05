@@ -1,0 +1,58 @@
+<?php
+/**
+ * @var \Phalcon\Mvc\View\Engine\Php $this
+ */
+?>
+
+<?php use Phalcon\Tag; ?>
+
+<?php $title = '仕入.一覧'; ?>
+
+<?php echo $this->getContent(); ?>
+
+<div class="row">
+	<?php $this->partial("common/modalkanni",["table_id"=>"shiire_dts","flds"=>[
+		["cd","fieldCd","伝票番号",14,14],["tekiyou","fieldTekiyou","摘要",24,24]
+	]]) ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+				<?php $this->partial("common/indexsort",["flds"=>[
+					["cd","伝票番号"],
+	 				["tekiyou","摘要"],
+	 				["shiirebi","仕入日"],
+	 				["shiirebi","仕入日"],
+	 				["shiiresaki_mr_cd","得意先"],
+	 				["tantou_mr_cd","担当者"],
+	 				["","商品1"],
+	 				["","数量1"],
+				]]) ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($page->items as $shiire_dt): ?>
+            <tr>
+                <td align="center"><div class="returnto" data-dismiss="modal" style="cursor: pointer;"><?php echo $shiire_dt->cd; ?></div></td>
+                <td><?php echo $shiire_dt->tekiyou ?></td>
+                <td align="center"><?php echo $shiire_dt->shiirebi ?></td>
+                <td><?php echo $shiire_dt->shiiresaki_mr_cd."=".$shiire_dt->ShiiresakiMrs->name ?></td>
+                <td><?php echo $shiire_dt->tantou_mr_cd.($shiire_dt->tantou_mr_cd==""?"":("=".$shiire_dt->TantouMrs->name)) ?></td>
+                <td><?php echo isset($shiire_dt->ShiireMeisaiDts[0])?$shiire_dt->ShiireMeisaiDts[0]->shouhin_mr_cd:"" ?></td>
+                <td align="right"><?php	$tanka_kbn=isset($shiire_dt->ShiireMeisaiDts[0])?$shiire_dt->ShiireMeisaiDts[0]->tanka_kbn:2;$suufld='suuryou'.$tanka_kbn;$tannitb='TanniMr'.$tanka_kbn.'s';
+                						echo isset($shiire_dt->ShiireMeisaiDts[0])?$shiire_dt->ShiireMeisaiDts[0]->$suufld.$shiire_dt->ShiireMeisaiDts[0]->$tannitb->name:"" ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->partial("common/indextail",["index_or"=>"modal", "table_id"=>"shiire_dts"]) ?>
+
+<div class="col-sm-2">
+    <button type="button" class="btn btn-default" id="ESC" data-dismiss="modal" onclick="window.parent.fromModal();">中止</button>
+</div>
+<script type="text/javascript">
+	$('.returnto').click(function () {//alert($(this).text());
+		window.parent.fromModal($(this).text());
+	});
+</script>
